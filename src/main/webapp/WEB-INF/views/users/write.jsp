@@ -403,7 +403,6 @@ $(function(){
                 <option value="SNG">SNG</option>
                 <option value="AOS">AOS</option>
                 <option value="기타">기타</option>
-                <option value="기타">확인용</option>
               </select>
             </div>
             <div class="col-md-12 mt-3">
