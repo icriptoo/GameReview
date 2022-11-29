@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="File">
+
+    <select id="getReplyFile"
+            resultType="String">
+        SELECT RIDER_REPLY_NUMBER
+        FROM RIDER_REPLY_FILE
+        WHERE RIDER_REPLY_NUMBER = #{rider_reply_number}
+    </select>
+    <select id="getSFileName"
+            resultType="String">
+        SELECT SFILENAME
+        FROM RIDER_REPLY_FILE
+        WHERE RIDER_REPLY_NUMBER = #{rider_reply_number}
+
+    </select>
+
+    <select id="getSFileNameC"
+            resultType="String">
+        SELECT SFILENAME
+        FROM CUSTOMER_BOARD_FILE
+        WHERE CUSTOMER_BOARD_NUMBER = #{board_number}
+
+    </select>
+
+    <insert id="insertReplyFile">
+        INSERT  INTO  RIDER_REPLY_FILE(
+        FILE_NUM,
+        RIDER_REPLY_NUMBER,
+        FILENAME,
+        FILEEXIT,
+        SFILENAME)
+        VALUES (RIDER_PDFILE_NUMBER.NEXTVAL, #{rider_reply_number}, #{vo.fileName}, #{vo.fileExit}, #{vo.sFileName})
+
+    </insert>
+
+    <insert id="writePicture">
+        INSERT  INTO  CUSTOMER_BOARD_FILE(
+        FILE_NUM,
+        CUSTOMER_BOARD_NUMBER,
+        FILENAME,
+        FILEEXIT,
+        SFILENAME)
+        VALUES (CUSTOMER_PDFILE_NUMBER.NEXTVAL, #{customer_board_number}, #{vo.fileName}, #{vo.fileExit}, #{vo.sFileName})
+
+    </insert>
+
+
+    <update id="updateReplyFile">
+        UPDATE RIDER_REPLY_FILE
+        SET
+        FILENAME=#{vo.fileName},
+        FILEEXIT=#{vo.fileExit},
+        SFILENAME=#{vo.sFileName}
+
+        WHERE RIDER_REPLY_NUMBER = #{rider_reply_number}
+
+    </update>
+
+</mapper>
