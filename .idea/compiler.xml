@@ -10,6 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="GameReview" target="11" />
       <module name="SpringAjax" target="11" />
     </bytecodeTargetLevel>
   </component>
