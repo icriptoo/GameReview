@@ -343,93 +343,82 @@ $(function(){
 </head>
 <body>
 <div class="form-body">
-    <div class="make-row">
-        <div class="form-holder">
-            <div class="form-content">
-                <div class="form-items">
-                    <h3 style="text-align: center">회원가입</h3>
-                    <form action="/userInsert" class="requires-validation">
-
-                        <div class="col-md-12">
-                            <input class="form-control" name="userid" type="text" placeholder="ID"/>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button type="button"  id="idCheck" class="button"
-                                            style=" margin-top: 10px;padding-top: 4px;padding-bottom: 4px;padding-left: 8px;padding-right: 8px;width: 86px;
-                                            font-size: 15px;">중복확인</button>
-                                    </td>
-                                    <td>
-                                        <span id="idCheckResult" name="idCheckResult" style="color:#efe2c9; font-size:15px;"></span>
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <input class="form-control" type="password" name="passwd" placeholder="password"/>
-                        </div>
-                        <div class="col-md-12">
-                            <input class="form-control" type="password" name="passwdCheck" placeholder="passwordCheck"/>
-                        </div>
-                        <div class="col-md-12">
-                            <span id="passwdCheck" style="color:#efe2c9; font-size:15px;"></span>
-                        </div>
-
-                        <div class="col-md-12">
-                            <input class="form-control" name="nickname" type="text" placeholder="NickName"/>
-                        </div>
-
-                        <div class="col-md-12">
-                            <input class="form-control" name="email" type="text" placeholder="EMail"/>
-                        </div>
-                        <div class="col-md-12">
-                            <span id="emailCheck" style="color:#efe2c9; font-size:15px;"></span>
-                        </div>
-
-                        <div class="col-md-12">
-                            <input class="form-control" name="phoneNumber" type="text"
-                                   oninput="autoHyphen(this)" maxlength="13" placeholder="000-0000-0000" autofocus/>
-                        </div>
-
-                        <div class="col-md-12">
-                            <select class="form-select mt-3" id="LOACTION" name="user_local">
-                                <option value="">LOCATION</option>
-                                <option value="기장군">기장군</option>
-                                <option value="금정구">금정구</option>
-                                <option value="동래구">동래구</option>
-                                <option value="연제구">연제구</option>
-                                <option value="해운대구">해운대구</option>
-                                <option value="수영구">수영구</option>
-                                <option value="사상구">사상구</option>
-                                <option value="부산진구">부산진구</option>
-                                <option value="동구">동구</option>
-                                <option value="서구">서구</option>
-                                <option value="남구">남구</option>
-                                <option value="북구">북구</option>
-                                <option value="중구">중구</option>
-                                <option value="영도구">영도구</option>
-                                <option value="사하구">사하구</option>
-                                <option value="강서구">강서구</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-12 mt-3">
-                            <input type="radio" class="btn-check" name="rider" value="normal" autocomplete="off" checked>
-                            <label style="color:#efe2c9; font-size:15px;">퀵을 맡기시나요?</label>
-
-                            <input type="radio" class="btn-check" name="rider" value="rider" autocomplete="off" required>
-                            <label style="color:#efe2c9; font-size:15px;">퀵을 가시나요?</label>
-                        </div>
-                        <div class="form-button mt-3">
-                            <button id="submit" type="submit" class="button" style="margin-left: 15px;">Register</button>
-                        </div>
-                    </form>
-                </div>
+  <div class="make-row">
+    <div class="form-holder">
+      <div class="form-content">
+        <div class="form-items">
+          <h3 style="text-align: center">회원가입</h3>
+          <form action="/userInsert" class="requires-validation">
+            <div class="col-md-12">
+              <input class="form-control" name="userid" type="text" placeholder="ID"/>
+              <table>
+                <tr>
+                  <td>
+                    <button type="button"  id="idCheck" class="button"
+                      style=" margin-top: 10px;padding-top: 4px;padding-bottom: 4px;padding-left: 8px;padding-right: 8px;width: 86px; font-size: 15px;">중복확인</button>
+                  </td>
+                  <td>
+                    <span id="idCheckResult" name="idCheckResult" style="color:#efe2c9; font-size:15px;"></span>
+                  </td>
+                </tr>
+              </table>
             </div>
+            <div class="col-md-12">
+              <input class="form-control" type="password" name="passwd" placeholder="password"/>
+            </div>
+            <div class="col-md-12">
+              <input class="form-control" type="password" name="passwdCheck" placeholder="passwordCheck"/>
+            </div>
+            <div class="col-md-12">
+              <span id="passwdCheck" style="color:#efe2c9; font-size:15px;"></span>
+            </div>
+            <div class="col-md-12">
+              <input class="form-control" name="nickname" type="text" placeholder="NickName"/>
+            </div>
+            <div class="col-md-12">
+              <input class="form-control" name="email" type="text" placeholder="EMail"/>
+            </div>
+            <div class="col-md-12">
+              <span id="emailCheck" style="color:#efe2c9; font-size:15px;"></span>
+            </div>
+            <div class="col-md-12">
+              <input class="form-control" name="phoneNumber" type="text" oninput="autoHyphen(this)" maxlength="13" placeholder="000-0000-0000" autofocus/>
+            </div>
+            <div class="col-md-12">
+              <select class="form-select mt-3" id="LOACTION" name="user_local">
+                <option value="">장르명</option>
+                <option value="RPG">RPG</option>
+                <option value="어드벤쳐">어드벤쳐</option>
+                <option value="FPS">FPS</option>
+                <option value="스포츠">스포츠</option>
+                <option value="TCG">TCG</option>
+                <option value="보드">보드</option>
+                <option value="레이싱">레이싱</option>
+                <option value="슈팅">슈팅</option>
+                <option value="액션">액션</option>
+                <option value="시뮬레이션">시뮬레이션</option>
+                <option value="RTS">RTS</option>
+                <option value="퍼즐">퍼즐</option>
+                <option value="리듬액션">리듬액션</option>
+                <option value="SNG">SNG</option>
+                <option value="AOS">AOS</option>
+                <option value="기타">기타</option>
+              </select>
+            </div>
+            <div class="col-md-12 mt-3">
+              <input type="radio" class="btn-check" name="rider" value="normal" autocomplete="off" checked>
+              <label style="color:#efe2c9; font-size:15px;">퀵을 맡기시나요?</label>
+              <input type="radio" class="btn-check" name="rider" value="rider" autocomplete="off" required>
+              <label style="color:#efe2c9; font-size:15px;">퀵을 가시나요?</label>
+            </div>
+            <div class="form-button mt-3">
+              <button id="submit" type="submit" class="button" style="margin-left: 15px;">Register</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 </body>

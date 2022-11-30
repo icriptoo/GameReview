@@ -26,7 +26,6 @@ public class RRPdsFile {
         }
 
         CheckFileName checkFile = new CheckFileName();
-        System.out.println(request.getParameterNames());
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();

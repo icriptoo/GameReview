@@ -18,8 +18,8 @@
             resultType="com.project.user.vo.UserVo">
         SELECT *
         FROM  USERS
-        WHERE USERID = #{userid}
-        AND   PASSWD = #{passwd}
+        WHERE U_ID = #{userid}
+        AND   PW = #{passwd}
     </select>
 
     <!-- 유저 상세 화면 -->

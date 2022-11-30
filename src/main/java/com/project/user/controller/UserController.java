@@ -1,5 +1,5 @@
 package com.project.user.controller;
-import com.project.pds.user.controller.UserFileController;
+
 import com.project.pds.user.service.PdsService;
 import com.project.user.service.UserService;
 import com.project.user.vo.UserVo;
@@ -9,7 +9,10 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -188,7 +191,6 @@ public class UserController {
 
     @RequestMapping("/YA")
     public String sendSms(HttpServletRequest request) throws Exception {
-        System.out.println("나와봐라!");
 
         String api_key = "NCSO8KXP96MLGO23";
         String api_secret = "GTLDCW79SIYCMPWDQKESIDJTBDY5SPHB";
@@ -197,19 +199,15 @@ public class UserController {
         HashMap<String, String> set = new HashMap<String, String>();
         set.put("to", (String)request.getParameter("to")); // 수신번호
 
-        set.put("from", "01046925971"); // 발신번호
+        set.put("from", "0104692597"); // 발신번호
         set.put("text", (String)request.getParameter("text")); // 문자내용
         set.put("type", "sms"); // 문자 타입
         set.put("app_version", "test app 1.2");
 
-        System.out.println(set);
         try {
             JSONObject result = coolsms.send(set); // 보내기&전송결과받기
 
-            System.out.println(result.toString());
         } catch (CoolsmsException e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getCode());
         }
 
         return "redirect:/changePasswdForm";

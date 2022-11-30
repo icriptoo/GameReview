@@ -12,11 +12,14 @@ import com.project.reply.vo.RiderReplyVo;
 import com.project.user.vo.UserVo;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
-import org.apache.ibatis.javassist.compiler.ast.Keyword;
 import org.json.simple.JSONObject;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,6 +49,24 @@ public class BoardController {
     ReplyPager replyPager = new ReplyPager();
     // 해주세요 게시판 글 전체 조회
 
+    @RequestMapping("/test")
+    public String test(){
+        String Url = "https://www.inven.co.kr/webzine/game/?page=";
+        Connection conn = Jsoup.connect(Url);
+        try {
+            Document document = conn.get();
+            Elements imageUrlElements = document.getElementsByClass("info");
+            for (Element element : imageUrlElements){
+                System.out.printf(String.valueOf(element));
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();;
+        }
+
+        return "C";
+    }
+
 
     @RequestMapping("/index")
     public String index(){
@@ -52,7 +74,7 @@ public class BoardController {
     }
 
     @RequestMapping("/Board/customerList")
-    public String CustomerBoardList(Model model, @RequestParam HashMap<String,Object> map, HttpSession httpSession) {
+    public String CustomerBoardList(Model model, @RequestParam HashMap<String,Object> map, HttpSession httpSession) throws IOException{
         List<MenuVo> menuList = this.menuService.getMenuList();
 
         int cPageNum = Integer.parseInt((String) map.get("pageNum"));
@@ -132,6 +154,25 @@ public class BoardController {
         model.addAttribute("menuList", menuList);
         model.addAttribute("map",map);
         model.addAttribute("userLocal",userLocal);
+
+
+        String Url = "https://www.inven.co.kr/webzine/game/?page=1";
+        Connection conn = Jsoup.connect(Url);
+
+        try {
+            Document document = conn.get();
+            Elements imageUrlElements = document.getElementsByClass("game");
+
+            for (Element element : imageUrlElements){
+                System.out.printf(String.valueOf(element.select("span[class='game']")));
+            }
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
 
         return "ctmboard/customerList";
 
@@ -311,13 +352,6 @@ public class BoardController {
 
         String nickName = ((UserVo) httpSession.getAttribute("login")).getNickname();
         String board_local =  ((UserVo) httpSession.getAttribute("login")).getUser_local();
-        System.out.println(board_local);
-
-
-
-
-
-
 
         model.addAttribute("menu_id", menu_id);
         model.addAttribute("cPageNum", cPageNum);
@@ -349,7 +383,6 @@ public class BoardController {
         int cContentNum = Integer.parseInt((String) map.get("contentNum"));
         String nickName = ((UserVo) httpSession.getAttribute("login")).getNickname();
         String rider_local =  ((UserVo) httpSession.getAttribute("login")).getUser_local();
-        System.out.println(rider_local);
 
         model.addAttribute("cPageNum", cPageNum);
         model.addAttribute("cContentNum",cContentNum);
