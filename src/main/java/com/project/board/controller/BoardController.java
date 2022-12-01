@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -75,104 +76,117 @@ public class BoardController {
 
     @RequestMapping("/Board/customerList")
     public String CustomerBoardList(Model model, @RequestParam HashMap<String,Object> map, HttpSession httpSession) throws IOException{
-        List<MenuVo> menuList = this.menuService.getMenuList();
+//        List<MenuVo> menuList = this.menuService.getMenuList();
+//
+//        int cPageNum = Integer.parseInt((String) map.get("pageNum"));
+//        int cContentNum = Integer.parseInt((String) map.get("contentNum"));
+//        String keyword = (String) map.get("keyword");
+//        String searchType = (String) map.get("searchType");
+//        String userLocal = ((UserVo) httpSession.getAttribute("login")).getUser_local();
+//
+//
+//
+//
+//        if(searchType == null){
+//            keyword = "";
+//            searchType = "";
+//        }
+//
+//        if(searchType.equals("board_check")){
+//            if (keyword.equals("대기")){
+//                keyword="0";
+//                map.put("keyword",keyword);
+//            }else if (keyword.equals("중")){
+//                keyword="1";
+//                map.put("keyword",keyword);
+//            }else if (keyword.equals("완료")){
+//                keyword="2";
+//                map.put("keyword",keyword);
+//            }
+//        }
+//        List<BoardVo> customerList = null;
+//
+//        this.boardPager.setTotalCount(this.boardService.customerCount()); // board 전체 게시글 개수를 지정
+//        this.boardPager.setPageNum(cPageNum - 1); // 현제 페이지를 페이지 객체에 지정한다 -1을 해야 쿼리에서 사용가능
+//        this.boardPager.setContentNum(cContentNum); // 한 페이지에 몇개씩 게시글을 보여줄지 정함
+//        this.boardPager.setCurrentBlock(cPageNum); // 현재 페이지 블록이 몇번인지 현재 페이지번호를 통해 지정
+//        this.boardPager.setLastBlock(); // 마지막 블록 번호를 전체 게시글 수를 통해서 정함
+//        this.boardPager.prevNext(cPageNum); // 현재 페이지 번호로 화살표를 나타낼지 정함
+//        this.boardPager.setStartPage(this.boardPager.getCurrentBlock()); // 시작 페이지를 페이지 블록번호로 지정
+//        this.boardPager.setEndPage(); // 마지막 페이지
+//
+//        map.put("pageNum", this.boardPager.getPageNum());
+//        map.put("contentNum", this.boardPager.getContentNum());
+//
+//        if (this.boardPager.getPageNum() == 0) {
+//            if(!searchType.equals("초기값") && keyword.length() != 0){
+//                customerList = this.boardService.CSList(map);
+//                this.boardPager.setTotalCount(this.boardService.CSCount(map));
+//                this.boardPager.setPageNum(cPageNum - 1);
+//                this.boardPager.setContentNum(cContentNum);
+//                this.boardPager.setCurrentBlock(cPageNum);
+//                this.boardPager.setLastBlock();
+//                this.boardPager.prevNext(cPageNum);
+//                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+//                this.boardPager.setEndPage();
+//            } else{
+//                customerList = this.boardService.customerList(map);
+//            }
+//        } else if (this.boardPager.getPageNum() != 0) {
+//            if(keyword.length() != 0){
+//              map.put("pageNum", this.boardPager.getPageNum() * 10 + 1);
+//              customerList = this.boardService.CSList(map);
+//                this.boardPager.setTotalCount(this.boardService.CSCount(map));
+//                this.boardPager.setPageNum(cPageNum - 1);
+//                this.boardPager.setContentNum(cContentNum);
+//                this.boardPager.setCurrentBlock(cPageNum);
+//                this.boardPager.setLastBlock();
+//                this.boardPager.prevNext(cPageNum);
+//                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+//                this.boardPager.setEndPage();
+//            }else {
+//              map.put("pageNum", this.boardPager.getPageNum() * 10 + 1);
+//              customerList = this.boardService.customerList(map);
+//            }
+//        }
+//
+//        model.addAttribute("customerList", customerList);
+//        model.addAttribute("boardPager", this.boardPager);
+//        model.addAttribute("menuList", menuList);
+//        model.addAttribute("map",map);
+//        model.addAttribute("userLocal",userLocal);
 
-        int cPageNum = Integer.parseInt((String) map.get("pageNum"));
-        int cContentNum = Integer.parseInt((String) map.get("contentNum"));
-        String keyword = (String) map.get("keyword");
-        String searchType = (String) map.get("searchType");
-        String userLocal = ((UserVo) httpSession.getAttribute("login")).getUser_local();
+        int end = 1;
 
+        //String Url = "https://www.inven.co.kr/webzine/game/?page=";
 
+        // 인벤게임db 사이트에서 게임정보 크롤링
+        for(int i=1; i <= end;i++){
+            ArrayList<String> G = new ArrayList<>() ;
+            ArrayList<String> GE = new ArrayList<>() ;
+            ArrayList<String> GR = new ArrayList<>() ;
+            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?page="+i).get();
+            //Elements elem = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span");
+            Elements elemG = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"game\"]");
+            Elements elemGE = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"gameEn\"]");
+            Elements elemGR = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li");
 
-
-        if(searchType == null){
-            keyword = "";
-            searchType = "";
-        }
-
-        if(searchType.equals("board_check")){
-            if (keyword.equals("대기")){
-                keyword="0";
-                map.put("keyword",keyword);
-            }else if (keyword.equals("중")){
-                keyword="1";
-                map.put("keyword",keyword);
-            }else if (keyword.equals("완료")){
-                keyword="2";
-                map.put("keyword",keyword);
+            // 게임명 List 저장
+            for(Element e: elemG){
+                G.add(e.text());
             }
-        }
-        List<BoardVo> customerList = null;
-
-        this.boardPager.setTotalCount(this.boardService.customerCount()); // board 전체 게시글 개수를 지정
-        this.boardPager.setPageNum(cPageNum - 1); // 현제 페이지를 페이지 객체에 지정한다 -1을 해야 쿼리에서 사용가능
-        this.boardPager.setContentNum(cContentNum); // 한 페이지에 몇개씩 게시글을 보여줄지 정함
-        this.boardPager.setCurrentBlock(cPageNum); // 현재 페이지 블록이 몇번인지 현재 페이지번호를 통해 지정
-        this.boardPager.setLastBlock(); // 마지막 블록 번호를 전체 게시글 수를 통해서 정함
-        this.boardPager.prevNext(cPageNum); // 현재 페이지 번호로 화살표를 나타낼지 정함
-        this.boardPager.setStartPage(this.boardPager.getCurrentBlock()); // 시작 페이지를 페이지 블록번호로 지정
-        this.boardPager.setEndPage(); // 마지막 페이지
-
-        map.put("pageNum", this.boardPager.getPageNum());
-        map.put("contentNum", this.boardPager.getContentNum());
-
-        if (this.boardPager.getPageNum() == 0) {
-            if(!searchType.equals("초기값") && keyword.length() != 0){
-                customerList = this.boardService.CSList(map);
-                this.boardPager.setTotalCount(this.boardService.CSCount(map));
-                this.boardPager.setPageNum(cPageNum - 1);
-                this.boardPager.setContentNum(cContentNum);
-                this.boardPager.setCurrentBlock(cPageNum);
-                this.boardPager.setLastBlock();
-                this.boardPager.prevNext(cPageNum);
-                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
-                this.boardPager.setEndPage();
-            } else{
-                customerList = this.boardService.customerList(map);
+            // 게임명EN List 저장
+            for(Element e: elemGE){
+                GE.add(e.text());
             }
-        } else if (this.boardPager.getPageNum() != 0) {
-            if(keyword.length() != 0){
-              map.put("pageNum", this.boardPager.getPageNum() * 10 + 1);
-              customerList = this.boardService.CSList(map);
-                this.boardPager.setTotalCount(this.boardService.CSCount(map));
-                this.boardPager.setPageNum(cPageNum - 1);
-                this.boardPager.setContentNum(cContentNum);
-                this.boardPager.setCurrentBlock(cPageNum);
-                this.boardPager.setLastBlock();
-                this.boardPager.prevNext(cPageNum);
-                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
-                this.boardPager.setEndPage();
-            }else {
-              map.put("pageNum", this.boardPager.getPageNum() * 10 + 1);
-              customerList = this.boardService.customerList(map);
+            // 장르명 List 저장
+            for(Element e: elemGR){
+                GR.add(e.text());
             }
+            //boardService.GInsert(G); //게임명 DB에 추가
+            //boardService.GEInset(GE); // 게임명영어 DB에 추가
+            boardService.GameInsert(GR); //장르명 DB에 추가
         }
-
-        model.addAttribute("customerList", customerList);
-        model.addAttribute("boardPager", this.boardPager);
-        model.addAttribute("menuList", menuList);
-        model.addAttribute("map",map);
-        model.addAttribute("userLocal",userLocal);
-
-
-        String Url = "https://www.inven.co.kr/webzine/game/?page=1";
-        Connection conn = Jsoup.connect(Url);
-
-        try {
-            Document document = conn.get();
-            Elements imageUrlElements = document.getElementsByClass("game");
-
-            for (Element element : imageUrlElements){
-                System.out.printf(String.valueOf(element.select("span[class='game']")));
-            }
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-
-
 
         return "ctmboard/customerList";
 

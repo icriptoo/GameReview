@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Game">
+
+    <insert id="G" parameterType="com.project.board.vo.BoardVo">
+        INSERT INTO GAMELIST (G_IDX,G_NAME)
+        VALUES(GAME_N.NEXTVAL,#{g})
+    </insert>
+
+    <update id="Genre">
+        UPDATE GAMELIST
+        SET
+    </update>
+
+</mapper>

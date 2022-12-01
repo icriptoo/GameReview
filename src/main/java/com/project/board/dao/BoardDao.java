@@ -5,6 +5,7 @@ import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,4 +69,9 @@ public interface BoardDao {
     List<RiderBoardVo> myRWritePage(String nickname);
 
     List<ReviewVo> myRVwritePage(String nickname);
+
+    void GameInsert(ArrayList<String> gr);
+
+    void GInsert(ArrayList<String> g);
+
 }
