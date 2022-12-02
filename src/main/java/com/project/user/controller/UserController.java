@@ -31,7 +31,7 @@ public class UserController {
     //홈 화면 보내는 컨트롤러
     @RequestMapping("/")
     public String index() {
-        return "home";
+        return "/index";
     }
 
     //로그인 화면 보내는 컨트롤러
@@ -47,8 +47,7 @@ public class UserController {
     }
 
     //유저 아이디 찾는 화면으로 보내는 컨트롤러
-    @RequestMapping("/findUserid")
-    public String findUserid(){return "users/findUserid";}
+
 
     //비밀번호 변경을 하는 화면으로 보내는 컨트롤러
     @RequestMapping("/changePasswdForm")

@@ -72,7 +72,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if(requestUrl.contains("/userInsert")) {
             return true;
         }
-
+        //해주세요 게시판 예외 처리
+        if(requestUrl.contains("/Board/customerList")){
+            return true;
+        }
 
 
         Object obj = httpSession.getAttribute("login");

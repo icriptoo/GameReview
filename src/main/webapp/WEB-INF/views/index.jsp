@@ -216,7 +216,10 @@ a {
     margin: 0;
   }
 }
-
+aside {
+	float: right;
+	width: 350px;
+}
 </style>
 
 </head>
@@ -224,54 +227,25 @@ a {
 <!-- html 시작 -->
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
-    <header class="w3-container w3-center w3-white" style="padding-top: 80px; padding-bottom: 80px;">
-      <h1 class="headerB" ><b>Banana Quick</b></h1>
-      <h6><span class="headerD">delivery's world</span></h6>
-    </header>
-          <section class="cards-wrapper">
-            <div class="card-grid-space">
-              <div class="num"></div>
-              <a class="card" href="https://codetheweb.blog/2017/10/06/html-syntax/" style="--bg-img: url(https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/html-syntax/cover.jpg)">
-                <div>
-                  <h1>해주세요</h1>
-                  <p>The syntax of a language is how it works. How to actually write it. Learn HTML syntax…</p>
-
-                  <div class="tags">
-                    <div class="tag">HTML</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="card-grid-space">
-              <div class="num"></div>
-              <a class="card" href="https://codetheweb.blog/2017/10/09/basic-types-of-html-tags/" style="--bg-img: url('https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/basic-types-of-html-tags/cover.jpg')">
-                <div>
-                  <h1>할게요</h1>
-                  <p>Learn about some of the most common HTML tags…</p>
-
-                  <div class="tags">
-                    <div class="tag">HTML</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div class="card-grid-space">
-              <div class="num"></div>
-              <a class="card" href="https://codetheweb.blog/2017/10/14/links-images-about-file-paths/" style="--bg-img: url('https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/links-images-about-file-paths/cover.jpg')">
-                <div>
-                  <h1>후기</h1>
-                  <p>Learn how to use links and images along with file paths…</p>
-
-                  <div class="tags">
-                    <div class="tag">HTML</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <!-- https://images.unsplash.com/photo-1520839090488-4a6c211e2f94?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=38951b8650067840307cba514b554ba5&auto=format&fit=crop&w=1350&q=80 -->
-          </section>
-
-
-
+<header class="w3-container w3-center w3-white" style="padding-top: 80px; padding-bottom: 80px;">
+  <h1 class="headerB" ><b>Banana Quick</b></h1>
+  <h6><span class="headerD">delivery's world</span></h6>
+</header>
+<div style="width: 100%; height: 500px; ">
+  <div>
+  <table>
+    <tr>
+      <td>
+        <h2>확인</h2>
+      </td>
+    </tr>
+  </table>
+  </div>
+  <div>
+    <aside>
+      <%@ include file="/WEB-INF/include/login.jsp" %>
+    </aside>
+  </div>
+</div>
 </body>
 </html>

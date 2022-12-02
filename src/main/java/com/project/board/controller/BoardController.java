@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,6 +49,8 @@ public class BoardController {
     ReplyPager replyPager = new ReplyPager();
     // 해주세요 게시판 글 전체 조회
 
+    @RequestMapping("/Board/findUserid")
+    public String findUserid(){return "users/findUserid";}
     @RequestMapping("/test")
     public String test(){
         String Url = "https://www.inven.co.kr/webzine/game/?page=";
@@ -156,8 +157,8 @@ public class BoardController {
 //        model.addAttribute("map",map);
 //        model.addAttribute("userLocal",userLocal);
 
-
-            boardService.GameInsert(); // db에 게임목록 저장
+        // 게임목록 크롤링
+        // boardService.GameInsert();
 
         return "ctmboard/customerList";
 
