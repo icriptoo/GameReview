@@ -5,7 +5,7 @@ import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,8 +70,6 @@ public interface BoardDao {
 
     List<ReviewVo> myRVwritePage(String nickname);
 
-    void GameInsert(ArrayList<String> gr);
-
-    void GInsert(ArrayList<String> g);
+    void GameInsert() throws IOException;
 
 }

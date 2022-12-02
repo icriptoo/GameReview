@@ -156,37 +156,8 @@ public class BoardController {
 //        model.addAttribute("map",map);
 //        model.addAttribute("userLocal",userLocal);
 
-        int end = 1;
 
-        //String Url = "https://www.inven.co.kr/webzine/game/?page=";
-
-        // 인벤게임db 사이트에서 게임정보 크롤링
-        for(int i=1; i <= end;i++){
-            ArrayList<String> G = new ArrayList<>() ;
-            ArrayList<String> GE = new ArrayList<>() ;
-            ArrayList<String> GR = new ArrayList<>() ;
-            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?page="+i).get();
-            //Elements elem = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span");
-            Elements elemG = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"game\"]");
-            Elements elemGE = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"gameEn\"]");
-            Elements elemGR = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li");
-
-            // 게임명 List 저장
-            for(Element e: elemG){
-                G.add(e.text());
-            }
-            // 게임명EN List 저장
-            for(Element e: elemGE){
-                GE.add(e.text());
-            }
-            // 장르명 List 저장
-            for(Element e: elemGR){
-                GR.add(e.text());
-            }
-            //boardService.GInsert(G); //게임명 DB에 추가
-            //boardService.GEInset(GE); // 게임명영어 DB에 추가
-            boardService.GameInsert(GR); //장르명 DB에 추가
-        }
+            boardService.GameInsert(); // db에 게임목록 저장
 
         return "ctmboard/customerList";
 

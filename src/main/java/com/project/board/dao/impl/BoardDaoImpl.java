@@ -6,9 +6,14 @@ import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
 import org.apache.ibatis.session.SqlSession;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -198,169 +203,109 @@ public class BoardDaoImpl implements BoardDao {
         return this.sqlSession.selectOne("Board.RVSCount",map);
     }
 
+    // 2022-12-02 강지찬 크롤링
     @Override
-    public void GameInsert(ArrayList<String> gr) {
+    public void GameInsert() throws IOException {
 
-        System.out.println(gr.get(0));
-        System.out.println(gr.get(1));
-        System.out.println(gr.get(2));
-        System.out.println(gr.get(3));
-        System.out.println(gr.get(4));
-        System.out.println(gr.get(5));
-        String[] Gtest = gr.get(0).split(":");
-        System.out.println(Gtest[0]);
-        System.out.println(Gtest[1]);
-        //장르
-        String te = gr.get(1);
-        String te1 = gr.get(7);
-        String te2 = gr.get(13);
-        String te3 = gr.get(19);
-        String te4 = gr.get(25);
-        String te5 = gr.get(31);
-        String te6 = gr.get(37);
-        String te7 = gr.get(43);
-        String te8 = gr.get(49);
-        String te9 = gr.get(55);
-        String te10 = gr.get(61);
-        String te11 = gr.get(67);
-        String te12 = gr.get(73);
-        String te13 = gr.get(79);
-        String te14 = gr.get(85);
-        String te15 = gr.get(91);
-        String te16 = gr.get(97);
-        String te17 = gr.get(103);
-        String te18 = gr.get(109);
-        String te19 = gr.get(115);
-        String te20 = gr.get(121);
-        String te21 = gr.get(127);
-        String te22 = gr.get(133);
-        String te23 = gr.get(139);
-        String te24 = gr.get(145);
-        String te25 = gr.get(151);
-        String te26 = gr.get(157);
-        String te27 = gr.get(163);
-        String te28 = gr.get(169);
-        String te29 = gr.get(175);
+        int end = 363;
 
-        String[] tes = te.split(":");
-        String[] tes1 = te1.split(":");
-        String[] tes2 = te2.split(":");
-        String[] tes3 = te3.split(":");
-        String[] tes4 = te4.split(":");
-        String[] tes5 = te5.split(":");
-        String[] tes6 = te6.split(":");
-        String[] tes7 = te7.split(":");
-        String[] tes8 = te8.split(":");
-        String[] tes9 = te9.split(":");
-        String[] tes10 = te10.split(":");
-        String[] tes11 = te11.split(":");
-        String[] tes12 = te12.split(":");
-        String[] tes13 = te13.split(":");
-        String[] tes14 = te14.split(":");
-        String[] tes15 = te15.split(":");
-        String[] tes16 = te16.split(":");
-        String[] tes17 = te17.split(":");
-        String[] tes18 = te18.split(":");
-        String[] tes19 = te19.split(":");
-        String[] tes20 = te20.split(":");
-        String[] tes21 = te21.split(":");
-        String[] tes22 = te22.split(":");
-        String[] tes23 = te23.split(":");
-        String[] tes24 = te24.split(":");
-        String[] tes25 = te25.split(":");
-        String[] tes26 = te26.split(":");
-        String[] tes27 = te27.split(":");
-        String[] tes28 = te28.split(":");
-        String[] tes29 = te29.split(":");
+        // 인벤게임db 사이트에서 게임정보 크롤링
+        for (int k = 1; k <= end; k++) {
+            HashMap<String, Object> map = new HashMap<>();
+            ArrayList<String> G = new ArrayList<>();
+            ArrayList<String> GE = new ArrayList<>();
+            ArrayList<String> IM = new ArrayList<>();
+            ArrayList<String> SC = new ArrayList<>();
+            ArrayList<String> GR = new ArrayList<>();
 
-        String test = tes[1];
-        String test1 = tes1[1];
-        String test2 = tes2[1];
-        String test3 = tes3[1];
-        String test4 = tes4[1];
-        String test5 = tes5[1];
-        String test6 = tes6[1];
-        String test7 = tes7[1];
-        String test8 = tes8[1];
-        String test9 = tes9[1];
-        String test10 = tes10[1];
-        String test11 = tes11[1];
-        String test12 = tes12[1];
-        String test13 = tes13[1];
-        String test14 = tes14[1];
-        String test15 = tes15[1];
-        String test16 = tes16[1];
-        String test17 = tes17[1];
-        String test18 = tes18[1];
-        String test19 = tes19[1];
-        String test20 = tes20[1];
-        String test21 = tes21[1];
-        String test22 = tes22[1];
-        String test23 = tes23[1];
-        String test24 = tes24[1];
-        String test25 = tes25[1];
-        String test26 = tes26[1];
-        String test27 = tes27[1];
-        String test28 = tes28[1];
-        String test29 = tes29[1];
+            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?page=" + k).get();
 
-//        sqlSession.update("Game.Genre",test);
-//        sqlSession.update("Game.Genre",test2);
-//        sqlSession.update("Game.Genre",test3);
-//        sqlSession.update("Game.Genre",test4);
-//        sqlSession.update("Game.Genre",test5);
-//        sqlSession.update("Game.Genre",test6);
-//        sqlSession.update("Game.Genre",test7);
-//        sqlSession.update("Game.Genre",test8);
-//        sqlSession.update("Game.Genre",test9);
-//        sqlSession.update("Game.Genre",test10);
-//        sqlSession.update("Game.Genre",test11);
-//        sqlSession.update("Game.Genre",test12);
-//        sqlSession.update("Game.Genre",test13);
-//        sqlSession.update("Game.Genre",test14);
-//        sqlSession.update("Game.Genre",test15);
-//        sqlSession.update("Game.Genre",test16);
-//        sqlSession.update("Game.Genre",test17);
-//        sqlSession.update("Game.Genre",test18);
-//        sqlSession.update("Game.Genre",test19);
-//        sqlSession.update("Game.Genre",test20);
-//        sqlSession.update("Game.Genre",test21);
-//        sqlSession.update("Game.Genre",test22);
-//        sqlSession.update("Game.Genre",test23);
-//        sqlSession.update("Game.Genre",test24);
-//        sqlSession.update("Game.Genre",test25);
-//        sqlSession.update("Game.Genre",test26);
-//        sqlSession.update("Game.Genre",test27);
-//        sqlSession.update("Game.Genre",test28);
-//        sqlSession.update("Game.Genre",test29);
+            Elements elemG = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"game\"]");
+            Elements elemGE = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"gameEn\"]");
+            Elements elemIM = doc.select("td[class=\"thumb\"]").select("a[class=\"imgbox\"]").select("img");
+            Elements elemSC = doc.select("td[class=\"score\"]").select("div");
+            Elements elemGR = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li");
 
+            // 게임정보 저장
+            for (Element e : elemGR) {
+                GR.add(e.text());
+            }
+
+            int grC = 0;
+            // 장르명 저장
+            for (int i = 1; i < 181; i += 6) {
+                String[] Genre = GR.get(i).split(":");
+                map.put("gr" + grC, Genre[1]);
+                grC += 1;
+            }
+
+            int cpC = 0;
+            // 개발사 저장
+            for (int i = 2; i < 181; i += 6) {
+                String[] Genre = GR.get(i).split(":");
+                map.put("cp" + cpC, Genre[1]);
+                cpC += 1;
+            }
+
+            int svC = 0;
+            // 서비스 저장
+            for (int i = 3; i < 181; i += 6) {
+                String[] Genre = GR.get(i).split(":");
+                map.put("sv" + svC, Genre[1]);
+                svC += 1;
+            }
+
+            int pfC = 0;
+            // 플랫폼 저장
+            for (int i = 4; i < 181; i += 6) {
+                String[] Genre = GR.get(i).split(":");
+                map.put("pf" + pfC, Genre[1]);
+                pfC += 1;
+            }
+
+            int idC = 0;
+            // 출시일 저장
+            for (int i = 5; i < 181; i += 6) {
+                String[] Genre = GR.get(i).split(":");
+                map.put("id" + idC, Genre[1]);
+                idC += 1;
+            }
+
+            // 게임이미지 저장
+            for (Element e : elemIM) {
+                IM.add(e.attr("src"));
+            }
+            for (int j = 0; j < IM.size(); j++) {
+                map.put("im" + j, IM.get(j));
+            }
+
+            // 평점 저장
+            for (Element e : elemSC) {
+                SC.add(e.text());
+            }
+            for (int j = 0; j < IM.size(); j++) {
+                map.put("sc" + j, SC.get(j));
+            }
+
+            // 게임명 저장
+            for (Element e : elemG) {
+                G.add(e.text());
+            }
+            for (int j = 0; j < IM.size(); j++) {
+                map.put("g" + j, G.get(j));
+            }
+
+            // 영문게임명 저장
+            for (Element e : elemGE) {
+                GE.add(e.text());
+            }
+            for (int j = 0; j < IM.size(); j++) {
+                map.put("ge" + j, GE.get(j));
+            }
+            for(int i=0;i<=29;i++) {
+                sqlSession.insert("Game.G"+i, map);
+            }
+        }
 
     }
-
-    @Override
-    public void GInsert(ArrayList<String> g) {
-            sqlSession.insert("Game.G",g.get(0));
-            sqlSession.insert("Game.G",g.get(1));
-            sqlSession.insert("Game.G",g.get(2));
-            sqlSession.insert("Game.G",g.get(3));
-            sqlSession.insert("Game.G",g.get(4));
-            sqlSession.insert("Game.G",g.get(5));
-            sqlSession.insert("Game.G",g.get(6));
-            sqlSession.insert("Game.G",g.get(7));
-            sqlSession.insert("Game.G",g.get(8));
-            sqlSession.insert("Game.G",g.get(9));
-            sqlSession.insert("Game.G",g.get(10));
-            sqlSession.insert("Game.G",g.get(11));
-            sqlSession.insert("Game.G",g.get(12));
-            sqlSession.insert("Game.G",g.get(13));
-            sqlSession.insert("Game.G",g.get(14));
-            sqlSession.insert("Game.G",g.get(15));
-            sqlSession.insert("Game.G",g.get(16));
-            sqlSession.insert("Game.G",g.get(17));
-            sqlSession.insert("Game.G",g.get(18));
-            sqlSession.insert("Game.G",g.get(19));
-
-    }
-
-
 }

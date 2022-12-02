@@ -5,7 +5,7 @@ import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,7 +71,6 @@ public interface BoardService {
 
     int RVSCount(HashMap<String, Object> map);
 
-    void GameInsert(ArrayList<String> gr);
+    void GameInsert() throws IOException;
 
-    void GInsert(ArrayList<String> g);
 }

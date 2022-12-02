@@ -9,7 +9,7 @@ import com.project.reply.vo.ReplyVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -204,10 +204,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void GameInsert(ArrayList<String> gr) { boardDao.GameInsert(gr); }
+    public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
-    @Override
-    public void GInsert(ArrayList<String> g) { boardDao.GInsert(g); }
 
 
 }
