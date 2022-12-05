@@ -73,7 +73,7 @@ public class BoardController {
         boardPager.setCurrentBlock(PageNum);
         boardPager.setLastBlock();
         boardPager.prevNext(PageNum);
-        boardPager.setStartPage(boardPager.getCurrentBlock());
+        boardPager.setStartPage();
         boardPager.setEndPage();
 
         map.put("pageNum", boardPager.getPageNum());
@@ -86,7 +86,7 @@ public class BoardController {
             boardPager.setCurrentBlock(PageNum);
             boardPager.setLastBlock();
             boardPager.prevNext(PageNum);
-            boardPager.setStartPage(boardPager.getCurrentBlock());
+            boardPager.setStartPage();
             boardPager.setEndPage();
             gameListVo = boardService.GameListSelect(map);
         } else if (boardPager.getPageNum() != 0) {
@@ -97,7 +97,7 @@ public class BoardController {
             boardPager.setCurrentBlock(PageNum);
             boardPager.setLastBlock();
             boardPager.prevNext(PageNum);
-            boardPager.setStartPage(boardPager.getCurrentBlock());
+            boardPager.setStartPage();
             boardPager.setEndPage();
             map.put("pageNum", boardPager.getPageNum() * 30 + 1);
             gameListVo = boardService.GameListSelect(map);
@@ -233,7 +233,7 @@ public class BoardController {
         this.boardPager.setCurrentBlock(cPageNum); // 현재 페이지 블록이 몇번인지 현재 페이지번호를 통해 지정
         this.boardPager.setLastBlock(); // 마지막 블록 번호를 전체 게시글 수를 통해서 정함
         this.boardPager.prevNext(cPageNum); // 현재 페이지 번호로 화살표를 나타낼지 정함
-        this.boardPager.setStartPage(this.boardPager.getCurrentBlock()); // 시작 페이지를 페이지 블록번호로 지정
+        this.boardPager.setStartPage(); // 시작 페이지를 페이지 블록번호로 지정
         this.boardPager.setEndPage(); // 마지막 페이지
 
         map.put("pageNum", this.boardPager.getPageNum());
@@ -249,7 +249,7 @@ public class BoardController {
                 this.boardPager.setCurrentBlock(cPageNum);
                 this.boardPager.setLastBlock();
                 this.boardPager.prevNext(cPageNum);
-                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+                this.boardPager.setStartPage();
                 this.boardPager.setEndPage();
             }else {
                 riderList = this.boardService.riderList(map);
@@ -264,7 +264,7 @@ public class BoardController {
                 this.boardPager.setCurrentBlock(cPageNum);
                 this.boardPager.setLastBlock();
                 this.boardPager.prevNext(cPageNum);
-                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+                this.boardPager.setStartPage();
                 this.boardPager.setEndPage();
             }else{
               map.put("pageNum", this.boardPager.getPageNum() * 10 + 1);
@@ -315,7 +315,7 @@ public class BoardController {
         this.boardPager.setCurrentBlock(cPageNum);
         this.boardPager.setLastBlock();
         this.boardPager.prevNext(cPageNum);
-        this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+        this.boardPager.setStartPage();
         this.boardPager.setEndPage();
 
         map.put("pageNum", this.boardPager.getPageNum());
@@ -329,7 +329,7 @@ public class BoardController {
                 this.boardPager.setCurrentBlock(cPageNum);
                 this.boardPager.setLastBlock();
                 this.boardPager.prevNext(cPageNum);
-                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+                this.boardPager.setStartPage();
                 this.boardPager.setEndPage();
             }else {
                 reviewList = this.boardService.reviewList(map);
@@ -344,7 +344,7 @@ public class BoardController {
                 this.boardPager.setCurrentBlock(cPageNum);
                 this.boardPager.setLastBlock();
                 this.boardPager.prevNext(cPageNum);
-                this.boardPager.setStartPage(this.boardPager.getCurrentBlock());
+                this.boardPager.setStartPage();
                 this.boardPager.setEndPage();
             }else {
                 map.put("pageNum", this.boardPager.getPageNum() * 10 + 1);

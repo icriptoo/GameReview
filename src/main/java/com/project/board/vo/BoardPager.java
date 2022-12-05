@@ -12,7 +12,6 @@ public class BoardPager {
     private int currentBlock; // 다음 페이지로 가는 화살표
     private double lastBlock;    // 다음 페이지로 가는 화살표
     private int lastPageNum;
-
     public void prevNext(int pageNum){ // 이전, 다음 페이지 블록
         if(calcPage(totalCount)<11){
             setPrev(false);
@@ -37,7 +36,7 @@ public class BoardPager {
         if (toP < totalPage) {
             totalPage += 1;
         }
-        this.lastPageNum = (int) totalPage;
+        lastPageNum = (int) totalPage;
         return totalPage;
     }
 
@@ -69,7 +68,7 @@ public class BoardPager {
         return startPage;
     }
 
-    public void setStartPage(int startPage) {
+    public void setStartPage() {
         this.startPage = (currentBlock * 10) - 9;
     }
 
@@ -130,8 +129,6 @@ public class BoardPager {
     public int getLastPageNum() {
         return lastPageNum;
     }
-
-
 
     @Override
     public String toString() {

@@ -76,14 +76,14 @@ ul{
         <td class="page" id="page" colspan="2" style="text-align:center;">
           <div class="pager">
             <c:if test="${Pager.prev}">
-              <a href="http://localhost:8080/Board/GameList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.endPage-1)*30}">< 이전</a>
+              <a href="http://localhost:8080/Board/GameList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}">< 이전</a>
             </c:if>
             <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
               <a class="pageNum" href="/Board/GameList?pageNum=${idx}&contentNum=${idx*30}">${idx}</a>
             </c:forEach>
-            ...
-            <a class="lastPageNum" href="/Board/GameList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}">${Pager.lastPageNum}</a>
             <c:if test="${Pager.next}">
+              ...
+              <a class="lastPageNum" href="/Board/GameList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}">${Pager.lastPageNum}</a>
               <a href="http://localhost:8080/Board/GameList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}">다음 ></a>
             </c:if>
           </div>
