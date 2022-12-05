@@ -3,6 +3,7 @@ package com.project.board.service.impl;
 import com.project.board.dao.BoardDao;
 import com.project.board.service.BoardService;
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.GameListVo;
 import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
@@ -206,6 +207,16 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
+    @Override
+    public int GameListCount() {
+        return boardDao.GameListCount();
+    }
+
+    @Override
+    public List<GameListVo> GameListSelect(HashMap<String, Object> map) {
+        List<GameListVo> gameList = boardDao.GameListSelect(map);
+        return gameList;
+    }
 
 
 }

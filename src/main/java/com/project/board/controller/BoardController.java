@@ -13,11 +13,6 @@ import com.project.user.vo.UserVo;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,33 +42,76 @@ public class BoardController {
 
     BoardPager boardPager = new BoardPager();
     ReplyPager replyPager = new ReplyPager();
-    // 해주세요 게시판 글 전체 조회
 
+    // 아이디 찾기 창
     @RequestMapping("/Board/findUserid")
     public String findUserid(){return "users/findUserid";}
-    @RequestMapping("/test")
-    public String test(){
-        String Url = "https://www.inven.co.kr/webzine/game/?page=";
-        Connection conn = Jsoup.connect(Url);
-        try {
-            Document document = conn.get();
-            Elements imageUrlElements = document.getElementsByClass("info");
-            for (Element element : imageUrlElements){
-                System.out.printf(String.valueOf(element));
-            }
-
-        }catch (IOException e){
-            e.printStackTrace();;
-        }
-
-        return "C";
-    }
-
 
     @RequestMapping("/index")
     public String index(){
         return "index";
     }
+
+    // 게임목록db에 넣는 기능
+    @RequestMapping("/GameListInsert")
+    public String GameListInsert() throws IOException {
+        boardService.GameInsert();
+        return"board/GameList";
+    }
+
+    // 게임목록 조회 게시판
+    @RequestMapping("/Board/GameList")
+    public String GameList(Model model, @RequestParam HashMap<String,Object> map){
+
+        List<GameListVo> gameListVo = null;
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+
+        boardPager.setTotalCount(boardService.GameListCount());
+        boardPager.setPageNum(PageNum - 1);
+        boardPager.setContentNum(ContentNum);
+        boardPager.setCurrentBlock(PageNum);
+        boardPager.setLastBlock();
+        boardPager.prevNext(PageNum);
+        boardPager.setStartPage(boardPager.getCurrentBlock());
+        boardPager.setEndPage();
+
+        map.put("pageNum", boardPager.getPageNum());
+        map.put("contentNum", boardPager.getContentNum());
+
+        if (boardPager.getPageNum() == 0) {
+            boardPager.setTotalCount(boardService.GameListCount());
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage(boardPager.getCurrentBlock());
+            boardPager.setEndPage();
+            gameListVo = boardService.GameListSelect(map);
+        } else if (boardPager.getPageNum() != 0) {
+            map.put("pageNum", boardPager.getPageNum() * 30 + 1);
+            boardPager.setTotalCount(boardService.GameListCount());
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage(boardPager.getCurrentBlock());
+            boardPager.setEndPage();
+            map.put("pageNum", boardPager.getPageNum() * 30 + 1);
+            gameListVo = boardService.GameListSelect(map);
+        }
+        gameListVo = boardService.GameListSelect(map);
+        int nowPage = boardPager.getPageNum() + 1;
+        model.addAttribute("GameList",gameListVo);
+        model.addAttribute("Pager",boardPager);
+        model.addAttribute("nowPage",nowPage);
+        System.out.println(boardPager);
+
+        return "board/GameList";
+    }
+
 
     @RequestMapping("/Board/customerList")
     public String CustomerBoardList(Model model, @RequestParam HashMap<String,Object> map, HttpSession httpSession) throws IOException{
@@ -84,9 +122,6 @@ public class BoardController {
 //        String keyword = (String) map.get("keyword");
 //        String searchType = (String) map.get("searchType");
 //        String userLocal = ((UserVo) httpSession.getAttribute("login")).getUser_local();
-//
-//
-//
 //
 //        if(searchType == null){
 //            keyword = "";
@@ -156,9 +191,6 @@ public class BoardController {
 //        model.addAttribute("menuList", menuList);
 //        model.addAttribute("map",map);
 //        model.addAttribute("userLocal",userLocal);
-
-        // 게임목록 크롤링
-        // boardService.GameInsert();
 
         return "ctmboard/customerList";
 

@@ -2,6 +2,7 @@ package com.project.board.dao.impl;
 
 import com.project.board.dao.BoardDao;
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.GameListVo;
 import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
@@ -307,5 +308,16 @@ public class BoardDaoImpl implements BoardDao {
             }
         }
 
+    }
+
+    @Override
+    public int GameListCount() {
+        return sqlSession.selectOne("Game.GCount");
+    }
+
+    @Override
+    public List<GameListVo> GameListSelect(HashMap<String, Object> map) {
+        List<GameListVo> gameList = sqlSession.selectList("Game.GList",map);
+        return gameList;
     }
 }

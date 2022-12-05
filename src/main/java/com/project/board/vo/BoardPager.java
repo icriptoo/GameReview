@@ -11,13 +11,13 @@ public class BoardPager {
     private boolean next;     // 다음 페이지로 가는 화살표
     private int currentBlock; // 다음 페이지로 가는 화살표
     private double lastBlock;    // 다음 페이지로 가는 화살표
+    private int lastPageNum;
 
     public void prevNext(int pageNum){ // 이전, 다음 페이지 블록
-
-        if(calcPage(totalCount)<6){
+        if(calcPage(totalCount)<11){
             setPrev(false);
             setNext(false);
-        }else if (pageNum>0 && pageNum<=5){
+        }else if (pageNum>0 && pageNum<=10){
             setPrev(false);
             setNext(true);
         }else if (lastBlock == currentBlock){
@@ -28,11 +28,16 @@ public class BoardPager {
             setNext(true);
         }
     }
-    public int calcPage(int totalCount){ // 전체페이지 개수를 계산하는 함수
+
+    public double calcPage(int totalCount){ // 전체페이지 개수를 계산하는 함수
         //    12.5    =     125    /     10
         //   13페이지
-        int totalPage = totalCount / 10;
-
+        int toP = totalCount /30;
+        double totalPage = (double) totalCount / 30;
+        if (toP < totalPage) {
+            totalPage += 1;
+        }
+        this.lastPageNum = (int) totalPage;
         return totalPage;
     }
 
@@ -65,7 +70,7 @@ public class BoardPager {
     }
 
     public void setStartPage(int startPage) {
-        this.startPage = (currentBlock * 5) - 4;
+        this.startPage = (currentBlock * 10) - 9;
     }
 
     public int getEndPage() {
@@ -74,12 +79,12 @@ public class BoardPager {
 
     public void setEndPage() { // 마지막 페이지 블록 구하는 곳
         if (lastBlock == currentBlock){
-            endPage = totalCount / 10;
-            if (0< (totalCount % 10)){
+            endPage = totalCount / 30;
+            if (0< (totalCount % 30)){
                 endPage++;
             }
         }else {
-            endPage = getStartPage() + 4;
+            endPage = getStartPage() + 9;
         }
     }
     public boolean isPrev() {
@@ -105,8 +110,8 @@ public class BoardPager {
     public void setCurrentBlock(int pageNum) {
         // 현제페이지 블록 구하는 곳, 페이지 번호를 통해 구한다
         // 페이지 번호 / 페이지 그룹안의 페이지 개수
-        this.currentBlock = pageNum/5;
-        if(pageNum%5 > 0) {
+        this.currentBlock = pageNum/10;
+        if(pageNum%10 > 0) {
             this.currentBlock++;
         }
     }
@@ -116,11 +121,17 @@ public class BoardPager {
     }
 
     public void setLastBlock() {
-        lastBlock = totalCount / 50;
-        if ((totalCount % 50) > 0){
+        lastBlock = totalCount / 300;
+        if ((totalCount % 300) > 0){
             lastBlock++;
         }
     }
+
+    public int getLastPageNum() {
+        return lastPageNum;
+    }
+
+
 
     @Override
     public String toString() {
@@ -134,6 +145,7 @@ public class BoardPager {
                 ", next=" + next +
                 ", currentBlock=" + currentBlock +
                 ", lastBlock=" + lastBlock +
+                ", lastPageNum=" + lastPageNum +
                 '}';
     }
 }

@@ -12,68 +12,8 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>Insert title here</title>
 <style>
-.pickup{
-text-align:left;
-font-family:"S-Core Dream 6";
-font-size:38px;
-}
-.oooo{
-border:1px solid #ccc!important;
-margin:40px 40px 40px 40px;
-}
 
-.search {
-  width: 120px;
-  height: 35px;
-  background: url('https://freepikpsd.com/media/2019/10/down-arrow-icon-png-7-Transparent-Images.png') calc(100% - 5px) center no-repeat;
-  background-color: #fff;
-  background-size: 20px;
-  padding: 5px 10px 5px 10px;
-  border-radius: 4px;
-  outline: 0 none;
-}
-.search option { background: #fff; color: #000; padding: 3px 0; }
-.keyword {
-  width: 200px;
-  height: 35px;
-  border-radius: 4px;
-  padding-left: 10px;
-  border: 1px solid #000;
-}
-.write {
-  padding: 10px 10px;
-  border-radius: 4px;
-  border: 1px solid #000;
-  background: #fff;
-}
-.searchB { height: 35px; border-radius: 4px; border: 1px solid #000; background: #fff; }
 .headerB{ font-size: 80px!important }
-
-.BoardPa { text-align: center; margin: 10px 0px; }
-.PageNum { color: #4c72db; font-weight: bold;}
-
-.page-linkA {
-    position: relative;
-    padding: 10px 15px;
-    margin-left: 5px;
-    line-height: 1.25;
-    color: #000;
-    background-color: #fff;
-    border: 1px solid #a0a0a0;
-    text-decoration: none;
-    text-align:center;
-    font-size: 15px!important;
-    border-radius: 10%;
-}
-
-.ta {
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: 1rem;
-  background-color: transparent;
-}
-
-a.page-linkA:hover { font-weight: bold; text-decoration: none; background: rgba(210,210,210,1); color: #4c72db; border: 1px solid #000; }
 
 aside {
 	float: right;
@@ -101,8 +41,7 @@ function btnSearch(e){
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 
 <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="headerB"><b>Banana Quick</b></h1>
-    <h6><span class="w3-tag">delivery's world</span></h6>
+    <h1 class="headerB"><b>Game Review</b></h1>
 </header>
 <div style="width: 100%; height: 500px; ">
   <div>

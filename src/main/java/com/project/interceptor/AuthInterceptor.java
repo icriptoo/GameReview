@@ -77,6 +77,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+        if(requestUrl.contains("/Board/GameList")){
+            return true;
+        }
 
         Object obj = httpSession.getAttribute("login");
         if (obj == null){

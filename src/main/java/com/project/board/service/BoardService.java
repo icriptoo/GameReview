@@ -1,6 +1,7 @@
 package com.project.board.service;
 
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.GameListVo;
 import com.project.board.vo.ReviewVo;
 import com.project.board.vo.RiderBoardVo;
 import com.project.reply.vo.ReplyVo;
@@ -73,4 +74,7 @@ public interface BoardService {
 
     void GameInsert() throws IOException;
 
+    int GameListCount();
+
+    List<GameListVo> GameListSelect(HashMap<String, Object> map);
 }

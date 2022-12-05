@@ -5,6 +5,32 @@
 
 <mapper namespace="Game">
 
+    <select id="GCount"
+            resultType="int">
+        SELECT COUNT(*)
+          FROM GAMELIST
+    </select>
+
+    <select id="GList"
+            resultType="com.project.board.vo.GameListVo">
+        SELECT *
+        FROM (
+        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX ASC) RNUM,
+        G_IDX,
+        G_NAME,
+        G_ENAME,
+        G_GENRE,
+        G_COMPANY,
+        G_SERVICE,
+        G_PLATFORM,
+        G_DATE,
+        G_SCORE,
+        G_IMG
+        FROM GAMELIST G
+        ORDER BY G_IDX ASC)
+        WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
+    </select>
+
     <insert id="G0" parameterType="com.project.board.vo.BoardVo">
         INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_SCORE, G_IMG)
               VALUES(GAME_N.NEXTVAL, #{g0}, #{ge0}, #{gr0}, #{cp0}, #{sv0}, #{pf0}, #{id0}, #{sc0}, #{im0})
