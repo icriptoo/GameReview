@@ -208,10 +208,10 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void GameInsert() throws IOException {
 
-        int end = 363;
+        int end = 364;
 
         // 인벤게임db 사이트에서 게임정보 크롤링
-        for (int k = 1; k <= end; k++) {
+        for (int k = 364; k <= end; k++) {
             HashMap<String, Object> map = new HashMap<>();
             ArrayList<String> G = new ArrayList<>();
             ArrayList<String> GE = new ArrayList<>();
@@ -234,7 +234,7 @@ public class BoardDaoImpl implements BoardDao {
 
             int grC = 0;
             // 장르명 저장
-            for (int i = 1; i < 181; i += 6) {
+            for (int i = 1; i < 169; i += 6) {
                 String[] Genre = GR.get(i).split(":");
                 map.put("gr" + grC, Genre[1]);
                 grC += 1;
@@ -242,7 +242,7 @@ public class BoardDaoImpl implements BoardDao {
 
             int cpC = 0;
             // 개발사 저장
-            for (int i = 2; i < 181; i += 6) {
+            for (int i = 2; i < 169; i += 6) {
                 String[] Genre = GR.get(i).split(":");
                 map.put("cp" + cpC, Genre[1]);
                 cpC += 1;
@@ -250,7 +250,7 @@ public class BoardDaoImpl implements BoardDao {
 
             int svC = 0;
             // 서비스 저장
-            for (int i = 3; i < 181; i += 6) {
+            for (int i = 3; i < 169; i += 6) {
                 String[] Genre = GR.get(i).split(":");
                 map.put("sv" + svC, Genre[1]);
                 svC += 1;
@@ -258,7 +258,7 @@ public class BoardDaoImpl implements BoardDao {
 
             int pfC = 0;
             // 플랫폼 저장
-            for (int i = 4; i < 181; i += 6) {
+            for (int i = 4; i < 169; i += 6) {
                 String[] Genre = GR.get(i).split(":");
                 map.put("pf" + pfC, Genre[1]);
                 pfC += 1;
@@ -303,7 +303,7 @@ public class BoardDaoImpl implements BoardDao {
             for (int j = 0; j < IM.size(); j++) {
                 map.put("ge" + j, GE.get(j));
             }
-            for(int i=0;i<=29;i++) {
+            for(int i=0;i<=27;i++) {
                 sqlSession.insert("Game.G"+i, map);
             }
         }

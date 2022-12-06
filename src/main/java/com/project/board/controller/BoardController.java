@@ -59,6 +59,8 @@ public class BoardController {
         return"board/GameList";
     }
 
+
+
     // 게임목록 조회 게시판
     @RequestMapping("/Board/GameList")
     public String GameList(Model model, @RequestParam HashMap<String,Object> map){
