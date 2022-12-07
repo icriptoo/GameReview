@@ -12,6 +12,7 @@ public class BoardPager {
     private int currentBlock; // 다음 페이지로 가는 화살표
     private double lastBlock;    // 다음 페이지로 가는 화살표
     private int lastPageNum;
+
     public void prevNext(int pageNum){ // 이전, 다음 페이지 블록
         if(calcPage(totalCount)<11){
             setPrev(false);

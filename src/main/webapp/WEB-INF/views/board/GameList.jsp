@@ -55,6 +55,21 @@ ul{
   </div>
   <div>
     <table>
+      <tr>
+        <th>
+          <select id="platform" name="platform" onchange="if(this.value) location.href=(this.value);">
+          <option value="" ${so == '0' ? 'selected="selected"' : '' }>플랫폼</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=1" ${so == '1' ? 'selected="selected"' : '' }>PC패키지</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=2" ${so == '2' ? 'selected="selected"' : '' }>PC온라인</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=3" ${so == '3' ? 'selected="selected"' : '' }>모바일</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=4" ${so == '4' ? 'selected="selected"' : '' }>PS</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=5" ${so == '5' ? 'selected="selected"' : '' }>XBOX</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=6" ${so == '6' ? 'selected="selected"' : '' }>switch</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
+          <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
+        </th>
+      </tr>
       <c:forEach var="list" items="${GameList}">
         <tr>
           <td>
@@ -77,6 +92,8 @@ ul{
           <div class="pager">
             <c:if test="${Pager.prev}">
               <a href="http://localhost:8080/Board/GameList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}">< 이전</a>
+              <a class="firstPageNum" href="/Board/GameList?pageNum=1&contentNum=30">1</a>
+              ...
             </c:if>
             <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
               <a class="pageNum" href="/Board/GameList?pageNum=${idx}&contentNum=${idx*30}">${idx}</a>
