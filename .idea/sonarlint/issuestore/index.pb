@@ -1,17 +1,31 @@
 
-m
-=src/main/java/com/project/user/controller/UserController.java,c\1\c1ccdc29a106854fdf6586c15a8e365056a13b78
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-i
-9src/main/webapp/WEB-INF/views/ctmboard/customerdetail.jsp,4\a\4ab0418c4fd558a475dd2d7f3d0a268cd374c287
-b
-2src/main/java/com/project/board/vo/BoardPager.java,4\e\4e2b2173f4141151a99228432552bcc76aa26ff6
-\
-,src/main/webapp/WEB-INF/views/ctmboard/C.jsp,a\8\a8730bc2218cf2d68ee9b168ddf3422b8f4bf91c
+Z
+*src/main/webapp/WEB-INF/spring-servlet.xml,2\7\27d1ffb6fc31b5d30d8c3569fb69477b2ea37e1b
 \
 ,src/main/webapp/WEB-INF/SQL/CREATE TABLE.SQL,1\f\1f5793d0c63f34387fe332bf9ca06ee0f287f19b
-\
-,src/main/webapp/WEB-INF/SQL/BASIC VALUES.SQL,f\8\f8786d494201e339bd2b6a71be1eeba4e5d5e371
-]
--src/main/webapp/WEB-INF/views/users/write.jsp,d\3\d3e1a46286eccd66d9128ca9a0d8851b4f1fd598
+b
+2src/main/java/com/project/board/vo/GameListVo.java,c\f\cfebd1febb29a5d57fe04bd62e23a35f6e8db2da
+m
+=src/main/java/com/project/user/controller/UserController.java,c\1\c1ccdc29a106854fdf6586c15a8e365056a13b78
+Y
+)src/main/webapp/WEB-INF/include/menus.jsp,c\5\c5da3548492c56c3302a22029e7dfb09663ffaed
+[
++.idea/libraries/jython_standalone_2_7_3.xml,d\6\d6073a6585d9ff16dad194e7d19d898fdc7b2d6e
+c
+3.idea/libraries/Maven__clj_time_clj_time_0_12_0.xml,8\7\87913388e7238ffee7db6ac2d5ab3b3d9905f5c6
+`
+0src/main/webapp/WEB-INF/views/board/GameList.jsp,3\d\3d1cd9ad95ecff60dd75d7a9b3cba49f11024d8d
+d
+4.idea/libraries/Maven__joda_time_joda_time_2_9_3.xml,a\7\a7c12f995cd252e850727e95ed2a6ea9251ea2f5
+d
+4.idea/libraries/Maven__org_clojure_clojure_1_8_0.xml,d\7\d72eac36d56af20a5d7934d229978e7a1278cb66
+p
+@.idea/libraries/Maven__commandline_clj_commandline_clj_0_3_0.xml,5\b\5bf8623c18fd8a9ad669fb886f848e30d065bc26
+h
+8.idea/libraries/Maven__commons_cli_commons_cli_1_3_1.xml,8\c\8c7a0b14ef77255bf1e3fc0791aad2d07be0bc17
+b
+2src/main/java/com/project/board/vo/BoardPager.java,4\e\4e2b2173f4141151a99228432552bcc76aa26ff6
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392

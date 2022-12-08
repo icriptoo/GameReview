@@ -1,0 +1,36 @@
+
+c	java:S112À"FDefine and throw a dedicated exception instead of using a generic one.(Ÿú—Ğ8ş²İÚÎ0
+w
+java:S2293Æ"YReplace the type specification in this constructor call with the diamond operator ("<>").(üï·Ö8€³İÚÎ0
+n
+java:S1192("LDefine a constant instead of duplicating this literal "users/login" 4 times.(‡ŠÉäøÿÿÿÿ8€³İÚÎ0
+h
+java:S1192Q"FDefine a constant instead of duplicating this literal "login" 7 times.(¥Ïîãşÿÿÿÿ8³İÚÎ0
+}
+java:S1319M"`The type of "map" should be an interface such as "Map" rather than the implementation "HashMap".(¹‹8³İÚÎ0
+s	java:S117Â"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øÜúÿÿÿÿ8‚³İÚÎ0
+n	java:S117Ã"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©Ê‹Ï8‚³İÚÎ0
+9
+java:S1643<"Use a StringBuilder instead.(±ÁÍã8‚³İÚÎ0
+@
+java:S21198"Save and re-use this "Random".(šŸ«íøÿÿÿÿ8³³İÚÎ0
+X
+java:S2441W"<Make "UserVo" serializable or don't store it in the session.(ÏéİR8¸³İÚÎ0
+f
+java:S4488"HReplace "@RequestMapping(method = RequestMethod.GET)" with "@GetMapping"(çÒ§8¿³İÚÎ0
+š
+java:S1130›"}Remove the declaration of thrown exception 'java.io.UnsupportedEncodingException', as it cannot be thrown from method's body.(­³êX8Á³İÚÎ0
+h
+java:S4488˜"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(ÏíÊ­8Á³İÚÎ0
+Y	java:S125Ÿ"<This block of commented-out lines of code should be removed.(°®‘±8Ã³İÚÎ0
+h
+java:S4488¦"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(£„Òª8Ã³İÚÎ0
+]
+java:S1854Ï":Remove this useless assignment to local variable "result".(¹‡ñäşÿÿÿÿ8Å³İÚÎ0
+G
+java:S1905Ç")Remove this unnecessary cast to "String".(íú®û8Ç³İÚÎ0
+G
+java:S1905Ê")Remove this unnecessary cast to "String".(Â–…Á8È³İÚÎ0
+N
+java:S1481Ï"+Remove this unused "result" local variable.(¹‡ñäşÿÿÿÿ8É³İÚÎ0
+F	java:S108Ñ")Either remove or fill this block of code.(ËÓ¶·8É³İÚÎ0
