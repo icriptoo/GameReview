@@ -19,5 +19,6 @@ text-align:right;
   <a class ="o" href="/home" class="w3-bar-item w3-button">메인</a>
   <a class ="o" href="/GameListInsert" class="w3-bar-item w3-button">게임목록db에 넣기</a>
   <a class ="o" href="/Board/GameList?pageNum=1&contentNum=30" class="w3-bar-item w3-button">게임 리스트</a>
+  <a class ="o" href="/Board/GameRecom" class="w3-bar-item w3-button">게임 추천</a>
 
 </div>
