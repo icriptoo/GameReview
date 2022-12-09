@@ -30,7 +30,7 @@ cosine_sim_df = pd.DataFrame(cosine_sim, index = game_data.G_NAME, columns = gam
 # print(cosine_sim_df.shape)
 # print(cosine_sim_df.head())
 
-def game_recommendations(target_title, matrix, items, k=5):
+def game_recommendations(target_title, matrix, items, k=5): # k= 뽑아올 게임개수
     recom_idx = matrix.loc[:, target_title].values.reshape(1, -1).argsort()[:, ::-1].flatten()[1:k+1]
     recom_title = items.iloc[recom_idx, :].G_NAME.values
     recom_genre = items.iloc[recom_idx, :].G_GENRE.values
