@@ -226,10 +226,9 @@ aside {
 
 <!-- html 시작 -->
 <body class="w3-light-grey">
-<%@ include file="/WEB-INF/include/menus.jsp" %>
+<%@ include file="/WEB-INF/include/menus2.jsp" %>
 <header class="w3-container w3-center w3-white" style="padding-top: 80px; padding-bottom: 80px;">
-  <h1 class="headerB" ><b>Banana Quick</b></h1>
-  <h6><span class="headerD">delivery's world</span></h6>
+  <h1 class="headerB" ><b>게임 리뷰 사이트</b></h1>
 </header>
 <div style="width: 100%; height: 500px; ">
   <div>
@@ -242,7 +241,11 @@ aside {
   </table>
   </div>
   <div>
-
+    <aside>
+      <%@ include file="/WEB-INF/include/login2.jsp" %>
+      <br><br>
+      <%@ include file="/WEB-INF/include/topgame.jsp" %>
+    </aside>
   </div>
 </div>
 </body>
