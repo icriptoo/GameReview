@@ -23,8 +23,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if(requestUrl.equals("http://localhost:8080/")){
             return true;
         }
+
         //로그인 화면도 예외 처리
         if(requestUrl.contains("/login")){
+            return true;
+        }
+
+        if(requestUrl.contains("/GameListInsert")){
             return true;
         }
         //회원가입 화면 예외 처리

@@ -35,6 +35,21 @@ public class BoardServiceImpl implements BoardService {
         return gameSList;
     }
 
+    @Override
+    public int GameListSCount(HashMap<String, Object> map) {
+        return boardDao.GameListSCount(map);
+    }
+
+    @Override
+    public int GameSCount(HashMap<String, Object> map) {
+        return boardDao.GameSCount(map);
+    }
+
+    @Override
+    public List<GameListVo> GameListS(HashMap<String, Object> map) {
+        return boardDao.GameListS(map);
+    }
+
 
 }
 

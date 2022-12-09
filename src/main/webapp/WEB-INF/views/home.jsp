@@ -242,9 +242,7 @@ aside {
   </table>
   </div>
   <div>
-    <aside>
-      <%@ include file="/WEB-INF/include/login.jsp" %>
-    </aside>
+
   </div>
 </div>
 </body>

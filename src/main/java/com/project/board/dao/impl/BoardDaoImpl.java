@@ -135,10 +135,26 @@ public class BoardDaoImpl implements BoardDao {
         }
     }
 
-    // 페이징용 전체 게임 수 구하기
+    // 전체 게임 수 구하기
     @Override
     public int GameListCount() {
         return sqlSession.selectOne("Game.GCount");
+    }
+
+    // 검색한 게임 수 구하기
+    @Override
+    public int GameListSCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Game.GSCount",map);
+    }
+
+    @Override
+    public int GameSCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Game.GameSC",map);
+    }
+
+    @Override
+    public List<GameListVo> GameListS(HashMap<String, Object> map) {
+        return sqlSession.selectList("Game.GameLS",map);
     }
 
     // 전체게임리스트 뽑기
@@ -148,10 +164,13 @@ public class BoardDaoImpl implements BoardDao {
         return gameList;
     }
 
-    // 검색키워드 가지고 게임리스트 뽑기
+    // 검색한 게임리스트 뽑기
     @Override
     public List<GameListVo> GameListSearchS(HashMap<String, Object> map) {
-        List<GameListVo> gameSList = sqlSession.selectList("Game.GSList",map);
+        List<GameListVo> gameSList = null;
+
+        gameSList = sqlSession.selectList("Game.GSList", map);
+
         return gameSList;
     }
 }
