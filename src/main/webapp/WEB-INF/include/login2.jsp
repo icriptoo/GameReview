@@ -72,10 +72,10 @@
                 <li id="ID">
                     <ul>
                         <li>
-                            <input type="text" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
+                            <input type="text" placeholder=" ID" style="width:180px;height:30px;font-size:15px;">
                         </li>
                         <li id="PW">
-                            <input type="text" placeholder="password" style="width:180px;height:30px;font-size:15px;">
+                            <input type="text" placeholder=" PW" style="width:180px;height:30px;font-size:15px;">
                         </li>
                     </ul>
                 </li>

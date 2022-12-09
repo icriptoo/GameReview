@@ -46,7 +46,7 @@ function btnGSearch(e){
 </script>
 </head>
 <body class="w3-light-grey">
-<%@ include file="/WEB-INF/include/menus.jsp" %>
+<%@ include file="/WEB-INF/include/menus2.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
@@ -58,7 +58,9 @@ function btnGSearch(e){
   </div>
   <div>
     <aside class="rightAside">
-
+      <%@ include file="/WEB-INF/include/login2.jsp" %>
+      <br><br>
+      <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
   <div>

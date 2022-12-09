@@ -210,7 +210,6 @@ public class BoardController {
 
         // 검색한 게임 출력
         if(map.get("gameName") != null){
-            System.out.println("검색");
             if (boardPager.getPageNum() == 0) {
                 boardPager.setTotalCount(boardService.GameSCount(map));
                 boardPager.setPageNum(PageNum - 1);
@@ -292,7 +291,7 @@ public class BoardController {
     @RequestMapping("/Board/GameRecom")
     public String GameList() throws InterruptedException, IOException {
         String arg1;
-        String title = "토탈워: 워해머3";
+        String title = "토탈워: 워해머3"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
         ProcessBuilder builder;
         BufferedReader br;
 
