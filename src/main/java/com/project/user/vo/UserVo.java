@@ -2,98 +2,106 @@ package com.project.user.vo;
 
 public class UserVo {
 
-    private String userid;
-    private String passwd;
-    private String nickname;
+    private String u_id;
+    private String n_name;
     private String email;
-    private String user_local;
-    private String rider;
+    private String genre1;
+    private String genre2;
+    private String genre3;
+    private String p_q;
+    private String p_a;
+    private String img;
     private String indate;
-    private String phoneNumber;
 
     public UserVo (){}
 
-    //기본적인 생성자
-    public UserVo(String userid, String passwd, String nickname, String email, String user_local, String rider, String indate, String PhoneNumber) {
-        this.userid = userid;
-        this.passwd = passwd;
-        this.nickname = nickname;
+    public UserVo(String u_id, String n_name, String email, String genre1, String genre2, String genre3, String p_q, String p_a, String img, String indate) {
+        this.u_id = u_id;
+        this.n_name = n_name;
         this.email = email;
-        this.user_local = user_local;
-        this.rider = rider;
+        this.genre1 = genre1;
+        this.genre2 = genre2;
+        this.genre3 = genre3;
+        this.p_q = p_q;
+        this.p_a = p_a;
+        this.img = img;
         this.indate = indate;
-        this.phoneNumber = PhoneNumber;
     }
 
-    //유저아이디 찾기 할 때 쓰는 생성자
-    public UserVo(String nickname, String email) {
-        this.nickname = nickname;
-        this.email = email;
+    public String getU_id() {
+        return u_id;
     }
 
-    //유저아이디 중복체크할 때 쓰는 생성자
-    public UserVo(String userid) {
-            this.userid = userid;
+    public void setU_id(String u_id) {
+        this.u_id = u_id;
     }
 
-    public String getPhoneNumber() {
-        return this.phoneNumber;
+    public String getN_name() {
+        return n_name;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getuserid() {
-        return this.userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
-    }
-
-    public String getPasswd() {
-        return this.passwd;
-    }
-
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
-    public String getNickname() {
-        return this.nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setN_name(String n_name) {
+        this.n_name = n_name;
     }
 
     public String getEmail() {
-        return this.email;
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getUser_local() {
-        return this.user_local;
+    public String getGenre1() {
+        return genre1;
     }
 
-    public void setUser_local(String user_local) {
-        this.user_local = user_local;
+    public void setGenre1(String genre1) {
+        this.genre1 = genre1;
     }
 
-    public String getRider() {
-        return this.rider;
+    public String getGenre2() {
+        return genre2;
     }
 
-    public void setRider(String rider) {
-        this.rider = rider;
+    public void setGenre2(String genre2) {
+        this.genre2 = genre2;
+    }
+
+    public String getGenre3() {
+        return genre3;
+    }
+
+    public void setGenre3(String genre3) {
+        this.genre3 = genre3;
+    }
+
+    public String getP_q() {
+        return p_q;
+    }
+
+    public void setP_q(String p_q) {
+        this.p_q = p_q;
+    }
+
+    public String getP_a() {
+        return p_a;
+    }
+
+    public void setP_a(String p_a) {
+        this.p_a = p_a;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getIndate() {
-        return this.indate;
+        return indate;
     }
 
     public void setIndate(String indate) {
@@ -103,14 +111,16 @@ public class UserVo {
     @Override
     public String toString() {
         return "UserVo{" +
-                "userid='" + this.userid + '\'' +
-                ", passwd='" + this.passwd + '\'' +
-                ", nickname='" + this.nickname + '\'' +
-                ", email='" + this.email + '\'' +
-                ", userLocal='" + this.user_local + '\'' +
-                ", rider='" + this.rider + '\'' +
-                ", indate='" + this.indate + '\'' +
-                ", phoneNumber='" + this.phoneNumber + '\'' +
+                "u_id='" + u_id + '\'' +
+                ", n_name='" + n_name + '\'' +
+                ", email='" + email + '\'' +
+                ", genre1='" + genre1 + '\'' +
+                ", genre2='" + genre2 + '\'' +
+                ", genre3='" + genre3 + '\'' +
+                ", p_q='" + p_q + '\'' +
+                ", p_a='" + p_a + '\'' +
+                ", img='" + img + '\'' +
+                ", indate='" + indate + '\'' +
                 '}';
     }
 }

@@ -21,9 +21,8 @@ public class BoardController {
 
     BoardPager boardPager = new BoardPager();
 
-    // 아이디 찾기 창
-    @RequestMapping("/Board/findUserid")
-    public String findUserid(){return "users/findUserid";}
+    @RequestMapping("/")
+    public String home(){ return "/home";}
 
     // 게임목록db에 넣기
     @RequestMapping("/GameListInsert")
