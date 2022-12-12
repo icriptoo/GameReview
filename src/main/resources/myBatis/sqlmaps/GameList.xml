@@ -11,6 +11,41 @@
           FROM GAMELIST
     </select>
 
+    <select id="GSCount"
+            resultType="int">
+        SELECT COUNT(*)
+          FROM GAMELIST
+         WHERE ${type} LIKE '%'||#{sType}||'%'
+    </select>
+
+    <select id="GameSC"
+            resultType="int">
+        SELECT COUNT(*)
+          FROM GAMELIST
+         WHERE G_NAME LIKE '%'||#{gameName}||'%'
+    </select>
+
+    <select id="GameLS"
+            resultType="com.project.board.vo.GameListVo">
+        SELECT *
+        FROM (
+        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX ASC) RNUM,
+        G_IDX,
+        G_NAME,
+        G_ENAME,
+        G_GENRE,
+        G_COMPANY,
+        G_SERVICE,
+        G_PLATFORM,
+        G_DATE,
+        G_SCORE,
+        G_IMG
+        FROM GAMELIST
+        WHERE G_NAME LIKE '%'||#{gameName}||'%'
+        ORDER BY G_IDX ASC)
+        WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
+    </select>
+
     <select id="GList"
             resultType="com.project.board.vo.GameListVo">
         SELECT *
@@ -25,7 +60,7 @@
         G_DATE,
         G_SCORE,
         G_IMG
-        FROM GAMELIST G
+        FROM GAMELIST
         ORDER BY G_IDX ASC)
         WHERE G_IDX BETWEEN #{pageNum} AND #{contentNum}
     </select>
@@ -45,8 +80,8 @@
         G_DATE,
         G_SCORE,
         G_IMG
-        FROM GAMELIST G
-        WHERE G_PLATFORM LIKE '%${sType}%'
+        FROM GAMELIST
+        WHERE ${type} LIKE '%'||#{sType}||'%'
         ORDER BY G_IDX ASC)
         WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
     </select>

@@ -7,8 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # -*- coding: utf-8 -*-
 
-# title = sys.argv[1]
-title = '토탈워: 워해머3'
+title = sys.argv[1]
 
 game_data = pd.read_csv('C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv', low_memory=False, encoding='cp949')
 # game_data = game_data.loc[game_data['original_language'] == 'en', :]
@@ -30,7 +29,7 @@ cosine_sim_df = pd.DataFrame(cosine_sim, index = game_data.G_NAME, columns = gam
 # print(cosine_sim_df.shape)
 # print(cosine_sim_df.head())
 
-def game_recommendations(target_title, matrix, items, k=5):
+def game_recommendations(target_title, matrix, items, k=5): # k= 뽑아올 게임개수
     recom_idx = matrix.loc[:, target_title].values.reshape(1, -1).argsort()[:, ::-1].flatten()[1:k+1]
     recom_title = items.iloc[recom_idx, :].G_NAME.values
     recom_genre = items.iloc[recom_idx, :].G_GENRE.values

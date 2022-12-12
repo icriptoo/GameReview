@@ -15,4 +15,11 @@ public interface BoardService {
     List<GameListVo> GameListSelect(HashMap<String, Object> map);
 
     List<GameListVo> GameListSearchS(HashMap<String, Object> map);
+
+    int GameListSCount(HashMap<String, Object> map);
+
+    int GameSCount(HashMap<String, Object> map);
+
+
+    List<GameListVo> GameListS(HashMap<String, Object> map);
 }
