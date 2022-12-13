@@ -72,6 +72,7 @@
         <ul class="clearfix">
           <li class="asd"><a href="/Board/GameList?pageNum=1&contentNum=30">게임 리스트</a></li> <!--""<-여기 부분에 URL 작성하면 됨-->
           <li class="asd"><a href="/GameListInsert">게임목록db에 넣기</a></li>
+          <li class="asd"><a href="/GameListDelete">게임목록db 삭제</a></li>
           <li class="asd"><a href="http://www._____.com/About">게임 추천</a></li>
           <li class="asd"><a href="http://www._____.com/Project">자유게시판</a></li>
           <li class="asd"><a href="http://www._____.com/Travel">리뷰게시판</a></li>

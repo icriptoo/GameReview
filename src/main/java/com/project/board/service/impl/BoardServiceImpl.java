@@ -17,7 +17,8 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
-
+    @Override
+    public void GameListDelete() { boardDao.GameListDelete(); }
     @Override
     public int GameListCount() {
         return boardDao.GameListCount();
@@ -49,6 +50,8 @@ public class BoardServiceImpl implements BoardService {
     public List<GameListVo> GameListS(HashMap<String, Object> map) {
         return boardDao.GameListS(map);
     }
+
+
 
 
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+
+    <select id="login"
+            resultType="com.project.user.vo.UserVo">
+        SELECT U_ID,
+        PW,
+        N_NAME,
+        EMAIL,
+        GENRE1,
+        GENRE2,
+        GENRE3,
+        P_Q,
+        P_A,
+        IMG,
+        INDATE
+
+        FROM  USERS
+        WHERE U_ID = #{id}
+        AND   PW = #{pw}
+    </select>
+
+</mapper>

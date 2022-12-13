@@ -21,6 +21,9 @@ public class BoardDaoImpl implements BoardDao {
     @Autowired
     private SqlSession sqlSession;
 
+    @Override
+    public void GameListDelete() { sqlSession.delete("Game.GameListDelete"); }
+
     // 2022-12-02 강지찬 크롤링
     @Override
     public void GameInsert() throws IOException {

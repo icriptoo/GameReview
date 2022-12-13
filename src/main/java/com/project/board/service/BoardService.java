@@ -22,4 +22,6 @@ public interface BoardService {
 
 
     List<GameListVo> GameListS(HashMap<String, Object> map);
+
+    void GameListDelete();
 }
