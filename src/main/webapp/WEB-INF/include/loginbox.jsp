@@ -98,13 +98,13 @@ function logoutbtn(){
       </ul>
     </c:when>
     <c:otherwise>
-    <h2>${login.n_name}님</h2>
-    <ul>
-      <li>
-        <button class="logout" onclick="logoutbtn()" style="font-size:15px;">로그아웃</button>
-        <button style="font-size:15px;">마이페이지</button>
-      </li>
-    </ul>
+      <h2>${login.n_name}님</h2>
+      <ul>
+        <li>
+          <button class="logout" onclick="logoutbtn()" style="font-size:15px;">로그아웃</button>
+          <button style="font-size:15px;">마이페이지</button>
+        </li>
+      </ul>
     </c:otherwise>
   </c:choose>
 </div>
