@@ -242,7 +242,7 @@ aside {
   </div>
   <div>
     <aside>
-      <%@ include file="/WEB-INF/include/login2.jsp" %>
+      <%@ include file="/WEB-INF/include/loginbox.jsp" %>
       <br><br>
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>

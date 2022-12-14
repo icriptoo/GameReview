@@ -10,6 +10,8 @@ public interface BoardDao {
 
     void GameInsert() throws IOException;
 
+    void GameListDelete();
+
     int GameListCount();
 
     List<GameListVo> GameListSelect(HashMap<String, Object> map);
@@ -21,4 +23,5 @@ public interface BoardDao {
     int GameSCount(HashMap<String, Object> map);
 
     List<GameListVo> GameListS(HashMap<String, Object> map);
+
 }

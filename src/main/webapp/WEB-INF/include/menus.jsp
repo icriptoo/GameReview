@@ -5,20 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
-.o{
-margin-left:5px;
-margin-right:5px;
-font-size: 19px;
+nav{
+    font-size: 12pt;
+    font-family: 'PT Sans', Arial, Sans-serif;
+    position: relative;
 }
-.oo {
-text-align:right;
+nav ul{
+    padding: 0;
+    margin: 0 auto;
+    width: auto;
+}
+nav li{
+}
+nav a{
+    line-height: 50px;
+  height: 50px;
+}
+nav li a{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+nav li:last-child a{
+    border-right: 0;
+    }
+nav a:hover, nav a:active{
+}
+nav a#pull{
+    display: none;
+}
+html {
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+}
+li.asd{
+  /*position: relative;*/
+  display: inline-block;
+}
+li a{
+  color: #FFFFFF;
+  text-align: center;
+  padding: 14.5px 16px;
+  text-decoration: none;
+}
+li a:hover{
+  /*color: #597812;*/
+  color: #FFD400;
+  font-weight:normal;
+}
+.menu {
+  width: 5000px;
+  height: 50px;
+  text-align: center;
+  max-width: 100%;
+  background-position: center;
+  background-size: cover;
+  background-color: #333333;color: white;
+  position: absolute;z-index: 1;
 }
 </style>
 
-<div class = "oo" id="mySidebar"  style= "background-color:#FFF">
-  <a class ="o" href="/home" class="w3-bar-item w3-button">메인</a>
-  <a class ="o" href="/GameListInsert" class="w3-bar-item w3-button">게임목록db에 넣기</a>
-  <a class ="o" href="/Board/GameList?pageNum=1&contentNum=30" class="w3-bar-item w3-button">게임 리스트</a>
-  <a class ="o" href="/Board/GameRecom" class="w3-bar-item w3-button">게임 추천</a>
-
+<body style="background-color:#F6F6F6">
+<div class="menu">
+  <nav class="clearfix">
+    <ul class="clearfix">
+      <li class="asd"><a href="/">메인화면</a></li>
+      <li class="asd"><a href="/Board/GameList?pageNum=1&contentNum=30">게임 리스트</a></li>
+      <li class="asd"><a href="/GameListInsert">게임목록db에 넣기</a></li>
+      <li class="asd"><a href="/GameListDelete">게임목록db 삭제</a></li>
+      <li class="asd"><a href="http://www._____.com/About">게임 추천</a></li>
+      <li class="asd"><a href="http://www._____.com/Project">자유게시판</a></li>
+      <li class="asd"><a href="http://www._____.com/Travel">리뷰게시판</a></li>
+      <li class="asd"><a href="http://www._____.com/Contact">공지사항</a></li>
+      <li class="asd"><a href="http://www._____.com/Contact">고객센터</a></li>
+    </ul>
+  </nav>
 </div>
+</body>

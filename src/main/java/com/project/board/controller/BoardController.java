@@ -34,7 +34,14 @@ public class BoardController {
     @RequestMapping("/GameListInsert")
     public String GameListInsert() throws IOException {
         boardService.GameInsert();
-        return "board/GameList";
+        return "/home";
+    }
+
+    // 게임목록db에 게임지우기
+    @RequestMapping("/GameListDelete")
+    public String GamListDelete(){
+        boardService.GameListDelete();
+        return "/home";
     }
 
     // 게임목록 조회 게시판

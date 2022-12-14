@@ -32,7 +32,6 @@ ul{
 }
 </style>
 <script>
-console.log(${sT});
 function btnGSearch(e){
   e.preventDefault();
   var url = "/Board/GameList?pageNum=1&contentNum=30";
@@ -43,10 +42,11 @@ function btnGSearch(e){
     location.href = url;
   }
 }
+
 </script>
 </head>
 <body class="w3-light-grey">
-<%@ include file="/WEB-INF/include/menus2.jsp" %>
+<%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
@@ -58,7 +58,7 @@ function btnGSearch(e){
   </div>
   <div>
     <aside class="rightAside">
-      <%@ include file="/WEB-INF/include/login2.jsp" %>
+      <%@ include file="/WEB-INF/include/loginbox.jsp" %>
       <br><br>
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>

@@ -4,6 +4,7 @@ public class UserVo {
 
     private String u_id;
     private String n_name;
+    private String pw;
     private String email;
     private String genre1;
     private String genre2;
@@ -15,9 +16,10 @@ public class UserVo {
 
     public UserVo (){}
 
-    public UserVo(String u_id, String n_name, String email, String genre1, String genre2, String genre3, String p_q, String p_a, String img, String indate) {
+    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String p_q, String p_a, String img, String indate) {
         this.u_id = u_id;
         this.n_name = n_name;
+        this.pw = pw;
         this.email = email;
         this.genre1 = genre1;
         this.genre2 = genre2;
@@ -27,6 +29,10 @@ public class UserVo {
         this.img = img;
         this.indate = indate;
     }
+
+    public String getPw() { return pw; }
+
+    public void setPw(String pw) { this.pw = pw; }
 
     public String getU_id() {
         return u_id;
@@ -113,6 +119,7 @@ public class UserVo {
         return "UserVo{" +
                 "u_id='" + u_id + '\'' +
                 ", n_name='" + n_name + '\'' +
+                ", pw='" + pw + '\'' +
                 ", email='" + email + '\'' +
                 ", genre1='" + genre1 + '\'' +
                 ", genre2='" + genre2 + '\'' +
