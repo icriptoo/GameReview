@@ -226,7 +226,7 @@ aside {
 
 <!-- html 시작 -->
 <body class="w3-light-grey">
-<%@ include file="/WEB-INF/include/menus2.jsp" %>
+<%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-white" style="padding-top: 80px; padding-bottom: 80px;">
   <h1 class="headerB" ><b>게임 리뷰 사이트</b></h1>
 </header>

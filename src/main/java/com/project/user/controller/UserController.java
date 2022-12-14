@@ -71,4 +71,8 @@ public class UserController {
         return "redirect:"+ url;
     }
 
+    @RequestMapping("/mypage")
+    public String mypage(){
+        return "user/mypage";
+    }
 }
