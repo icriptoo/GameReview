@@ -25,6 +25,13 @@
          WHERE G_NAME LIKE '%'||#{gameName}||'%'
     </select>
 
+    <select id="GetGame"
+            resultType="com.project.board.vo.GameListVo">
+        SELECT *
+        FROM GAMELIST
+        WHERE G_IDX = #{g_idx}
+    </select>
+
     <select id="GameLS"
             resultType="com.project.board.vo.GameListVo">
         SELECT *

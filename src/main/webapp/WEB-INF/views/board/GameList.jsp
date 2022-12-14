@@ -105,7 +105,7 @@ function btnGSearch(e){
         </td>
       </tr>
       <c:forEach var="list" items="${GameList}">
-        <tr>
+        <tr onClick="location.href='/GameReviewList?g_idx=${list.g_idx}'">
           <td>
             <img src="${list.g_img}" alt="${list.g_name}" style="width: 165px; height: 115px;">
           </td>

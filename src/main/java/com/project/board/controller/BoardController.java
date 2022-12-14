@@ -2,6 +2,7 @@ package com.project.board.controller;
 
 import com.project.board.service.BoardService;
 import com.project.board.vo.BoardPager;
+import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,21 @@ public class BoardController {
     @RequestMapping("/")
     public String home() {
         return "/home";
+    }
+
+    //게임리뷰목록
+    @RequestMapping("/GameReviewList")
+    public String gameReview(@RequestParam HashMap<String, Object> map, Model model){
+        GameListVo gameListVo = boardService.getGame(map);
+        List<BoardVo> boardList = boardService.getBoardList(map);
+        System.out.println(gameListVo);
+        System.out.println(boardList);
+
+
+        model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
+        model.addAttribute("boardList", boardList ); //해당게임리뷰목록 불러오기
+
+        return "/board/GameReviewList";
     }
 
     // 게임목록db에 넣기

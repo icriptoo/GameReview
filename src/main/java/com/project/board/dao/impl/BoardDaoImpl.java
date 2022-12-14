@@ -1,6 +1,7 @@
 package com.project.board.dao.impl;
 
 import com.project.board.dao.BoardDao;
+import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
@@ -158,6 +159,18 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public List<GameListVo> GameListS(HashMap<String, Object> map) {
         return sqlSession.selectList("Game.GameLS",map);
+    }
+
+    // 게임정보가져오기
+    @Override
+    public GameListVo getGame(HashMap<String, Object> map) {return sqlSession.selectOne("Game.GetGame",map);}
+
+    @Override
+    public List<BoardVo> boardListSelect(HashMap<String, Object> map) {
+        System.out.println("map:" + map);
+        List<BoardVo> boardList = sqlSession.selectList("Board.List", map);
+        System.out.println("boardList:" + boardList);
+        return boardList;
     }
 
     // 전체게임리스트 뽑기
