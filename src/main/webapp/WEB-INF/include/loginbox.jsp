@@ -79,9 +79,6 @@ function logoutbtn(){
   }
 }
 
-function mypage(){
-  location.href = "/mypage";
-}
 </script>
 </head>
 <body>
@@ -93,7 +90,7 @@ function mypage(){
         <br>
         <li id="login_btn">
           <button class="login" onclick="loginbtn()" style="font-size:15px;">로그인</button>
-          <button style="font-size:15px;">회원가입</button>
+          <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
         </li>
       </ul>
       <ul id="btns">
@@ -105,8 +102,8 @@ function mypage(){
       <ul>
         <li>
           <button class="logout" onclick="logoutbtn()" style="font-size:15px;">로그아웃</button>
-          <button class="mypage" onclick="mypage()" style="font-size:15px;">마이페이지</button>
         </li>
+          <a class="mypagebt" href="/mypage" style="font-size:15px;">마이페이지</a>
       </ul>
     </c:otherwise>
   </c:choose>

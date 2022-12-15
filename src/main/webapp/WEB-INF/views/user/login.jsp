@@ -122,7 +122,7 @@ $(function(){
       <br><br>
       <li id="login_btn">
         <button onclick="loginbtn()" class="login" style="font-size:15px;">로그인</button>
-        <button style="font-size:15px;">회원가입</button>
+        <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
       </li>
     </ul>
     <ul id="btns">

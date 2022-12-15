@@ -24,4 +24,61 @@
         AND   PW = #{pw}
     </select>
 
+    <select id="getUser"
+            resultType="com.project.user.vo.UserVo">
+        SELECT U_ID,
+        PW,
+        N_NAME,
+        EMAIL,
+        GENRE1,
+        GENRE2,
+        GENRE3,
+        P_Q,
+        P_A,
+        IMG,
+        INDATE
+
+        FROM  USERS
+        WHERE U_ID = #{u_id}
+        AND   PW = #{pw}
+    </select>
+
+    <select id="idCheck"
+            resultType="com.project.user.vo.UserVo">
+        SELECT U_ID
+        FROM USERS
+        WHERE U_ID = #{u_id}
+    </select>
+
+    <select id="nnCheck"
+            resultType="com.project.user.vo.UserVo">
+        SELECT N_NAME
+        FROM USERS
+        WHERE N_NAME = #{n_name}
+    </select>
+
+    <update id="UserUpdate">
+        UPDATE USERS
+           SET N_NAME = #{n_name},
+               EMAIL = #{email},
+               GENRE1 = #{genre1},
+               GENRE2 = #{genre2},
+               GENRE3 = #{genre3},
+               P_Q = #{p_q},
+               P_A = #{p_a}
+         WHERE U_ID = #{u_id}
+    </update>
+
+    <update id="profileupdate">
+        UPDATE USERS
+           SET IMG = #{vo.fileName}
+         WHERE U_ID = #{vo.u_id}
+    </update>
+
+    <insert id="UserInsert"
+            parameterType="com.project.user.vo.UserVo">
+        INSERT INTO USERS (U_ID, N_NAME, PW, GENRE1, GENRE2, GENRE3, P_Q, P_A)
+                   VALUES (${u_id}, ${n_name}, ${pw}, ${genre1}, ${genre2}, ${genre3}, ${p_q}, ${p_a})
+    </insert>
+
 </mapper>
