@@ -5,11 +5,21 @@
 
 <mapper namespace="Board">
 
+    <!-- 글 목록 불러오기 -->
     <select id="List"
             resultType="com.project.board.vo.BoardVo">
         select *
         from board
         where g_idx = #{g_idx}
+        and   menu_id = #{menu_id}
+    </select>
+
+    <!-- 글 불러오기 -->
+    <select id="View"
+            resultType="com.project.board.vo.BoardVo">
+        select *
+        from board
+        where b_idx = #{b_idx}
     </select>
 
 </mapper>

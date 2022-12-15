@@ -7,22 +7,22 @@ public class BoardVo {
     private String cont;
     private int r_score;
     private String indate;
-    private int B_COUNT;
-    private int MENU_ID;
-    private String U_ID;
-    private int G_IDX;
+    private int b_count;
+    private int menu_id;
+    private String u_id;
+    private int g_idx;
 
     public BoardVo(){};
-    public BoardVo(int b_idx, String title, String cont, int r_score, String indate, int b_COUNT, int MENU_ID, String u_ID, int g_IDX) {
+    public BoardVo(int b_idx, String title, String cont, int r_score, String indate, int b_count, int menu_id, String u_id, int g_idx) {
         this.b_idx = b_idx;
         this.title = title;
         this.cont = cont;
         this.r_score = r_score;
         this.indate = indate;
-        B_COUNT = b_COUNT;
-        this.MENU_ID = MENU_ID;
-        U_ID = u_ID;
-        G_IDX = g_IDX;
+        this.b_count = b_count;
+        this.menu_id = menu_id;
+        this.u_id = u_id;
+        this.g_idx = g_idx;
     }
 
     public int getB_idx() {
@@ -65,36 +65,36 @@ public class BoardVo {
         this.indate = indate;
     }
 
-    public int getB_COUNT() {
-        return B_COUNT;
+    public int getB_count() {
+        return b_count;
     }
 
-    public void setB_COUNT(int b_COUNT) {
-        B_COUNT = b_COUNT;
+    public void setB_count(int b_count) {
+        this.b_count = b_count;
     }
 
-    public int getMENU_ID() {
-        return MENU_ID;
+    public int getMenu_id() {
+        return menu_id;
     }
 
-    public void setMENU_ID(int MENU_ID) {
-        this.MENU_ID = MENU_ID;
+    public void setMenu_id(int menu_id) {
+        this.menu_id = menu_id;
     }
 
-    public String getU_ID() {
-        return U_ID;
+    public String getU_id() {
+        return u_id;
     }
 
-    public void setU_ID(String u_ID) {
-        U_ID = u_ID;
+    public void setU_id(String u_id) {
+        this.u_id = u_id;
     }
 
-    public int getG_IDX() {
-        return G_IDX;
+    public int getG_idx() {
+        return g_idx;
     }
 
-    public void setG_IDX(int g_IDX) {
-        G_IDX = g_IDX;
+    public void setG_idx(int g_idx) {
+        this.g_idx = g_idx;
     }
 
     @Override
@@ -105,10 +105,10 @@ public class BoardVo {
                 ", cont='" + cont + '\'' +
                 ", r_score=" + r_score +
                 ", indate='" + indate + '\'' +
-                ", B_COUNT=" + B_COUNT +
-                ", MENU_ID=" + MENU_ID +
-                ", U_ID='" + U_ID + '\'' +
-                ", G_IDX=" + G_IDX +
+                ", b_count=" + b_count +
+                ", menu_id=" + menu_id +
+                ", u_id='" + u_id + '\'' +
+                ", g_idx=" + g_idx +
                 '}';
     }
 }

@@ -28,6 +28,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public BoardVo getBoard(HashMap<String, Object> map) {
+        BoardVo boardVo = boardDao.getBoard(map);
+        return boardVo;
+    }
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
     @Override
     public void GameListDelete() { boardDao.GameListDelete(); }

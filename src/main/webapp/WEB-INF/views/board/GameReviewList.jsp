@@ -37,6 +37,7 @@ ul{
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
+
 <div style="width: 100%; height: 500px; ">
   <div>
     <aside class="leftAside">
@@ -51,110 +52,114 @@ ul{
     </aside>
   </div>
 
+
+
   <table>
 
-  <div>
-      <tr onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}'">
-        <td>
-          <img src="${gameListVo.g_img}" alt="${gameListVo.g_name}" style="width: 165px; height: 115px;">
-        </td>
-        <td colspan="2">
-          <ul class="gList">
-            <li><strong>게임명 : </strong><span class="gName">${gameListVo.g_name}</span> <span class="eGName">${gameListVo.g_ename}</span></li>
-            <li><strong>장르명 : </strong>${gameListVo.g_genre}</li>
-            <li><strong>개발사 : </strong>${gameListVo.g_company}</li>
-            <li><strong>서비스 : </strong>${gameListVo.g_service}</li>
-            <li><strong>플랫폼 : </strong>${gameListVo.g_platform}</li>
-            <li><strong>출시일 : </strong>${gameListVo.g_date}</li>
-          </ul>
-        </td>
-      </tr>
-  </div>
-
-  <tr>
-  <th colspan="6" style="text-align:center">
-  <button style="font-size:20px;">리뷰게시판</button>
-  <button style="font-size:20px;">자유게시판</button>
-  </th>
-  </tr>
-
-  <div>
-        <tr>
-        <th width="5%" style="text-align:center">번호</th>
-        <th width="30%" style="text-align:left">제목</th>
-        <th width="5%" style="text-align:center">평점</th>
-        <th width="10%" style="text-align:center">작성자</th>
-        <th width="10%" style="text-align:center">작성일</th>
-        <th width="5%" style="text-align:center">조회수</th>
+    <div>
+        <tr onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1'">
+          <td>
+            <img src="${gameListVo.g_img}" alt="${gameListVo.g_name}" style="width: 165px; height: 115px;">
+          </td>
+          <td colspan="2">
+            <ul class="gList">
+              <li><strong>게임명 : </strong><span class="gName">${gameListVo.g_name}</span> <span class="eGName">${gameListVo.g_ename}</span></li>
+              <li><strong>장르명 : </strong>${gameListVo.g_genre}</li>
+              <li><strong>개발사 : </strong>${gameListVo.g_company}</li>
+              <li><strong>서비스 : </strong>${gameListVo.g_service}</li>
+              <li><strong>플랫폼 : </strong>${gameListVo.g_platform}</li>
+              <li><strong>출시일 : </strong>${gameListVo.g_date}</li>
+            </ul>
+          </td>
         </tr>
-        <c:forEach var="board" items="${boardList}">
-          <tr>
-           <td width="5%" style="text-align:center">${board.b_idx}</td>
-           <td width="30%" style="text-align:left"><a href="/Board/ReviewDetail?board_number=${board.board_number}&menu_id=${board.menu_id}">${board.title}</a></td>
-           <td width="5%" style="text-align:center">${board.r_score}</td>
-           <td width="10%" style="text-align:center">${board.u_id}</td>
-           <td width="10%" style="text-align:center">${board.indate}</td>
-          </tr>
-        </c:forEach>
-        <tr>
-          <td colspan="4">
-            <c:set var="url" value="http://localhost:8080/Board/reviewList?menu_id=MENU_01&pageNum=1&contentNum=10"/>
-            <c:choose>
-              <c:when test="${ url eq 'window.location.href'}">
-                <div id="BoardPa" class="BoardPa">
-                  <c:if test="${boardPager.prev}">
-                    <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getStartPage()-1}&contentNum=${(boardPager.getStartPage()-1)*10}" class="w3-button">< 이전</a>
-                  </c:if>
-                  <c:forEach begin="${boardPager.getStartPage()}" end="${boardPager.getEndPage()}" var="idx">
-                    <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${idx}&contentNum=${idx*10}" class="w3-button">${idx}</a>
-                  </c:forEach>
-                  <c:if test="${boardPager.next}">
-                    <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getEndPage()+1}&contentNum=${(boardPager.getEndPage()+1)*10}" class="w3-button">다음 ></a>
-                  </c:if>
-                </div>
-              </c:when>
-              <c:otherwise>
-                <div id="BoardPa" class="BoardPa">
-                  <c:if test="${boardPager.prev}">
-                    <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getStartPage()-1}&contentNum=${(boardPager.getStartPage()-1)*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">< 이전</a>
-                  </c:if>
-                  <c:forEach begin="${boardPager.getStartPage()}" end="${boardPager.getEndPage()}" var="idx">
-                    <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${idx}&contentNum=${idx*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">${idx}</a>
-                  </c:forEach>
-                  <c:if test="${boardPager.next}">
-                    <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getEndPage()+1}&contentNum=${(boardPager.getEndPage()+1)*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">다음 ></a>
-                  </c:if>
-                </div>
-              </c:otherwise>
-            </c:choose>
-
-        <table class="ta">
-          <tr style="border-top: 1px solid #000">
-            <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
-              <select class="search" id="searchType">
-                <option value="title"><strong>제목</strong></option>
-                <option value="board_local"><strong>지역</strong></option>
-                <option value="writer"><strong>작성자</strong></option>
-                <option value="board_check"><strong>접수상태</strong></option>
-              </select>
-              <input id="keyword" class="keyword" type="text">
-              <button id="btnSearch" class="searchB">검색</button>
-            </td>
-            <td style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
-            <a href="/Board/RVBoardWriteForm?menu_id=MENU_03&pageNum=1&contentNum=10}"
-              class="write">새글쓰기</a>
-            </td>
-          </tr>
-        </table>
     </div>
+
+    <tr>
+      <th colspan="6" style="text-align:center">
+        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1'" >리뷰게시판</button>
+        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=2'" >자유게시판</button>
+      </th>
+    </tr>
+
+          <tr>
+          <th width="10%" style="text-align:center">번호</th>
+          <th width="25%" style="text-align:center">제목</th>
+          <c:if test= "${boardList[0].menu_id eq 1}">
+            <th width="5%" style="text-align:center">평점</th>
+          </c:if>
+          <th width="10%" style="text-align:center">작성자</th>
+          <th width="10%" style="text-align:center">작성일</th>
+          <th width="5%" style="text-align:center">조회수</th>
+          </tr>
+
+          <c:forEach var="item" items="${boardList}" >
+            <tr>
+              <td width="10%" style="text-align:center">${item.b_idx}</td>
+              <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}">${item.title}</a></td>
+              <c:if test="${item.menu_id eq 1}">
+                <td width="5%" style="text-align:center">${item.r_score}</td>
+              </c:if>
+              <td width="5%" style="text-align:center">${item.u_id}</td>
+              <td width="10%" style="text-align:center">${item.indate}</td>
+              <td width="5%" style="text-align:center">${item.b_count}</td>
+            </tr>
+          </c:forEach>
+
+          <tr>
+            <td colspan="4">
+              <c:set var="url" value="http://localhost:8080/Board/reviewList?menu_id=MENU_01&pageNum=1&contentNum=10"/>
+              <c:choose>
+                <c:when test="${ url eq 'window.location.href'}">
+                  <div id="BoardPa" class="BoardPa">
+                    <c:if test="${boardPager.prev}">
+                      <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getStartPage()-1}&contentNum=${(boardPager.getStartPage()-1)*10}" class="w3-button">< 이전</a>
+                    </c:if>
+                    <c:forEach begin="${boardPager.getStartPage()}" end="${boardPager.getEndPage()}" var="idx">
+                      <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${idx}&contentNum=${idx*10}" class="w3-button">${idx}</a>
+                    </c:forEach>
+                    <c:if test="${boardPager.next}">
+                      <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getEndPage()+1}&contentNum=${(boardPager.getEndPage()+1)*10}" class="w3-button">다음 ></a>
+                    </c:if>
+                  </div>
+                </c:when>
+                <c:otherwise>
+                  <div id="BoardPa" class="BoardPa">
+                    <c:if test="${boardPager.prev}">
+                      <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getStartPage()-1}&contentNum=${(boardPager.getStartPage()-1)*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">< 이전</a>
+                    </c:if>
+                    <c:forEach begin="${boardPager.getStartPage()}" end="${boardPager.getEndPage()}" var="idx">
+                      <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${idx}&contentNum=${idx*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">${idx}</a>
+                    </c:forEach>
+                    <c:if test="${boardPager.next}">
+                      <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getEndPage()+1}&contentNum=${(boardPager.getEndPage()+1)*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">다음 ></a>
+                    </c:if>
+                  </div>
+                </c:otherwise>
+              </c:choose>
+
+
+            <tr style="border-top: 1px solid #000">
+              <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+                <select class="search" id="searchType">
+                  <option value="title"><strong>제목</strong></option>
+                  <option value="board_local"><strong>지역</strong></option>
+                  <option value="writer"><strong>작성자</strong></option>
+                  <option value="board_check"><strong>접수상태</strong></option>
+                </select>
+                <input id="keyword" class="keyword" type="text">
+                <button id="btnSearch" class="searchB">검색</button>
+              </td>
+              <td style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
+              <a href="/Board/RVBoardWriteForm?menu_id=MENU_03&pageNum=1&contentNum=10}"
+                class="write">할게요 새글쓰기</a>
+              </td>
+            </tr>
+
+
 
   </table>
 
-
 </div>
 
-<script>
-console.log(${boardList});
-</script>
 </body>
 </html>

@@ -31,4 +31,6 @@ public interface BoardService {
     GameListVo getGame(HashMap<String, Object> map);
 
     List<BoardVo> getBoardList(HashMap<String, Object> map);
+
+    BoardVo getBoard(HashMap<String, Object> map);
 }
