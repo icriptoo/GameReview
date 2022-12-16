@@ -61,9 +61,9 @@ function update(){
   var url = "/user/profilupdate?n_name="
   var name = $('input[name=name]').val();
   var email = $('input[name=email]').val();
-  var genre1 = $('input[name=genre1]').val();
-  var genre2 = $('input[name=genre2]').val();
-  var genre3 = $('input[name=genre3]').val();
+  var genre1 = $('select[name=genre1]').val();
+  var genre2 = $('select[name=genre2]').val();
+  var genre3 = $('select[name=genre3]').val();
   var pq = $('input[name=pq]').val();
   var pa = $('input[name=pa]').val();
   var u_id = $('input[name=u_id]').val();;
@@ -73,6 +73,25 @@ function update(){
 function back(){
   location.href = "/user/mypage";
 }
+
+$(function(){
+  $('#nnCheck').on('click', function(e){
+    let n_name = $('input[name=n_name]').val();
+    $.ajax({
+      type : 'POST',
+      url : "nnCheck",
+      dataType : "text",
+      data : {
+        "n_name" : n_name
+      },
+      success : function(nnCheck){
+        $("#nnCheckResult").html(nnCheck);
+      }
+    })
+    e.preventDefault();
+    e.stopPropagation();
+  });
+});
 </script>
 </head>
 <body class="w3-light-grey">
@@ -102,12 +121,73 @@ function back(){
     <div class="mypagein">
       <input type="hidden" name="pw" value="${login.pw}">
       <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${login.u_id}" disabled></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="name" value="${login.n_name}"> <button name="nameck" onclick="nameck()">중복확인</button></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 : <input type="text" name="email" value="${login.email}"> <button name="emailck" onclick="emailck()">인증번호전송</button></p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${login.n_name}"><button id="nnCheck" name="nnCheck">중복확인</button>
+             <span id="nnCheckResult" name="nnCheckResult"></span></p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 : <input type="text" name="email" value="${login.email}"><button name="emailck">인증번호전송</button></p>
       <p>&nbsp;&nbsp;인증번호 : <input type="text" name="emailcode"></p>
-      <p>선호 장르1 : <input type="text" name="genre1" value="${login.genre1}"></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르2 : <input type="text" name="genre2" value="${login.genre2}"></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르3 : <input type="text" name="genre3" value="${login.genre3}"></p>
+      <p>선호 장르1 :
+        <select name="genre1" id="genre1">
+          <option value="">선호 장르1</option>
+          <option value="RPG">RPG</option>
+          <option value="어드벤쳐">어드벤쳐</option>
+          <option value="FPS">FPS</option>
+          <option value="스포츠">스포츠</option>
+          <option value="TCG">TCG</option>
+          <option value="보드">보드</option>
+          <option value="레이싱">레이싱</option>
+          <option value="슈팅">슈팅</option>
+          <option value="액션">액션</option>
+          <option value="시뮬레이션">시뮬레이션</option>
+          <option value="RTS">RTS</option>
+          <option value="퍼즐">퍼즐</option>
+          <option value="리듬액션">리듬액션</option>
+          <option value="SNG">SNG</option>
+          <option value="AOS">AOS</option>
+          <option value="기타">기타</option>
+        </select>
+      </p>
+      <p>선호 장르2 :
+        <select name="genre2" id="genre2">
+          <option value="">선호 장르2</option>
+          <option value="RPG">RPG</option>
+          <option value="어드벤쳐">어드벤쳐</option>
+          <option value="FPS">FPS</option>
+          <option value="스포츠">스포츠</option>
+          <option value="TCG">TCG</option>
+          <option value="보드">보드</option>
+          <option value="레이싱">레이싱</option>
+          <option value="슈팅">슈팅</option>
+          <option value="액션">액션</option>
+          <option value="시뮬레이션">시뮬레이션</option>
+          <option value="RTS">RTS</option>
+          <option value="퍼즐">퍼즐</option>
+          <option value="리듬액션">리듬액션</option>
+          <option value="SNG">SNG</option>
+          <option value="AOS">AOS</option>
+          <option value="기타">기타</option>
+        </select>
+      </p>
+      <p>선호 장르3 :
+        <select name="genre3" id="genre3">
+          <option value="">선호 장르3</option>
+          <option value="RPG">RPG</option>
+          <option value="어드벤쳐">어드벤쳐</option>
+          <option value="FPS">FPS</option>
+          <option value="스포츠">스포츠</option>
+          <option value="TCG">TCG</option>
+          <option value="보드">보드</option>
+          <option value="레이싱">레이싱</option>
+          <option value="슈팅">슈팅</option>
+          <option value="액션">액션</option>
+          <option value="시뮬레이션">시뮬레이션</option>
+          <option value="RTS">RTS</option>
+          <option value="퍼즐">퍼즐</option>
+          <option value="리듬액션">리듬액션</option>
+          <option value="SNG">SNG</option>
+          <option value="AOS">AOS</option>
+          <option value="기타">기타</option>
+        </select>
+      </p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 찾기에 사용 할 질문 및 답변</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : <input type="text" name="pq" value="${login.p_q}"></p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : <input type="text" name="pa" value="${login.p_a}"></p>
@@ -116,7 +196,9 @@ function back(){
   </div>
 </div>
 <script>
-console.log(${login});
+$('select[name=genre1]').val('${login.genre1}').prop("selected",true);
+$('select[name=genre2]').val('${login.genre2}').prop("selected",true);
+$('select[name=genre3]').val('${login.genre3}').prop("selected",true);
 </script>
 </body>
 </html>

@@ -29,71 +29,71 @@ div.signup{
 <script>
 
 $(function(){
-$('form').on('submit',function(e){
-  let g1 = $('[name=genre1]').val();
-  let g2 = $('[name=genre2]').val();
-  let g3 = $('[name=genre3]').val();
-  if($('[name=u_id]').val()==''){
-    alert('아이디를 입력하세요.');
-    return false;
-  }
-  if($('[name=idCheckResult]').html()== "중복된 아이디입니다."){
-    alert('중복된 아이디 입니다. 다시 확인 해주세요.');
-    return false;
-  }
-  if($('[name=idCheckResult]').html()== ""){
-    alert('아이디 중복확인을 해주세요.');
-    return false;
-  }
-  if($('[name=pw]').val()==''){
-    alert('비밀번호를 입력하세요.');
-    return false;
-  }
-  if($('#pwCheckResult').html()== ""){
-    alert('비밀번호확인을 입력하지 않았습니다.');
-    return false;
-  }
-  if($('#pwCheckResult').html()== "비밀번호가 일치하지 않습니다."){
-    alert('비밀번호가 일치하지 않습니다.');
-    return false;
-  }
-  if($('[name=n_name]').val()==''){
-    alert('닉네임을 입력하세요.');
-    return false;
-  }
-  if($('[name=nnCheckResult]').html()== ""){
-    alert('닉네임 중복확인을 해주세요.');
-    return false;
-  }
-  if($('[name=nnCheckResult]').html()== "중복된 닉네임입니다."){
-    alert('중복된 닉네임입니다. 다시 확인 해주세요.');
-    return false;
-  }
-  if(g1==''){
-    alert('첫번째 장르를 선택해주세요.');
-    return false;
-  }
-  if(g2==''){
-    alert('두번째 장르를 선택해주세요.');
-    return false;
-  }
-  if(g3==''){
-    alert('세번째 장르를 선택해주세요.');
-    return false;
-  }
-  if(g1==g2 || g1==g3 || g2==g3){
-    alert('장르가 중복입니다. 다시 확인 해주세요.');
-    return false;
-  }
-  if($('[name=p_q]').val()==''){
-    alert('질문을 선택해주세요.');
-    return false;
-  }
-  if($('[name=p_a]').val()==''){
-    alert('답변을 입력해주세요.');
-    return false;
-  }
-});
+  $('form').on('submit',function(e){
+    let g1 = $('[name=genre1]').val();
+    let g2 = $('[name=genre2]').val();
+    let g3 = $('[name=genre3]').val();
+    if($('[name=u_id]').val()==''){
+      alert('아이디를 입력하세요.');
+      return false;
+    }
+    if($('[name=idCheckResult]').html()== "중복된 아이디입니다."){
+      alert('중복된 아이디 입니다. 다시 확인 해주세요.');
+      return false;
+    }
+    if($('[name=idCheckResult]').html()== ""){
+      alert('아이디 중복확인을 해주세요.');
+      return false;
+    }
+    if($('[name=pw]').val()==''){
+      alert('비밀번호를 입력하세요.');
+      return false;
+    }
+    if($('#pwCheckResult').html()== ""){
+      alert('비밀번호확인을 입력하지 않았습니다.');
+      return false;
+    }
+    if($('#pwCheckResult').html()== "비밀번호가 일치하지 않습니다."){
+      alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    if($('[name=n_name]').val()==''){
+      alert('닉네임을 입력하세요.');
+      return false;
+    }
+    if($('[name=nnCheckResult]').html()== ""){
+      alert('닉네임 중복확인을 해주세요.');
+      return false;
+    }
+    if($('[name=nnCheckResult]').html()== "중복된 닉네임입니다."){
+      alert('중복된 닉네임입니다. 다시 확인 해주세요.');
+      return false;
+    }
+    if(g1==''){
+      alert('첫번째 장르를 선택해주세요.');
+      return false;
+    }
+    if(g2==''){
+      alert('두번째 장르를 선택해주세요.');
+      return false;
+    }
+    if(g3==''){
+      alert('세번째 장르를 선택해주세요.');
+      return false;
+    }
+    if(g1==g2 || g1==g3 || g2==g3){
+      alert('장르가 중복입니다. 다시 확인 해주세요.');
+      return false;
+    }
+    if($('[name=p_q]').val()==''){
+      alert('질문을 선택해주세요.');
+      return false;
+    }
+    if($('[name=p_a]').val()==''){
+      alert('답변을 입력해주세요.');
+      return false;
+    }
+  });
 
   $('form').on('submit',function(e){
     if($('[name=u_id]').val()==''){
@@ -144,7 +144,7 @@ $('form').on('submit',function(e){
     } else{
       $('#pwCheckResult').html("비밀번호가 일치하지 않습니다.")
     }
-  })
+  });
 });
 
 </script>
@@ -177,9 +177,9 @@ $('form').on('submit',function(e){
         <button id="nnCheck">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p>비밀번호 : <input/ type="password" name="pw"></p>
+      <p>비밀번호 : <input type="password" name="pw"></p>
       <p>비밀번호 확인 : <input type="password" name="pwck"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
-      <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택 바랍니다.</p>
+      <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택 해주세요.</p>
       <p>선호 장르1 :
         <select name="genre1">
           <option value="">선호 장르1</option>

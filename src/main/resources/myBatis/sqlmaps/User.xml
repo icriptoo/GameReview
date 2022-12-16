@@ -57,6 +57,13 @@
         WHERE N_NAME = #{n_name}
     </select>
 
+    <select id="getuserId"
+            resultType="String">
+        SELECT U_ID
+        FROM USERS
+        WHERE N_NAME = #{n_name} AND EMAIL = #{email}
+    </select>
+
     <update id="UserUpdate">
         UPDATE USERS
            SET N_NAME = #{n_name},
@@ -77,8 +84,16 @@
 
     <insert id="UserInsert"
             parameterType="com.project.user.vo.UserVo">
-        INSERT INTO USERS (U_ID, PW, N_NAME, GENRE1, GENRE2, GENRE3, P_Q, P_A)
-                   VALUES (${u_id}, ${pw}, ${n_name}, ${genre1}, ${genre2}, ${genre3}, ${p_q}, ${p_a})
+        INSERT INTO USERS (
+        U_ID,
+        PW,
+        N_NAME,
+        GENRE1,
+        GENRE2,
+        GENRE3,
+        P_Q,
+        P_A)
+        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3}, #{p_q}, #{p_a})
     </insert>
 
 </mapper>

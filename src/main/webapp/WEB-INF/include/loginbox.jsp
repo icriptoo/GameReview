@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,16 +65,17 @@ h2{
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 
-var link = document.location.href;
+var next = document.location.href;
+
 function loginbtn(){
-  var url = "/login?link=" + link;
+  var url = "/login?next=" + next;
   location.href = url;
 }
 
 function logoutbtn(){
   let out = confirm("로그아웃을 하시겠습니까?");
   if (out){
-    var url = "/logout?link=" + link
+    var url = "/logout?next=" + next;
     location.href = url;
   }
 }
@@ -89,12 +90,13 @@ function logoutbtn(){
       <ul id="input_button">
         <br>
         <li id="login_btn">
+          <input type="hidden" name="next" value="">
           <button class="login" onclick="loginbtn()" style="font-size:15px;">로그인</button>
           <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
         </li>
       </ul>
       <ul id="btns">
-        <a href="javascript:void(window.open('findUserid', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디찾기 / 비밀번호 변경</a>
+        <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기 / 비밀번호 변경</a>
       </ul>
     </c:when>
     <c:otherwise>

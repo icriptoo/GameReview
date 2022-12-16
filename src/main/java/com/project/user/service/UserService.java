@@ -13,7 +13,7 @@ public interface UserService {
 
     Object getUser(Object login);
 
-    void userupdate(UserVo userVo);
+    void userupdate(HashMap<String, Object> userVo);
 
     void profileupdate(HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession);
 
@@ -22,4 +22,6 @@ public interface UserService {
     String nnCheck(HashMap<String, Object> map);
 
     void userInsert(HashMap<String, Object> map);
+
+    String getuserId(HashMap<String, Object> map);
 }

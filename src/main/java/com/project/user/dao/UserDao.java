@@ -8,7 +8,7 @@ public interface UserDao {
 
     UserVo login(HashMap<String, Object> map);
 
-    void userupdqte(UserVo userVo);
+    void userupdqte(HashMap<String, Object> map);
 
     Object getUser(Object login);
 
@@ -19,4 +19,6 @@ public interface UserDao {
     String nnCheck(HashMap<String, Object> map);
 
     void userInsert(HashMap<String, Object> map);
+
+    String getuserId(HashMap<String, Object> map);
 }

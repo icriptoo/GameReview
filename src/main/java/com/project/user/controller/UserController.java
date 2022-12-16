@@ -21,24 +21,35 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // 로그인 창 이동
     @RequestMapping("login")
-    public String login(){
-        return "/user/login";
+    public String login(@RequestParam HashMap<String, Object> map, Model model){
+        String url= "";
+        String next = (String) map.get("next");
+        String next1 = next.substring(21);
+        if(map.get("contentNum") != null) {
+            String conN = (String) map.get("contentNum");
+            url = next + "&contentNum=" + conN;
+            model.addAttribute("next",url);
+        }else {
+            model.addAttribute("next", next1);
+        }
+        return "user/login";
     }
+
+    // 로그인
     @RequestMapping("loginProcess")
     public String loginProcess(HttpSession httpSession, @RequestParam HashMap<String, Object> map, Model model){
 
         String returnURL = "";
-
         String next = (String) map.get("next");
-        String next1 = next.substring(21);
         String url = "";
-
+        model.addAttribute("next",next);
         if (map.get("contentNum") != null) {
-            String next2 = (String) map.get("contentNum");
-            url = next1 + "&contentNum=" + next2;
+            String next1 = (String) map.get("contentNum");
+            url = next + "&contentNum=" + next1;
         }else {
-            url = next1;
+            url = next;
         }
 
         if(httpSession.getAttribute("login") != null){
@@ -53,21 +64,19 @@ public class UserController {
             model.addAttribute("fail","로그인 실패");
             returnURL = "user/login";
         }
-
         return returnURL;
     }
 
+    // 로그아웃
     @RequestMapping(value = "/logout", method= {RequestMethod.GET})
     public String logout(HttpServletRequest request, @RequestParam HashMap<String,Object> map){
-
-        String next = (String) map.get("link");
-        String next1 = next.substring(21);
+        String next = (String) map.get("next");
         String url = "";
         if (map.get("contentNum") != null) {
-            String next2 = (String) map.get("contentNum");
-            url = next1 + "&contentNum=" + next2;
+            String next1 = (String) map.get("contentNum");
+            url = next + "&contentNum=" + next1;
         }else {
-            url = next1;
+            url = next;
         }
 
         HttpSession httpSession = request.getSession();
@@ -100,9 +109,9 @@ public class UserController {
 
     // 수정된 내 정보를 업데이트 후 업데이트된 내용을 마이페이지에 보여줌
     @RequestMapping("/user/profilupdate")
-    public ModelAndView profilupdate(UserVo userVo, HttpSession httpSession){
+    public ModelAndView profilupdate(@RequestParam HashMap<String, Object> map, HttpSession httpSession){
         ModelAndView mv = new ModelAndView();
-        userService.userupdate(userVo);
+        userService.userupdate(map);
         Object vo = userService.getUser(httpSession.getAttribute("login"));
 
         httpSession.removeAttribute("login");
@@ -119,11 +128,13 @@ public class UserController {
 
     // 선택한 프로필 사진 업데이트
     @RequestMapping("/profileupdate")
-    public String profileUpdate(@RequestParam HashMap<String, Object> map,
-                                HttpServletRequest request,
-                                HttpSession httpSession){
-
+    public String profileUpdate(@RequestParam HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession){
         userService.profileupdate(map, request, httpSession);
+        Object vo = userService.getUser(httpSession.getAttribute("login"));
+
+        httpSession.removeAttribute("login");
+        httpSession.setAttribute("login",vo);
+
         return "user/popupout";
     }
 
@@ -131,8 +142,9 @@ public class UserController {
     @RequestMapping("/signupform")
     public String SignUpForm(){ return "user/signup"; }
 
+    // 회원가입
     @RequestMapping("/signup")
-    public String SignUp(@RequestParam HashMap<String,Object> map){
+    public String SignUp(@RequestParam HashMap<String, Object> map){
         // 질문 if문으로 변환시킬것
         userService.userInsert(map);
         return "user/login";
@@ -166,6 +178,44 @@ public class UserController {
             return check;
         } else {
             check = "중복되지 않은 닉네임입니다.";
+            return check;
+        }
+    }
+
+    // 프로필 닉네임 중복확인
+    @RequestMapping(value="/user/nnCheck", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String pronnCheck(@RequestParam HashMap<String, Object> map){
+        String nnCheck = userService.nnCheck(map);
+        String check = "";
+
+        if (nnCheck != null){
+            check = "중복된 닉네임입니다.";
+            return check;
+        } else {
+            check = "중복되지 않은 닉네임입니다.";
+            return check;
+        }
+    }
+
+    // 아이디찾기 창 띄우기
+    @RequestMapping("/findUseridform")
+    public String findUserid(){
+        return "user/findUserid";
+    }
+
+    // 아이디찾기
+    @RequestMapping(value = "/getUserid", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String getuserId(@RequestParam HashMap<String, Object> map){
+        String uid = userService.getuserId(map);
+        String check = "";
+
+        if (uid != null){
+            check = "아이디는 " + uid +" 입니다.";
+            return check;
+        }else {
+            check = "아이디와 이메일을 확인 해주세요.";
             return check;
         }
     }

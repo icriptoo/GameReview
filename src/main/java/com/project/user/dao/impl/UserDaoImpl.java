@@ -21,8 +21,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void userupdqte(UserVo userVo) {
-        sqlSession.update("User.UserUpdate", userVo);
+    public void userupdqte(HashMap<String, Object> map) {
+        sqlSession.update("User.UserUpdate", map);
     }
 
     @Override
@@ -52,7 +52,6 @@ public class UserDaoImpl implements UserDao {
         UserVo nnck = sqlSession.selectOne("User.nnCheck",map);
         if(nnck != null){
             String check = nnck.getN_name();
-            System.out.println(check);
             return check;
         }else {
             return null;
@@ -61,6 +60,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void userInsert(HashMap<String, Object> map) {
-        sqlSession.insert("User.UserInsert",map);
+        sqlSession.insert("User.UserInsert", map);
+    }
+
+    @Override
+    public String getuserId(HashMap<String, Object> map) {
+        String uid = sqlSession.selectOne("User.getuserId",map);
+        if (uid != null){
+            return uid;
+        }else {
+            return null;
+        }
     }
 }

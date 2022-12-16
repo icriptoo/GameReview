@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void userupdate(UserVo userVo) {
-        userDao.userupdqte(userVo);
+    public void userupdate(HashMap<String, Object> map) {
+        userDao.userupdqte(map);
     }
 
     @Override
@@ -50,6 +50,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void userInsert(HashMap<String, Object> map) {
         userDao.userInsert(map);
+    }
+
+    @Override
+    public String getuserId(HashMap<String, Object> map) {
+        String uid = userDao.getuserId(map);
+        return uid;
     }
 
     @Override

@@ -28,7 +28,7 @@
     <bean id="dataSource"
     class="org.apache.commons.dbcp.BasicDataSource"
     destroy-method="close">
-       <property name="driverClassName"  value="oracle.jdbc.OracleDriver" />
+        <property name="driverClassName"  value="oracle.jdbc.OracleDriver" />
         <property name="url"              value="jdbc:oracle:thin:@tcps://adb.ap-seoul-1.oraclecloud.com/g3242ceedb0e814_project_high.adb.oraclecloud.com" />
         <property name="username"         value="admin" />
         <property name="password"         value="Readmilk12!@" />
