@@ -32,6 +32,8 @@ ul{
 }
 </style>
 </head>
+
+
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
@@ -84,7 +86,7 @@ ul{
           <tr>
           <th width="10%" style="text-align:center">번호</th>
           <th width="25%" style="text-align:center">제목</th>
-          <c:if test= "${boardList[0].menu_id eq 1}">
+          <c:if test= "${menu_id eq 1}">
             <th width="5%" style="text-align:center">평점</th>
           </c:if>
           <th width="10%" style="text-align:center">작성자</th>
@@ -95,8 +97,8 @@ ul{
           <c:forEach var="item" items="${boardList}" >
             <tr>
               <td width="10%" style="text-align:center">${item.b_idx}</td>
-              <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}">${item.title}</a></td>
-              <c:if test="${item.menu_id eq 1}">
+              <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+              <c:if test="${menu_id eq 1}">
                 <td width="5%" style="text-align:center">${item.r_score}</td>
               </c:if>
               <td width="5%" style="text-align:center">${item.u_id}</td>
@@ -148,10 +150,9 @@ ul{
                 </select>
                 <input id="keyword" class="keyword" type="text">
                 <button id="btnSearch" class="searchB">검색</button>
-              </td>
-              <td style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
-              <a href="/Board/RVBoardWriteForm?menu_id=MENU_03&pageNum=1&contentNum=10}"
-                class="write">할게요 새글쓰기</a>
+              </td >
+              <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
+              <button style="font-size:20px;" onClick="location.href='/boardWrite?'" >글쓰기</button>
               </td>
             </tr>
 

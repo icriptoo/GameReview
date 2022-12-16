@@ -22,3 +22,7 @@ Y
 )src/main/webapp/WEB-INF/include/menus.jsp,c\5\c5da3548492c56c3302a22029e7dfb09663ffaed
 \
 ,src/main/webapp/WEB-INF/include/loginbox.jsp,6\8\68fdaa87c9b41369a39d7822d5b9e5f40f8e08d9
+a
+1src/main/java/com/project/board/dao/BoardDao.java,d\7\d7e7c85b0cc0251bf8320e2f84bac1f6117c6013
+_
+/src/main/java/com/project/board/vo/BoardVo.java,1\2\1230c6fd9a8ddad6ed509f00050b8d2aebe159d8

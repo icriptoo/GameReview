@@ -31,16 +31,23 @@ public class BoardController {
         return "/home";
     }
 
+    //글작성화면
+    @RequestMapping("/boardWrite")
+    public String boardWrite(@RequestParam HashMap<String, Object> map, Model model){
+
+        return "/board/boardWrite";
+    }
+
     //게임리뷰목록
     @RequestMapping("/GameReviewList")
     public String gameReview(@RequestParam HashMap<String, Object> map, Model model){
         GameListVo gameListVo = boardService.getGame(map);
         List<BoardVo> boardList = boardService.getBoardList(map);
-        //System.out.println(gameListVo);
-        //System.out.println(boardList);
+        String menu_id = (String)map.get("menu_id");
 
 
         model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
+        model.addAttribute("menu_id", menu_id ); //메뉴정보
         model.addAttribute("boardList", boardList ); //해당게임리뷰목록 불러오기
 
         return "/board/GameReviewList";
@@ -51,9 +58,11 @@ public class BoardController {
     @RequestMapping("/View")
     public String view(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
-        System.out.println("글내용:" + boardVo);
+        String menu_id = (String)map.get("menu_id");
+        System.out.println("menu_id:" + menu_id);
 
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
+        model.addAttribute("menu_id", menu_id ); //메뉴정보
 
         return "/board/view";
     }
