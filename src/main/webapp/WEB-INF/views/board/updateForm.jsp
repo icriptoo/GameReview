@@ -47,7 +47,6 @@ td, th {
 
 </style>
 </head>
-
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
@@ -67,35 +66,53 @@ td, th {
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-
+  <form action = "/boardUpdate" method="POST" id="form1">
+    <input type="hidden" name="menu_id" value="${boardVo.menu_id}" />
+    <input type="hidden" name="u_id" value="admin" />
+    <input type="hidden" name="g_idx" value="${boardVo.g_idx}" />
+    <input type="hidden" name="b_idx" value="${boardVo.b_idx}" />
   <table >
 
       <tr>
         <th style= "width:6%; height:10%; text-align:center">제목</th>
-        <td>${boardVo.title}</td>
-      </tr>
-      <tr>
-        <th style= "width:6%; height:10%; text-align:center">작성자</th>
-        <td>${boardVo.u_id}</td>
+        <td><input  type="text" name="title" id="title" style="width:1000px ;font-size:15px;" value="${boardVo.title}" /></td>
       </tr>
       <tr>
           <th style="text-align:center">내용</th>
-          <td>${boardVo.cont}</td>
+          <td><input  type="text" name="cont" id="cont" style="width:1000px;height:400px;font-size:15px;" value="${boardVo.cont}" /></td>
       </tr>
-      <c:if test="${menu_id eq 1}">
-        <tr>
-          <th style=" height:10%; text-align:center">평점</th>
-          <td style="font-size:20px;">${boardVo.r_score}</td>
-        </tr>
-      </c:if>
+      <c:choose>
+      <c:when test="${menu_id eq 1}">
       <tr>
-        <td style="height:10%; text-align:right" colspan="2">
-          <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >수정</button>
-          <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >삭제</button>
-          <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}'" >목록으로</button>
+        <th style=" height:10%; text-align:center">평점</th>
+        <td style="font-size:20px;">
+          <select name="r_score" id="r_score">
+            <option value="${boardVo.r_score}" selected>${boardVo.r_score}</option>
+            <option value=1.0>1.0</option>
+            <option value=2.0>2.0</option>
+            <option value=3.0>3.0</option>
+            <option value=4.0>4.0</option>
+            <option value=5.0>5.0</option>
+            <option value=6.0>6.0</option>
+            <option value=7.0>7.0</option>
+            <option value=8.0>8.0</option>
+            <option value=9.0>9.0</option>
+            <option value=10.0>10.0</option>
+          </select>
+        </td>
+      </tr>
+      </c:when>
+      <c:otherwise>
+        <input type="hidden" name="r_score" value="0" />
+      </c:otherwise>
+      </c:choose>
+      <tr>
+        <td style="height:10%; text-align:center" colspan="2">
+          <input type="submit" value="저장" style="width:80px; height:40px; font-size:20px; float: center" />
           </td>
       </tr>
   </table>
+  </form>
 
 </div>
 

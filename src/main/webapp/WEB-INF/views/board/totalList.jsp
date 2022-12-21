@@ -58,34 +58,10 @@ ul{
 
   <table>
 
-    <div>
-        <tr onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1'">
-          <td>
-            <img src="${gameListVo.g_img}" alt="${gameListVo.g_name}" style="width: 165px; height: 115px;">
-          </td>
-          <td colspan="2">
-            <ul class="gList">
-              <li><strong>게임명 : </strong><span class="gName">${gameListVo.g_name}</span> <span class="eGName">${gameListVo.g_ename}</span></li>
-              <li><strong>장르명 : </strong>${gameListVo.g_genre}</li>
-              <li><strong>개발사 : </strong>${gameListVo.g_company}</li>
-              <li><strong>서비스 : </strong>${gameListVo.g_service}</li>
-              <li><strong>플랫폼 : </strong>${gameListVo.g_platform}</li>
-              <li><strong>출시일 : </strong>${gameListVo.g_date}</li>
-            </ul>
-          </td>
-        </tr>
-    </div>
-
-    <tr>
-      <th colspan="6" style="text-align:center">
-        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1'" >리뷰게시판</button>
-        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=2'" >자유게시판</button>
-      </th>
-    </tr>
-
           <tr>
           <th width="10%" style="text-align:center">번호</th>
-          <th width="25%" style="text-align:center">제목</th>
+          <th width="13%" style="text-align:center">제목</th>
+          <th width="12%" style="text-align:center">게임</th>
           <c:if test= "${menu_id eq 1}">
             <th width="5%" style="text-align:center">평점</th>
           </c:if>
@@ -97,7 +73,8 @@ ul{
           <c:forEach var="item" items="${boardList}" >
             <tr>
               <td width="10%" style="text-align:center">${item.b_idx}</td>
-              <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+              <td width="13%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+              <td width="12%" style="text-align:left">${item.g_name}</td>
               <c:if test="${menu_id eq 1}">
                 <td width="5%" style="text-align:center">${item.r_score}</td>
               </c:if>

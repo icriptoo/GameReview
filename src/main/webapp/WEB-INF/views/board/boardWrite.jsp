@@ -66,11 +66,10 @@ td, th {
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-  <form action = "/" method="POST" id="form1">
-    <input type="hidden" name="b_idx" value="${user_info.b_idx}" />
-    <input type="hidden" name="menu_id" value="${user_info.menu_id}" />
-    <input type="hidden" name="u_id" value="u_id" />
-    <input type="hidden" name="g_idx" value="${user_info.g_idx}" />
+  <form action = "/boardInsert" method="POST" id="form1">
+    <input type="hidden" name="menu_id" value="${menu_id}" />
+    <input type="hidden" name="u_id" value="admin" />
+    <input type="hidden" name="g_idx" value="${g_idx}" />
   <table >
 
       <tr>
@@ -81,6 +80,8 @@ td, th {
           <th style="text-align:center">내용</th>
           <td><input  type="text" name="cont" id="cont" style="width:1000px;height:400px;font-size:15px;" /></td>
       </tr>
+      <c:choose>
+      <c:when test="${menu_id eq 1}">
       <tr>
         <th style=" height:10%; text-align:center">평점</th>
         <td style="font-size:20px;">
@@ -99,6 +100,11 @@ td, th {
           </select>
         </td>
       </tr>
+      </c:when>
+      <c:otherwise>
+        <input type="hidden" name="r_score" value="0" />
+      </c:otherwise>
+      </c:choose>
       <tr>
         <td style="height:10%; text-align:center" colspan="2">
           <input type="submit" value="저장" style="width:80px; height:40px; font-size:20px; float: center" />

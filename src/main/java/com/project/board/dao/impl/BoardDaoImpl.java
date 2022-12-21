@@ -179,6 +179,22 @@ public class BoardDaoImpl implements BoardDao {
         return boardVo;
     }
 
+    @Override
+    public void boardDelete(HashMap<String, Object> map) {
+        sqlSession.delete( "Board.Delete",map);
+    }
+
+    @Override
+    public void boardInsert(HashMap<String, Object> map) {
+        sqlSession.insert("Board.BoardInsert", map);
+
+    }
+
+    @Override
+    public void boardUpdate(HashMap<String, Object> map) {
+        sqlSession.update("Board.BoardUpdate", map);
+    }
+
     // 전체게임리스트 뽑기
     @Override
     public List<GameListVo> GameListSelect(HashMap<String, Object> map) {

@@ -33,4 +33,10 @@ public interface BoardService {
     List<BoardVo> getBoardList(HashMap<String, Object> map);
 
     BoardVo getBoard(HashMap<String, Object> map);
+
+    void boardDelete(HashMap<String, Object> map);
+
+    void boardInsert(HashMap<String, Object> map);
+
+    void boardUpdate(HashMap<String, Object> map);
 }

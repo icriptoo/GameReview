@@ -34,6 +34,21 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void boardDelete(HashMap<String, Object> map) {
+        boardDao.boardDelete(map);
+    }
+
+    @Override
+    public void boardInsert(HashMap<String, Object> map) {
+        boardDao.boardInsert(map);
+    }
+
+    @Override
+    public void boardUpdate(HashMap<String, Object> map) {
+        boardDao.boardUpdate(map);
+    }
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
     @Override
     public void GameListDelete() { boardDao.GameListDelete(); }
