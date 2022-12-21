@@ -72,4 +72,10 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
     }
+
+    @Override
+    public String emailck(HashMap<String, Object> map) {
+        String eck = sqlSession.selectOne("User.getmail", map);
+        return eck;
+    }
 }

@@ -1,6 +1,8 @@
 package com.project.user.controller;
 
+import com.project.user.service.MailSendService;
 import com.project.user.service.UserService;
+import com.project.user.vo.EmailCodeCheck;
 import com.project.user.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 
 @Controller
@@ -21,6 +24,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MailSendService mailService;
     // 로그인 창 이동
     @RequestMapping("login")
     public String login(@RequestParam HashMap<String, Object> map, Model model){
@@ -128,7 +133,7 @@ public class UserController {
 
     // 선택한 프로필 사진 업데이트
     @RequestMapping("/profileupdate")
-    public String profileUpdate(@RequestParam HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession){
+    public String profileUpdate(@RequestParam HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession) throws IOException {
         userService.profileupdate(map, request, httpSession);
         Object vo = userService.getUser(httpSession.getAttribute("login"));
 
@@ -219,4 +224,41 @@ public class UserController {
             return check;
         }
     }
+
+    // 이메일 중복체크 후 인증번호 전송
+    @RequestMapping(value = "/user/email", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String email(@RequestParam HashMap<String, Object> map, Model model){
+        String email = (String) map.get("email");
+        String mse = "";
+        String eck = userService.emailck(map); // 이메일 중복확인
+        EmailCodeCheck vo = null;
+        if (eck != null) {
+            String num = mailService.joinEmail(eck);
+            mse = "인증번호가 발송 됐습니다.";
+        }else if(email == eck){
+            mse = "중복된 이메일입니다.";
+        }else {
+            mse = "이메일을 확인 해주세요.";
+        }
+        return mse;
+    }
+
+    // 인증번호 체크
+    @RequestMapping(value = "/user/ecodeck", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String ecodeck(@RequestParam HashMap<String, Object> map){
+        String ecode = (String) map.get("ecodeck");
+        EmailCodeCheck vo = null;
+        String mse = "";
+        if (ecode == vo.getEcode()){
+            mse = "인증번호가 일치합니다.";
+        }else {
+            mse = "인증번호가 일치하지 않습니다.";
+        }
+        return mse;
+    }
+
+
+
 }

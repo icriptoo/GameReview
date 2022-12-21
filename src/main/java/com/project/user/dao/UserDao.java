@@ -21,4 +21,6 @@ public interface UserDao {
     void userInsert(HashMap<String, Object> map);
 
     String getuserId(HashMap<String, Object> map);
+
+    String emailck(HashMap<String, Object> map);
 }

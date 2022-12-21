@@ -88,10 +88,43 @@ $(function(){
         $("#nnCheckResult").html(nnCheck);
       }
     })
-    e.preventDefault();
-    e.stopPropagation();
   });
 });
+
+$(function(){
+  $('#enumsend').on('click', function(e){
+    let email = $('input[name=email]').val();
+    $.ajax({
+      type : 'POST',
+      url : "email",
+      dataType : "text",
+      data : {
+        "email" : email
+      },
+      success : function(enumsend){
+        $('#enumsendResult span').html(enumsend);
+      }
+    });
+  });
+});
+
+$(function(){
+  $('#enumck').on('click',function(){
+    const ecodeck = $('input[name=emailcode]').val();
+    $.ajax({
+      type : 'POST',
+      url : "ecodeck",
+      dataType : "text",
+      data : {
+        "ecodeck" : ecodeck
+      },
+      success : function(en){
+        $('#enumckResult span').html(en);
+      }
+    });
+  });
+});
+
 </script>
 </head>
 <body class="w3-light-grey">
@@ -115,16 +148,33 @@ $(function(){
   <div class="mypage">
     <div class="profile">
       <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
-      <button name="update" onclick="update()">수정완료</a>
-      <button name="update" onclick="back()">취소하기</a>
+      <button name="update" onclick="update()">수정완료</button>
+      <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
     </div>
     <div class="mypagein">
       <input type="hidden" name="pw" value="${login.pw}">
       <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${login.u_id}" disabled></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${login.n_name}"><button id="nnCheck" name="nnCheck">중복확인</button>
-             <span id="nnCheckResult" name="nnCheckResult"></span></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 : <input type="text" name="email" value="${login.email}"><button name="emailck">인증번호전송</button></p>
-      <p>&nbsp;&nbsp;인증번호 : <input type="text" name="emailcode"></p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${login.n_name}">
+        <button id="nnCheck" name="nnCheck">중복확인</button>
+        <span id="nnCheckResult" name="nnCheckResult"></span>
+      </p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
+        <c:set var="email" value="${login.email}"/>
+        <c:choose>
+          <c:when test="${emile eq null}">
+            <input type="text" name="email" value="${login.email}">
+          </c:when>
+          <c:otherwise>
+            <input type="text" name="email">
+          </c:otherwise>
+        </c:choose>
+        <button id="enumsend" name="enumsend">인증번호전송</button>
+        <span id="enumsendResult" name="enumsendResult"></span>
+      </p>
+      <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해주세요." name="emailcode" id="emailcode">
+        <button name="enumck" id="enumck">인증하기</button>
+        <span id="enumckResult" name="enumckResult"></span>
+      </p>
       <p>선호 장르1 :
         <select name="genre1" id="genre1">
           <option value="">선호 장르1</option>

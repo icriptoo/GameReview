@@ -50,6 +50,13 @@
         WHERE U_ID = #{u_id}
     </select>
 
+    <select id="getmail"
+            resultType="String">
+        SELECT EMAIL
+        FROM USERS
+        WHERE EMAIL = #{email}
+    </select>
+
     <select id="nnCheck"
             resultType="com.project.user.vo.UserVo">
         SELECT N_NAME

@@ -1,7 +1,7 @@
 package com.project.user.service.impl;
 
-import com.project.user.service.PdsFile;
 import com.project.user.dao.UserDao;
+import com.project.user.service.PdsFile;
 import com.project.user.service.UserService;
 import com.project.user.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 
 @Service("UserService")
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void profileupdate(HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession) {
+    public void profileupdate(HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession) throws IOException {
         PdsFile.save(map, request, httpSession);
         userDao.profileupdate(map);
     }
@@ -56,6 +57,16 @@ public class UserServiceImpl implements UserService {
     public String getuserId(HashMap<String, Object> map) {
         String uid = userDao.getuserId(map);
         return uid;
+    }
+
+    @Override
+    public String emailck(HashMap<String, Object> map) {
+        String eck = userDao.emailck(map);
+        if (eck != null){
+            return eck;
+        }else {
+            return null;
+        }
     }
 
     @Override
