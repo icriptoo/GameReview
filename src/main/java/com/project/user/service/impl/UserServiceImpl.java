@@ -70,6 +70,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getpw(HashMap<String, Object> map) {
+        String pw = userDao.getpw(map);
+        return pw;
+    }
+
+    @Override
+    public String finduidck(HashMap<String, Object> map) {
+        String uid = userDao.finduidck(map);
+        return uid;
+    }
+
+    @Override
+    public String findpwck(HashMap<String, Object> map) {
+        String pw = userDao.findpwck(map);
+        return pw;
+    }
+
+    @Override
     public Object getUser(Object login) {
         Object getUser = userDao.getUser(login);
         return getUser;

@@ -13,8 +13,8 @@ import java.util.Random;
 public class MailSendService {
     @Autowired
     private JavaMailSenderImpl mailSender;
+
     private int authNumber;
-    // 난수 발생(여러분들 맘대러)
 
     public void makeRandomNumber() {
         // 난수의 범위 111111 ~ 999999 (6자리 난수)
@@ -36,7 +36,8 @@ public class MailSendService {
                         "<br>" +
                         "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
         mailSend(setFrom, toMail, title, content);
-        return Integer.toString(authNumber);
+        String ecode = String.valueOf(authNumber);
+        return ecode;
     }
 
     //이메일 전송 메소드

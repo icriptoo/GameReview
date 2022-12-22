@@ -2,7 +2,6 @@ package com.project.user.controller;
 
 import com.project.user.service.MailSendService;
 import com.project.user.service.UserService;
-import com.project.user.vo.EmailCodeCheck;
 import com.project.user.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +25,10 @@ public class UserController {
 
     @Autowired
     private MailSendService mailService;
+
+    // 이메일 인증번호 저장변수
+    private String ecode;
+
     // 로그인 창 이동
     @RequestMapping("login")
     public String login(@RequestParam HashMap<String, Object> map, Model model){
@@ -214,29 +217,97 @@ public class UserController {
     @ResponseBody
     public String getuserId(@RequestParam HashMap<String, Object> map){
         String uid = userService.getuserId(map);
-        String check = "";
+        String mse = "";
 
         if (uid != null){
-            check = "아이디는 " + uid +" 입니다.";
-            return check;
+            return mse = "아이디는 " + uid +" 입니다.";
         }else {
-            check = "아이디와 이메일을 확인 해주세요.";
-            return check;
+            return mse = "닉네임과 이메일을 다시 확인 해주세요.";
         }
     }
 
-    // 이메일 중복체크 후 인증번호 전송
+    // 비밀번호 찾기 창 띄우기
+    @RequestMapping("/findPasswordform")
+    public String findpassword(){ return "user/findPassword"; }
+
+    // 비밀번호 찾기
+    @RequestMapping(value = "/getPassword", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String getPassword(@RequestParam HashMap<String, Object> map){
+        String pw = userService.getpw(map);
+        String mse ="";
+
+        if (pw != null){
+            return mse = "비밀번호는 " + pw + " 입니다.";
+        }else {
+            return mse = "아이디와 이메일을 다시 확인 해주세요.";
+        }
+    }
+
+    // 아이디, 비밀번호 찾기 이메일 인증번호 전송
+    @RequestMapping(value = "/findemailck", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String findemailck(@RequestParam HashMap<String, Object> map){
+        ecode = "";
+        String email = (String) map.get("email"); // 입력한 이메일
+        String u_id = "";
+        String n_name = "";
+        String mse = "";
+        String eck = "";
+        if (map.get("u_id") != null){
+            u_id = (String) map.get("u_id");
+        } else if (map.get("n_name") != null){
+            n_name = (String) map.get("n_name");
+        }
+        if (n_name != ""){
+            eck = userService.finduidck(map);
+            if (eck != null) {
+                ecode = mailService.joinEmail(email);
+                mse = "인증번호가 발송 됐습니다.";
+            } else {
+                mse = "아이디와 이메일을 확인해주세요.";
+            }
+        }else if (u_id != ""){
+            eck = userService.findpwck(map);
+            if (eck != null) {
+                ecode = mailService.joinEmail(email);
+                mse = "인증번호가 발송 됐습니다.";
+            } else {
+                mse = "닉네임과 이메일을 확인해주세요.";
+            }
+        }
+        return mse;
+    }
+
+    // 아이디, 비밀번호 찾기 인증번호 체크
+    @RequestMapping(value = "/findecodeck", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String findecodeck(@RequestParam HashMap<String, Object> map){
+        String ecodeck = (String) map.get("ecodeck");
+        String mse = "";
+        if (ecodeck.equals(ecode)){
+            mse = "인증번호가 일치합니다.";
+        }else {
+            mse = "인증번호가 일치하지 않습니다.";
+        }
+        return mse;
+    }
+
+
+
+
+    // 마이 페이지 이메일등록 중복체크 후 인증번호 전송
     @RequestMapping(value = "/user/email", produces = "application/text; charset=UTF-8")
     @ResponseBody
-    public String email(@RequestParam HashMap<String, Object> map, Model model){
-        String email = (String) map.get("email");
+    public String email(@RequestParam HashMap<String, Object> map){
+        ecode = "";
+        String email = (String) map.get("email"); // 입력한 이메일
         String mse = "";
         String eck = userService.emailck(map); // 이메일 중복확인
-        EmailCodeCheck vo = null;
-        if (eck != null) {
-            String num = mailService.joinEmail(eck);
+        if (eck == null) {
+            ecode = mailService.joinEmail(email);
             mse = "인증번호가 발송 됐습니다.";
-        }else if(email == eck){
+        }else if(eck != null){
             mse = "중복된 이메일입니다.";
         }else {
             mse = "이메일을 확인 해주세요.";
@@ -248,10 +319,9 @@ public class UserController {
     @RequestMapping(value = "/user/ecodeck", produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String ecodeck(@RequestParam HashMap<String, Object> map){
-        String ecode = (String) map.get("ecodeck");
-        EmailCodeCheck vo = null;
+        String ecodeck = (String) map.get("ecodeck");
         String mse = "";
-        if (ecode == vo.getEcode()){
+        if (ecodeck.equals(ecode)){
             mse = "인증번호가 일치합니다.";
         }else {
             mse = "인증번호가 일치하지 않습니다.";

@@ -71,6 +71,27 @@
         WHERE N_NAME = #{n_name} AND EMAIL = #{email}
     </select>
 
+    <select id="getpw"
+            resultType="String">
+        SELECT PW
+        FROM USERS
+        WHERE U_ID = #{u_id} AND EMAIL = #{email}
+    </select>
+
+    <select id="finduid"
+            resultType="String">
+        SELECT U_ID
+        FROM USERS
+        WHERE N_NAME = #{n_name} AND EMAIL = #{email}
+    </select>
+
+    <select id="findpw"
+            resultType="String">
+        SELECT PW
+        FROM USERS
+        WHERE U_ID = #{u_id} AND EMAIL = #{email}
+    </select>
+
     <update id="UserUpdate">
         UPDATE USERS
            SET N_NAME = #{n_name},

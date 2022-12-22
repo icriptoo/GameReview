@@ -23,4 +23,10 @@ public interface UserDao {
     String getuserId(HashMap<String, Object> map);
 
     String emailck(HashMap<String, Object> map);
+
+    String getpw(HashMap<String, Object> map);
+
+    String finduidck(HashMap<String, Object> map);
+
+    String findpwck(HashMap<String, Object> map);
 }

@@ -22,6 +22,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void userupdqte(HashMap<String, Object> map) {
+        System.out.println(map);
         sqlSession.update("User.UserUpdate", map);
     }
 
@@ -77,5 +78,31 @@ public class UserDaoImpl implements UserDao {
     public String emailck(HashMap<String, Object> map) {
         String eck = sqlSession.selectOne("User.getmail", map);
         return eck;
+    }
+
+    @Override
+    public String getpw(HashMap<String, Object> map) {
+        String pw = sqlSession.selectOne("User.getpw");
+        return pw;
+    }
+
+    @Override
+    public String finduidck(HashMap<String, Object> map) {
+        String uid = sqlSession.selectOne("User.finduid",map);
+        if (uid != null){
+            return uid;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public String findpwck(HashMap<String, Object> map) {
+        String pw = sqlSession.selectOne("User.findpw",map);
+        if (pw != null){
+            return pw;
+        }else {
+            return null;
+        }
     }
 }

@@ -57,59 +57,126 @@ ul{
 }
 </style>
 <script>
-function update(){
-  var url = "/user/profilupdate?n_name="
-  var name = $('input[name=name]').val();
-  var email = $('input[name=email]').val();
-  var genre1 = $('select[name=genre1]').val();
-  var genre2 = $('select[name=genre2]').val();
-  var genre3 = $('select[name=genre3]').val();
-  var pq = $('input[name=pq]').val();
-  var pa = $('input[name=pa]').val();
-  var u_id = $('input[name=u_id]').val();;
-  var pw = $('input[name=pw]').val();;
-  location.href = url + name + "&email=" + email + "&genre1=" + genre1 + "&genre2=" + genre2 +"&genre3=" + genre3 + "&p_q=" + pq + "&p_a=" + pa + "&u_id=" + u_id + "&pw=" + pw;
-}
-function back(){
-  location.href = "/user/mypage";
-}
-
 $(function(){
+  $('form').on('submit',function(e){
+    const n_name = "${login.n_name}";
+    const cn_name = $('input[name=n_name]').val();
+    const email = "${login.email}";
+    const cemail = $('input[name=email]').val();
+    const g1 = $('[name=genre1]').val();
+    const g2 = $('[name=genre2]').val();
+    const g3 = $('[name=genre3]').val();
+    if(cn_name != n_name){
+      if($('[name=nnCheckResult]').text() == "중복된 닉네임입니다."){
+        alert('아이디 중복체크를 확인 해주세요.');
+        return false;
+      }
+      if($('[name=nnCheckResult]').text() == ""){
+        alert('아이디 중복체크를 해주세요.');
+        return false;
+      }
+    }
+    if(cemail != email){
+      if($('[name=enumsendResult]').text() == "중복된 이메일입니다."){
+        alert('이메일을 확인 해주세요.');
+        return false;
+      }
+      if($('[name=enumsendResult]').text() == ""){
+        alert('이메일을 확인 해주세요.');
+        return false;
+      }
+      if($('[name=enumsendResult]').text() == "이메일을 확인 해주세요."){
+        alert('이메일을 확인 해주세요.');
+        return false;
+      }
+      if($('[name=enumckResult]').text() == "인증번호가 발송 됐습니다."){
+        if($('[name=enumckResult]').text() == ""){
+          alert('인증번호를 입력해주세요.');
+          return false;
+        }
+        if($('[name=enumckResult]').text() == "인증번호가 일치하지 않습니다."){
+          alert('인증번호가 일치하지 않습니다.');
+          return false;
+        }
+      }
+    }
+    if(g1==''){
+      alert('첫번째 장르를 선택해주세요.');
+      return false;
+    }
+    if(g2==''){
+      alert('두번째 장르를 선택해주세요.');
+      return false;
+    }
+    if(g3==''){
+      alert('세번째 장르를 선택해주세요.');
+      return false;
+    }
+    if(g1==g2 || g1==g3 || g2==g3){
+      alert('장르가 중복입니다. 다시 확인 해주세요.');
+      return false;
+    }
+    if($('[name=p_q]').val() == ""){
+      alert('질문을 선택 해주세요.');
+      return false;
+    }
+    if($('[name=p_a]').val() == ""){
+      alert('답변을 입력 해주세요.');
+      return false;
+    }
+  });
+
+  function back(){
+    location.href = "/user/mypage";
+  }
+
   $('#nnCheck').on('click', function(e){
-    let n_name = $('input[name=n_name]').val();
-    $.ajax({
-      type : 'POST',
-      url : "nnCheck",
-      dataType : "text",
-      data : {
-        "n_name" : n_name
-      },
-      success : function(nnCheck){
-        $("#nnCheckResult").html(nnCheck);
-      }
-    })
+    const cn_name = $('input[name=n_name]').val();
+    const n_name = "${login.n_name}";
+    if(cn_name != n_name){
+      $.ajax({
+        type : 'POST',
+        url : "nnCheck",
+        dataType : "text",
+        data : {
+          "n_name" : cn_name
+        },
+        success : function(nnCheck){
+          $("#nnCheckResult").html(nnCheck);
+        }
+      })
+    } else{
+      alert('현재 닉네임과 동일한 닉네임입니다.');
+    }
+    e.preventDefault();
+    e.stopPropagation();
   });
-});
 
-$(function(){
   $('#enumsend').on('click', function(e){
-    let email = $('input[name=email]').val();
-    $.ajax({
-      type : 'POST',
-      url : "email",
-      dataType : "text",
-      data : {
-        "email" : email
-      },
-      success : function(enumsend){
-        $('#enumsendResult span').html(enumsend);
-      }
-    });
+    $("#enumsendResult").text("");
+    const cemail = $('input[name=email]').val();
+    const email = "${login.email}";
+    if(cemail != email){
+      $.ajax({
+        type : 'POST',
+        url : "email",
+        dataType : "text",
+        data : {
+          "email" : cemail
+        },
+        success : function(enumsend){
+          $("#enumsendResult").text(enumsend);
+        }
+      });
+    } else {
+      alert('현재 등록된 이메일과 같은 이메일 입니다.');
+    }
+    e.preventDefault();
+    e.stopPropagation();
   });
-});
 
-$(function(){
-  $('#enumck').on('click',function(){
+  $('#emailcode').keyup(function(){
+    $("#enumckResult").text("");
     const ecodeck = $('input[name=emailcode]').val();
     $.ajax({
       type : 'POST',
@@ -119,10 +186,11 @@ $(function(){
         "ecodeck" : ecodeck
       },
       success : function(en){
-        $('#enumckResult span').html(en);
+        $("#enumckResult").text(en);
       }
     });
   });
+
 });
 
 </script>
@@ -146,103 +214,105 @@ $(function(){
     </aside>
   </div>
   <div class="mypage">
-    <div class="profile">
-      <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
-      <button name="update" onclick="update()">수정완료</button>
-      <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
-    </div>
-    <div class="mypagein">
-      <input type="hidden" name="pw" value="${login.pw}">
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${login.u_id}" disabled></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${login.n_name}">
-        <button id="nnCheck" name="nnCheck">중복확인</button>
-        <span id="nnCheckResult" name="nnCheckResult"></span>
-      </p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
-        <c:set var="email" value="${login.email}"/>
-        <c:choose>
-          <c:when test="${emile eq null}">
-            <input type="text" name="email" value="${login.email}">
-          </c:when>
-          <c:otherwise>
-            <input type="text" name="email">
-          </c:otherwise>
-        </c:choose>
-        <button id="enumsend" name="enumsend">인증번호전송</button>
-        <span id="enumsendResult" name="enumsendResult"></span>
-      </p>
-      <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해주세요." name="emailcode" id="emailcode">
-        <button name="enumck" id="enumck">인증하기</button>
-        <span id="enumckResult" name="enumckResult"></span>
-      </p>
-      <p>선호 장르1 :
-        <select name="genre1" id="genre1">
-          <option value="">선호 장르1</option>
-          <option value="RPG">RPG</option>
-          <option value="어드벤쳐">어드벤쳐</option>
-          <option value="FPS">FPS</option>
-          <option value="스포츠">스포츠</option>
-          <option value="TCG">TCG</option>
-          <option value="보드">보드</option>
-          <option value="레이싱">레이싱</option>
-          <option value="슈팅">슈팅</option>
-          <option value="액션">액션</option>
-          <option value="시뮬레이션">시뮬레이션</option>
-          <option value="RTS">RTS</option>
-          <option value="퍼즐">퍼즐</option>
-          <option value="리듬액션">리듬액션</option>
-          <option value="SNG">SNG</option>
-          <option value="AOS">AOS</option>
-          <option value="기타">기타</option>
-        </select>
-      </p>
-      <p>선호 장르2 :
-        <select name="genre2" id="genre2">
-          <option value="">선호 장르2</option>
-          <option value="RPG">RPG</option>
-          <option value="어드벤쳐">어드벤쳐</option>
-          <option value="FPS">FPS</option>
-          <option value="스포츠">스포츠</option>
-          <option value="TCG">TCG</option>
-          <option value="보드">보드</option>
-          <option value="레이싱">레이싱</option>
-          <option value="슈팅">슈팅</option>
-          <option value="액션">액션</option>
-          <option value="시뮬레이션">시뮬레이션</option>
-          <option value="RTS">RTS</option>
-          <option value="퍼즐">퍼즐</option>
-          <option value="리듬액션">리듬액션</option>
-          <option value="SNG">SNG</option>
-          <option value="AOS">AOS</option>
-          <option value="기타">기타</option>
-        </select>
-      </p>
-      <p>선호 장르3 :
-        <select name="genre3" id="genre3">
-          <option value="">선호 장르3</option>
-          <option value="RPG">RPG</option>
-          <option value="어드벤쳐">어드벤쳐</option>
-          <option value="FPS">FPS</option>
-          <option value="스포츠">스포츠</option>
-          <option value="TCG">TCG</option>
-          <option value="보드">보드</option>
-          <option value="레이싱">레이싱</option>
-          <option value="슈팅">슈팅</option>
-          <option value="액션">액션</option>
-          <option value="시뮬레이션">시뮬레이션</option>
-          <option value="RTS">RTS</option>
-          <option value="퍼즐">퍼즐</option>
-          <option value="리듬액션">리듬액션</option>
-          <option value="SNG">SNG</option>
-          <option value="AOS">AOS</option>
-          <option value="기타">기타</option>
-        </select>
-      </p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 찾기에 사용 할 질문 및 답변</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : <input type="text" name="pq" value="${login.p_q}"></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : <input type="text" name="pa" value="${login.p_a}"></p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
-    </div>
+    <form action="/user/profilupdate" method="POST" encType = "multipart/form-data">
+      <div class="profile">
+        <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+        <button name="update">수정완료</button>
+        <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
+      </div>
+      <div class="mypagein">
+        <input type="hidden" name="pw" value="${login.pw}">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${login.u_id}" readonly/></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${login.n_name}"/>
+          <button id="nnCheck" name="nnCheck">중복확인</button>
+          <span id="nnCheckResult" name="nnCheckResult"></span>
+        </p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
+          <c:set var="email" value="${login.email}"/>
+          <c:choose>
+            <c:when test="${emile eq null}">
+              <input type="text" name="email" value="${login.email}">
+            </c:when>
+            <c:otherwise>
+              <input type="text" name="email">
+            </c:otherwise>
+          </c:choose>
+          <button id="enumsend" name="enumsend">인증번호전송</button>
+          <span id="enumsendResult" name="enumsendResult"></span>
+        </p>
+        <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해주세요." name="emailcode" id="emailcode">
+          <span id="enumckResult" name="enumckResult"></span>
+        </p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;선호 장르는 중복되지 않도록 선택 해주세요.</p>
+        <p>선호 장르1 :
+          <select name="genre1" id="genre1">
+            <option value="">선호 장르1</option>
+            <option value="RPG">RPG</option>
+            <option value="어드벤쳐">어드벤쳐</option>
+            <option value="FPS">FPS</option>
+            <option value="스포츠">스포츠</option>
+            <option value="TCG">TCG</option>
+            <option value="보드">보드</option>
+            <option value="레이싱">레이싱</option>
+            <option value="슈팅">슈팅</option>
+            <option value="액션">액션</option>
+            <option value="시뮬레이션">시뮬레이션</option>
+            <option value="RTS">RTS</option>
+            <option value="퍼즐">퍼즐</option>
+            <option value="리듬액션">리듬액션</option>
+            <option value="SNG">SNG</option>
+            <option value="AOS">AOS</option>
+            <option value="기타">기타</option>
+          </select>
+        </p>
+        <p>선호 장르2 :
+          <select name="genre2" id="genre2">
+            <option value="">선호 장르2</option>
+            <option value="RPG">RPG</option>
+            <option value="어드벤쳐">어드벤쳐</option>
+            <option value="FPS">FPS</option>
+            <option value="스포츠">스포츠</option>
+            <option value="TCG">TCG</option>
+            <option value="보드">보드</option>
+            <option value="레이싱">레이싱</option>
+            <option value="슈팅">슈팅</option>
+            <option value="액션">액션</option>
+            <option value="시뮬레이션">시뮬레이션</option>
+            <option value="RTS">RTS</option>
+            <option value="퍼즐">퍼즐</option>
+            <option value="리듬액션">리듬액션</option>
+            <option value="SNG">SNG</option>
+            <option value="AOS">AOS</option>
+            <option value="기타">기타</option>
+          </select>
+        </p>
+        <p>선호 장르3 :
+          <select name="genre3" id="genre3">
+            <option value="">선호 장르3</option>
+            <option value="RPG">RPG</option>
+            <option value="어드벤쳐">어드벤쳐</option>
+            <option value="FPS">FPS</option>
+            <option value="스포츠">스포츠</option>
+            <option value="TCG">TCG</option>
+            <option value="보드">보드</option>
+            <option value="레이싱">레이싱</option>
+            <option value="슈팅">슈팅</option>
+            <option value="액션">액션</option>
+            <option value="시뮬레이션">시뮬레이션</option>
+            <option value="RTS">RTS</option>
+            <option value="퍼즐">퍼즐</option>
+            <option value="리듬액션">리듬액션</option>
+            <option value="SNG">SNG</option>
+            <option value="AOS">AOS</option>
+            <option value="기타">기타</option>
+          </select>
+        </p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 찾기에 사용 할 질문 및 답변</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : <input type="text" name="p_q" value="${login.p_q}"></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : <input type="text" name="p_a" value="${login.p_a}"></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
+      </div>
+    </form>
   </div>
 </div>
 <script>

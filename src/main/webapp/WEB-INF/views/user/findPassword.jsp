@@ -11,18 +11,18 @@
 $(function(){
 
   $('#enumsend').on('click', function(e){
-    const n_name = $('input[name=n_name]').val();
+    const u_id = $('input[name=u_id]').val();
     const email = $('input[name=email]').val();
     $.ajax({
       type : 'POST',
       url : "findemailck",
       dataType : "text",
       data : {
-        "n_name" : n_name,
+        "u_id" : u_id,
         "email" : email
       },
-      success : function(u_id){
-        $("#enumsendResult").text(u_id);
+      success : function(pw){
+        $("#enumsendResult").text(pw);
       }
     });
     e.preventDefault();
@@ -45,9 +45,9 @@ $(function(){
     });
   });
 
-  $('#findu_id').on('click', function(e){
-    if($('[name=n_name]').val() == ""){
-      alert('닉네임을 입력 해주세요.');
+  $('#findwd').on('click', function(e){
+    if($('[name=u_id]').val() == ""){
+      alert('아이디을 입력 해주세요.');
       return false;
     }
     if($('[name=email]').val() == ""){
@@ -77,18 +77,18 @@ $(function(){
       }
     }
     if($('[name=enumckResult]').text() == "인증번호가 일치합니다."){
-      const n_name = $('input[name=n_name]').val();
+      const u_id = $('input[name=u_id]').val();
       const email = $('input[name=email]').val();
       $.ajax({
         type : 'POST',
-        url : "getUserid",
+        url : "getPassword",
         dataType : "text",
         data : {
-          "n_name" : n_name,
+          "u_id" : u_id,
           "email" : email
         },
-        success : function(getUserid){
-          $("#useridCheck").html(getUserid);
+        success : function(pw){
+          $("#useridCheck").html(pw);
         }
       });
     }
@@ -100,11 +100,11 @@ $(function(){
 </head>
 <body>
 <header>
-    <h1>아이디 찾기</h1>
+    <h1>비밀번호 찾기</h1>
 </header>
 <div style="height:70%">
   <p>
-    닉네임 <input id="n_name" name="n_name" type="text" style="width:50%"/>
+    아이디 <input id="u_id" name="u_id"" type="text" style="width:50%"/>
   </p>
   <p>
     이메일 <input id="email" name="email" type="text" style="width:50%"/>
@@ -119,7 +119,7 @@ $(function(){
     <span id="useridCheck" name="useridCheck"></span>
   </p>
   <p>
-    <button id="findu_id">찾기</button>
+    <button id="findwd">찾기</button>
   </p>
 </div>
 </body>
