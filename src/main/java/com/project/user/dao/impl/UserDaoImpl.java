@@ -22,7 +22,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void userupdqte(HashMap<String, Object> map) {
-        System.out.println(map);
         sqlSession.update("User.UserUpdate", map);
     }
 
@@ -82,7 +81,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public String getpw(HashMap<String, Object> map) {
-        String pw = sqlSession.selectOne("User.getpw");
+        String pw = sqlSession.selectOne("User.getpw",map);
         return pw;
     }
 

@@ -81,7 +81,11 @@ $(function(){
         alert('이메일을 확인 해주세요.');
         return false;
       }
-      if($('[name=enumsendResult]').text() == ""){
+      if($('[name=enumsendResult]').text() == "중복된 이메일입니다."){
+        alert('이메일을 확인 해주세요.');
+        return false;
+      }
+      if($('[name=enumsendResult]').text() == "올바른 이메일 형식이 아닙니다."){
         alert('이메일을 확인 해주세요.');
         return false;
       }
@@ -142,11 +146,11 @@ $(function(){
           "n_name" : cn_name
         },
         success : function(nnCheck){
-          $("#nnCheckResult").html(nnCheck);
+          $("#nnCheckResult").text(nnCheck);
         }
       })
     } else{
-      alert('현재 닉네임과 동일한 닉네임입니다.');
+     $("#nnCheckResult").text("현재 닉네임과 동일한 닉네임입니다.");
     }
     e.preventDefault();
     e.stopPropagation();
@@ -154,25 +158,39 @@ $(function(){
 
   $('#enumsend').on('click', function(e){
     $("#enumsendResult").text("");
+    const regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const cemail = $('input[name=email]').val();
     const email = "${login.email}";
-    if(cemail != email){
-      $.ajax({
-        type : 'POST',
-        url : "email",
-        dataType : "text",
-        data : {
-          "email" : cemail
-        },
-        success : function(enumsend){
-          $("#enumsendResult").text(enumsend);
-        }
-      });
-    } else {
-      alert('현재 등록된 이메일과 같은 이메일 입니다.');
+
+    if(cemail == ""){
+      $("#enumsendResult").text("이메일을 입력 해주세요.");
+      return false;
     }
-    e.preventDefault();
-    e.stopPropagation();
+
+    if(cemail == '' || cemail == 'undefined') return false;
+    if(cemail == email){
+      $("#enumsendResult").text("현재 이메일과 같은 이메일 입니다.");
+      return false;
+    } else {
+      if(cemail.match(regExp) != null || $("#enumsendResult").text() != "현재 이메일과 같은 이메일 입니다."){
+        $("#enumsendResult").text("올바른 이메일 형식이 맞습니다.");
+        $.ajax({
+          type : 'POST',
+          url : "email",
+          dataType : "text",
+          data : {
+            "email" : cemail
+          },
+          success : function(enumsend){
+            $("#enumsendResult").text(enumsend);
+          }
+        });
+        return false;
+      }else {
+        $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+        return false;
+      }
+    }
   });
 
   $('#emailcode').keyup(function(){

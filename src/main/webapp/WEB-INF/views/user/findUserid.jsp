@@ -9,22 +9,29 @@
 <title>아이디 찾기</title>
 <script>
 $(function(){
-
   $('#enumsend').on('click', function(e){
+    $("#enumsendResult").text("");
+    const regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     const n_name = $('input[name=n_name]').val();
     const email = $('input[name=email]').val();
-    $.ajax({
-      type : 'POST',
-      url : "findemailck",
-      dataType : "text",
-      data : {
-        "n_name" : n_name,
-        "email" : email
-      },
-      success : function(u_id){
-        $("#enumsendResult").text(u_id);
-      }
-    });
+
+    if(email.match(regExp) != null){
+      $("#enumckResult").text("");
+      $.ajax({
+        type : 'POST',
+        url : "findemailck",
+        dataType : "text",
+        data : {
+          "n_name" : n_name,
+          "email" : email
+        },
+        success : function(u_id){
+          $("#enumsendResult").text(u_id);
+        }
+      });
+    }else {
+      $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+    }
     e.preventDefault();
     e.stopPropagation();
   });

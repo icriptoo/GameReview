@@ -263,6 +263,7 @@ public class UserController {
             eck = userService.finduidck(map);
             if (eck != null) {
                 ecode = mailService.joinEmail(email);
+                System.out.println(ecode);
                 mse = "인증번호가 발송 됐습니다.";
             } else {
                 mse = "아이디와 이메일을 확인해주세요.";
@@ -271,6 +272,7 @@ public class UserController {
             eck = userService.findpwck(map);
             if (eck != null) {
                 ecode = mailService.joinEmail(email);
+                System.out.println(ecode);
                 mse = "인증번호가 발송 됐습니다.";
             } else {
                 mse = "닉네임과 이메일을 확인해주세요.";
@@ -293,9 +295,6 @@ public class UserController {
         return mse;
     }
 
-
-
-
     // 마이 페이지 이메일등록 중복체크 후 인증번호 전송
     @RequestMapping(value = "/user/email", produces = "application/text; charset=UTF-8")
     @ResponseBody
@@ -306,6 +305,7 @@ public class UserController {
         String eck = userService.emailck(map); // 이메일 중복확인
         if (eck == null) {
             ecode = mailService.joinEmail(email);
+            System.out.println(ecode);
             mse = "인증번호가 발송 됐습니다.";
         }else if(eck != null){
             mse = "중복된 이메일입니다.";
@@ -328,7 +328,4 @@ public class UserController {
         }
         return mse;
     }
-
-
-
 }
