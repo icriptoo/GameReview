@@ -47,13 +47,16 @@ public class BoardDaoImpl implements BoardDao {
             ArrayList<String> IM = new ArrayList<>();
             ArrayList<String> SC = new ArrayList<>();
             ArrayList<String> GR = new ArrayList<>();
+            ArrayList<Integer> In = new ArrayList<>();
+            int len = 0;
+            int de = 0;
 
-            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?page=" + k).get();
+            System.out.println(k);
+            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?page=" + k + "&of=post").get();
             // 게임명, 게임명(영문), 이미지, 평점, 게임정보 가져오기
             Elements elemG = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"game\"]");
             Elements elemGE = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"gameEn\"]");
             Elements elemIM = doc.select("td[class=\"thumb\"]").select("a[class=\"imgbox\"]").select("img");
-            Elements elemSC = doc.select("td[class=\"score\"]").select("div");
             Elements elemGR = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li");
 
             // 게임정보 저장
@@ -61,79 +64,80 @@ public class BoardDaoImpl implements BoardDao {
                 GR.add(e.text());
             }
 
-            int grC = 0;
-            // 장르명 저장
-            for (int i = 1; i <= GR.size(); i += 6) {
-                String[] Genre = GR.get(i).split(":");
-                map.put("gr" + grC, Genre[1]);
-                grC += 1;
-            }
+            len = GR.size() / 6;
 
-            int cpC = 0;
-            // 개발사 저장
-            for (int i = 2; i <= GR.size(); i += 6) {
-                String[] Genre = GR.get(i).split(":");
-                map.put("cp" + cpC, Genre[1]);
-                cpC += 1;
-            }
-
-            int svC = 0;
-            // 서비스 저장
-            for (int i = 3; i <= GR.size(); i += 6) {
-                String[] Genre = GR.get(i).split(":");
-                map.put("sv" + svC, Genre[1]);
-                svC += 1;
-            }
-
-            int pfC = 0;
-            // 플랫폼 저장
-            for (int i = 4; i <= GR.size(); i += 6) {
-                String[] Genre = GR.get(i).split(":");
-                map.put("pf" + pfC, Genre[1]);
-                pfC += 1;
-            }
-
-            int idC = 0;
-            // 출시일 저장
-            for (int i = 5; i <= GR.size(); i += 6) {
-                String[] Genre = GR.get(i).split(":");
-                map.put("id" + idC, Genre[1]);
-                idC += 1;
-            }
-
-            // 게임이미지 저장
-            for (Element e : elemIM) {
-                IM.add(e.attr("src"));
-            }
-            for (int j = 0; j < IM.size(); j++) {
-                map.put("im" + j, IM.get(j));
-            }
-
-            // 평점 저장
-            for (Element e : elemSC) {
-                SC.add(e.text());
-            }
-            for (int j = 0; j < IM.size(); j++) {
-                map.put("sc" + j, SC.get(j));
-            }
+//            Elements elemSC = doc.select("td[class=\"score\"]").select("div");
+//            // 평점 저장
+//            for (Element e : elemSC) {
+//                SC.add(e.text());
+//            }
+//            for (int j = 0; j < GR.size(); j++) {
+//                map.put("sc" + j, SC.get(j));
+//            }
 
             // 게임명 저장
             for (Element e : elemG) {
                 G.add(e.text());
             }
-            for (int j = 0; j < IM.size(); j++) {
-                map.put("g" + j, G.get(j));
+            // 게임이미지 저장
+            for (Element e : elemIM) {
+                IM.add(e.attr("src"));
             }
-
             // 영문게임명 저장
             for (Element e : elemGE) {
                 GE.add(e.text());
             }
-            for (int j = 0; j < IM.size(); j++) {
-                map.put("ge" + j, GE.get(j));
+            // 장르명 저장
+            int grC = 0;
+            // 개발사 저장
+            int cpC = 0;
+            // 서비스 저장
+            int svC = 0;
+            // 플랫폼 저장
+            int pfC = 0;
+            // 출시일 저장
+            int idC = 0;
+
+            int i = 1;
+
+            for (int j = 0; j < len; j++) {
+                map.put("test" + j, G.get(j));
+                if (G.get(j).equals("삭제")){
+                    de = 1;
+                }
+                String ji = sqlSession.selectOne("Game.Se" + j, map.get("test" + j));
+                if (ji == null || de == 1) {
+                    In.add(j);
+                    map.put("g" + j, G.get(j));
+                    map.put("im" + j, IM.get(j));
+                    map.put("ge" + j, GE.get(j));
+                    String[] Genre = GR.get(i).split(":");
+                    String[] Company = GR.get(i + 1).split(":");
+                    String[] Service = GR.get(i + 2).split(":");
+                    String[] FlatForm = GR.get(i + 3).split(":");
+                    String[] Date = GR.get(i + 4).split(":");
+
+                    map.put("gr" + grC, Genre[1]);
+                    map.put("cp" + cpC, Company[1]);
+                    map.put("sv" + svC, Service[1]);
+                    map.put("pf" + pfC, FlatForm[1]);
+                    map.put("id" + idC, Date[1]);
+                }
+                map.remove("test"+j);
+
+                grC += 1;
+                cpC += 1;
+                svC += 1;
+                pfC += 1;
+                idC += 1;
+
+                i += 6;
             }
-            for (int i = 0; i <= (GR.size()/6)-1; i++) {
-                sqlSession.insert("Game.G" + i, map);
+
+            if (In.size() > 0) {
+                for (int a = 0; a <= In.size(); a++) {
+                        sqlSession.insert("Game.G" + In.get(a), map);
+                }
             }
         }
     }

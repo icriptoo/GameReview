@@ -5,6 +5,13 @@
 
 <mapper namespace="Game">
 
+    <select id="DeSe"
+            resultType="int">
+        SELECT COUNT(*)
+          FROM GAMELIST
+         WHERE G_NAME = ${de}
+    </select>
+
     <select id="GCount"
             resultType="int">
         SELECT COUNT(*)
@@ -90,154 +97,359 @@
         DELETE FROM GAMELIST WHERE G_IDX > 0
     </delete>
 
+    <delete id="De">
+        DELETE FROM GAMELIST WHERE G_NAME = ${de}
+    </delete>
+
     <insert id="G0" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_SCORE, G_IMG)
-              VALUES(GAME_N.NEXTVAL, #{g0}, #{ge0}, #{gr0}, #{cp0}, #{sv0}, #{pf0}, #{id0}, #{sc0}, #{im0})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+              VALUES(GAME_N.NEXTVAL, #{g0}, #{ge0}, #{gr0}, #{cp0}, #{sv0}, #{pf0}, #{id0}, #{im0})
     </insert>
 
     <insert id="G1" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g1}, #{ge1}, #{gr1}, #{sc1}, #{im1}, #{cp1}, #{sv1}, #{pf1}, #{id1})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g1}, #{ge1}, #{gr1}, #{cp1}, #{sv1}, #{pf1}, #{id1}, #{im1})
     </insert>
 
     <insert id="G2" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g2}, #{ge2}, #{gr2}, #{sc2}, #{im2}, #{cp2}, #{sv2}, #{pf2}, #{id2})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g2}, #{ge2}, #{gr2}, #{cp2}, #{sv2}, #{pf2}, #{id2}, #{im2})
     </insert>
 
     <insert id="G3" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g3}, #{ge3}, #{gr3}, #{sc3}, #{im3}, #{cp3}, #{sv3}, #{pf3}, #{id3})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g3}, #{ge3}, #{gr3}, #{cp3}, #{sv3}, #{pf3}, #{id3}, #{im3})
     </insert>
 
     <insert id="G4" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g4}, #{ge4}, #{gr4}, #{sc4}, #{im4}, #{cp4}, #{sv4}, #{pf4}, #{id4})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g4}, #{ge4}, #{gr4}, #{cp4}, #{sv4}, #{pf4}, #{id4}, #{im4})
     </insert>
 
     <insert id="G5" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g5}, #{ge5}, #{gr5}, #{sc5}, #{im5}, #{cp5}, #{sv5}, #{pf5}, #{id5})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g5}, #{ge5}, #{gr5}, #{cp5}, #{sv5}, #{pf5}, #{id5}, #{im5})
     </insert>
 
     <insert id="G6" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g6}, #{ge6}, #{gr6}, #{sc6}, #{im6}, #{cp6}, #{sv6}, #{pf6}, #{id6})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g6}, #{ge6}, #{gr6}, #{cp6}, #{sv6}, #{pf6}, #{id6}, #{im6})
     </insert>
 
     <insert id="G7" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g7}, #{ge7}, #{gr7}, #{sc7}, #{im7}, #{cp7}, #{sv7}, #{pf7}, #{id7})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g7}, #{ge7}, #{gr7}, #{cp7}, #{sv7}, #{pf7}, #{id7}, #{im7})
     </insert>
 
     <insert id="G8" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g8}, #{ge8}, #{gr8}, #{sc8}, #{im8}, #{cp8}, #{sv8}, #{pf8}, #{id8})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g8}, #{ge8}, #{gr8}, #{cp8}, #{sv8}, #{pf8}, #{id8}, #{im8})
     </insert>
 
     <insert id="G9" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g9}, #{ge9}, #{gr9}, #{sc9}, #{im9}, #{cp9}, #{sv9}, #{pf9}, #{id9})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g9}, #{ge9}, #{gr9}, #{cp9}, #{sv9}, #{pf9}, #{id9}, #{im9})
     </insert>
 
     <insert id="G10" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g10}, #{ge10}, #{gr10}, #{sc10}, #{im10}, #{cp10}, #{sv10}, #{pf10}, #{id10})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g10}, #{ge10}, #{gr10}, #{cp10}, #{sv10}, #{pf10}, #{id10}, #{im10})
     </insert>
 
     <insert id="G11" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g11}, #{ge11}, #{gr11}, #{sc11}, #{im11}, #{cp11}, #{sv11}, #{pf11}, #{id11})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g11}, #{ge11}, #{gr11}, #{cp11}, #{sv11}, #{pf11}, #{id11}, #{im11})
     </insert>
 
     <insert id="G12" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g12}, #{ge12}, #{gr12}, #{sc12}, #{im12}, #{cp12}, #{sv12}, #{pf12}, #{id12})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g12}, #{ge12}, #{gr12}, #{cp12}, #{sv12}, #{pf12}, #{id12}, #{im12})
     </insert>
 
     <insert id="G13" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g13}, #{ge13}, #{gr13}, #{sc13}, #{im13}, #{cp13}, #{sv13}, #{pf13}, #{id13})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g13}, #{ge13}, #{gr13}, #{cp13}, #{sv13}, #{pf13}, #{id13}, #{im13})
     </insert>
 
     <insert id="G14" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g14}, #{ge14}, #{gr14}, #{sc14}, #{im14}, #{cp14}, #{sv14}, #{pf14}, #{id14})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g14}, #{ge14}, #{gr14}, #{cp14}, #{sv14}, #{pf14}, #{id14}, #{im14})
     </insert>
 
     <insert id="G15" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g15}, #{ge15}, #{gr15}, #{sc15}, #{im15}, #{cp15}, #{sv15}, #{pf15}, #{id15})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g15}, #{ge15}, #{gr15}, #{cp15}, #{sv15}, #{pf15}, #{id15}, #{im15})
     </insert>
 
     <insert id="G16" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g16}, #{ge16}, #{gr16}, #{sc16}, #{im16}, #{cp16}, #{sv16}, #{pf16}, #{id16})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g16}, #{ge16}, #{gr16}, #{cp16}, #{sv16}, #{pf16}, #{id16}, #{im16})
     </insert>
 
     <insert id="G17" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g17}, #{ge17}, #{gr17}, #{sc17}, #{im17}, #{cp17}, #{sv17}, #{pf17}, #{id17})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g17}, #{ge17}, #{gr17}, #{cp17}, #{sv17}, #{pf17}, #{id17}, #{im17})
     </insert>
 
     <insert id="G18" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g18}, #{ge18}, #{gr18}, #{sc18}, #{im18}, #{cp18}, #{sv18}, #{pf18}, #{id18})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g18}, #{ge18}, #{gr18}, #{cp18}, #{sv18}, #{pf18}, #{id18}, #{im18})
     </insert>
 
     <insert id="G19" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g19}, #{ge19}, #{gr19}, #{sc19}, #{im19}, #{cp19}, #{sv19}, #{pf19}, #{id19})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g19}, #{ge19}, #{gr19}, #{cp19}, #{sv19}, #{pf19}, #{id19}, #{im19})
     </insert>
 
     <insert id="G20" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g20}, #{ge20}, #{gr20}, #{sc20}, #{im20}, #{cp20}, #{sv20}, #{pf20}, #{id20})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g20}, #{ge20}, #{gr20}, #{cp20}, #{sv20}, #{pf20}, #{id20}, #{im20})
     </insert>
 
     <insert id="G21" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g21}, #{ge21}, #{gr21}, #{sc21}, #{im21}, #{cp21}, #{sv21}, #{pf21}, #{id21})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g21}, #{ge21}, #{gr21}, #{cp21}, #{sv21}, #{pf21}, #{id21}, #{im21})
     </insert>
 
     <insert id="G22" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g22}, #{ge22}, #{gr22}, #{sc22}, #{im22}, #{cp22}, #{sv22}, #{pf22}, #{id22})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g22}, #{ge22}, #{gr22}, #{cp22}, #{sv22}, #{pf22}, #{id22}, #{im22})
     </insert>
 
     <insert id="G23" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g23}, #{ge23}, #{gr23}, #{sc23}, #{im23}, #{cp23}, #{sv23}, #{pf23}, #{id23})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g23}, #{ge23}, #{gr23}, #{cp23}, #{sv23}, #{pf23}, #{id23}, #{im23})
     </insert>
 
     <insert id="G24" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g24}, #{ge24}, #{gr24}, #{sc24}, #{im24}, #{cp24}, #{sv24}, #{pf24}, #{id24})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g24}, #{ge24}, #{gr24}, #{cp24}, #{sv24}, #{pf24}, #{id24}, #{im24})
     </insert>
 
     <insert id="G25" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g25}, #{ge25}, #{gr25}, #{sc25}, #{im25}, #{cp25}, #{sv25}, #{pf25}, #{id25})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g25}, #{ge25}, #{gr25}, #{cp25}, #{sv25}, #{pf25}, #{id25}, #{im25})
     </insert>
 
     <insert id="G26" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g26}, #{ge26}, #{gr26}, #{sc26}, #{im26}, #{cp26}, #{sv26}, #{pf26}, #{id26})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g26}, #{ge26}, #{gr26}, #{cp26}, #{sv26}, #{pf26}, #{id26}, #{im26})
     </insert>
 
     <insert id="G27" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g27}, #{ge27}, #{gr27}, #{sc27}, #{im27}, #{cp27}, #{sv27}, #{pf27}, #{id27})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g27}, #{ge27}, #{gr27}, #{cp27}, #{sv27}, #{pf27}, #{id27}, #{im27})
     </insert>
 
     <insert id="G28" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g28}, #{ge28}, #{gr28}, #{sc28}, #{im28}, #{cp28}, #{sv28}, #{pf28}, #{id28})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g28}, #{ge28}, #{gr28}, #{cp28}, #{sv28}, #{pf28}, #{id28}, #{im28})
     </insert>
 
     <insert id="G29" parameterType="com.project.board.vo.BoardVo">
-        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_SCORE, G_IMG, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE)
-        VALUES(GAME_N.NEXTVAL, #{g29}, #{ge29}, #{gr29}, #{sc29}, #{im29}, #{cp29}, #{sv29}, #{pf29}, #{id29})
+        INSERT INTO GAMELIST (G_IDX, G_NAME, G_ENAME, G_GENRE, G_COMPANY, G_SERVICE, G_PLATFORM, G_DATE, G_IMG)
+        VALUES(GAME_N.NEXTVAL, #{g29}, #{ge29}, #{gr29}, #{cp29}, #{sv29}, #{pf29}, #{id29}, #{im29})
     </insert>
+
+    <select id="Se0"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test0}
+    </select>
+
+    <select id="Se1"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test1}
+    </select>
+
+    <select id="Se2"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test2}
+    </select>
+
+    <select id="Se3"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test3}
+    </select>
+
+    <select id="Se4"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test4}
+    </select>
+
+    <select id="Se5"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test5}
+    </select>
+
+    <select id="Se6"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test6}
+    </select>
+
+    <select id="Se7"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test7}
+    </select>
+
+    <select id="Se8"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test8}
+    </select>
+
+    <select id="Se9"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test9}
+    </select>
+
+    <select id="Se10"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test10}
+    </select>
+
+    <select id="Se11"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test11}
+    </select>
+
+    <select id="Se12"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test12}
+    </select>
+
+    <select id="Se13"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test13}
+    </select>
+
+    <select id="Se14"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test14}
+    </select>
+
+    <select id="Se15"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test15}
+    </select>
+
+    <select id="Se16"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test16}
+    </select>
+
+    <select id="Se17"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test17}
+    </select>
+
+    <select id="Se18"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test18}
+    </select>
+
+    <select id="Se19"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test19}
+    </select>
+
+    <select id="Se20"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test20}
+    </select>
+    <select id="Se21"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test21}
+    </select>
+    <select id="Se22"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test22}
+    </select>
+    <select id="Se23"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test23}
+    </select>
+    <select id="Se24"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test24}
+    </select>
+    <select id="Se25"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test25}
+    </select>
+    <select id="Se26"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test26}
+    </select>
+    <select id="Se27"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test27}
+    </select>
+    <select id="Se28"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test28}
+    </select>
+    <select id="Se29"
+            resultType="String">
+        SELECT G_NAME
+        FROM GAMELIST
+        WHERE G_NAME = #{test29}
+    </select>
 
 </mapper>
