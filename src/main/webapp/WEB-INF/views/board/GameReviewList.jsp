@@ -73,6 +73,9 @@ ul{
               <li><strong>출시일 : </strong>${gameListVo.g_date}</li>
             </ul>
           </td>
+          <td style="font-size:20px;">
+            평점 : ${gameListVo.g_score}
+          </td>
         </tr>
     </div>
 

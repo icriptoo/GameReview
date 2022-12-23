@@ -10,10 +10,10 @@ public class GameListVo {
     private String g_service;
     private String g_platform;
     private String g_date;
-    private String g_score;
+    private double g_score;
     private String g_img;
 
-    public GameListVo(int g_idx, String g_name, String g_ename, String g_genre, String g_company, String g_service, String g_platform, String g_date, String g_score, String g_img) {
+    public GameListVo(int g_idx, String g_name, String g_ename, String g_genre, String g_company, String g_service, String g_platform, String g_date, double g_score, String g_img) {
         this.g_idx = g_idx;
         this.g_name = g_name;
         this.g_ename = g_ename;
@@ -92,11 +92,11 @@ public class GameListVo {
         this.g_date = g_date;
     }
 
-    public String getG_score() {
+    public double getG_score() {
         return g_score;
     }
 
-    public void setG_score(String g_score) {
+    public void setG_score(double g_score) {
         this.g_score = g_score;
     }
 

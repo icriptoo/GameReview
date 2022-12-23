@@ -10,6 +10,25 @@
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+  function check_onclick(){
+  		theForm=document.form1;
+
+  		if(theForm.title.value==""){
+  			alert("제목을 입력해주세요.");
+  			return false;
+  		}
+  		if(theForm.cont.value==""){
+  			alert("내용을 입력해주세요.");
+  			return false;
+  		}
+  		if(theForm.r_score.value=="none"){
+  			alert("평점을 입력해주세요.");
+  			return false;
+  		}
+
+  	}
+</script>
 <title>Insert title here</title>
 <style>
 
@@ -66,11 +85,11 @@ td, th {
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-  <form action = "/boardInsert" method="POST" id="form1">
+  <form action = "/boardInsert" method="POST" name="form1" id="form1">
     <input type="hidden" name="menu_id" value="${menu_id}" />
     <input type="hidden" name="u_id" value="admin" />
     <input type="hidden" name="g_idx" value="${g_idx}" />
-  <table >
+  <table>
 
       <tr>
         <th style= "width:6%; height:10%; text-align:center">제목</th>
@@ -107,7 +126,7 @@ td, th {
       </c:choose>
       <tr>
         <td style="height:10%; text-align:center" colspan="2">
-          <input type="submit" value="저장" style="width:80px; height:40px; font-size:20px; float: center" />
+          <input type="submit" value="저장" style="width:80px; height:40px; font-size:20px; float: center" onclick="return check_onclick()" />
           </td>
       </tr>
   </table>

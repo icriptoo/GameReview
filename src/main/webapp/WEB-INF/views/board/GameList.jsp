@@ -119,6 +119,9 @@ function btnGSearch(e){
               <li><strong>출시일 : </strong>${list.g_date}</li>
             </ul>
           </td>
+          <td style="font-size:20px;">
+            평점 : ${list.g_score}
+          </td>
         </tr>
       </c:forEach>
       <c:choose>

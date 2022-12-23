@@ -45,7 +45,16 @@
     <!-- 글 목록 불러오기 -->
     <select id="List"
             resultType="com.project.board.vo.BoardVo">
-        select  a.b_idx,
+        <choose>
+            <when test="g_idx != null">
+                select *
+                  from board
+                 where g_idx = #{g_idx}
+                   and menu_id = #{menu_id}
+                 order by b_idx desc
+            </when>
+            <otherwise>
+                select  a.b_idx,
                 a.title,
                 a.cont,
                 a.r_score,
@@ -55,16 +64,13 @@
                 b.g_name,
                 a.g_idx,
                 a.u_id
-        from  board a
-        inner join gamelist b
-        on a.g_idx = b.g_idx
-        where
-        <if test="g_idx != null">
-            g_idx   = #{g_idx}
-            and
-        </if>
-        menu_id = #{menu_id}
-        order by b_idx desc
+                from  board a
+                inner join gamelist b
+                on a.g_idx = b.g_idx
+                where menu_id = #{menu_id}
+                order by b_idx desc
+            </otherwise>
+        </choose>
     </select>
 
     <!-- 글 불러오기 -->
@@ -74,6 +80,13 @@
         from board
         where b_idx = #{b_idx}
     </select>
+
+    <!-- 조회수 증가 -->
+    <update  id="ReadCountUpdate">
+        update board
+        set  b_count = b_count + 1
+        where b_idx = #{b_idx}
+    </update>
 
     <!-- 글 삭제하기 -->
     <delete id="Delete">

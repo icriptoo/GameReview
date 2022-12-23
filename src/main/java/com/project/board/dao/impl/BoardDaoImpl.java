@@ -175,6 +175,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public BoardVo getBoard(HashMap<String, Object> map) {
+        sqlSession.update("Board.ReadCountUpdate", map );
         BoardVo boardVo = sqlSession.selectOne("Board.View", map);
         return boardVo;
     }
@@ -186,13 +187,16 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public void boardInsert(HashMap<String, Object> map) {
+        System.out.println("다오:" + map);
         sqlSession.insert("Board.BoardInsert", map);
+        sqlSession.update("Game.ScoreUpdate", map);
 
     }
 
     @Override
     public void boardUpdate(HashMap<String, Object> map) {
         sqlSession.update("Board.BoardUpdate", map);
+        sqlSession.update("Game.ScoreUpdate", map);
     }
 
     // 전체게임리스트 뽑기

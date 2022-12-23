@@ -5,6 +5,18 @@
 
 <mapper namespace="Game">
 
+    <!-- 게임 평점 업데이트 -->
+    <update  id="ScoreUpdate">
+        UPDATE GAMELIST
+           SET G_SCORE =(
+                  SELECT AVG(R_SCORE)
+                    FROM BOARD
+                   WHERE G_IDX = #{g_idx}
+                     AND MENU_ID = 1
+               )
+         WHERE G_IDX = #{g_idx}
+    </update>
+
     <select id="GCount"
             resultType="int">
         SELECT COUNT(*)
@@ -28,48 +40,50 @@
     <select id="GetGame"
             resultType="com.project.board.vo.GameListVo">
         SELECT *
-        FROM GAMELIST
-        WHERE G_IDX = #{g_idx}
+          FROM GAMELIST
+         WHERE G_IDX = #{g_idx}
     </select>
 
     <select id="GameLS"
             resultType="com.project.board.vo.GameListVo">
         SELECT *
-        FROM (
-        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX ASC) RNUM,
-        G_IDX,
-        G_NAME,
-        G_ENAME,
-        G_GENRE,
-        G_COMPANY,
-        G_SERVICE,
-        G_PLATFORM,
-        G_DATE,
-        G_SCORE,
-        G_IMG
-        FROM GAMELIST
-        WHERE G_NAME LIKE '%'||#{gameName}||'%'
-        ORDER BY G_IDX ASC)
-        WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
+          FROM (
+             SELECT ROW_NUMBER() OVER (ORDER BY G_IDX ASC) RNUM,
+                    G_IDX,
+                    G_NAME,
+                    G_ENAME,
+                    G_GENRE,
+                    G_COMPANY,
+                    G_SERVICE,
+                    G_PLATFORM,
+                    G_DATE,
+                    G_SCORE,
+                    G_IMG
+               FROM GAMELIST
+              WHERE G_NAME LIKE '%'||#{gameName}||'%'
+              ORDER BY G_IDX ASC
+               )
+         WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
     </select>
 
     <select id="GList"
             resultType="com.project.board.vo.GameListVo">
         SELECT *
-        FROM (
-        SELECT G_IDX,
-        G_NAME,
-        G_ENAME,
-        G_GENRE,
-        G_COMPANY,
-        G_SERVICE,
-        G_PLATFORM,
-        G_DATE,
-        G_SCORE,
-        G_IMG
-        FROM GAMELIST
-        ORDER BY G_IDX ASC)
-        WHERE G_IDX BETWEEN #{pageNum} AND #{contentNum}
+          FROM (
+             SELECT G_IDX,
+                    G_NAME,
+                    G_ENAME,
+                    G_GENRE,
+                    G_COMPANY,
+                    G_SERVICE,
+                    G_PLATFORM,
+                    G_DATE,
+                    G_SCORE,
+                    G_IMG
+               FROM GAMELIST
+              ORDER BY G_IDX ASC
+               )
+         WHERE G_IDX BETWEEN #{pageNum} AND #{contentNum}
     </select>
 
     <select id="GSList"
