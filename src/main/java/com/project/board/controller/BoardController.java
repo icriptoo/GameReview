@@ -31,12 +31,11 @@ public class BoardController {
         return "/home";
     }
 
-    //글수정 저장하기
+    //글수정하기
     @RequestMapping("/boardUpdate")
     public String boardUpdate(@RequestParam HashMap<String, Object> map, Model model){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
-        System.out.println("map2:" + map);
         boardService.boardUpdate(map);
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
@@ -60,8 +59,6 @@ public class BoardController {
     //글저장하기
     @RequestMapping("/boardInsert")
     public  String boardInsert(@RequestParam HashMap<String, Object> map, Model model){
-        System.out.println("맵:" + map);
-
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         boardService.boardInsert(map);
@@ -77,9 +74,7 @@ public class BoardController {
     public String boardDelete(@RequestParam HashMap<String, Object> map, Model model){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
-        System.out.println("menu_id:" + (String)map.get("menu_id"));
-        System.out.println("g_idx:" + (String)map.get("g_idx"));
-        System.out.println("b_idx:" + (String)map.get("b_idx"));
+
         boardService.boardDelete(map);
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
@@ -117,7 +112,6 @@ public class BoardController {
     //전체 글목록
     @RequestMapping("/totalList")
     public String totalList(@RequestParam HashMap<String, Object> map, Model model){
-        System.out.println("보자:"+ map);
         List<BoardVo> boardList = boardService.getBoardList(map);
         String menu_id = (String)map.get("menu_id");
 
@@ -132,7 +126,6 @@ public class BoardController {
     public String view(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
         String menu_id = (String)map.get("menu_id");
-        System.out.println("menu_id:" + menu_id);
 
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
