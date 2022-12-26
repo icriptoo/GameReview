@@ -4,6 +4,8 @@ import com.project.board.service.BoardService;
 import com.project.board.vo.BoardPager;
 import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import java.util.Random;
 
 @Controller
 public class BoardController {
+    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     @Autowired
     BoardService boardService;
@@ -95,12 +98,16 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
+    // http://localhost:8080/GameReviewList?currentPage=1
+    // defaultValue : 해당 요청 파라미터를 지정하지 않을 경우
+    // defaultValue 속성에 지정한 문자열을 값으로 이용하게 됨
     //선택한 게임 글목록
     @RequestMapping("/GameReviewList")
     public String gameReview(@RequestParam HashMap<String, Object> map, Model model){
         GameListVo gameListVo = boardService.getGame(map);
         List<BoardVo> boardList = boardService.getBoardList(map);
         String menu_id = (String)map.get("menu_id");
+
 
         model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴번호
