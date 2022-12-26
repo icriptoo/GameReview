@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,16 +68,11 @@ h2{
 
 function loginbtn(){
   var url = "/loginProcess?id=";
-  var params = window.location.search;
-
-  params = params.substr(6);
-  $('input[name=next]').attr('value',params);
 
   var id = $('input[name=id]').val();
   var pw = $('input[name=pw]').val();
-  var next = $('input[name=next]').val();
 
-  location.href = url + id + "&pw=" + pw + "&next=" + next;
+  location.href = url + id + "&pw=" + pw + "&next=${next}";
 
 }
 
@@ -105,30 +100,33 @@ $(function(){
 </script>
 </head>
 <body>
-<input type="hidden" name="next" value="">
-  <div id="login_box">
-    <h2>Member-Login</h2>
-    <ul id="input_button">
-      <li id="id">
-        <ul>
-          <li>
-            <input type="text" name="id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
-          </li>
-          <li id="pw">
-            <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
-          </li>
-        </ul>
-      </li>
-      <br><br>
-      <li id="login_btn">
-        <button onclick="loginbtn()" class="login" style="font-size:15px;">로그인</button>
-        <button style="font-size:15px;">회원가입</button>
-      </li>
-    </ul>
-    <ul id="btns">
-      <a href="javascript:void(window.open('findUserid', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디찾기 / 비밀번호 변경</a>
-    </ul>
-  </div>
+<%@ include file="/WEB-INF/include/menus.jsp" %>
+<header class="w3-container w3-center w3-padding-48 w3-white">
+    <h1 class="headerB"><b>Game List</b></h1>
+</header>
+<div id="login_box">
+  <h2>Member-Login</h2>
+  <ul id="input_button">
+    <li id="id">
+      <ul>
+        <li>
+          <input type="text" name="id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
+        </li>
+        <li id="pw">
+          <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
+        </li>
+      </ul>
+    </li>
+    <br><br>
+    <li id="login_btn">
+      <button onclick="loginbtn()" class="login" style="font-size:15px;">로그인</button>
+      <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
+    </li>
+  </ul>
+  <ul id="btns">
+    <a href="javascript:void(window.open('findUserid', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디찾기 / 비밀번호 변경</a>
+  </ul>
+</div>
 <script>
 </script>
 </body>

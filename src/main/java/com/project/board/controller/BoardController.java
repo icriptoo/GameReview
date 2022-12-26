@@ -150,7 +150,6 @@ public class BoardController {
     // 게임목록 조회 게시판
     @RequestMapping("/Board/GameList")
     public String GameList(Model model, @RequestParam HashMap<String, Object> map) {
-
         List<GameListVo> gameListVo = null;
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));

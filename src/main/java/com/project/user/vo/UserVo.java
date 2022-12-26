@@ -14,7 +14,7 @@ public class UserVo {
     private String img;
     private String indate;
 
-    public UserVo (){}
+    public UserVo (String u_id){}
 
     public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String p_q, String p_a, String img, String indate) {
         this.u_id = u_id;

@@ -30,6 +30,30 @@ ul{
 .eGName{
     color:#c0c0c0;
 }
+
+.mypage{
+  height: 800px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  text-align: center;
+  margin: 50px 450px 0px 350px;
+  background-color: #fff;
+}
+.mypagein{
+  width: 500px;
+  height: 600px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  text-align: left;
+  padding: 40px 40px;
+  font-family:'d2coding';
+  float:left;
+}
+.profile{
+  width: 100px;
+  height: 100px;
+  float:left;
+}
 </style>
 <script>
 
@@ -40,10 +64,10 @@ ul{
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
-<div style="width: 100%; height: 500px; ">
+<div style="width: 100%; height: 500px;  ">
   <div>
     <aside class="leftAside">
-      <h1></h1>
+      <h1>왼쪽사이드</h1>
     </aside>
   </div>
   <div>
@@ -53,8 +77,24 @@ ul{
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-  <div>
-    ${login}
+  <div class="mypage">
+    <div class="profile">
+      <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+      <p><a href="/user/profilupdateform">내 정보 수정</a></p>
+      <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=500, height=500'))">프로필 사진 수정</a></p>
+      <p><a href="/user/myboards">내 게시글보기</a></p>
+    </div>
+    <div class="mypagein">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : ${login.u_id}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : ${login.n_name}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 : ${login.email}</p>
+      <p>선호 장르1 : ${login.genre1}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르2 : ${login.genre2}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르3 : ${login.genre3}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : ${login.p_q}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : ${login.p_a}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
+    </div>
   </div>
 </div>
 <script>
