@@ -83,6 +83,7 @@ ul{
       <p><a href="/user/profilupdateform">내 정보 수정</a></p>
       <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=500, height=500'))">프로필 사진 수정</a></p>
       <p><a href="/user/myboards">내 게시글보기</a></p>
+      <p><a href="/user/WithdrawalForm">회원탈퇴</a></p>
     </div>
     <div class="mypagein">
       <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : ${login.u_id}</p>

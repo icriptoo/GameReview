@@ -88,6 +88,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void wirthdrwal(HashMap<String, Object> map) {
+        userDao.wirthdwal(map);
+    }
+
+    @Override
     public Object getUser(Object login) {
         Object getUser = userDao.getUser(login);
         return getUser;

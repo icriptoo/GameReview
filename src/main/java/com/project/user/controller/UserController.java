@@ -328,4 +328,17 @@ public class UserController {
         }
         return mse;
     }
+
+    //회원탈퇴 페이지 이동
+    @RequestMapping("/user/WithdrawalForm")
+    public String withdrawalForm(){ return "/user/Withdrawal"; }
+
+    //회원탈퇴
+    @RequestMapping("/user/Wirthdrwal")
+    public String withdrawal(HttpSession httpSession,@RequestParam HashMap<String, Object> map){
+        userService.wirthdrwal(map);
+        httpSession.invalidate();
+        return "/home";
+    }
+
 }

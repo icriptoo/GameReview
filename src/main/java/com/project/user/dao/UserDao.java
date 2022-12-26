@@ -29,4 +29,6 @@ public interface UserDao {
     String finduidck(HashMap<String, Object> map);
 
     String findpwck(HashMap<String, Object> map);
+
+    void wirthdwal(HashMap<String, Object> map);
 }

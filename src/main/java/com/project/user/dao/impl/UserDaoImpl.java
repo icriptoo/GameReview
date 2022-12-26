@@ -104,4 +104,9 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
     }
+
+    @Override
+    public void wirthdwal(HashMap<String, Object> map) {
+        sqlSession.delete("User.wirthdwal",map);
+    }
 }

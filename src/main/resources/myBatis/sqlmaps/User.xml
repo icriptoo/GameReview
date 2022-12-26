@@ -124,4 +124,8 @@
         VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3}, #{p_q}, #{p_a})
     </insert>
 
+    <delete id="wirthdwal">
+        DELETE FROM USERS WHERE U_ID = #{u_id}
+    </delete>
+
 </mapper>
