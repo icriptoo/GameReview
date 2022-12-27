@@ -73,7 +73,8 @@ public class UserController {
             model.addAttribute("fail","로그인 실패");
             returnURL = "user/login";
         }
-        return returnURL;
+        //return returnURL;
+        return "home";
     }
 
     // 로그아웃
@@ -90,7 +91,8 @@ public class UserController {
 
         HttpSession httpSession = request.getSession();
         httpSession.invalidate();
-        return "redirect:"+ url;
+        //return "redirect:"+ url;
+        return "home";
     }
 
     // 마이페이지

@@ -50,6 +50,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public int boardCount(HashMap<String, Object> map) {
+        return boardDao.boardCount(map);
+    }
+
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
     @Override
     public void GameListDelete() { boardDao.GameListDelete(); }
