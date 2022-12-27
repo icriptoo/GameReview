@@ -88,34 +88,68 @@ ul{
             <td colspan="4">
               <c:set var="url" value="http://localhost:8080/Board/reviewList?menu_id=MENU_01&pageNum=1&contentNum=10"/>
               <c:choose>
-                <c:when test="${ url eq 'window.location.href'}">
-                  <div id="BoardPa" class="BoardPa">
-                    <c:if test="${boardPager.prev}">
-                      <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getStartPage()-1}&contentNum=${(boardPager.getStartPage()-1)*10}" class="w3-button">< 이전</a>
-                    </c:if>
-                    <c:forEach begin="${boardPager.getStartPage()}" end="${boardPager.getEndPage()}" var="idx">
-                      <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${idx}&contentNum=${idx*10}" class="w3-button">${idx}</a>
-                    </c:forEach>
-                    <c:if test="${boardPager.next}">
-                      <a href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getEndPage()+1}&contentNum=${(boardPager.getEndPage()+1)*10}" class="w3-button">다음 ></a>
-                    </c:if>
-                  </div>
-                </c:when>
-                <c:otherwise>
-                  <div id="BoardPa" class="BoardPa">
-                    <c:if test="${boardPager.prev}">
-                      <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getStartPage()-1}&contentNum=${(boardPager.getStartPage()-1)*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">< 이전</a>
-                    </c:if>
-                    <c:forEach begin="${boardPager.getStartPage()}" end="${boardPager.getEndPage()}" var="idx">
-                      <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${idx}&contentNum=${idx*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">${idx}</a>
-                    </c:forEach>
-                    <c:if test="${boardPager.next}">
-                      <a class="page-linkA" href="/Board/reviewList?menu_id=MENU_01&pageNum=${boardPager.getEndPage()+1}&contentNum=${(boardPager.getEndPage()+1)*10}&searchType=${map.searchType}&keyword=${map.keyword}" class="w3-button">다음 ></a>
-                    </c:if>
-                  </div>
-                </c:otherwise>
-              </c:choose>
-
+                                  <c:when test="${sT eq 0}">
+                                    <tr>
+                                      <td class="page" id="page" colspan="2" style="text-align:center;">
+                                        <div class="pager">
+                                          <c:if test="${Pager.prev}">
+                                            <a href="http://localhost:8080/totalList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}">< 이전</a>
+                                            <a class="firstPageNum" href="/Board/totalList?pageNum=1&contentNum=30">1</a>
+                                            ...
+                                          </c:if>
+                                          <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                                            <a class="pageNum" href="/Board/totalList?pageNum=${idx}&contentNum=${idx*30}">${idx}</a>
+                                          </c:forEach>
+                                          <c:if test="${Pager.next}">
+                                            ...
+                                            <a class="lastPageNum" href="/Board/totalList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}">${Pager.lastPageNum}</a>
+                                            <a href="http://localhost:8080/Board/totalList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}">다음 ></a>
+                                          </c:if>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </c:when>
+                                  <c:when test="${sT eq 101}">
+                                    <td class="page" id="page" colspan="2" style="text-align:center;">
+                                      <div class="pager">
+                                        <c:if test="${Pager.prev}">
+                                          <a href="http://localhost:8080/Board/totalList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&gameName=${gN}">< 이전</a>
+                                          <a class="firstPageNum" href="/Board/totalList?pageNum=1&contentNum=30&gameName=${gN}">1</a>
+                                          ...
+                                        </c:if>
+                                        <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                                          <a class="pageNum" href="/Board/totalList?pageNum=${idx}&contentNum=${idx*30}&gameName=${gN}">${idx}</a>
+                                        </c:forEach>
+                                        <c:if test="${Pager.next}">
+                                          ...
+                                          <a class="lastPageNum" href="/Board/totalList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&gameName=${gN}">${Pager.lastPageNum}</a>
+                                          <a href="http://localhost:8080/Board/totalList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&gameName=${gN}">다음 ></a>
+                                        </c:if>
+                                      </div>
+                                    </td>
+                                  </c:when>
+                                  <c:otherwise>
+                                    <tr>
+                                      <td class="page" id="page" colspan="2" style="text-align:center;">
+                                        <div class="pager">
+                                          <c:if test="${Pager.prev}">
+                                            <a href="http://localhost:8080/Board/totalList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}">< 이전</a>
+                                            <a class="firstPageNum" href="/Board/totalList?pageNum=1&contentNum=30&searchType=${sT}">1</a>
+                                            ...
+                                          </c:if>
+                                          <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                                            <a class="pageNum" href="/Board/totalList?pageNum=${idx}&contentNum=${idx*30}&searchType=${sT}">${idx}</a>
+                                          </c:forEach>
+                                          <c:if test="${Pager.next}">
+                                            ...
+                                            <a class="lastPageNum" href="/Board/totalList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&searchType=${sT}">${Pager.lastPageNum}</a>
+                                            <a href="http://localhost:8080/Board/totalList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&searchType=${sT}">다음 ></a>
+                                          </c:if>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </c:otherwise>
+                                </c:choose>
 
             <tr style="border-top: 1px solid #000">
               <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">

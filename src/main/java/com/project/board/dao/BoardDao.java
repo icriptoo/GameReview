@@ -36,4 +36,6 @@ public interface BoardDao {
     void boardInsert(HashMap<String, Object> map);
 
     void boardUpdate(HashMap<String, Object> map);
+
+    int boardCount(HashMap<String, Object> map);
 }

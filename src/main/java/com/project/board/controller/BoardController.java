@@ -108,7 +108,6 @@ public class BoardController {
         List<BoardVo> boardList = boardService.getBoardList(map);
         String menu_id = (String)map.get("menu_id");
 
-
         model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("boardList", boardList ); //해당게임리뷰목록 불러오기
@@ -121,6 +120,25 @@ public class BoardController {
     public String totalList(@RequestParam HashMap<String, Object> map, Model model){
         List<BoardVo> boardList = boardService.getBoardList(map);
         String menu_id = (String)map.get("menu_id");
+
+        //페징관련 [s]
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+        System.out.println(boardList.size());
+        boardPager.setTotalCount(boardService.boardCount(map));
+        boardPager.setPageNum(PageNum - 1);
+        boardPager.setContentNum(ContentNum);
+        boardPager.setCurrentBlock(PageNum);
+        boardPager.setLastBlock();
+        boardPager.prevNext(PageNum);
+        boardPager.setStartPage();
+        boardPager.setEndPage();
+        map.put("pageNum", boardPager.getPageNum());
+        map.put("contentNum", boardPager.getContentNum());
+        //System.out.println(boardPager);
+
+        model.addAttribute("Pager", boardPager);
+        //페징관련 [e]
 
         model.addAttribute("boardList", boardList ); //전체 글목록 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴번호
