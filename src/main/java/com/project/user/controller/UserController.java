@@ -143,7 +143,7 @@ public class UserController {
         httpSession.removeAttribute("login");
         httpSession.setAttribute("login",vo);
 
-        return "user/popupout";
+        return "popupout";
     }
 
     //회원가입 창 이동
@@ -153,7 +153,6 @@ public class UserController {
     // 회원가입
     @RequestMapping("/signup")
     public String SignUp(@RequestParam HashMap<String, Object> map){
-        // 질문 if문으로 변환시킬것
         userService.userInsert(map);
         return "user/login";
     }
@@ -263,7 +262,7 @@ public class UserController {
             eck = userService.finduidck(map);
             if (eck != null) {
                 ecode = mailService.joinEmail(email);
-                System.out.println(ecode);
+                System.out.println("인증번호:"+ecode);
                 mse = "인증번호가 발송 됐습니다.";
             } else {
                 mse = "아이디와 이메일을 확인해주세요.";
@@ -272,7 +271,7 @@ public class UserController {
             eck = userService.findpwck(map);
             if (eck != null) {
                 ecode = mailService.joinEmail(email);
-                System.out.println(ecode);
+                System.out.println("인증번호:"+ecode);
                 mse = "인증번호가 발송 됐습니다.";
             } else {
                 mse = "닉네임과 이메일을 확인해주세요.";
@@ -305,7 +304,7 @@ public class UserController {
         String eck = userService.emailck(map); // 이메일 중복확인
         if (eck == null) {
             ecode = mailService.joinEmail(email);
-            System.out.println(ecode);
+            System.out.println("인증번호:"+ecode);
             mse = "인증번호가 발송 됐습니다.";
         }else if(eck != null){
             mse = "중복된 이메일입니다.";
@@ -315,7 +314,7 @@ public class UserController {
         return mse;
     }
 
-    // 인증번호 체크
+    // 마이페이지 인증번호 체크
     @RequestMapping(value = "/user/ecodeck", produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String ecodeck(@RequestParam HashMap<String, Object> map){

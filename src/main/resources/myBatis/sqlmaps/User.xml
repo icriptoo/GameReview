@@ -14,8 +14,6 @@
         GENRE1,
         GENRE2,
         GENRE3,
-        P_Q,
-        P_A,
         IMG,
         INDATE
 
@@ -33,8 +31,6 @@
         GENRE1,
         GENRE2,
         GENRE3,
-        P_Q,
-        P_A,
         IMG,
         INDATE
 
@@ -98,9 +94,7 @@
                EMAIL = #{email},
                GENRE1 = #{genre1},
                GENRE2 = #{genre2},
-               GENRE3 = #{genre3},
-               P_Q = #{p_q},
-               P_A = #{p_a}
+               GENRE3 = #{genre3}
          WHERE U_ID = #{u_id}
     </update>
 
@@ -112,16 +106,8 @@
 
     <insert id="UserInsert"
             parameterType="com.project.user.vo.UserVo">
-        INSERT INTO USERS (
-        U_ID,
-        PW,
-        N_NAME,
-        GENRE1,
-        GENRE2,
-        GENRE3,
-        P_Q,
-        P_A)
-        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3}, #{p_q}, #{p_a})
+        INSERT INTO USERS (U_ID, PW, N_NAME, GENRE1, GENRE2, GENRE3)
+        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3})
     </insert>
 
     <delete id="wirthdwal">

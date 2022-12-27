@@ -120,14 +120,6 @@ $(function(){
       alert('장르가 중복입니다. 다시 확인 해주세요.');
       return false;
     }
-    if($('[name=p_q]').val() == ""){
-      alert('질문을 선택 해주세요.');
-      return false;
-    }
-    if($('[name=p_a]').val() == ""){
-      alert('답변을 입력 해주세요.');
-      return false;
-    }
   });
 
   function back(){
@@ -325,9 +317,6 @@ $(function(){
             <option value="기타">기타</option>
           </select>
         </p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 찾기에 사용 할 질문 및 답변</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : <input type="text" name="p_q" value="${login.p_q}"></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : <input type="text" name="p_a" value="${login.p_a}"></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
       </div>
     </form>

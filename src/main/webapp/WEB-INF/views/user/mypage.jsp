@@ -92,8 +92,6 @@ ul{
       <p>선호 장르1 : ${login.genre1}</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르2 : ${login.genre2}</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르3 : ${login.genre3}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : ${login.p_q}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : ${login.p_a}</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
     </div>
   </div>
