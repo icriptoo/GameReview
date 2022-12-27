@@ -27,7 +27,7 @@ public interface BoardDao {
 
     GameListVo getGame(HashMap<String, Object> map);
 
-    List<BoardVo> boardListSelect(HashMap<String, Object> map);
+    List<BoardVo> getBoardList(HashMap<String, Object> map);
 
     BoardVo getBoard(HashMap<String, Object> map);
 
@@ -38,4 +38,8 @@ public interface BoardDao {
     void boardUpdate(HashMap<String, Object> map);
 
     int boardCount(HashMap<String, Object> map);
+
+    List<BoardVo> getSBoardList(HashMap<String, Object> map);
+
+    int boardSCount(HashMap<String, Object> map);
 }

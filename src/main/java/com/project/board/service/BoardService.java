@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface BoardService {
 
-
-
     void GameInsert() throws IOException;
 
     int GameListCount();
@@ -22,7 +20,6 @@ public interface BoardService {
     int GameListSCount(HashMap<String, Object> map);
 
     int GameSCount(HashMap<String, Object> map);
-
 
     List<GameListVo> GameListS(HashMap<String, Object> map);
 
@@ -41,4 +38,8 @@ public interface BoardService {
     void boardUpdate(HashMap<String, Object> map);
 
     int boardCount(HashMap<String, Object> map);
+
+    List<BoardVo> getSBoardList(HashMap<String, Object> map);
+
+    int boardSCount(HashMap<String, Object> map);
 }

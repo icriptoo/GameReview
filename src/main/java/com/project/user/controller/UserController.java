@@ -48,11 +48,10 @@ public class UserController {
     // 로그인
     @RequestMapping("loginProcess")
     public String loginProcess(HttpSession httpSession, @RequestParam HashMap<String, Object> map, Model model){
-        System.out.println("맵:" + map);
-
         String returnURL = "";
         String next = (String) map.get("next");
         String url = "";
+
         model.addAttribute("next",next);
         if (map.get("contentNum") != null) {
             String next1 = (String) map.get("contentNum");

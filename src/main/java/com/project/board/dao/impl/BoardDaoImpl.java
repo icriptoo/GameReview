@@ -52,7 +52,7 @@ public class BoardDaoImpl implements BoardDao {
             int len = 0;
             int de = 0;
             int insize = 0;
-            System.out.println(k);
+
             Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?of=post&page=" + k).get();
             // 게임명, 게임명(영문), 이미지, 평점, 게임정보 가져오기
             Elements elemG = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"game\"]");
@@ -162,10 +162,8 @@ public class BoardDaoImpl implements BoardDao {
     public GameListVo getGame(HashMap<String, Object> map) {return sqlSession.selectOne("Game.GetGame",map);}
 
     @Override
-    public List<BoardVo> boardListSelect(HashMap<String, Object> map) { // 글 목록 가져오기
-        System.out.println(map);
+    public List<BoardVo> getBoardList(HashMap<String, Object> map) { // 글 목록 가져오기
         List<BoardVo> boardList = sqlSession.selectList("Board.List", map);
-        System.out.println(boardList);
         return boardList;
     }
 
@@ -197,6 +195,17 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public int boardCount(HashMap<String, Object> map) {
         return sqlSession.selectOne("Board.BoardCount", map);
+    }
+
+    @Override
+    public List<BoardVo> getSBoardList(HashMap<String, Object> map) {
+        List<BoardVo> boardList = sqlSession.selectList("Board.SList",map);
+        return boardList;
+    }
+
+    @Override
+    public int boardSCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Board.BoardSCount",map);
     }
 
     // 전체게임리스트 뽑기

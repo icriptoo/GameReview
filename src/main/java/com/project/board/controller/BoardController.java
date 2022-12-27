@@ -104,13 +104,57 @@ public class BoardController {
     //선택한 게임 글목록
     @RequestMapping("/GameReviewList")
     public String gameReview(@RequestParam HashMap<String, Object> map, Model model){
-        GameListVo gameListVo = boardService.getGame(map);
-        List<BoardVo> boardList = boardService.getBoardList(map);
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String menu_id = (String)map.get("menu_id");
+        String searchType = (String) map.get("searchType");
+        String keyword = (String) map.get("keyword");
+        List<BoardVo> boardList = null;
+
+        GameListVo gameListVo = boardService.getGame(map);
+
+        if (searchType == null){
+            searchType = "a";
+        }
+        // 첫 화면에 나올 게시글 가져오기
+        if (searchType == "a") {
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if(boardPager.getPageNum() != 0){
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getBoardList(map);
+        }else { // 검색할때 사용하는 페이징
+            boardPager.setTotalCount(boardService.boardSCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if(boardPager.getPageNum() != 0){
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getSBoardList(map);
+        }
 
         model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("boardList", boardList ); //해당게임리뷰목록 불러오기
+        model.addAttribute("Pager", boardPager);
+        model.addAttribute("sT",searchType);// 페이징용 검색유무
+        model.addAttribute("kw",keyword);
 
         return "/board/GameReviewList";
     }
@@ -118,30 +162,54 @@ public class BoardController {
     //전체 글목록
     @RequestMapping("/totalList")
     public String totalList(@RequestParam HashMap<String, Object> map, Model model){
-        List<BoardVo> boardList = boardService.getBoardList(map);
-        String menu_id = (String)map.get("menu_id");
-
-        //페징관련 [s]
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
-        System.out.println(boardList.size());
-        boardPager.setTotalCount(boardService.boardCount(map));
-        boardPager.setPageNum(PageNum - 1);
-        boardPager.setContentNum(ContentNum);
-        boardPager.setCurrentBlock(PageNum);
-        boardPager.setLastBlock();
-        boardPager.prevNext(PageNum);
-        boardPager.setStartPage();
-        boardPager.setEndPage();
-        map.put("pageNum", boardPager.getPageNum());
-        map.put("contentNum", boardPager.getContentNum());
-        //System.out.println(boardPager);
+        String menu_id = (String)map.get("menu_id");
+        String searchType = (String) map.get("searchType");
+        String keyword = (String) map.get("keyword");
+        List<BoardVo> boardList = null;
 
-        model.addAttribute("Pager", boardPager);
-        //페징관련 [e]
+        if (searchType == null){
+            searchType = "a";
+        }
+        // 첫 화면에 나올 게시글 가져오기
+        if (searchType == "a") {
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if(boardPager.getPageNum() != 0){
+              boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getBoardList(map);
+        }else { // 검색할때 사용하는 페이징
+            boardPager.setTotalCount(boardService.boardSCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if(boardPager.getPageNum() != 0){
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getSBoardList(map);
+        }
 
         model.addAttribute("boardList", boardList ); //전체 글목록 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("Pager", boardPager);
+        model.addAttribute("sT",searchType);// 페이징용 검색유무
+        model.addAttribute("kw",keyword);
 
         return "/board/totalList";
     }
