@@ -226,7 +226,17 @@ $(function(){
   <div class="mypage">
     <form action="/user/profilupdate" method="POST" encType = "multipart/form-data">
       <div class="profile">
-        <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+        <p>
+          <c:set var="img" value="${login.img}"/>
+          <c:choose>
+            <c:when test="${img eq null}">
+              <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+            </c:when>
+            <c:otherwise>
+              <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+            </c:otherwise>
+          </c:choose>
+        </p>
         <button name="update">수정완료</button>
         <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
       </div>

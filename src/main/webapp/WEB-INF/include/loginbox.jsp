@@ -84,6 +84,7 @@ function logoutbtn(){
 </head>
 <body>
 <div id="login_box">
+  <c:set var="img" value="${login.img}"/>
   <c:choose>
     <c:when test="${empty login}">
       <h2>Member-Login</h2>
@@ -101,7 +102,15 @@ function logoutbtn(){
       </ul>
     </c:when>
     <c:otherwise>
-      <h2>${login.n_name}님</h2>
+      <c:choose>
+        <c:when test="${img eq null}">
+          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 50%"/></p>
+        </c:when>
+        <c:otherwise>
+          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 50%"/></p>
+        </c:otherwise>
+      </c:choose>
+      <h4>${login.n_name}님</h4>
       <ul>
         <li>
           <button class="logout" onclick="logoutbtn()" style="font-size:15px;">로그아웃</button>
