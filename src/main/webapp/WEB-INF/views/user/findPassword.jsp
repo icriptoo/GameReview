@@ -125,7 +125,8 @@ $(function(){
     <span id="useridCheck" name="useridCheck"></span>
   </p>
   <p>
-    <button id="findwd">찾기</button>
+    <a id="findwd" href=''>찾기</a>
+    <a id="close" href='javascript:window.close();'>닫기</a>
   </p>
 </div>
 </body>

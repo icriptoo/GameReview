@@ -79,10 +79,19 @@ ul{
   </div>
   <div class="mypage">
     <div class="profile">
-      <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+      <c:set var="img" value="${login.img}"/>
+      <c:choose>
+        <c:when test="${img eq null}">
+          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+        </c:when>
+        <c:otherwise>
+          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+        </c:otherwise>
+      </c:choose>
       <p><a href="/user/profilupdateform">내 정보 수정</a></p>
       <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=500, height=500'))">프로필 사진 수정</a></p>
       <p><a href="/user/myboards">내 게시글보기</a></p>
+      <p><a href="/user/WithdrawalForm">회원탈퇴</a></p>
     </div>
     <div class="mypagein">
       <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : ${login.u_id}</p>
@@ -91,8 +100,6 @@ ul{
       <p>선호 장르1 : ${login.genre1}</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르2 : ${login.genre2}</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르3 : ${login.genre3}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : ${login.p_q}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : ${login.p_a}</p>
       <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
     </div>
   </div>

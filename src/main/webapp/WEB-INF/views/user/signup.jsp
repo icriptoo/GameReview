@@ -243,17 +243,6 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
-      <p>비밀번호 찾기에 사용 할 질문 및 답변</p>
-      <p>질문 :
-        <select name="p_q">
-          <option value="">질문내용</option>
-          <option value="pq1">입학한 초등학교 이름은?</option>
-          <option value="pq2">입학한 중학교 이름은?</option>
-          <option value="pq3">입학한 고등학교 이름은?</option>
-          <option value="pq4">지금 거주하고 있는 지역 이름은?</option>
-        </select>
-      </p>
-      <p>답변 : <input type="text" name="p_a"/></p>
       <p><button>가입하기</button></p>
     </form>
   <div>

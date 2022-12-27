@@ -120,14 +120,6 @@ $(function(){
       alert('장르가 중복입니다. 다시 확인 해주세요.');
       return false;
     }
-    if($('[name=p_q]').val() == ""){
-      alert('질문을 선택 해주세요.');
-      return false;
-    }
-    if($('[name=p_a]').val() == ""){
-      alert('답변을 입력 해주세요.');
-      return false;
-    }
   });
 
   function back(){
@@ -234,7 +226,17 @@ $(function(){
   <div class="mypage">
     <form action="/user/profilupdate" method="POST" encType = "multipart/form-data">
       <div class="profile">
-        <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+        <p>
+          <c:set var="img" value="${login.img}"/>
+          <c:choose>
+            <c:when test="${img eq null}">
+              <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+            </c:when>
+            <c:otherwise>
+              <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+            </c:otherwise>
+          </c:choose>
+        </p>
         <button name="update">수정완료</button>
         <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
       </div>
@@ -325,9 +327,6 @@ $(function(){
             <option value="기타">기타</option>
           </select>
         </p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호 찾기에 사용 할 질문 및 답변</p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;질문 : <input type="text" name="p_q" value="${login.p_q}"></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;답변 : <input type="text" name="p_a" value="${login.p_a}"></p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
       </div>
     </form>

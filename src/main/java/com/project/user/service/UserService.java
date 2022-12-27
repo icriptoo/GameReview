@@ -33,4 +33,6 @@ public interface UserService {
     String finduidck(HashMap<String, Object> map);
 
     String findpwck(HashMap<String, Object> map);
+
+    void wirthdrwal(HashMap<String, Object> map);
 }

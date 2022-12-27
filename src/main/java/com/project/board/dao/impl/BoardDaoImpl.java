@@ -48,12 +48,12 @@ public class BoardDaoImpl implements BoardDao {
             ArrayList<String> IM = new ArrayList<>();
             ArrayList<String> SC = new ArrayList<>();
             ArrayList<String> GR = new ArrayList<>();
-            ArrayList<Integer> In = new ArrayList<>();
+            GameListVo gamese = null;
             int len = 0;
             int de = 0;
-
+            int insize = 0;
             System.out.println(k);
-            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?page=" + k + "&of=post").get();
+            Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?of=post&page=" + k).get();
             // 게임명, 게임명(영문), 이미지, 평점, 게임정보 가져오기
             Elements elemG = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"game\"]");
             Elements elemGE = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"gameEn\"]");
@@ -103,27 +103,25 @@ public class BoardDaoImpl implements BoardDao {
 
             for (int j = 0; j < len; j++) {
                 map.put("test" + j, G.get(j));
-                if (G.get(j).equals("삭제")){
-                    de = 1;
-                }
-                String ji = sqlSession.selectOne("Game.Se" + j, map.get("test" + j));
-                if (ji == null || de == 1) {
-                    In.add(j);
-                    map.put("g" + j, G.get(j));
-                    map.put("im" + j, IM.get(j));
-                    map.put("ge" + j, GE.get(j));
-                    String[] Genre = GR.get(i).split(":");
-                    String[] Company = GR.get(i + 1).split(":");
-                    String[] Service = GR.get(i + 2).split(":");
-                    String[] FlatForm = GR.get(i + 3).split(":");
-                    String[] Date = GR.get(i + 4).split(":");
+                insize += 1;
+                String[] Genre = GR.get(i).split(":");
+                String[] Company = GR.get(i + 1).split(":");
+                String[] Service = GR.get(i + 2).split(":");
+                String[] FlatForm = GR.get(i + 3).split(":");
+                String[] Date = GR.get(i + 4).split(":");
+                map.put("g" + j, G.get(j));
+                map.put("im" + j, IM.get(j));
+                map.put("ge" + j, GE.get(j));
 
-                    map.put("gr" + grC, Genre[1]);
-                    map.put("cp" + cpC, Company[1]);
-                    map.put("sv" + svC, Service[1]);
-                    map.put("pf" + pfC, FlatForm[1]);
-                    map.put("id" + idC, Date[1]);
-                }
+                map.put("gr" + grC, Genre[1]);
+                map.put("cp" + cpC, Company[1]);
+                map.put("sv" + svC, Service[1]);
+                map.put("pf" + pfC, FlatForm[1]);
+                map.put("id" + idC, Date[1]);
+
+                if (!G.get(j).equals("삭제")){
+                    sqlSession.insert("Game.G" + j, map);
+               }
                 map.remove("test"+j);
 
                 grC += 1;
@@ -133,12 +131,6 @@ public class BoardDaoImpl implements BoardDao {
                 idC += 1;
 
                 i += 6;
-            }
-
-            if (In.size() > 0) {
-                for (int a = 0; a <= In.size(); a++) {
-                        sqlSession.insert("Game.G" + In.get(a), map);
-                }
             }
         }
     }

@@ -9,14 +9,12 @@ public class UserVo {
     private String genre1;
     private String genre2;
     private String genre3;
-    private String p_q;
-    private String p_a;
     private String img;
     private String indate;
 
     public UserVo (String u_id){}
 
-    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String p_q, String p_a, String img, String indate) {
+    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate) {
         this.u_id = u_id;
         this.n_name = n_name;
         this.pw = pw;
@@ -24,8 +22,6 @@ public class UserVo {
         this.genre1 = genre1;
         this.genre2 = genre2;
         this.genre3 = genre3;
-        this.p_q = p_q;
-        this.p_a = p_a;
         this.img = img;
         this.indate = indate;
     }
@@ -82,22 +78,6 @@ public class UserVo {
         this.genre3 = genre3;
     }
 
-    public String getP_q() {
-        return p_q;
-    }
-
-    public void setP_q(String p_q) {
-        this.p_q = p_q;
-    }
-
-    public String getP_a() {
-        return p_a;
-    }
-
-    public void setP_a(String p_a) {
-        this.p_a = p_a;
-    }
-
     public String getImg() {
         return img;
     }
@@ -124,8 +104,6 @@ public class UserVo {
                 ", genre1='" + genre1 + '\'' +
                 ", genre2='" + genre2 + '\'' +
                 ", genre3='" + genre3 + '\'' +
-                ", p_q='" + p_q + '\'' +
-                ", p_a='" + p_a + '\'' +
                 ", img='" + img + '\'' +
                 ", indate='" + indate + '\'' +
                 '}';
