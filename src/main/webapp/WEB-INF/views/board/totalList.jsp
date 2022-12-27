@@ -54,8 +54,6 @@ ul{
     </aside>
   </div>
 
-
-
   <table>
 
           <tr>

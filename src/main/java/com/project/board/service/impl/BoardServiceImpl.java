@@ -54,6 +54,13 @@ public class BoardServiceImpl implements BoardService {
         return boardDao.boardCount(map);
     }
 
+    @Override
+    public List<GameListVo> getGameList() {
+        List<GameListVo> gameListVo = boardDao.getGameList();
+
+        return gameListVo;
+    }
+
 
     @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }

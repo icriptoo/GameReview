@@ -41,4 +41,6 @@ public interface BoardService {
     void boardUpdate(HashMap<String, Object> map);
 
     int boardCount(HashMap<String, Object> map);
+
+    List<GameListVo> getGameList();
 }

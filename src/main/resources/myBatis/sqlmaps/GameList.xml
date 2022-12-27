@@ -51,6 +51,12 @@
          WHERE G_IDX = #{g_idx}
     </select>
 
+    <select id="GetGameList"
+            resultType="com.project.board.vo.GameListVo">
+        SELECT *
+        FROM GAMELIST
+    </select>
+
     <select id="GameLS"
             resultType="com.project.board.vo.GameListVo">
         SELECT *

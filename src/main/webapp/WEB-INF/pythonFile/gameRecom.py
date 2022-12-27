@@ -7,7 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # -*- coding: utf-8 -*-
 
-title = sys.argv[1]
+#title = sys.argv[1]
+title = '엘든 링'
 
 game_data = pd.read_csv('C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv', low_memory=False, encoding='cp949')
 # game_data = game_data.loc[game_data['original_language'] == 'en', :]
