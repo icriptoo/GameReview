@@ -5,6 +5,18 @@
 
 <mapper namespace="Game">
 
+    <!-- 게임 평점 업데이트 -->
+    <update  id="ScoreUpdate">
+        UPDATE GAMELIST
+           SET G_SCORE =(
+                  SELECT AVG(R_SCORE)
+                    FROM BOARD
+                   WHERE G_IDX = #{g_idx}
+                     AND MENU_ID = 1
+               )
+         WHERE G_IDX = #{g_idx}
+    </update>
+
     <select id="DeSe"
             resultType="int">
         SELECT COUNT(*)
@@ -30,6 +42,13 @@
         SELECT COUNT(*)
           FROM GAMELIST
          WHERE G_NAME LIKE '%'||#{gameName}||'%'
+    </select>
+
+    <select id="GetGame"
+            resultType="com.project.board.vo.GameListVo">
+        SELECT *
+          FROM GAMELIST
+         WHERE G_IDX = #{g_idx}
     </select>
 
     <select id="GameLS"

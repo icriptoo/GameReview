@@ -1,6 +1,7 @@
 package com.project.board.dao.impl;
 
 import com.project.board.dao.BoardDao;
+import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
@@ -154,6 +155,41 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public List<GameListVo> GameListS(HashMap<String, Object> map) {
         return sqlSession.selectList("Game.GameLS",map);
+    }
+
+    // 게임정보가져오기
+    @Override
+    public GameListVo getGame(HashMap<String, Object> map) {return sqlSession.selectOne("Game.GetGame",map);}
+
+    @Override
+    public List<BoardVo> boardListSelect(HashMap<String, Object> map) { // 글 목록 가져오기
+        List<BoardVo> boardList = sqlSession.selectList("Board.List", map);
+        return boardList;
+    }
+
+    @Override
+    public BoardVo getBoard(HashMap<String, Object> map) {
+        sqlSession.update("Board.ReadCountUpdate", map ); // 조회수 증가
+        BoardVo boardVo = sqlSession.selectOne("Board.View", map); // 글 가져오기
+        return boardVo;
+    }
+
+    @Override
+    public void boardDelete(HashMap<String, Object> map) {
+        sqlSession.delete( "Board.Delete",map); // 글 삭제
+    }
+
+    @Override
+    public void boardInsert(HashMap<String, Object> map) {
+        sqlSession.insert("Board.BoardInsert", map); // 글저장
+        sqlSession.update("Game.ScoreUpdate", map); //저장 후 해당게임 총평점 업데이트
+
+    }
+
+    @Override
+    public void boardUpdate(HashMap<String, Object> map) {
+        sqlSession.update("Board.BoardUpdate", map); // 글 수정
+        sqlSession.update("Game.ScoreUpdate", map); //수정 후 해당게임 총평점 업데이트
     }
 
     // 전체게임리스트 뽑기

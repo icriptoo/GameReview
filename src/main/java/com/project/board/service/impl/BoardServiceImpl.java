@@ -2,6 +2,7 @@ package com.project.board.service.impl;
 
 import com.project.board.dao.BoardDao;
 import com.project.board.service.BoardService;
+import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,39 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
     @Autowired
     private BoardDao boardDao;
+    @Override
+    public GameListVo getGame(HashMap<String, Object> map) {
+        GameListVo gameListVo = boardDao.getGame(map);
+        return gameListVo;
+    }
+
+    @Override
+    public List<BoardVo> getBoardList(HashMap<String, Object> map) {
+        List<BoardVo> boardList = boardDao.boardListSelect(map);
+        return boardList;
+    }
+
+    @Override
+    public BoardVo getBoard(HashMap<String, Object> map) {
+        BoardVo boardVo = boardDao.getBoard(map);
+        return boardVo;
+    }
+
+    @Override
+    public void boardDelete(HashMap<String, Object> map) {
+        boardDao.boardDelete(map);
+    }
+
+    //글 저장하기
+    @Override
+    public void boardInsert(HashMap<String, Object> map) {
+        boardDao.boardInsert(map);
+    }
+
+    @Override
+    public void boardUpdate(HashMap<String, Object> map) {
+        boardDao.boardUpdate(map);
+    }
 
     @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }

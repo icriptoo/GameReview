@@ -2,7 +2,10 @@ package com.project.board.controller;
 
 import com.project.board.service.BoardService;
 import com.project.board.vo.BoardPager;
+import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +22,7 @@ import java.util.Random;
 
 @Controller
 public class BoardController {
+    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     @Autowired
     BoardService boardService;
@@ -28,6 +32,112 @@ public class BoardController {
     @RequestMapping("/")
     public String home() {
         return "/home";
+    }
+
+    //글수정하기
+    @RequestMapping("/boardUpdate")
+    public String boardUpdate(@RequestParam HashMap<String, Object> map, Model model){
+        String menu_id = (String)map.get("menu_id");
+        String g_idx = (String)map.get("g_idx");
+        boardService.boardUpdate(map);
+
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("g_idx", g_idx ); //게임번호
+
+        return "redirect:/GameReviewList";
+    }
+
+    //글수정화면
+    @RequestMapping("/updateForm")
+    public String updateForm(@RequestParam HashMap<String, Object> map, Model model){
+        BoardVo boardVo = boardService.getBoard(map);
+        String menu_id = (String)map.get("menu_id");
+
+        model.addAttribute("boardVo", boardVo ); // 글 불러오기
+        model.addAttribute("menu_id", menu_id ); //메뉴정보
+
+        return "/board/updateForm";
+    }
+
+    //글저장하기
+    @RequestMapping("/boardInsert")
+    public  String boardInsert(@RequestParam HashMap<String, Object> map, Model model){
+        String menu_id = (String)map.get("menu_id");
+        String g_idx = (String)map.get("g_idx");
+        boardService.boardInsert(map);
+
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("g_idx", g_idx ); //게임번호
+
+        return "redirect:/GameReviewList";
+    }
+
+    //글삭제하기
+    @RequestMapping("/boardDelete")
+    public String boardDelete(@RequestParam HashMap<String, Object> map, Model model){
+        String menu_id = (String)map.get("menu_id");
+        String g_idx = (String)map.get("g_idx");
+
+        boardService.boardDelete(map);
+
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("g_idx", g_idx ); //게임번호
+
+        return "redirect:/GameReviewList";
+    }
+
+    //글작성화면
+    @RequestMapping("/boardWrite")
+    public String boardWrite(@RequestParam HashMap<String, Object> map, Model model){
+        String menu_id = (String)map.get("menu_id");
+        String g_idx = (String)map.get("g_idx");
+
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("g_idx", g_idx ); //게임번호
+
+        return "/board/boardWrite";
+    }
+
+    // http://localhost:8080/GameReviewList?currentPage=1
+    // defaultValue : 해당 요청 파라미터를 지정하지 않을 경우
+    // defaultValue 속성에 지정한 문자열을 값으로 이용하게 됨
+    //선택한 게임 글목록
+    @RequestMapping("/GameReviewList")
+    public String gameReview(@RequestParam HashMap<String, Object> map, Model model){
+        GameListVo gameListVo = boardService.getGame(map);
+        List<BoardVo> boardList = boardService.getBoardList(map);
+        String menu_id = (String)map.get("menu_id");
+
+
+        model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("boardList", boardList ); //해당게임리뷰목록 불러오기
+
+        return "/board/GameReviewList";
+    }
+
+    //전체 글목록
+    @RequestMapping("/totalList")
+    public String totalList(@RequestParam HashMap<String, Object> map, Model model){
+        List<BoardVo> boardList = boardService.getBoardList(map);
+        String menu_id = (String)map.get("menu_id");
+
+        model.addAttribute("boardList", boardList ); //전체 글목록 불러오기
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+
+        return "/board/totalList";
+    }
+
+    //글 내용 화면
+    @RequestMapping("/View")
+    public String view(@RequestParam HashMap<String, Object> map, Model model){
+        BoardVo boardVo = boardService.getBoard(map);
+        String menu_id = (String)map.get("menu_id");
+
+        model.addAttribute("boardVo", boardVo ); // 글 불러오기
+        model.addAttribute("menu_id", menu_id ); //메뉴정보
+
+        return "/board/view";
     }
 
     // 게임목록db에 넣기

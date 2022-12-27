@@ -2,56 +2,38 @@ package com.project.board.vo;
 
 public class BoardVo {
 
-    private int board_number;
-    private String menu_id;
+    private int b_idx;
     private String title;
-    private String writer;
-    private String board_local;
     private String cont;
+    private int r_score;
     private String indate;
-    private String board_check;
-    private String c_start;
-    private String c_end;
-    private String money;
-    private String c_time;
-    private String luggage;
+    private int b_count;
+    private int menu_id;
+    private String u_id;
+    private int g_idx;
 
-    private String delivery_indate;
+    private String g_name;
 
-
-
-    public BoardVo() {}
-
-    public BoardVo(int board_number, String menu_id, String title, String writer, String board_local, String cont, String indate, String board_check, String c_start, String c_end, String money, String c_time, String luggage, String delivery_indate) {        this.board_number = board_number;
-        this.menu_id = menu_id;
+    public BoardVo(){};
+    public BoardVo(int b_idx, String title, String cont, int r_score, String indate, int b_count, int menu_id, String u_id, int g_idx, String g_name) {
+        this.b_idx = b_idx;
         this.title = title;
-        this.writer = writer;
-        this.board_local = board_local;
         this.cont = cont;
+        this.r_score = r_score;
         this.indate = indate;
-        this.board_check = board_check;
-        this.c_start = c_start;
-        this.c_end = c_end;
-        this.money = money;
-        this.c_time = c_time;
-        this.luggage = luggage;
-        this.delivery_indate = delivery_indate;
-    }
-
-    public int getBoard_number() {
-        return board_number;
-    }
-
-    public void setBoard_number(int board_number) {
-        this.board_number = board_number;
-    }
-
-    public String getMenu_id() {
-        return menu_id;
-    }
-
-    public void setMenu_id(String menu_id) {
+        this.b_count = b_count;
         this.menu_id = menu_id;
+        this.u_id = u_id;
+        this.g_idx = g_idx;
+        this.g_name = g_name;
+    }
+
+    public int getB_idx() {
+        return b_idx;
+    }
+
+    public void setB_idx(int b_idx) {
+        this.b_idx = b_idx;
     }
 
     public String getTitle() {
@@ -62,28 +44,20 @@ public class BoardVo {
         this.title = title;
     }
 
-    public String getWriter() {
-        return writer;
-    }
-
-    public void setWriter(String writer) {
-        this.writer = writer;
-    }
-
-    public String getBoard_local() {
-        return board_local;
-    }
-
-    public void setBoard_local(String board_local) {
-        this.board_local = board_local;
-    }
-
     public String getCont() {
         return cont;
     }
 
     public void setCont(String cont) {
         this.cont = cont;
+    }
+
+    public int getR_score() {
+        return r_score;
+    }
+
+    public void setR_score(int r_score) {
+        this.r_score = r_score;
     }
 
     public String getIndate() {
@@ -94,79 +68,59 @@ public class BoardVo {
         this.indate = indate;
     }
 
-    public String getBoard_check() {
-        return board_check;
+    public int getB_count() {
+        return b_count;
     }
 
-    public void setBoard_check(String board_check) {
-        this.board_check = board_check;
+    public void setB_count(int b_count) {
+        this.b_count = b_count;
     }
 
-    public String getC_start() {
-        return c_start;
+    public int getMenu_id() {
+        return menu_id;
     }
 
-    public void setC_start(String c_start) {
-        this.c_start = c_start;
+    public void setMenu_id(int menu_id) {
+        this.menu_id = menu_id;
     }
 
-    public String getC_end() {
-        return c_end;
+    public String getU_id() {
+        return u_id;
     }
 
-    public void setC_end(String c_end) {
-        this.c_end = c_end;
+    public void setU_id(String u_id) {
+        this.u_id = u_id;
     }
 
-    public String getMoney() {
-        return money;
+    public int getG_idx() {
+        return g_idx;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setG_idx(int g_idx) {
+        this.g_idx = g_idx;
     }
 
-    public String getC_time() {
-        return c_time;
+    public String getG_name() {
+        return g_name;
     }
 
-    public void setC_time(String c_time) {
-        this.c_time = c_time;
-    }
-
-    public String getLuggage() {
-        return luggage;
-    }
-
-    public void setLuggage(String luggage) {
-        this.luggage = luggage;
-    }
-
-    public String getDelivery_indate() {
-        return delivery_indate;
-    }
-
-    public void setDelivery_indate(String delivery_indate) {
-        this.delivery_indate = delivery_indate;
+    public void setG_name(String g_name) {
+        this.g_name = g_name;
     }
 
     @Override
     public String toString() {
         return "BoardVo{" +
-                "board_number=" + board_number +
-                ", menu_id='" + menu_id + '\'' +
+                "b_idx=" + b_idx +
                 ", title='" + title + '\'' +
-                ", writer='" + writer + '\'' +
-                ", board_local='" + board_local + '\'' +
                 ", cont='" + cont + '\'' +
+                ", r_score=" + r_score +
                 ", indate='" + indate + '\'' +
-                ", board_check='" + board_check + '\'' +
-                ", c_start='" + c_start + '\'' +
-                ", c_end='" + c_end + '\'' +
-                ", money='" + money + '\'' +
-                ", c_time='" + c_time + '\'' +
-                ", luggage='" + luggage + '\'' +
-                ", delivery_indate='" + delivery_indate + '\'' +
+                ", b_count=" + b_count +
+                ", menu_id=" + menu_id +
+                ", u_id='" + u_id + '\'' +
+                ", g_idx=" + g_idx +
+                ", g_name='" + g_name + '\'' +
                 '}';
     }
 }

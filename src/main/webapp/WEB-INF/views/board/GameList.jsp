@@ -105,7 +105,7 @@ function btnGSearch(e){
         </td>
       </tr>
       <c:forEach var="list" items="${GameList}">
-        <tr>
+        <tr onClick="location.href='/GameReviewList?g_idx=${list.g_idx}&menu_id=1'">
           <td>
             <img src="${list.g_img}" alt="${list.g_name}" style="width: 165px; height: 115px;">
           </td>
@@ -118,6 +118,9 @@ function btnGSearch(e){
               <li><strong>플랫폼 : </strong>${list.g_platform}</li>
               <li><strong>출시일 : </strong>${list.g_date}</li>
             </ul>
+          </td>
+          <td style="font-size:20px;">
+            평점 : ${list.g_score}
           </td>
         </tr>
       </c:forEach>
