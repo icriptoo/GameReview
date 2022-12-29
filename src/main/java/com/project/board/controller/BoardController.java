@@ -219,9 +219,13 @@ public class BoardController {
     public String view(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
         String menu_id = (String)map.get("menu_id");
+        String pageNum = (String)map.get("pageNum");
+        String contentNum = (String)map.get("contentNum");
 
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
+        model.addAttribute("pageNum", pageNum); // 댓글페이지번호
+        model.addAttribute("contentNum", contentNum); //댓글가져오는 마지막 번호
 
         return "/board/view";
     }
@@ -230,13 +234,6 @@ public class BoardController {
     @RequestMapping("/GameListInsert")
     public String GameListInsert() throws IOException {
         boardService.GameInsert();
-        return "/home";
-    }
-
-    // 게임목록db에 게임지우기
-    @RequestMapping("/GameListDelete")
-    public String GamListDelete(){
-        boardService.GameListDelete();
         return "/home";
     }
 
