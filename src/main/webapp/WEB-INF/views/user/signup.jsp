@@ -57,6 +57,10 @@ $(function(){
       alert('비밀번호가 일치하지 않습니다.');
       return false;
     }
+    if($('#pwJCheckResult').html() != "옮바른 비밀번호입니다."){
+      alert('비밀번호는 영문과 특수문자, 숫자를 포함한 8자 이상이어야 합니다.');
+      return false;
+    }
     if($('[name=n_name]').val()==''){
       alert('닉네임을 입력하세요.');
       return false;
@@ -136,9 +140,26 @@ $(function(){
     e.stopPropagation();
   });
 
-  $('[name=pwck]').keyup(function(){
+  $('[name=pw]').keyup(function(e){
+    let pw = $('[name=pw]').val();
+    let u_id = $('input[name=u_id]').val();
+    let param = {"pw":pw, "u_id":u_id};
+
+    $.ajax({
+      type : 'POST',
+      url : "ckPwJ",
+      dataType : "text",
+      data : param,
+      success : function(nnCheck){
+        $("#pwJCheckResult").html(nnCheck);
+      }
+    })
+  });
+
+  $('[name=pwck]').keyup(function(e){
     let passwd = $('[name=pw]').val();
     let passwdCheck = $('[name=pwck]').val();
+
     if (passwd == passwdCheck){
       $('#pwCheckResult').html("비밀번호가 일치합니다.")
     } else{
@@ -177,7 +198,8 @@ $(function(){
         <button id="nnCheck">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p>비밀번호 : <input type="password" name="pw"></p>
+      <p>비밀번호는 영문과 특수문자(!@#$%^*+=-), 숫자를 포함한 8자 이상이어야 합니다.</p>
+      <p>비밀번호 : <input type="password" name="pw"><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
       <p>비밀번호 확인 : <input type="password" name="pwck"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
       <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택 해주세요.</p>
       <p>선호 장르1 :

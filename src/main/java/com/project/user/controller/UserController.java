@@ -1,5 +1,7 @@
 package com.project.user.controller;
 
+import com.project.user.service.CheckPassword;
+import com.project.user.service.Encrypt;
 import com.project.user.service.MailSendService;
 import com.project.user.service.UserService;
 import com.project.user.vo.UserVo;
@@ -26,6 +28,12 @@ public class UserController {
     @Autowired
     private MailSendService mailService;
 
+    @Autowired
+    private Encrypt encrypt;
+
+    @Autowired
+    private CheckPassword checkPassword;
+
     // 이메일 인증번호 저장변수
     private String ecode;
 
@@ -51,30 +59,42 @@ public class UserController {
         String returnURL = "";
         String next = (String) map.get("next");
         String url = "";
+        String pw = (String)map.get("pw");
+        String Epw = encrypt.getPw(pw);
+        String ckpw = userService.getpw(map);
 
-        model.addAttribute("next",next);
-        if (map.get("contentNum") != null) {
-            String next1 = (String) map.get("contentNum");
-            url = next + "&contentNum=" + next1;
+        UserVo vo = null;
+
+        if ( Epw.equals(ckpw)){
+            if(httpSession.getAttribute("login") != null){
+                httpSession.removeAttribute("login");
+            }
+            vo = userService.login(map);
+            model.addAttribute("next",next);
+            if (map.get("contentNum") != null) {
+                String next1 = (String) map.get("contentNum");
+                url = next + "&contentNum=" + next1;
+            }else {
+                url = next;
+            }
+
+            if(vo != null) {
+                httpSession.setAttribute("login", vo);
+                returnURL = "redirect:"+ url;
+            }else{
+                model.addAttribute("fail","아이디와 비밀번호를 확인 해주세요.");
+                returnURL = "user/login";
+            }
+            return "home";
         }else {
-            url = next;
+            model.addAttribute("fail","아이디와 비밀번호를 확인 해주세요.");
+            returnURL = "";
         }
 
-        if(httpSession.getAttribute("login") != null){
-            httpSession.removeAttribute("login");
-        }
-        UserVo vo = userService.login(map);
-
-        if(vo != null) {
-            httpSession.setAttribute("login", vo);
-            returnURL = "redirect:"+ url;
-        }else{
-            model.addAttribute("fail","로그인 실패");
-            returnURL = "user/login";
-        }
         //return returnURL;
         return "home";
     }
+
 
     // 로그아웃
     @RequestMapping(value = "/logout", method= {RequestMethod.GET})
@@ -155,6 +175,9 @@ public class UserController {
     // 회원가입
     @RequestMapping("/signup")
     public String SignUp(@RequestParam HashMap<String, Object> map){
+        String pw = (String)map.get("pw");
+        String Epw = encrypt.getPw(pw);
+        map.put("pw",Epw);
         userService.userInsert(map);
         return "user/login";
     }
@@ -205,6 +228,21 @@ public class UserController {
             check = "중복되지 않은 닉네임입니다.";
             return check;
         }
+    }
+
+    // 비밀번호 정규식 패턴확인
+    @RequestMapping(value = "/ckPwJ", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String ckPwJ(@RequestParam HashMap<String, Object> map){
+        String mes ="";
+        String u_id = (String)map.get("u_id");
+        String pw = (String)map.get("pw");
+
+        mes = checkPassword.ckPw(pw, u_id);
+        if (mes == ""){
+            mes = "옳바른 비밀번호입니다.";
+        }
+        return mes;
     }
 
     // 아이디찾기 창 띄우기
