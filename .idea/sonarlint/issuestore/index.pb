@@ -1,8 +1,6 @@
 
 P
  .idea/libraries/jsoup_1_15_3.xml,7\d\7df4e4072385551b917d2a271793716e4a75019c
->
-SpringAjax.iml,4\4\442ed8bee390edb7f0c63a699ff7329c25dc486d
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
@@ -34,3 +32,9 @@ f
 0src/main/webapp/WEB-INF/views/board/GameList.jsp,3\d\3d1cd9ad95ecff60dd75d7a9b3cba49f11024d8d
 m
 =src/main/java/com/project/user/controller/UserController.java,c\1\c1ccdc29a106854fdf6586c15a8e365056a13b78
+V
+&src/main/webapp/WEB-INF/views/home.jsp,1\a\1af60de6709e573f5dad4fe0319db0bb3a87e804
+a
+1src/main/webapp/WEB-INF/views/board/recomList.jsp,6\7\67627074a41fa73903e2063d3dec6a95234e1d7c
+a
+1src/main/webapp/WEB-INF/views/board/totalList.jsp,7\3\73474226f7786e811661264898dab87126ef5cf0

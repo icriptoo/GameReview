@@ -99,15 +99,17 @@ public class BoardController {
     //추천게임목록
     @RequestMapping("/RecomList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
+        List<GameListVo> gameListVo = boardService.getGameList();
 
         String arg1;
-        String title = "토탈워: 워해머3"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
+        String title = "리그 오브 레전드"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
         ProcessBuilder builder;
         BufferedReader br;
 
         arg1 = "C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gameRecom.py";
         //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gameRecom.py
         //C:/Users/ekrxj/PycharmProjects/pythonProject/gameRecom.py
+        //C:/Users/GGG/PycharmProjects/pythonProject1/main.py
 
         //첫번째가 파이썬실행파일경로, 두번째가 추천알고리즘 파이썬파일 경로(arg1), 세번재가 넘겨줄 파라미터(title)
         //builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title); //python3 error
@@ -126,12 +128,11 @@ public class BoardController {
         ArrayList<String> al = new ArrayList<>();
 
         //전처리 위해서 앞에 1줄(필요없는정보)을 버리기위함
-        br.readLine();
-//        for(int i=0; i<1; i++) {
-//            br.readLine();
-//        }
+        for(int i=0; i<1; i++) {
+            br.readLine();
+        }
         //여기서부터 읽어지는 줄이 게임제목
-        for(int i=0; i<5; i++) { //(현재는 출력목록을 5개로 설정)
+        for(int i=0; i<20; i++) { //(현재는 출력목록을 5개로 설정)
             al.add(br.readLine().trim());
             System.out.println(">>>  "+ i + ":" + al.get(i));
         }
@@ -216,22 +217,25 @@ public class BoardController {
         int resultCount =0;
         //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv
         try{
-            BufferedWriter fw = new BufferedWriter(new FileWriter("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_test.csv", true));
+            //BufferedWriter fw = new BufferedWriter(new FileWriter("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_test7.csv", true));
+            BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/GameList.csv"),"MS949"));
+            fw.write("G_IDX,G_NAME,G_GENRE,G_COMPANY,G_SERVICE,G_PLATFORM");
+            fw.newLine();
 
             for(int i = 0; i < gameListVo.size(); ++i){
-                System.out.println("겜이름:" + gameListVo.get(i).getG_name());
                 int g_idx = gameListVo.get(i).getG_idx();
                 String g_name = gameListVo.get(i).getG_name();
-                String g_ename = gameListVo.get(i).getG_ename();
+                g_name= g_name.replaceAll(",", "/").trim();
                 String g_genre = gameListVo.get(i).getG_genre();
+                g_genre= g_genre.replaceAll(",", "/").trim();
                 String g_company = gameListVo.get(i).getG_company();
+                g_company= g_company.replaceAll(",", "/").trim();
                 String g_service = gameListVo.get(i).getG_service();
+                g_service= g_service.replaceAll(",", "/").trim();
                 String g_platform= gameListVo.get(i).getG_platform();
-                String g_date = gameListVo.get(i).getG_date();
-                double g_score = gameListVo.get(i).getG_score();
-                String g_img = gameListVo.get(i).getG_img();
+                g_platform= g_platform.replaceAll(",", "/").trim();
 
-                fw.write(g_idx + ","+ g_name +","+ g_ename +","+ g_genre +","+ g_company +","+ g_service +","+ g_platform +","+ g_date +","+ g_score +","+ g_img);
+                fw.write(g_idx + ","+ g_name +","+ g_genre +","+ g_company +","+ g_service +","+ g_platform);
                 fw.newLine();
             }
 
