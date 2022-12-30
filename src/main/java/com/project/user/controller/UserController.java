@@ -60,8 +60,9 @@ public class UserController {
         String next = (String) map.get("next");
         String url = "";
         String pw = (String)map.get("pw");
-        String Epw = encrypt.getPw(pw);
-        String ckpw = userService.getpw(map);
+        String salt = userService.getPcode(map);
+        String Epw = encrypt.getEncrypt(pw,salt);
+        String ckpw = userService.getckpw(map);
 
         UserVo vo = null;
 
@@ -176,8 +177,10 @@ public class UserController {
     @RequestMapping("/signup")
     public String SignUp(@RequestParam HashMap<String, Object> map){
         String pw = (String)map.get("pw");
-        String Epw = encrypt.getPw(pw);
+        String Pcode = encrypt.getSalt();
+        String Epw = encrypt.getEncrypt(pw,Pcode);
         map.put("pw",Epw);
+        map.put("pcode",Pcode);
         userService.userInsert(map);
         return "user/login";
     }

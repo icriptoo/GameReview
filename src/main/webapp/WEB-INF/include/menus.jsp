@@ -73,7 +73,7 @@ li a:hover{
       <li class="asd"><a href="/">메인화면</a></li>
       <li class="asd"><a href="/Board/GameList?pageNum=1&contentNum=30">게임 리스트</a></li>
       <li class="asd"><a href="/GameListInsert">게임목록db에 넣기</a></li>
-      <li class="asd"><a href="http://www._____.com/About">게임 추천</a></li>
+      <li class="asd"><a href="/Board/GameRecom">게임 추천</a></li>
       <li class="asd"><a href="/totalList?menu_id=1&pageNum=1&contentNum=30">전체리뷰게시판</a></li>
       <li class="asd"><a href="/totalList?menu_id=2&pageNum=1&contentNum=30">전체자유게시판</a></li>
       <li class="asd"><a href="http://www._____.com/Contact">공지사항</a></li>

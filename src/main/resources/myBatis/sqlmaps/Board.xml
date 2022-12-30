@@ -42,6 +42,11 @@
         where b_idx   = #{b_idx}
     </update>
 
+    <select id="getGameList" resultType="com.project.board.vo.GameListVo">
+        SELECT *
+          FROM GAMELIST
+    </select>
+
     <!-- 글 목록 카운트 -->
     <select id="BoardCount"
             resultType="int">

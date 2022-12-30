@@ -41,4 +41,5 @@ public interface BoardDao {
 
     int boardSCount(HashMap<String, Object> map);
 
+    List<GameListVo> getGameList();
 }

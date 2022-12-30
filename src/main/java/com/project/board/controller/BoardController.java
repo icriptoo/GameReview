@@ -12,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -233,10 +231,49 @@ public class BoardController {
     // 게임목록db에 넣기
     @RequestMapping("/GameListInsert")
     public String GameListInsert() throws IOException {
-        boardService.GameInsert();
+        //boardService.GameInsert();
+        List<GameListVo> gameListVo = boardService.getGameList();
+        System.out.println(gameListVo.get(0).getG_name());
+
+        int resultCount =0;
+        //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv
+        try{
+            BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_test7.csv"),"MS949"));
+            fw.write("g_idx,g_name,g_genre,g_company,g_service,g_platform");
+            fw.newLine();
+
+            for(int i = 0; i < gameListVo.size(); ++i){
+                int g_idx = gameListVo.get(i).getG_idx();
+                String g_name = gameListVo.get(i).getG_name();
+                g_name= g_name.replaceAll(",", "/").trim();
+                String g_genre = gameListVo.get(i).getG_genre();
+                g_genre= g_genre.replaceAll(",", "/").trim();
+                String g_company = gameListVo.get(i).getG_company();
+                g_company= g_company.replaceAll(",", "/").trim();
+                String g_service = gameListVo.get(i).getG_service();
+                g_service= g_service.replaceAll(",", "/").trim();
+                String g_platform= gameListVo.get(i).getG_platform();
+                g_platform= g_platform.replaceAll(",", "/").trim();
+
+                fw.write(g_idx + ","+ g_name +","+ g_genre +","+ g_company +","+ g_service +","+ g_platform);
+                fw.newLine();
+            }
+
+//            for(gameListVo : list){
+//                fw.write(dom+","+"test");
+//                fw.newLine();
+//                resultCount++;
+//                if(resultCount % 100 == 0)
+//                    log.info("resultCount :"+resultCount + "/" + list.size());
+//            }
+            fw.flush();
+            // 객체 닫기
+            fw.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return "/home";
     }
-
     // 게임목록 조회 게시판
     @RequestMapping("/Board/GameList")
     public String GameList(Model model, @RequestParam HashMap<String, Object> map) {
@@ -490,7 +527,7 @@ public class BoardController {
     @RequestMapping("/Board/GameRecom")
     public String GameList() throws InterruptedException, IOException {
         String arg1;
-        String title = "토탈워: 워해머3"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
+        String title = "리그 오브 레전드"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
         ProcessBuilder builder;
         BufferedReader br;
 
@@ -520,7 +557,7 @@ public class BoardController {
 //            br.readLine();
 //        }
         //여기서부터 읽어지는 줄이 게임제목
-        for(int i=0; i<5; i++) { //(현재는 출력목록을 5개로 설정)
+        for(int i=0; i<50; i++) { //(현재는 출력목록을 5개로 설정)
             al.add(br.readLine().trim());
             System.out.println(">>>  "+ i + ":" + al.get(i));
         }

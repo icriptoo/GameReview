@@ -109,4 +109,15 @@ public class UserDaoImpl implements UserDao {
     public void wirthdwal(HashMap<String, Object> map) {
         sqlSession.delete("User.wirthdwal",map);
     }
+
+    @Override
+    public String getPcode(HashMap<String, Object> map) {
+        System.out.println(map);
+        return sqlSession.selectOne("User.getPcode", map);
+    }
+
+    @Override
+    public String getckpw(HashMap<String, Object> map) {
+        return sqlSession.selectOne("User.getckpw",map);
+    }
 }

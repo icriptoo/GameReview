@@ -93,6 +93,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getPcode(HashMap<String, Object> map) {
+        return userDao.getPcode(map);
+    }
+
+    @Override
+    public String getckpw(HashMap<String, Object> map) {
+        return userDao.getckpw(map);
+    }
+
+
+    @Override
     public Object getUser(Object login) {
         Object getUser = userDao.getUser(login);
         return getUser;

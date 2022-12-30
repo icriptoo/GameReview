@@ -67,7 +67,7 @@ h2{
 
 
 function loginbtn(){
-  var url = "/loginProcess?id=";
+  var url = "/loginProcess?u_id=";
 
   var id = $('input[name=id]').val();
   var pw = $('input[name=pw]').val();

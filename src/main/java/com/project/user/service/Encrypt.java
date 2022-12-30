@@ -11,17 +11,7 @@ public class Encrypt {
     private String salt1;
     private String result;
 
-    public String getPw(String pw){
-        //Salt 생성
-        getSalt();
-        System.out.println("salt: "+salt1);
-
-        //최종 pwd 생성
-        getEncrypt(pw, salt1);
-        return result;
-    }
-
-    public void getSalt(){
+    public String getSalt(){
         //1. Random, byte 객체 생성
         SecureRandom r = new SecureRandom();
         byte[] salt = new byte[20];
@@ -35,9 +25,10 @@ public class Encrypt {
             sb.append(String.format("%02x",b));
         }
         salt1 = sb.toString();
+        return salt1;
     }
 
-    public void getEncrypt(String pwd, String salt){
+    public String getEncrypt(String pwd, String salt){
         try {
             //1. SHA256 알고리즘 객체 생성
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -57,6 +48,7 @@ public class Encrypt {
         }catch (NoSuchAlgorithmException e){
             e.printStackTrace();
         }
+        return result;
     }
 
 }

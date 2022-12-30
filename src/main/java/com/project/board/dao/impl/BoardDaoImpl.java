@@ -206,6 +206,11 @@ public class BoardDaoImpl implements BoardDao {
         return sqlSession.selectOne("Board.BoardSCount",map);
     }
 
+    @Override
+    public List<GameListVo> getGameList() {
+        return sqlSession.selectList("Board.getGameList");
+    }
+
     // 전체게임리스트 뽑기
     @Override
     public List<GameListVo> GameListSelect(HashMap<String, Object> map) {

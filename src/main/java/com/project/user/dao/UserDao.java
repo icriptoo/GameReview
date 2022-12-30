@@ -31,4 +31,8 @@ public interface UserDao {
     String findpwck(HashMap<String, Object> map);
 
     void wirthdwal(HashMap<String, Object> map);
+
+    String getPcode(HashMap<String, Object> map);
+
+    String getckpw(HashMap<String, Object> map);
 }

@@ -30,6 +30,7 @@ div.signup{
 
 $(function(){
   $('form').on('submit',function(e){
+  console.log($('#pwJCheckResult').text());
     let g1 = $('[name=genre1]').val();
     let g2 = $('[name=genre2]').val();
     let g3 = $('[name=genre3]').val();
@@ -57,8 +58,20 @@ $(function(){
       alert('비밀번호가 일치하지 않습니다.');
       return false;
     }
-    if($('#pwJCheckResult').html() != "옮바른 비밀번호입니다."){
+    if($('#pwJCheckResult').text()== "영문과 특수문자 숫자를 포함하며 8자 이상이어야 합니다."){
       alert('비밀번호는 영문과 특수문자, 숫자를 포함한 8자 이상이어야 합니다.');
+      return false;
+    }
+    if($('#pwJCheckResult').text()== "동일한 문자를 연속해서 사용할 수 없습니다."){
+      alert('동일한 문자를 연속해서 사용할 수 없습니다.');
+      return false;
+    }
+    if($('#pwJCheckResult').text()== "ID를 포함할 수 없습니다."){
+      alert('ID를 포함할 수 없습니다.');
+      return false;
+    }
+    if($('#pwJCheckResult').text()== "특수문자는 !@#$^*+=-만 사용 가능합니다."){
+      alert('특수문자는 !@#$^*+=-만 사용 가능합니다.');
       return false;
     }
     if($('[name=n_name]').val()==''){
@@ -151,7 +164,7 @@ $(function(){
       dataType : "text",
       data : param,
       success : function(nnCheck){
-        $("#pwJCheckResult").html(nnCheck);
+        $("#pwJCheckResult").text(nnCheck);
       }
     })
   });

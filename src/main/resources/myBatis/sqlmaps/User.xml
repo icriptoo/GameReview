@@ -18,7 +18,7 @@
         INDATE
 
         FROM  USERS
-        WHERE U_ID = #{id}
+        WHERE U_ID = #{u_id}
         AND   PW = #{pw}
     </select>
 
@@ -74,6 +74,13 @@
         WHERE U_ID = #{u_id} AND EMAIL = #{email}
     </select>
 
+    <select id="getckpw"
+            resultType="String">
+        SELECT PW
+        FROM USERS
+        WHERE U_ID = #{u_id}
+    </select>
+
     <select id="finduid"
             resultType="String">
         SELECT U_ID
@@ -86,6 +93,12 @@
         SELECT PW
         FROM USERS
         WHERE U_ID = #{u_id} AND EMAIL = #{email}
+    </select>
+
+    <select id="getPcode" resultType="String">
+        SELECT PCODE
+          FROM USERS
+         WHERE U_ID = #{u_id}
     </select>
 
     <update id="UserUpdate">
@@ -106,8 +119,8 @@
 
     <insert id="UserInsert"
             parameterType="com.project.user.vo.UserVo">
-        INSERT INTO USERS (U_ID, PW, N_NAME, GENRE1, GENRE2, GENRE3)
-        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3})
+        INSERT INTO USERS (U_ID, PW, N_NAME, GENRE1, GENRE2, GENRE3, PCODE)
+        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3}, #{pcode})
     </insert>
 
     <delete id="wirthdwal">
