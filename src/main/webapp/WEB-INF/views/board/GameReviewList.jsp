@@ -10,6 +10,49 @@
 <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script>
+
+function boardCheck(){
+  console.log('${ sessionScope.login.u_id }');
+  console.log('${gameListVo.g_idx}');
+  let u_id = '${ sessionScope.login.u_id }'; // 유저아이디 들고오기
+  let g_idx = '${gameListVo.g_idx}'; // 게임idx 들고오기
+
+  let obj={ // 넘겨줄 데이터
+      			"u_id" : u_id,
+      			"g_idx" : g_idx
+      		};
+
+  if('${menu_id}' == 1){
+      $.ajax({
+            url : "boardCheck",
+            type : "POST",
+            data : obj,
+            success : function(chk){
+                if(chk>0){ // 작성리뷰 있음 --> false
+                    alert('이미 리뷰를 작성하였습니다.');
+                    return false;
+                } else { // 작성리뷰 없음 --> 작성화면
+                    location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
+                }
+            },
+            error : function() {
+                alert("요청실패");
+            }
+        })
+  } else{
+     location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
+  }
+
+
+
+
+
+
+
+}
+
+</script>
 <title>Insert title here</title>
 <style>
 
@@ -113,69 +156,7 @@ ul{
 
           <tr>
             <td colspan="4">
-            <c:choose>
-                    <c:when test="${sT eq 0}">
-                      <tr>
-                        <td class="page" id="page" colspan="2" style="text-align:center;">
-                          <div class="pager">
-                            <c:if test="${Pager.prev}">
-                              <a href="http://localhost:8080/Board/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}">< 이전</a>
-                              <a class="firstPageNum" href="/Board/GameReviewList?pageNum=1&contentNum=30">1</a>
-                              ...
-                            </c:if>
-                            <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
-                              <a class="pageNum" href="/Board/GameReviewList?pageNum=${idx}&contentNum=${idx*30}">${idx}</a>
-                            </c:forEach>
-                            <c:if test="${Pager.next}">
-                              ...
-                              <a class="lastPageNum" href="/Board/GameReviewList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}">${Pager.lastPageNum}</a>
-                              <a href="http://localhost:8080/Board/GameReviewList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}">다음 ></a>
-                            </c:if>
-                          </div>
-                        </td>
-                      </tr>
-                    </c:when>
-                    <c:when test="${sT eq 101}">
-                      <td class="page" id="page" colspan="2" style="text-align:center;">
-                        <div class="pager">
-                          <c:if test="${Pager.prev}">
-                            <a href="http://localhost:8080/Board/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&gameName=${gN}">< 이전</a>
-                            <a class="firstPageNum" href="/Board/GameReviewList?pageNum=1&contentNum=30&gameName=${gN}">1</a>
-                            ...
-                          </c:if>
-                          <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
-                            <a class="pageNum" href="/Board/GameReviewList?pageNum=${idx}&contentNum=${idx*30}&gameName=${gN}">${idx}</a>
-                          </c:forEach>
-                          <c:if test="${Pager.next}">
-                            ...
-                            <a class="lastPageNum" href="/Board/GameReviewList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&gameName=${gN}">${Pager.lastPageNum}</a>
-                            <a href="http://localhost:8080/Board/GameReviewList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&gameName=${gN}">다음 ></a>
-                          </c:if>
-                        </div>
-                      </td>
-                    </c:when>
-                    <c:otherwise>
-                      <tr>
-                        <td class="page" id="page" colspan="2" style="text-align:center;">
-                          <div class="pager">
-                            <c:if test="${Pager.prev}">
-                              <a href="http://localhost:8080/Board/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}">< 이전</a>
-                              <a class="firstPageNum" href="/Board/GameReviewList?pageNum=1&contentNum=30&searchType=${sT}">1</a>
-                              ...
-                            </c:if>
-                            <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
-                              <a class="pageNum" href="/Board/GameReviewList?pageNum=${idx}&contentNum=${idx*30}&searchType=${sT}">${idx}</a>
-                            </c:forEach>
-                            <c:if test="${Pager.next}">
-                              ...
-                              <a class="lastPageNum" href="/Board/GameReviewList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&searchType=${sT}">${Pager.lastPageNum}</a>
-                              <a href="http://localhost:8080/Board/GameReviewList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&searchType=${sT}">다음 ></a>
-                            </c:if>
-                          </div>
-                        </td>
-                      </tr>
-                    </c:otherwise>
-                  </c:choose>
+
 
             <tr style="border-top: 1px solid #000">
               <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
@@ -190,7 +171,7 @@ ul{
               </td >
               <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
               <c:if test="${sessionScope.login.u_id ne null}">
-              <button style="font-size:20px;" onClick="location.href='/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}'" >글쓰기</button>
+              <button style="font-size:20px;" onClick="boardCheck()" >글쓰기</button>
               </c:if>
               </td>
             </tr>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -96,10 +97,22 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
+    // 작성글 체크
+    @ResponseBody
+    @RequestMapping(value= "/boardCheck") // 글작성여부 체크
+    public int regcheck(@RequestParam HashMap<String, Object> map) {
+        int boardCheck = boardService.boardCheck(map);
+        return  boardCheck;
+    }
+
     //추천게임목록
-    @RequestMapping("/RecomList")
+    @RequestMapping("/RecomGameList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
-        List<GameListVo> gameListVo = boardService.getGameList();
+        System.out.println("this:"+map);
+        BoardVo boardVo = boardService.goodGame(map);
+        System.out.println("왓니:"+boardVo);
+        String title_1 = boardVo.getG_name();
+        System.out.println("타이틀:"+ title_1);
 
         String arg1;
         String title = "리그 오브 레전드"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
@@ -113,7 +126,7 @@ public class BoardController {
 
         //첫번째가 파이썬실행파일경로, 두번째가 추천알고리즘 파이썬파일 경로(arg1), 세번재가 넘겨줄 파라미터(title)
         //builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title); //python3 error
-        builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title); //python3 error
+        builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title_1); //python3 error
 
         builder.redirectErrorStream(true);
         Process process = builder.start();
@@ -132,14 +145,18 @@ public class BoardController {
             br.readLine();
         }
         //여기서부터 읽어지는 줄이 게임제목
-        for(int i=0; i<20; i++) { //(현재는 출력목록을 5개로 설정)
+        for(int i=0; i<10; i++) { //(현재는 출력목록을 5개로 설정)
             al.add(br.readLine().trim());
             System.out.println(">>>  "+ i + ":" + al.get(i));
         }
         //랜덤하게 추천게임중하나 뽑기 테스트 중
         Random random = new Random();
-        int randomIndex = random.nextInt(al.size());
-        System.out.println(al.get(randomIndex));
+        int randomIndex1 = random.nextInt(al.size());
+        int randomIndex2 = random.nextInt(al.size());
+        int randomIndex3 = random.nextInt(al.size());
+        System.out.println(al.get(randomIndex1));
+        System.out.println(al.get(randomIndex2));
+        System.out.println(al.get(randomIndex3));
 
 
         if(exitval !=0){

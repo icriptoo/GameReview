@@ -61,6 +61,17 @@ public class BoardServiceImpl implements BoardService {
         return gameListVo;
     }
 
+    @Override
+    public int boardCheck(HashMap<String, Object> map) {
+        int boardCheck = boardDao.boardCheck(map);
+        return boardCheck;
+    }
+
+    @Override
+    public BoardVo goodGame(HashMap<String, Object> map) {
+        BoardVo boardVo = boardDao.goodGame(map);
+        return boardVo;
+    }
 
     @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }

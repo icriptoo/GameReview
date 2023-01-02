@@ -40,4 +40,8 @@ public interface BoardDao {
     int boardCount(HashMap<String, Object> map);
 
     List<GameListVo> getGameList();
+
+    int boardCheck(HashMap<String, Object> map);
+
+    BoardVo goodGame(HashMap<String, Object> map);
 }
