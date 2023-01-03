@@ -64,7 +64,6 @@ public class BoardDaoImpl implements BoardDao {
             }
 
             len = GR.size() / 6;
-
 //            Elements elemSC = doc.select("td[class=\"score\"]").select("div");
 //            // 평점 저장
 //            for (Element e : elemSC) {
