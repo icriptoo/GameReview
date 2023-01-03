@@ -233,7 +233,6 @@ public class BoardController {
     public String GameListInsert() throws IOException {
         //boardService.GameInsert();
         List<GameListVo> gameListVo = boardService.getGameList();
-        System.out.println(gameListVo.get(0).getG_name());
 
         int resultCount =0;
         //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv

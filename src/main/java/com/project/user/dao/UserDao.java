@@ -10,7 +10,7 @@ public interface UserDao {
 
     void userupdqte(HashMap<String, Object> map);
 
-    Object getUser(Object login);
+    UserVo getUser(Object login);
 
     void profileupdate(HashMap<String, Object> map);
 
@@ -24,7 +24,7 @@ public interface UserDao {
 
     String emailck(HashMap<String, Object> map);
 
-    String getpw(HashMap<String, Object> map);
+    UserVo getUserChPw(HashMap<String, Object> map);
 
     String finduidck(HashMap<String, Object> map);
 
@@ -35,4 +35,6 @@ public interface UserDao {
     String getPcode(HashMap<String, Object> map);
 
     String getckpw(HashMap<String, Object> map);
+
+    void changePw(HashMap<String, Object> map);
 }

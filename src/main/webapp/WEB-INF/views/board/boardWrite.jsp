@@ -15,15 +15,15 @@
   		theForm=document.form1;
 
   		if(theForm.title.value==""){
-  			alert("제목을 입력해주세요.");
+  			alert("제목을 입력해 주세요.");
   			return false;
   		}
   		if(theForm.cont.value==""){
-  			alert("내용을 입력해주세요.");
+  			alert("내용을 입력해 주세요.");
   			return false;
   		}
   		if(theForm.r_score.value=="none"){
-  			alert("평점을 입력해주세요.");
+  			alert("평점을 입력해 주세요.");
   			return false;
   		}
 

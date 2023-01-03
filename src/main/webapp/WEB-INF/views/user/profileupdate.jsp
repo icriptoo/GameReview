@@ -16,8 +16,8 @@
 <body>
 <div style="height:70%">
   <form action="/profileupdate" class="w3-container w3-card-4" method="POST" encType = "multipart/form-data">
-    <input type="file" id="image" name="upfile" accept="image/*" onchange="setThumbnail(event);"/><br>
-    <button type="submit">프로필 업로드</button>
+    <input type="file" id="image" name="upfile" accept="image/*" class="upfile w3-input" onchange="setThumbnail(event);"><br>
+    <button>프로필 업로드</button>
   </form>
 </div>
 </body>

@@ -40,7 +40,7 @@ function btnSearch(e){
   url += "&menu_id=${menu_id}";
   url += "&g_idx=${gameListVo.g_idx}"
   if ($("#keyword").val() === ""){
-    alert("키워드를 입력해주세요.");
+    alert("키워드를 입력해 주세요.");
   }else{
     location.href = url;
   }

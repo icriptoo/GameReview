@@ -37,7 +37,7 @@ function btnGSearch(e){
   var url = "/Board/GameList?pageNum=1&contentNum=30";
   url += "&gameName=" + $("#gameName").val();
   if ($("#gameName").val() === ""){
-    alert("게임명을 입력해주세요.");
+    alert("게임명을 입력해 주세요.");
   }else{
     location.href = url;
   }

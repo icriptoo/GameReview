@@ -79,33 +79,34 @@ ul{
   </div>
   <div class="mypage">
     <div class="profile">
-      <c:set var="img" value="${login.img}"/>
+      <c:set var="img" value="${user.img}"/>
       <c:choose>
         <c:when test="${img eq null}">
           <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
         </c:when>
         <c:otherwise>
-          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+          <p><img src="/img/userProfile/${user.u_id}/${user.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
         </c:otherwise>
       </c:choose>
       <p><a href="/user/profilupdateform">내 정보 수정</a></p>
-      <p><a href="javascript:void(window.open('/passwordUpdate', '비밀번호 변경','width=700, height=700'))">비밀번호 변경</a></p>
+      <p><a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))">비밀번호 변경</a></p>
       <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=700, height=700'))">프로필 사진 수정</a></p>
       <p><a href="/user/myboards">내 게시글보기</a></p>
       <p><a href="/user/WithdrawalForm">회원탈퇴</a></p>
     </div>
     <div class="mypagein">
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : ${login.u_id}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : ${login.n_name}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 : ${login.email}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : ${user.u_id}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : ${user.n_name}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 : ${user.email}</p>
       <p>선호 장르1 : ${login.genre1}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르2 : ${login.genre2}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르3 : ${login.genre3}</p>
-      <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르2 : ${user.genre2}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;장르3 : ${user.genre3}</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${user.indate}</p>
     </div>
   </div>
 </div>
 <script>
+console.log(${user});
 </script>
 </body>
 </html>

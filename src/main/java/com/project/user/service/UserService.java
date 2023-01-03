@@ -12,7 +12,6 @@ public interface UserService {
     UserVo login(HashMap<String, Object> map);
 
 
-    Object getUser(Object login);
 
     void userupdate(HashMap<String, Object> userVo);
 
@@ -28,7 +27,7 @@ public interface UserService {
 
     String emailck(HashMap<String, Object> map);
 
-    String getpw(HashMap<String, Object> map);
+    UserVo getUserChPw(HashMap<String, Object> map);
 
     String finduidck(HashMap<String, Object> map);
 
@@ -40,4 +39,8 @@ public interface UserService {
     String getPcode(HashMap<String, Object> map);
 
     String getckpw(HashMap<String, Object> map);
+
+    void changePw(HashMap<String, Object> map);
+
+    UserVo getUser(Object login);
 }

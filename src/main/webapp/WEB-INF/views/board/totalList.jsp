@@ -39,7 +39,7 @@ function btnSearch(e){
   url += "&searchType=" + $("#searchType").val();
   url += "&menu_id=${menu_id}";
   if ($("#keyword").val() === ""){
-    alert("키워드를 입력해주세요.");
+    alert("키워드를 입력해 주세요.");
   }else{
     location.href = url;
   }

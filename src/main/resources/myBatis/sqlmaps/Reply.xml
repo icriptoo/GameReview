@@ -14,7 +14,7 @@
         G_IDX,
         U_ID,
         CONT,
-        INDATE
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE
         FROM  REPLY
         WHERE B_IDX = ${b_idx}
         ORDER BY INDATE ASC)

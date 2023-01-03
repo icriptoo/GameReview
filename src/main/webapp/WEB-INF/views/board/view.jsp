@@ -79,7 +79,7 @@ function replyDelete(r_idx){
 }
 
 function replyUpdateForm(r_idx){
-  const ck = confirm("댓글을 수정 하시겠습니까?");
+  let ck = confirm("댓글을 수정 하시겠습니까?");
   if (ck) {
     let k = document.getElementById("replycont"+r_idx);
     let form = "";
@@ -103,12 +103,12 @@ function replyUpdate(r_idx){
     url:  "/replyUpdate",
     data: param,
     success: function(result){
-      alert("댓글이 수정됐습니다.");
+      alert("댓글이 수정 됐습니다.");
       replyList();
     },
     error: function(error_){
       if($('#replycontent').val() == ''){
-        alert('댓글을 입력해주세요.')
+        alert('댓글을 입력해 주세요.')
       }
     }
   });
@@ -169,7 +169,7 @@ function replyUpdate(r_idx){
   <div>
     <div class="replyin_box">
       <div>${login.u_id}</div><br>
-      <div><textarea type="textarea" id="replytext" placeholder="내용을 입력해주세요."></textarea></div>
+      <div><textarea type="textarea" id="replytext" placeholder="내용을 입력해 주세요."></textarea></div>
       <div style="float: center" id="replybtn"><button>작성</button></div>
     </div>
   </div>

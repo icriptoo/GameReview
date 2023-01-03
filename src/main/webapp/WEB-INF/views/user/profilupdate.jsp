@@ -59,16 +59,16 @@ ul{
 <script>
 $(function(){
   $('form').on('submit',function(e){
-    const n_name = "${login.n_name}";
-    const cn_name = $('input[name=n_name]').val();
-    const email = "${login.email}";
-    const cemail = $('input[name=email]').val();
-    const g1 = $('[name=genre1]').val();
-    const g2 = $('[name=genre2]').val();
-    const g3 = $('[name=genre3]').val();
+    let n_name = "${user.n_name}";
+    let cn_name = $('input[name=n_name]').val();
+    let email = "${user.email}";
+    let cemail = $('input[name=email]').val();
+    let g1 = $('[name=genre1]').val();
+    let g2 = $('[name=genre2]').val();
+    let g3 = $('[name=genre3]').val();
     if(cn_name != n_name){
       if($('[name=nnCheckResult]').text() == "중복된 닉네임입니다."){
-        alert('아이디 중복체크를 확인 해주세요.');
+        alert('아이디 중복체크를 확인해 주세요.');
         return false;
       }
       if($('[name=nnCheckResult]').text() == ""){
@@ -78,24 +78,24 @@ $(function(){
     }
     if(cemail != email){
       if($('[name=enumsendResult]').text() == "중복된 이메일입니다."){
-        alert('이메일을 확인 해주세요.');
+        alert('이메일을 확인해 주세요.');
         return false;
       }
       if($('[name=enumsendResult]').text() == "중복된 이메일입니다."){
-        alert('이메일을 확인 해주세요.');
+        alert('이메일을 확인해 주세요.');
         return false;
       }
       if($('[name=enumsendResult]').text() == "올바른 이메일 형식이 아닙니다."){
-        alert('이메일을 확인 해주세요.');
+        alert('이메일을 확인해 주세요.');
         return false;
       }
-      if($('[name=enumsendResult]').text() == "이메일을 확인 해주세요."){
-        alert('이메일을 확인 해주세요.');
+      if($('[name=enumsendResult]').text() == "이메일을 확인해 주세요."){
+        alert('이메일을 확인해 주세요.');
         return false;
       }
       if($('[name=enumckResult]').text() == "인증번호가 발송 됐습니다."){
         if($('[name=enumckResult]').text() == ""){
-          alert('인증번호를 입력해주세요.');
+          alert('인증번호를 입력해 주세요.');
           return false;
         }
         if($('[name=enumckResult]').text() == "인증번호가 일치하지 않습니다."){
@@ -105,19 +105,19 @@ $(function(){
       }
     }
     if(g1==''){
-      alert('첫번째 장르를 선택해주세요.');
+      alert('첫번째 장르를 선택해 주세요.');
       return false;
     }
     if(g2==''){
-      alert('두번째 장르를 선택해주세요.');
+      alert('두번째 장르를 선택해 주세요.');
       return false;
     }
     if(g3==''){
-      alert('세번째 장르를 선택해주세요.');
+      alert('세번째 장르를 선택해 주세요.');
       return false;
     }
     if(g1==g2 || g1==g3 || g2==g3){
-      alert('장르가 중복입니다. 다시 확인 해주세요.');
+      alert('장르가 중복입니다. 다시 확인해 주세요.');
       return false;
     }
   });
@@ -127,8 +127,8 @@ $(function(){
   }
 
   $('#nnCheck').on('click', function(e){
-    const cn_name = $('input[name=n_name]').val();
-    const n_name = "${login.n_name}";
+    let cn_name = $('input[name=n_name]').val();
+    let n_name = "${user.n_name}";
     if(cn_name != n_name){
       $.ajax({
         type : 'POST',
@@ -150,12 +150,12 @@ $(function(){
 
   $('#enumsend').on('click', function(e){
     $("#enumsendResult").text("");
-    const regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    const cemail = $('input[name=email]').val();
-    const email = "${login.email}";
+    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let cemail = $('input[name=email]').val();
+    let email = "${user.email}";
 
     if(cemail == ""){
-      $("#enumsendResult").text("이메일을 입력 해주세요.");
+      $("#enumsendResult").text("이메일을 입력해 주세요.");
       return false;
     }
 
@@ -187,7 +187,7 @@ $(function(){
 
   $('#emailcode').keyup(function(){
     $("#enumckResult").text("");
-    const ecodeck = $('input[name=emailcode]').val();
+    let ecodeck = $('input[name=emailcode]').val();
     $.ajax({
       type : 'POST',
       url : "ecodeck",
@@ -227,13 +227,13 @@ $(function(){
     <form action="/user/profilupdate" method="POST" encType = "multipart/form-data">
       <div class="profile">
         <p>
-          <c:set var="img" value="${login.img}"/>
+          <c:set var="img" value="${user.img}"/>
           <c:choose>
             <c:when test="${img eq null}">
               <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
             </c:when>
             <c:otherwise>
-              <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+              <p><img src="/img/userProfile/${user.u_id}/${user.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
             </c:otherwise>
           </c:choose>
         </p>
@@ -241,17 +241,17 @@ $(function(){
         <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
       </div>
       <div class="mypagein">
-        <input type="hidden" name="pw" value="${login.pw}">
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${login.u_id}" readonly/></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${login.n_name}"/>
+        <input type="hidden" name="pw" value="${user.pw}">
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${user.u_id}" readonly/></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}"/>
           <button id="nnCheck" name="nnCheck">중복확인</button>
           <span id="nnCheckResult" name="nnCheckResult"></span>
         </p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
-          <c:set var="email" value="${login.email}"/>
+          <c:set var="email" value="${user.email}"/>
           <c:choose>
             <c:when test="${emile eq null}">
-              <input type="text" name="email" value="${login.email}">
+              <input type="text" name="email" value="${user.email}">
             </c:when>
             <c:otherwise>
               <input type="text" name="email">
@@ -260,10 +260,10 @@ $(function(){
           <button id="enumsend" name="enumsend">인증번호전송</button>
           <span id="enumsendResult" name="enumsendResult"></span>
         </p>
-        <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해주세요." name="emailcode" id="emailcode">
+        <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode">
           <span id="enumckResult" name="enumckResult"></span>
         </p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;선호 장르는 중복되지 않도록 선택 해주세요.</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;선호 장르는 중복되지 않도록 선택해 주세요.</p>
         <p>선호 장르1 :
           <select name="genre1" id="genre1">
             <option value="">선호 장르1</option>
@@ -327,15 +327,15 @@ $(function(){
             <option value="기타">기타</option>
           </select>
         </p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${login.indate}</p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;가입일 : ${user.indate}</p>
       </div>
     </form>
   </div>
 </div>
 <script>
-$('select[name=genre1]').val('${login.genre1}').prop("selected",true);
-$('select[name=genre2]').val('${login.genre2}').prop("selected",true);
-$('select[name=genre3]').val('${login.genre3}').prop("selected",true);
+$('select[name=genre1]').val('${user.genre1}').prop("selected",true);
+$('select[name=genre2]').val('${user.genre2}').prop("selected",true);
+$('select[name=genre3]').val('${user.genre3}').prop("selected",true);
 </script>
 </body>
 </html>

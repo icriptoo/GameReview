@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +34,7 @@ public class UserController {
     private CheckPassword checkPassword;
 
     // 이메일 인증번호 저장변수
-    private String ecode;
+    private String ecode = "";
 
     // 로그인 창 이동
     @RequestMapping("login")
@@ -56,21 +55,27 @@ public class UserController {
     // 로그인
     @RequestMapping("loginProcess")
     public String loginProcess(HttpSession httpSession, @RequestParam HashMap<String, Object> map, Model model){
+        UserVo vo = null;
         String returnURL = "";
         String next = (String) map.get("next");
         String url = "";
         String pw = (String)map.get("pw");
+        // db에 id검색해서 pcode(회원가입할때 만들어진 salt) 가져옴
         String salt = userService.getPcode(map);
+        // 입력한 비밀번호와 가져온 salt를 sha256 암호화
         String Epw = encrypt.getEncrypt(pw,salt);
+        // db에 id에 등록되어 있는 암호화된 비밀번호 가져옴
         String ckpw = userService.getckpw(map);
 
-        UserVo vo = null;
-
+        // 암호화된 비밀번호 비교
         if ( Epw.equals(ckpw)){
+            map.put("pw",Epw);
             if(httpSession.getAttribute("login") != null){
                 httpSession.removeAttribute("login");
             }
             vo = userService.login(map);
+            // 나중에 로그인 후 원래 있던 페이지로 이동하기 위한 주소지정 - 지금사용 안함
+            /*
             model.addAttribute("next",next);
             if (map.get("contentNum") != null) {
                 String next1 = (String) map.get("contentNum");
@@ -78,24 +83,18 @@ public class UserController {
             }else {
                 url = next;
             }
-
-            if(vo != null) {
-                httpSession.setAttribute("login", vo);
-                returnURL = "redirect:"+ url;
-            }else{
-                model.addAttribute("fail","아이디와 비밀번호를 확인 해주세요.");
-                returnURL = "user/login";
-            }
+            returnURL = "redirect:"+ url;
+            */
+            httpSession.setAttribute("login", vo);
             return "home";
         }else {
-            model.addAttribute("fail","아이디와 비밀번호를 확인 해주세요.");
+            model.addAttribute("fail","아이디와 비밀번호를 확인해 주세요.");
             returnURL = "";
+            return "user/login";
         }
 
         //return returnURL;
-        return "home";
     }
-
 
     // 로그아웃
     @RequestMapping(value = "/logout", method= {RequestMethod.GET})
@@ -117,40 +116,32 @@ public class UserController {
 
     // 마이페이지
     @RequestMapping("/mypage")
-    public ModelAndView mypage(HttpSession httpSession){
-        ModelAndView mv = new ModelAndView();
-        Object getUser = userService.getUser(httpSession.getAttribute("login"));
-        mv.addObject(getUser);
-        mv.setViewName("user/mypage");
-
-        return mv;
+    public String mypage(HttpSession httpSession, HashMap<String, Object> map){
+        UserVo user = userService.getUser(httpSession.getAttribute("login"));
+        map.put("user",user);
+        return "user/mypage";
     }
 
-    // 내 정보 수정할 때 필요한 현재 정보를 가져옴
+    // 내 정보 수정할 때 필요한 현재 정보를 가져와 페이지에 보여줌
     @RequestMapping("/user/profilupdateform")
-    public ModelAndView profilupdateform(HttpSession httpSession) {
-        ModelAndView mv = new ModelAndView();
-        Object getUser = userService.getUser(httpSession.getAttribute("login"));
-
-        mv.addObject(getUser);
-        mv.setViewName("user/profilupdate");
-
-        return mv;
+    public String profilupdateform(HttpSession httpSession, HashMap<String, Object> map) {
+        UserVo user = userService.getUser(httpSession.getAttribute("login"));
+        map.put("user",user);
+        return "user/profilupdate";
     }
 
     // 수정된 내 정보를 업데이트 후 업데이트된 내용을 마이페이지에 보여줌
     @RequestMapping("/user/profilupdate")
-    public ModelAndView profilupdate(@RequestParam HashMap<String, Object> map, HttpSession httpSession){
-        ModelAndView mv = new ModelAndView();
+    public String profilupdate(@RequestParam HashMap<String, Object> map, HttpSession httpSession){
         userService.userupdate(map);
-        Object vo = userService.getUser(httpSession.getAttribute("login"));
+        UserVo user = userService.getUser(httpSession.getAttribute("login"));
 
         httpSession.removeAttribute("login");
-        httpSession.setAttribute("login",vo);
+        httpSession.setAttribute("login", user);
 
-        mv.addObject(vo);
-        mv.setViewName("user/mypage");
-        return mv;
+        map.put("user", user);
+
+        return "user/mypage";
     }
 
     // 프로필 사진 업데이트 창 띄우기
@@ -217,6 +208,20 @@ public class UserController {
         }
     }
 
+    // 이메일 중복확인
+    @RequestMapping(value="/emailck", produces = "application/text; charset=UTF-8")
+    @ResponseBody
+    public String emailCk(@RequestParam HashMap<String, Object> map){
+        String mse = "";
+        String email = userService.emailck(map);
+        if (email != null){
+            mse = "이미 사용중인 이메일입니다." ;
+        } else {
+            mse = "사용 가능한 이메일입니다.";
+        }
+        return mse;
+    }
+
     // 프로필 닉네임 중복확인
     @RequestMapping(value="/user/nnCheck", produces = "application/text; charset=UTF-8")
     @ResponseBody
@@ -237,15 +242,38 @@ public class UserController {
     @RequestMapping(value = "/ckPwJ", produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String ckPwJ(@RequestParam HashMap<String, Object> map){
-        String mes ="";
+        String mse ="";
+        String ck = "";
+        String signupck = null;
+        String ckpw = "";
         String u_id = (String)map.get("u_id");
         String pw = (String)map.get("pw");
+        signupck = (String)map.get("ck");
 
-        mes = checkPassword.ckPw(pw, u_id);
-        if (mes == ""){
-            mes = "옳바른 비밀번호입니다.";
+        if (!signupck.equals("ck")) {
+            ckpw = userService.findpwck(map);
         }
-        return mes;
+        if (map.size() >= 3) {
+            ck = (String) map.get("ck");
+        }
+
+        if (ck == "") {
+            mse = checkPassword.ckPw(pw, u_id);
+            if (mse == "") {
+                mse = "옳바른 비밀번호입니다.";
+            }
+        } else{
+            mse = checkPassword.ckPw(pw, u_id);
+            if (mse == "") {
+                mse = "옳바른 비밀번호입니다.";
+            }
+            String Pcode = userService.getPcode(map);
+            String Epw = encrypt.getEncrypt(pw, Pcode);
+            if (Epw.equals(ckpw)) {
+                mse = "기존 비밀번호와 동일합니다.";
+            }
+        }
+        return mse;
     }
 
     // 아이디찾기 창 띄우기
@@ -264,33 +292,48 @@ public class UserController {
         if (uid != null){
             return mse = "아이디는 " + uid +" 입니다.";
         }else {
-            return mse = "닉네임과 이메일을 다시 확인 해주세요.";
+            return mse = "닉네임과 이메일을 다시 확인해 주세요.";
         }
     }
 
-    // 비밀번호 찾기 창 띄우기
+    // 비밀번호 변경 창 띄우기
     @RequestMapping("/findPasswordform")
     public String findpassword(){ return "user/findPassword"; }
 
-    // 비밀번호 찾기
-    @RequestMapping(value = "/getPassword", produces = "application/text; charset=UTF-8")
+    // 비밀번호 변경 창
+    // 아이디와 이메일 가지고 비밀번호 변경 가능한지 확인
+    @RequestMapping(value = "/changePwIdCk", produces = "application/text; charset=UTF-8")
     @ResponseBody
-    public String getPassword(@RequestParam HashMap<String, Object> map){
-        String pw = userService.getpw(map);
+    public String changePwIdCk(@RequestParam HashMap<String, Object> map){
+        UserVo userVo = userService.getUserChPw(map);
         String mse ="";
 
-        if (pw != null){
-            return mse = "비밀번호는 " + pw + " 입니다.";
-        }else {
-            return mse = "아이디와 이메일을 다시 확인 해주세요.";
+        if (userVo != null){
+            mse = "y";
+        } else if (userVo == null){
+            mse = "n";
         }
+        return mse;
+    }
+
+    // 비밀번호 변경
+    @RequestMapping("/changePw")
+    public String changePw(@RequestParam HashMap<String, Object> map){
+        String mse = "비밀번호가 변경됐습니다.";
+        String pw = (String)map.get("pw");
+        String Pcode = userService.getPcode(map);
+        String Epw = encrypt.getEncrypt(pw,Pcode);
+        map.put("pw",Epw);
+        map.put("pcode",Pcode);
+        userService.changePw(map);
+
+        return "popupout";
     }
 
     // 아이디, 비밀번호 찾기 이메일 인증번호 전송
     @RequestMapping(value = "/findemailck", produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String findemailck(@RequestParam HashMap<String, Object> map){
-        ecode = "";
         String email = (String) map.get("email"); // 입력한 이메일
         String u_id = "";
         String n_name = "";
@@ -308,7 +351,7 @@ public class UserController {
                 System.out.println("인증번호:"+ecode);
                 mse = "인증번호가 발송 됐습니다.";
             } else {
-                mse = "아이디와 이메일을 확인해주세요.";
+                mse = "닉네임과 이메일을 확인해 주세요.";
             }
         }else if (u_id != ""){
             eck = userService.findpwck(map);
@@ -317,7 +360,7 @@ public class UserController {
                 System.out.println("인증번호:"+ecode);
                 mse = "인증번호가 발송 됐습니다.";
             } else {
-                mse = "닉네임과 이메일을 확인해주세요.";
+                mse = "아이디와 이메일을 확인해 주세요.";
             }
         }
         return mse;
@@ -329,19 +372,20 @@ public class UserController {
     public String findecodeck(@RequestParam HashMap<String, Object> map){
         String ecodeck = (String) map.get("ecodeck");
         String mse = "";
-        if (ecodeck.equals(ecode)){
-            mse = "인증번호가 일치합니다.";
-        }else {
-            mse = "인증번호가 일치하지 않습니다.";
+        if (ecode.length() > 0) {
+            if (ecodeck.equals(ecode)) {
+                mse = "인증번호가 일치합니다.";
+            } else {
+                mse = "인증번호가 일치하지 않습니다.";
+            }
         }
         return mse;
     }
 
-    // 마이 페이지 이메일등록 중복체크 후 인증번호 전송
+    // 마이페이지 이메일등록 중복체크 후 인증번호 전송
     @RequestMapping(value = "/user/email", produces = "application/text; charset=UTF-8")
     @ResponseBody
     public String email(@RequestParam HashMap<String, Object> map){
-        ecode = "";
         String email = (String) map.get("email"); // 입력한 이메일
         String mse = "";
         String eck = userService.emailck(map); // 이메일 중복확인
@@ -352,7 +396,7 @@ public class UserController {
         }else if(eck != null){
             mse = "중복된 이메일입니다.";
         }else {
-            mse = "이메일을 확인 해주세요.";
+            mse = "이메일을 확인해 주세요.";
         }
         return mse;
     }
@@ -382,5 +426,10 @@ public class UserController {
         httpSession.invalidate();
         return "/home";
     }
+
+
+    // 창닫기
+    @RequestMapping("/popupout")
+    public String popupout(){ return "popupout"; }
 
 }
