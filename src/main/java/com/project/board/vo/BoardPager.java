@@ -85,7 +85,7 @@ public class BoardPager {
                     endPage++;
                 }
             } else {
-                endPage = getStartPage() + 9;
+                endPage = startPage + 9;
             }
         } else if (totalCount == 0) {
             endPage = 0;

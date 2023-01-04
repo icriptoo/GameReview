@@ -13,7 +13,6 @@
         title,
         cont,
         r_score,
-        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
         b_count,
         menu_id,
         u_id,
@@ -25,7 +24,6 @@
         #{title},
         #{cont},
         #{r_score},
-        sysdate,
         0,
         #{menu_id},
         #{u_id},
@@ -47,12 +45,19 @@
           FROM GAMELIST
     </select>
 
-    <!-- 글 목록 카운트 -->
+    <!-- 글 전체 목록 카운트 -->
     <select id="BoardCount"
             resultType="int">
         SELECT COUNT(*)
         FROM BOARD
         where menu_id = ${menu_id}
+    </select>
+
+    <select id="BoardOneCount"
+            resultType="int">
+        SELECT COUNT(*)
+        FROM BOARD
+        where menu_id = ${menu_id} and g_idx = ${g_idx}
     </select>
 
     <select id="BoardSCount"
@@ -64,7 +69,7 @@
         a.title,
         a.cont,
         a.r_score,
-        a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
         a.b_count,
         a.menu_id,
         b.g_name,
@@ -89,7 +94,7 @@
                 a.title,
                 a.cont,
                 a.r_score,
-                a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+                TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
                 a.b_count,
                 a.menu_id,
                 b.g_name,
@@ -110,7 +115,7 @@
                 a.title,
                 a.cont,
                 a.r_score,
-                a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+                TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
                 a.b_count,
                 a.menu_id,
                 b.g_name,
@@ -135,7 +140,7 @@
         a.title,
         a.cont,
         a.r_score,
-        a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
         a.b_count,
         a.menu_id,
         b.g_name,

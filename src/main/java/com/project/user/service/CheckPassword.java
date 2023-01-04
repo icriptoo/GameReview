@@ -1,6 +1,5 @@
 package com.project.user.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
@@ -33,7 +32,7 @@ public class CheckPassword {
 
         // 특수문자 확인
         Pattern passPattern3 = Pattern.compile("\\W");
-        Pattern passPattern4 = Pattern.compile("[!@#$%^*+=-]");
+        Pattern passPattern4 = Pattern.compile("[!@$%^*+=-]");
 
         for (int i = 0; i < pw.length(); i++) {
             String s = String.valueOf(pw.charAt(i));
@@ -42,7 +41,7 @@ public class CheckPassword {
             if (passMatcher3.find()) {
                 Matcher passMatcher4 = passPattern4.matcher(s);
                 if (!passMatcher4.find()) {
-                    return "특수문자는 !@#$^*+=-만 사용 가능합니다.";
+                    return "특수문자는 !@$^*+=-만 사용 가능합니다.";
                 }
             }
         }

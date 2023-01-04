@@ -42,4 +42,6 @@ public interface BoardService {
     int boardSCount(HashMap<String, Object> map);
 
     List<GameListVo> getGameList();
+
+    int boardOneCount(HashMap<String, Object> map);
 }

@@ -67,7 +67,7 @@ public class BoardController {
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
 
-        return "redirect:/GameReviewList";
+        return "redirect:/GameReviewList?g_idx="+ g_idx +"&menu_id="+ menu_id +"&pageNum=1&contentNum=30";
     }
 
     //글삭제하기
@@ -114,9 +114,10 @@ public class BoardController {
         if (searchType == null){
             searchType = "a";
         }
+
         // 첫 화면에 나올 게시글 가져오기
         if (searchType == "a") {
-            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setTotalCount(boardService.boardOneCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
             boardPager.setCurrentBlock(PageNum);
