@@ -82,9 +82,9 @@ public class BoardController {
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
-            path = "redirect:/GameReviewList";
+            path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
         } else if(menu_id.equals("3")){
-            path = "redirect:/managementList";
+            path = "redirect:/managementList?pageNum=1&contentNum=30";
         }
 
         return path;
@@ -127,6 +127,7 @@ public class BoardController {
     //추천게임목록
     @RequestMapping("/RecomGameList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
+        System.out.println("왜:" + map);
         BoardVo boardVo = boardService.goodGame(map);
         String title = boardVo.getG_name(); // 추천알고리즘 입력값으로 넣어줄 게임
         System.out.println("대상게임:" + title);
@@ -278,7 +279,7 @@ public class BoardController {
             boardPager.setStartPage();
             boardPager.setEndPage();
             if(boardPager.getPageNum() != 0){
-              boardPager.setPageNum((PageNum - 1) * 30 + 1);
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
@@ -314,13 +315,9 @@ public class BoardController {
     public String view(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
         String menu_id = (String)map.get("menu_id");
-        String pageNum = (String)map.get("pageNum");
-        String contentNum = (String)map.get("contentNum");
 
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
-        model.addAttribute("pageNum", pageNum); // 댓글페이지번호
-        model.addAttribute("contentNum", contentNum); //댓글가져오는 마지막 번호
 
         return "/board/view";
     }
@@ -328,55 +325,7 @@ public class BoardController {
     // 게임목록db에 넣기
     @RequestMapping("/GameListInsert")
     public String GameListInsert() throws IOException {
-        //boardService.GameInsert();
-        List<GameListVo> gameListVo = boardService.getGameList();
-        System.out.println(gameListVo.get(0).getG_name());
-
-        int resultCount =0;
-        //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv
-        try{
-            //BufferedWriter fw = new BufferedWriter(new FileWriter("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_test7.csv", true));
-            BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/GameList.csv"),"MS949"));
-            fw.write("G_IDX,G_NAME,G_GENRE,G_COMPANY,G_SERVICE,G_PLATFORM");
-            fw.newLine();
-
-            for(int i = 0; i < gameListVo.size(); ++i){
-                int g_idx = gameListVo.get(i).getG_idx();
-                String g_name = gameListVo.get(i).getG_name();
-                g_name= g_name.replaceAll(",", "/").trim();
-                String g_genre = gameListVo.get(i).getG_genre();
-                g_genre= g_genre.replaceAll(",", "/").trim();
-                String g_company = gameListVo.get(i).getG_company();
-                g_company= g_company.replaceAll(",", "/").trim();
-                String g_service = gameListVo.get(i).getG_service();
-                g_service= g_service.replaceAll(",", "/").trim();
-                String g_platform= gameListVo.get(i).getG_platform();
-                g_platform= g_platform.replaceAll(",", "/").trim();
-
-                fw.write(g_idx + ","+ g_name +","+ g_genre +","+ g_company +","+ g_service +","+ g_platform);
-                fw.newLine();
-            }
-
-//            for(gameListVo : list){
-//                fw.write(dom+","+"test");
-//                fw.newLine();
-//                resultCount++;
-//                if(resultCount % 100 == 0)
-//                    log.info("resultCount :"+resultCount + "/" + list.size());
-//            }
-            fw.flush();
-            // 객체 닫기
-            fw.close();
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "/home";
-    }
-
-    // 게임목록db에 게임지우기
-    @RequestMapping("/GameListDelete")
-    public String GamListDelete(){
-        boardService.GameListDelete();
+        boardService.GameInsert();
         return "/home";
     }
 

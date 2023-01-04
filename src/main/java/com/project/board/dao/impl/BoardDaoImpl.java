@@ -161,7 +161,7 @@ public class BoardDaoImpl implements BoardDao {
     public GameListVo getGame(HashMap<String, Object> map) {return sqlSession.selectOne("Game.GetGame",map);}
 
     @Override
-    public List<BoardVo> boardListSelect(HashMap<String, Object> map) { // 글 목록 가져오기
+    public List<BoardVo> getBoardList(HashMap<String, Object> map) { // 글 목록 가져오기
         System.out.println(map);
         List<BoardVo> boardList = sqlSession.selectList("Board.List", map);
         System.out.println(boardList);

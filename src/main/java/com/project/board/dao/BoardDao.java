@@ -27,7 +27,7 @@ public interface BoardDao {
 
     GameListVo getGame(HashMap<String, Object> map);
 
-    List<BoardVo> boardListSelect(HashMap<String, Object> map);
+    List<BoardVo> getBoardList(HashMap<String, Object> map);
 
     BoardVo getBoard(HashMap<String, Object> map);
 

@@ -20,8 +20,6 @@ c
 3src/main/webapp/WEB-INF/views/user/findPassword.jsp,6\8\680e729a51af4fcb5dcdd36d6548b12d0f4b969c
 ]
 -src/main/webapp/WEB-INF/views/user/mypage.jsp,c\4\c43f7e342acd8690bef790e2c64d5cf50070a519
-m
-=src/main/java/com/project/user/controller/UserController.java,c\1\c1ccdc29a106854fdf6586c15a8e365056a13b78
 V
 &src/main/webapp/WEB-INF/views/home.jsp,1\a\1af60de6709e573f5dad4fe0319db0bb3a87e804
 >

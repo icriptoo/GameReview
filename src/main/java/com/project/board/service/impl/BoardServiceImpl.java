@@ -23,7 +23,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardVo> getBoardList(HashMap<String, Object> map) {
-        List<BoardVo> boardList = boardDao.boardListSelect(map);
+        List<BoardVo> boardList = boardDao.getBoardList(map);
         return boardList;
     }
 
@@ -31,11 +31,6 @@ public class BoardServiceImpl implements BoardService {
     public BoardVo getBoard(HashMap<String, Object> map) {
         BoardVo boardVo = boardDao.getBoard(map);
         return boardVo;
-    }
-
-    @Override
-    public void boardDelete(HashMap<String, Object> map) {
-        boardDao.boardDelete(map);
     }
 
     //글 저장하기
@@ -81,6 +76,11 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public int boardSCount(HashMap<String, Object> map) {
         return boardDao.boardSCount(map);
+    }
+
+    @Override
+    public void boardDelete(HashMap<String, Object> map) {
+        boardDao.boardDelete(map);
     }
 
     @Override

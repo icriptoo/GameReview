@@ -224,7 +224,7 @@ function btnSearch(e){
         </td>
         <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
           <c:if test="${sessionScope.login.u_id ne null}">
-          <button style="font-size:20px;" onClick="location.href='/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}'" >글쓰기</button>
+          <button style="font-size:20px;" onClick="boardCheck()" >글쓰기</button>
           </c:if>
         </td>
       </tr>

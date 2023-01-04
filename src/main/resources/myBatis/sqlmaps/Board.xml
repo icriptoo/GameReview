@@ -13,7 +13,6 @@
         title,
         cont,
         r_score,
-        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
         b_count,
         menu_id,
         u_id,
@@ -25,7 +24,6 @@
         #{title},
         #{cont},
         #{r_score},
-        sysdate,
         0,
         #{menu_id},
         #{u_id},
@@ -42,7 +40,7 @@
         where b_idx   = #{b_idx}
     </update>
 
-    <select id="getGameList" resultType="com.project.board.vo.GameListVo">
+    <select id="GetGameList" resultType="com.project.board.vo.GameListVo">
         SELECT *
           FROM GAMELIST
     </select>
@@ -64,7 +62,7 @@
         a.title,
         a.cont,
         a.r_score,
-        a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
         a.b_count,
         a.menu_id,
         b.g_name,
@@ -88,25 +86,23 @@
                 ORDER BY b_idx desc
             </when>
             <when test="g_idx != null">
-                select *
-                from(
+                SELECT *
+                FROM(
                 select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
-                a.b_idx,
-                a.title,
-                a.cont,
-                a.r_score,
-                a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
-                a.b_count,
-                a.menu_id,
-                b.g_name,
-                a.g_idx,
-                a.u_id
-                from  board a
-                inner join gamelist b
-                on a.g_idx = b.g_idx
-                where menu_id = ${menu_id} and a.g_idx = ${g_idx}
-                order by b_idx asc)
-                WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
+                b_idx,
+                title,
+                cont,
+                r_score,
+                TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+                b_count,
+                menu_id,
+                g_idx,
+                u_id
+                FROM  board
+                WHERE menu_id = ${menu_id}
+                  AND g_idx = ${g_idx}
+                order by b_idx desc)
+                WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
             </when>
             <otherwise>
                 select *
@@ -116,7 +112,7 @@
                 a.title,
                 a.cont,
                 a.r_score,
-                a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+                TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
                 a.b_count,
                 a.menu_id,
                 b.g_name,
@@ -126,8 +122,8 @@
                 inner join gamelist b
                 on a.g_idx = b.g_idx
                 where menu_id = ${menu_id}
-                order by b_idx asc)
-                WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
+                order by b_idx desc)
+                WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
             </otherwise>
         </choose>
     </select>
@@ -141,7 +137,7 @@
         a.title,
         a.cont,
         a.r_score,
-        a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
         a.b_count,
         a.menu_id,
         b.g_name,
@@ -206,7 +202,7 @@
               FROM(
                 SELECT *
                   FROM board
-                 WHERE  u_id = 'hamo'
+                 WHERE  u_id = #{u_id}
                    AND menu_id = 1
                    AND r_score >= 8
                    AND ROWNUM <= 10

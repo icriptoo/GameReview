@@ -23,18 +23,13 @@ public interface BoardService {
 
     int GameSCount(HashMap<String, Object> map);
 
-
     List<GameListVo> GameListS(HashMap<String, Object> map);
-
-    void GameListDelete();
 
     GameListVo getGame(HashMap<String, Object> map);
 
     List<BoardVo> getBoardList(HashMap<String, Object> map);
 
     BoardVo getBoard(HashMap<String, Object> map);
-
-    void boardDelete(HashMap<String, Object> map);
 
     void boardInsert(HashMap<String, Object> map);
 
@@ -52,4 +47,5 @@ public interface BoardService {
 
     int boardSCount(HashMap<String, Object> map);
 
+    void boardDelete(HashMap<String, Object> map);
 }

@@ -260,12 +260,12 @@ public class UserController {
         if (ck == "") {
             mse = checkPassword.ckPw(pw, u_id);
             if (mse == "") {
-                mse = "옳바른 비밀번호입니다.";
+                mse = "올바른 비밀번호입니다.";
             }
         } else{
             mse = checkPassword.ckPw(pw, u_id);
             if (mse == "") {
-                mse = "옳바른 비밀번호입니다.";
+                mse = "올바른 비밀번호입니다.";
             }
             String Pcode = userService.getPcode(map);
             String Epw = encrypt.getEncrypt(pw, Pcode);
