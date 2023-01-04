@@ -83,7 +83,7 @@ public class BoardController {
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
             path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
-        } else if(menu_id.equals("3")){
+        } else if(menu_id.equals("3") || menu_id.equals("4")){
             path = "redirect:/managementList?pageNum=1&contentNum=30";
         }
 
@@ -101,7 +101,7 @@ public class BoardController {
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
 
-        return "redirect:/GameReviewList";
+        return "redirect:/GameReviewList?pageNum=1&contentNum=30";
     }
 
     //글작성화면
