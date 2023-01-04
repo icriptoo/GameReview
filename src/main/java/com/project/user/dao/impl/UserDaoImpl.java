@@ -26,9 +26,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Object getUser(Object login) {
-        Object getUser = sqlSession.selectOne("User.getUser",login);
-        return getUser;
+    public UserVo getUser(Object login) {
+        UserVo user = sqlSession.selectOne("User.getUser",login);
+        return user;
     }
 
     @Override
@@ -80,9 +80,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public String getpw(HashMap<String, Object> map) {
-        String pw = sqlSession.selectOne("User.getpw",map);
-        return pw;
+    public UserVo getUserChPw(HashMap<String, Object> map) {
+        UserVo userVo = sqlSession.selectOne("User.getUserChPw",map);
+        return userVo;
     }
 
     @Override
@@ -108,5 +108,20 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void wirthdwal(HashMap<String, Object> map) {
         sqlSession.delete("User.wirthdwal",map);
+    }
+
+    @Override
+    public String getPcode(HashMap<String, Object> map) {
+        return sqlSession.selectOne("User.getPcode", map);
+    }
+
+    @Override
+    public String getckpw(HashMap<String, Object> map) {
+        return sqlSession.selectOne("User.getckpw",map);
+    }
+
+    @Override
+    public void changePw(HashMap<String, Object> map) {
+        sqlSession.update("User.changePw",map);
     }
 }

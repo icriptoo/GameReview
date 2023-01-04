@@ -15,10 +15,11 @@
         GENRE2,
         GENRE3,
         IMG,
-        INDATE
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        PCODE
 
         FROM  USERS
-        WHERE U_ID = #{id}
+        WHERE U_ID = #{u_id}
         AND   PW = #{pw}
     </select>
 
@@ -32,7 +33,8 @@
         GENRE2,
         GENRE3,
         IMG,
-        INDATE
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        PCODE
 
         FROM  USERS
         WHERE U_ID = #{u_id}
@@ -67,11 +69,18 @@
         WHERE N_NAME = #{n_name} AND EMAIL = #{email}
     </select>
 
-    <select id="getpw"
+    <select id="getUserChPw"
+            resultType="com.project.user.vo.UserVo">
+        SELECT *
+        FROM USERS
+        WHERE U_ID = #{u_id} AND EMAIL = #{email}
+    </select>
+
+    <select id="getckpw"
             resultType="String">
         SELECT PW
         FROM USERS
-        WHERE U_ID = #{u_id} AND EMAIL = #{email}
+        WHERE U_ID = #{u_id}
     </select>
 
     <select id="finduid"
@@ -86,6 +95,12 @@
         SELECT PW
         FROM USERS
         WHERE U_ID = #{u_id} AND EMAIL = #{email}
+    </select>
+
+    <select id="getPcode" resultType="String">
+        SELECT PCODE
+          FROM USERS
+         WHERE U_ID = #{u_id}
     </select>
 
     <update id="UserUpdate">
@@ -104,10 +119,17 @@
          WHERE U_ID = #{vo.u_id}
     </update>
 
+    <update id="changePw">
+        UPDATE USERS
+        SET PCODE = #{pcode},
+        PW = #{pw}
+        WHERE U_ID = #{u_id}
+    </update>
+
     <insert id="UserInsert"
             parameterType="com.project.user.vo.UserVo">
-        INSERT INTO USERS (U_ID, PW, N_NAME, GENRE1, GENRE2, GENRE3)
-        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3})
+        INSERT INTO USERS (U_ID, PW, N_NAME, GENRE1, GENRE2, GENRE3, PCODE, EMAIL)
+        VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3}, #{pcode}, #{email})
     </insert>
 
     <delete id="wirthdwal">

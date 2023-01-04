@@ -11,10 +11,11 @@ public class UserVo {
     private String genre3;
     private String img;
     private String indate;
+    private String pcode;
 
     public UserVo (String u_id){}
 
-    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate) {
+    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode) {
         this.u_id = u_id;
         this.n_name = n_name;
         this.pw = pw;
@@ -24,6 +25,7 @@ public class UserVo {
         this.genre3 = genre3;
         this.img = img;
         this.indate = indate;
+        this.pcode = pcode;
     }
 
     public String getPw() { return pw; }
@@ -94,6 +96,14 @@ public class UserVo {
         this.indate = indate;
     }
 
+    public String getPcode() {
+        return pcode;
+    }
+
+    public void setPcode(String pcode) {
+        this.pcode = pcode;
+    }
+
     @Override
     public String toString() {
         return "UserVo{" +
@@ -106,6 +116,7 @@ public class UserVo {
                 ", genre3='" + genre3 + '\'' +
                 ", img='" + img + '\'' +
                 ", indate='" + indate + '\'' +
+                ", pcode='" + pcode + '\'' +
                 '}';
     }
 }

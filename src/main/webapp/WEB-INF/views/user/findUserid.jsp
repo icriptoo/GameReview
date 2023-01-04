@@ -11,9 +11,9 @@
 $(function(){
   $('#enumsend').on('click', function(e){
     $("#enumsendResult").text("");
-    const regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    const n_name = $('input[name=n_name]').val();
-    const email = $('input[name=email]').val();
+    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let n_name = $('input[name=n_name]').val();
+    let email = $('input[name=email]').val();
 
     if(email.match(regExp) != null){
       $("#enumckResult").text("");
@@ -38,7 +38,7 @@ $(function(){
 
   $('#emailcode').keyup(function(){
     $("#enumckResult").text("");
-    const ecodeck = $('input[name=emailcode]').val();
+    let ecodeck = $('input[name=emailcode]').val();
     $.ajax({
       type : 'POST',
       url : "findecodeck",
@@ -54,38 +54,38 @@ $(function(){
 
   $('#findu_id').on('click', function(e){
     if($('[name=n_name]').val() == ""){
-      alert('닉네임을 입력 해주세요.');
+      alert('닉네임을 입력해 주세요.');
       return false;
     }
     if($('[name=email]').val() == ""){
-      alert('이메일을 입력 해주세요.');
+      alert('이메일을 입력해 주세요.');
       return false;
     }
     if($('[name=enumsendResult]').text() == ""){
-      alert("이메일인증을 해주세요.");
+      alert("이메일 인증을 해주세요.");
       return false;
     }
-    if($('[name=enumsendResult]').text() == "아이디와 이메일을 확인해주세요."){
-      alert("아이디와 이메일을 확인해주세요.");
+    if($('[name=enumsendResult]').text() == "아이디와 이메일을 확인해 주세요."){
+      alert("아이디와 이메일을 확인해 주세요.");
       return false;
     }
-    if($('[name=enumsendResult]').text() == "닉네임과 이메일을 확인해주세요."){
-      alert("닉네임과 이메일을 확인해주세요.");
+    if($('[name=enumsendResult]').text() == "닉네임과 이메일을 확인해 주세요."){
+      alert("닉네임과 이메일을 확인해 주세요.");
       return false;
     }
     if($('[name=enumsendResult]').text() == "인증번호가 발송 됐습니다."){
       if($('[name=enumckResult]').text() == "인증번호가 일치하지 않습니다."){
-        alert("인증번호를 확인 해주세요.");
+        alert("인증번호를 확인해 주세요.");
         return false;
       }
       if($('[name=enumckResult]').text() == ""){
-        alert("인증번호를 입력 해주세요.");
+        alert("인증번호를 입력해 주세요.");
         return false;
       }
     }
     if($('[name=enumckResult]').text() == "인증번호가 일치합니다."){
-      const n_name = $('input[name=n_name]').val();
-      const email = $('input[name=email]').val();
+      let n_name = $('input[name=n_name]').val();
+      let email = $('input[name=email]').val();
       $.ajax({
         type : 'POST',
         url : "getUserid",
@@ -96,6 +96,7 @@ $(function(){
         },
         success : function(getUserid){
           $("#useridCheck").html(getUserid);
+          document.getElementById("findu_id").style.display = "none";
         }
       });
     }
@@ -119,7 +120,7 @@ $(function(){
     <span id="enumsendResult" name="enumsendResult"></span>
   </p>
   <p>
-    인증번호 <input type="text" id="emailcode" name="emailcode" placeholder="인증번호 6자리를 입력해주세요." style="width:50%"/>
+    인증번호 <input type="text" id="emailcode" name="emailcode" placeholder="인증번호 6자리를 입력해 주세요." style="width:50%"/>
     <span id="enumckResult" name="enumckResult"></span>
   </p>
   <p>

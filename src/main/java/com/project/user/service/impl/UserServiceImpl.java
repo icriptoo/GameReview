@@ -70,9 +70,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getpw(HashMap<String, Object> map) {
-        String pw = userDao.getpw(map);
-        return pw;
+    public UserVo getUserChPw(HashMap<String, Object> map) {
+        UserVo userVo = userDao.getUserChPw(map);
+        return userVo;
     }
 
     @Override
@@ -89,12 +89,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void wirthdrwal(HashMap<String, Object> map) {
+
         userDao.wirthdwal(map);
     }
 
     @Override
-    public Object getUser(Object login) {
-        Object getUser = userDao.getUser(login);
-        return getUser;
+    public String getPcode(HashMap<String, Object> map) {
+        return userDao.getPcode(map);
+    }
+
+    @Override
+    public String getckpw(HashMap<String, Object> map) {
+        return userDao.getckpw(map);
+    }
+
+    @Override
+    public void changePw(HashMap<String, Object> map) {
+        userDao.changePw(map);
+    }
+
+
+    @Override
+    public UserVo getUser(Object login) {
+        UserVo user = userDao.getUser(login);
+        return user;
     }
 }

@@ -13,7 +13,7 @@
         title,
         cont,
         r_score,
-        indate,
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
         b_count,
         menu_id,
         u_id,
@@ -42,12 +42,39 @@
         where b_idx   = #{b_idx}
     </update>
 
+    <select id="getGameList" resultType="com.project.board.vo.GameListVo">
+        SELECT *
+          FROM GAMELIST
+    </select>
+
     <!-- 글 목록 카운트 -->
     <select id="BoardCount"
             resultType="int">
         SELECT COUNT(*)
         FROM BOARD
         where menu_id = ${menu_id}
+    </select>
+
+    <select id="BoardSCount"
+            resultType="int">
+        select count(*)
+        from(
+        select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+        a.b_idx,
+        a.title,
+        a.cont,
+        a.r_score,
+        a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        a.b_count,
+        a.menu_id,
+        b.g_name,
+        a.g_idx,
+        a.u_id
+        from  board a
+        inner join gamelist b
+        on a.g_idx = b.g_idx
+        where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
+        order by b_idx asc)
     </select>
 
     <!-- 글 목록 불러오기 -->
@@ -62,10 +89,24 @@
             </when>
             <when test="g_idx != null">
                 select *
-                  from board
-                 where g_idx = #{g_idx}
-                   and menu_id = #{menu_id}
-                 order by b_idx desc
+                from(
+                select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+                a.b_idx,
+                a.title,
+                a.cont,
+                a.r_score,
+                a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+                a.b_count,
+                a.menu_id,
+                b.g_name,
+                a.g_idx,
+                a.u_id
+                from  board a
+                inner join gamelist b
+                on a.g_idx = b.g_idx
+                where menu_id = ${menu_id} and a.g_idx = ${g_idx}
+                order by b_idx asc)
+                WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
             </when>
             <otherwise>
                 select *
@@ -75,7 +116,7 @@
                 a.title,
                 a.cont,
                 a.r_score,
-                a.indate,
+                a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
                 a.b_count,
                 a.menu_id,
                 b.g_name,
@@ -89,6 +130,29 @@
                 WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
             </otherwise>
         </choose>
+    </select>
+
+    <select id="SList"
+            resultType="com.project.board.vo.BoardVo">
+        select *
+        from(
+        select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+        a.b_idx,
+        a.title,
+        a.cont,
+        a.r_score,
+        a.TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        a.b_count,
+        a.menu_id,
+        b.g_name,
+        a.g_idx,
+        a.u_id
+        from  board a
+        inner join gamelist b
+        on a.g_idx = b.g_idx
+        where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
+        order by b_idx asc)
+        WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
     </select>
 
     <!-- 글 불러오기 -->

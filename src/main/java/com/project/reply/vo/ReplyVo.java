@@ -6,15 +6,17 @@ public class ReplyVo {
    private String indate;
    private int b_idx;
    private String u_id;
+   private int g_idx;
 
    public ReplyVo(){}
 
-   public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id) {
+    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx) {
         this.r_idx = r_idx;
         this.cont = cont;
         this.indate = indate;
         this.b_idx = b_idx;
         this.u_id = u_id;
+        this.g_idx = g_idx;
     }
 
     public int getR_idx() {
@@ -57,6 +59,14 @@ public class ReplyVo {
         this.u_id = u_id;
     }
 
+    public int getG_idx() {
+        return g_idx;
+    }
+
+    public void setG_idx(int g_idx) {
+        this.g_idx = g_idx;
+    }
+
     @Override
     public String toString() {
         return "ReplyVo{" +
@@ -65,6 +75,7 @@ public class ReplyVo {
                 ", indate='" + indate + '\'' +
                 ", b_idx=" + b_idx +
                 ", u_id='" + u_id + '\'' +
+                ", g_idx=" + g_idx +
                 '}';
     }
 }

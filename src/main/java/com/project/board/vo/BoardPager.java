@@ -78,13 +78,17 @@ public class BoardPager {
     }
 
     public void setEndPage() { // 마지막 페이지 블록 구하는 곳
-        if (lastBlock == currentBlock){
-            endPage = totalCount / 30;
-            if (0< (totalCount % 30)){
-                endPage++;
+        if (totalCount != 0) {
+            if (lastBlock == currentBlock) {
+                endPage = totalCount / 30;
+                if (0 < (totalCount % 30)) {
+                    endPage++;
+                }
+            } else {
+                endPage = getStartPage() + 9;
             }
-        }else {
-            endPage = getStartPage() + 9;
+        } else if (totalCount == 0) {
+            endPage = 0;
         }
     }
     public boolean isPrev() {

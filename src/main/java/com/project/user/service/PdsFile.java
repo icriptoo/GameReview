@@ -31,16 +31,16 @@ public class PdsFile {
         // 유저프로필 경로에 이전 프로필 파일 삭제
         File del = new File(deletePath);
         try {
-            while (del.exists()){
+            while (del.isDirectory()){
                 File[] delList = del.listFiles();
 
                 for (int i = 0; i < delList.length; i++){
                     delList[i].delete();
                 }
 //                폴더도 삭제 하는 명령어
-//                if (delList.length == 0 && del.isDirectory()){
-//                    del.delete();
-//                }
+                if (delList.length == 0 && del.isDirectory()){
+                    del.delete();
+                }
             }
         } catch (Exception e) {
             e.getStackTrace();
@@ -53,17 +53,12 @@ public class PdsFile {
         if (!dir.exists()){
             dir.mkdir();
         }
-
         CheckFileName checkFile = new CheckFileName();
 
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-
-        MultipartFile multipartFile =  null;
-
         FilesVo vo = new FilesVo();
-
+        MultipartFile  multipartFile =  null;
         String         fileName     = null;
         String         orgFileName  = null;
         String         fileExt      = null;
@@ -75,13 +70,9 @@ public class PdsFile {
             fileName = multipartFile.getOriginalFilename();
             orgFileName = fileName.substring(0, fileName.lastIndexOf('.'));
             fileExt = fileName.substring(fileName.lastIndexOf('.'));
-
             sFileName = checkFile.getCheckFileName(filePath, orgFileName, fileExt);
-
             vo = new FilesVo(userid, fileName, fileExt, sFileName);
-
             File file = new File(filePath, sFileName);
-
             try{
                 multipartFile.transferTo(file);
             }catch (IllegalStateException e){

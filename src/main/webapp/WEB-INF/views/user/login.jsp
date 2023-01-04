@@ -67,8 +67,15 @@ h2{
 
 
 function loginbtn(){
-  var url = "/loginProcess?id=";
-
+  if($('[name=id]').val()==''){
+    alert('아이디를 입력하세요');
+    return false;
+  }
+  if($('[name=pw]').val()==''){
+    alert('비밀번호를 입력하세요');
+    return false;
+  }
+  var url = "/loginProcess?u_id=";
   var id = $('input[name=id]').val();
   var pw = $('input[name=pw]').val();
 
@@ -125,7 +132,7 @@ $(function(){
   </ul>
   <ul id="btns">
     <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
-    <a href="javascript:void(window.open('/findPasswordform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">비밀번호 변경</a>
+    <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 변경</a>
   </ul>
 </div>
 <script>

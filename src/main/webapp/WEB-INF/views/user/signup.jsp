@@ -33,16 +33,29 @@ $(function(){
     let g1 = $('[name=genre1]').val();
     let g2 = $('[name=genre2]').val();
     let g3 = $('[name=genre3]').val();
+    let email = "${user.email}";
     if($('[name=u_id]').val()==''){
       alert('아이디를 입력하세요.');
       return false;
     }
     if($('[name=idCheckResult]').html()== "중복된 아이디입니다."){
-      alert('중복된 아이디 입니다. 다시 확인 해주세요.');
+      alert('중복된 아이디 입니다. 다시 확인해 주세요.');
       return false;
     }
     if($('[name=idCheckResult]').html()== ""){
       alert('아이디 중복확인을 해주세요.');
+      return false;
+    }
+    if($('[name=n_name]').val()==''){
+      alert('닉네임을 입력하세요.');
+      return false;
+    }
+    if($('[name=nnCheckResult]').text()== ""){
+      alert('닉네임 중복확인을 해주세요.');
+      return false;
+    }
+    if($('[name=nnCheckResult]').text()== "중복된 닉네임입니다."){
+      alert('중복된 닉네임입니다. 다시 확인해 주세요.');
       return false;
     }
     if($('[name=pw]').val()==''){
@@ -57,40 +70,58 @@ $(function(){
       alert('비밀번호가 일치하지 않습니다.');
       return false;
     }
-    if($('[name=n_name]').val()==''){
-      alert('닉네임을 입력하세요.');
+    if($('#pwJCheckResult').text()== "영문과 특수문자 숫자를 포함하며 8자 이상이어야 합니다."){
+      alert('비밀번호는 영문과 특수문자, 숫자를 포함한 8자 이상이어야 합니다.');
       return false;
     }
-    if($('[name=nnCheckResult]').html()== ""){
-      alert('닉네임 중복확인을 해주세요.');
+    if($('#pwJCheckResult').text()== "동일한 문자를 연속해서 사용할 수 없습니다."){
+      alert('동일한 문자를 연속해서 사용할 수 없습니다.');
       return false;
     }
-    if($('[name=nnCheckResult]').html()== "중복된 닉네임입니다."){
-      alert('중복된 닉네임입니다. 다시 확인 해주세요.');
+    if($('#pwJCheckResult').text()== "ID를 포함할 수 없습니다."){
+      alert('ID를 포함할 수 없습니다.');
       return false;
+    }
+    if($('#pwJCheckResult').text()== "특수문자는 !@#$^*+=-만 사용 가능합니다."){
+      alert('특수문자는 !@#$^*+=-만 사용 가능합니다.');
+      return false;
+    }
+    if($('[name=email]').val()== ""){
+      alert('이메일을 입력해 주세요.');
+      return false;
+    }
+    if($('[name=enumsendResult]').text()== "인증번호가 발송 됐습니다."){
+      if($('[name=emailcode]').val()== ""){
+        alert('인증번호를 입력해 주세요.');
+        return false;
+      }
+      if($('[name=emailcode]').val()== "인증번호가 일치하지 않습니다."){
+        alert('인증번호를 확인해 주세요.');
+        return false;
+      }
     }
     if(g1==''){
-      alert('첫번째 장르를 선택해주세요.');
+      alert('첫번째 장르를 선택해 주세요.');
       return false;
     }
     if(g2==''){
-      alert('두번째 장르를 선택해주세요.');
+      alert('두번째 장르를 선택해 주세요.');
       return false;
     }
     if(g3==''){
-      alert('세번째 장르를 선택해주세요.');
+      alert('세번째 장르를 선택해 주세요.');
       return false;
     }
     if(g1==g2 || g1==g3 || g2==g3){
-      alert('장르가 중복입니다. 다시 확인 해주세요.');
+      alert('장르가 중복입니다. 다시 확인해 주세요.');
       return false;
     }
     if($('[name=p_q]').val()==''){
-      alert('질문을 선택해주세요.');
+      alert('질문을 선택해 주세요.');
       return false;
     }
     if($('[name=p_a]').val()==''){
-      alert('답변을 입력해주세요.');
+      alert('답변을 입력해 주세요.');
       return false;
     }
   });
@@ -136,15 +167,98 @@ $(function(){
     e.stopPropagation();
   });
 
-  $('[name=pwck]').keyup(function(){
+  $('[name=pw]').keyup(function(e){
+    let pw = $('[name=pw]').val();
+    let u_id = $('input[name=u_id]').val();
+    let ck = "ck";
+    let param = {"pw":pw, "u_id":u_id, "ck":ck};
+
+    $.ajax({
+      type : 'POST',
+      url : "ckPwJ",
+      dataType : "text",
+      data : param,
+      success : function(nnCheck){
+        $("#pwJCheckResult").text(nnCheck);
+        $("#pwCheckResult").text("");
+      }
+    })
+  });
+
+  $('[name=pwck]').keyup(function(e){
     let passwd = $('[name=pw]').val();
     let passwdCheck = $('[name=pwck]').val();
+
     if (passwd == passwdCheck){
       $('#pwCheckResult').html("비밀번호가 일치합니다.")
     } else{
       $('#pwCheckResult').html("비밀번호가 일치하지 않습니다.")
     }
   });
+
+  $('#enumsend').on('click', function(e){
+    $("#enumsendResult").text("");
+    let email = $('input[name=email]').val();
+    $.ajax({
+      type : 'POST',
+      url : "email",
+      dataType : "text",
+      data : {
+        "email" : email
+      },
+      success : function(enumsend){
+        $("#enumResult").text(enumsend);
+      }
+    });
+  });
+
+  $('#emailcode').keyup(function(){
+    $("#enumckResult").text("");
+    let ecodeck = $('input[name=emailcode]').val();
+    $.ajax({
+      type : 'POST',
+      url : "findecodeck",
+      dataType : "text",
+      data : {
+        "ecodeck" : ecodeck
+      },
+      success : function(en){
+        $("#enumckResult").text(en);
+      }
+    });
+  });
+
+  $('#enumsend').on('click', function(e){
+    $("#enumsendResult").text("");
+    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let email = $('input[name=email]').val();
+
+    if(email == ""){
+      $("#enumsendResult").text("이메일을 입력 주세요.");
+      return false;
+    }
+
+    if(email == '' || email == 'undefined') return false;
+    if(email.match(regExp) != null){
+      $("#enumsendResult").text("");
+        $.ajax({
+          type : 'POST',
+          url : "user/email",
+          dataType : "text",
+          data : {
+            "email" : email
+          },
+          success : function(enumsend){
+            $("#enumsendResult").text(enumsend);
+          }
+        });
+        return false;
+    } else {
+        $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+        return false;
+      }
+  });
+
 });
 
 </script>
@@ -170,16 +284,20 @@ $(function(){
   <div class="signup">
     <form action="/signup" method="POST" encType = "multipart/form-data">
       <p>아이디 : <input type="text" name="u_id"/>
-        <button id="idCheck">중복확인</button>
+        <button id="idCheck" type="button">중복확인</button>
         <span id="idCheckResult" name="idCheckResult"></span>
       </p>
       <p>닉네임 : <input type="text" name="n_name"/>
-        <button id="nnCheck">중복확인</button>
+        <button id="nnCheck" type="button">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p>비밀번호 : <input type="password" name="pw"></p>
+      <p>비밀번호는 영문과 특수문자(!@#$%^*+=-), 숫자를 포함한 8자 이상이어야 합니다.</p>
+      <p>비밀번호 : <input type="password" name="pw"><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
       <p>비밀번호 확인 : <input type="password" name="pwck"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
-      <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택 해주세요.</p>
+      <p>이메일 : <input type="text" name="email"><button id="enumsend" name="enumsend" type="button">인증번호전송</button><span id="enumsendResult" name="enumsendResult"></span></p>
+      <p>인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode"><span id="enumckResult" name="enumckResult"></span></p>
+      <p><span id="enumckResult" name="enumckResult"></span></p>
+      <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택해 주세요.</p>
       <p>선호 장르1 :
         <select name="genre1">
           <option value="">선호 장르1</option>
@@ -248,4 +366,6 @@ $(function(){
   <div>
 </div>
 </body>
+<script>
+</script>
 </html>
