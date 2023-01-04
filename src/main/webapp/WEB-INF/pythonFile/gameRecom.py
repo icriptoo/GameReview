@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import sys
+import cx_Oracle
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 from sklearn.metrics.pairwise import cosine_similarity
@@ -9,7 +10,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 title = sys.argv[1]
 
-game_data = pd.read_csv('C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv', low_memory=False, encoding='cp949')
+game_data = pd.read_csv('C:/GameReview/src/main/webapp/WEB-INF/pythonFile/GameList.csv', low_memory=False, encoding='cp949')
 # game_data = game_data.loc[game_data['original_language'] == 'en', :]
 game_data = game_data[['G_IDX', 'G_NAME', 'G_GENRE', 'G_COMPANY', 'G_SERVICE', 'G_PLATFORM']]
 # print(game_data.shape)
@@ -29,26 +30,21 @@ cosine_sim_df = pd.DataFrame(cosine_sim, index = game_data.G_NAME, columns = gam
 # print(cosine_sim_df.shape)
 # print(cosine_sim_df.head())
 
-def game_recommendations(target_title, matrix, items, k=50): # k= 뽑아올 게임개수
+def game_recommendations(target_title, matrix, items, k=10): # k= 뽑아올 게임개수
     recom_idx = matrix.loc[:, target_title].values.reshape(1, -1).argsort()[:, ::-1].flatten()[1:k+1]
     recom_title = items.iloc[recom_idx, :].G_NAME.values
     recom_genre = items.iloc[recom_idx, :].G_GENRE.values
-    #recom_company = items.iloc[recom_idx, :].G_COMPANY.values
-    recom_platform = items.iloc[recom_idx,:].G_PLATFORM.values
+    recom_company = items.iloc[recom_idx, :].G_COMPANY.values
     target_title_list = np.full(len(range(k)), target_title)
     target_genre_list = np.full(len(range(k)), items[items.G_NAME == target_title].G_GENRE.values)
-    #target_company_list = np.full(len(range(k)), items[items.G_NAME == target_title].G_COMPANY.values)
-    target_platform_list = np.full(len(range(k)), items[items.G_NAME == target_title].G_PLATFORM.values)
-
+    target_company_list = np.full(len(range(k)), items[items.G_NAME == target_title].G_COMPANY.values)
     d = {
         'target_title':target_title_list,
         'target_genre':target_genre_list,
-        #'target_company':target_company_list,
-        'target_company':target_platform_list,
+        'target_company':target_company_list,
         'recom_title' : recom_title,
         'recom_genre' : recom_genre,
-        #'recom_company': recom_company
-        'recom_platform': recom_platform
+        'recom_company': recom_company
     }
     return pd.DataFrame(d)
 

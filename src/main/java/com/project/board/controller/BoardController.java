@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -30,6 +31,18 @@ public class BoardController {
     @RequestMapping("/")
     public String home() {
         return "/home";
+    }
+
+    //관리게시판 글목록 managementList
+    @RequestMapping("managementList")
+    public String managementList(@RequestParam HashMap<String, Object> map, Model model){
+        List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
+        String menu_id = (String)map.get("menu_id");  //메뉴번호
+
+        model.addAttribute("menu_id", menu_id );
+        model.addAttribute("boardList", boardList );
+
+        return "/board/managementList";
     }
 
     //글수정하기
@@ -67,7 +80,14 @@ public class BoardController {
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
 
-        return "redirect:/GameReviewList?g_idx="+ g_idx +"&menu_id="+ menu_id +"&pageNum=1&contentNum=30";
+        String path = null;
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            path = "redirect:/GameReviewList?g_idx="+ g_idx +"&menu_id="+ menu_id +"&pageNum=1&contentNum=30";
+        } else if(menu_id.equals("3")){
+            path = "redirect:/GameReviewList?g_idx="+ g_idx +"&menu_id="+ menu_id +"&pageNum=1&contentNum=30";
+        }
+
+        return path;
     }
 
     //글삭제하기
@@ -96,9 +116,86 @@ public class BoardController {
         return "/board/boardWrite";
     }
 
-    // http://localhost:8080/GameReviewList?currentPage=1
-    // defaultValue : 해당 요청 파라미터를 지정하지 않을 경우
-    // defaultValue 속성에 지정한 문자열을 값으로 이용하게 됨
+    // 작성글 체크
+    @ResponseBody
+    @RequestMapping(value= "/boardCheck") // 글작성여부 체크
+    public int regcheck(@RequestParam HashMap<String, Object> map) {
+        int boardCheck = boardService.boardCheck(map);
+        return  boardCheck;
+    }
+
+    //추천게임목록
+    @RequestMapping("/RecomGameList")
+    public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
+        BoardVo boardVo = boardService.goodGame(map);
+        String title = boardVo.getG_name(); // 추천알고리즘 입력값으로 넣어줄 게임
+        System.out.println("대상게임:" + title);
+
+        ProcessBuilder builder;
+        BufferedReader br;
+
+        String arg1 = "C:/Python/Python39/python.exe"; //파이썬프로그램 경로
+        String arg2 = "C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gameRecom.py"; //파이썬코딩파일 경로
+
+        //첫번째가 파이썬실행파일경로, 두번째가 추천알고리즘 파이썬파일 경로(arg1), 세번재가 넘겨줄 파라미터(title)
+        //builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title); //python3 error
+        builder = new ProcessBuilder(arg1, arg2, title); //python3 error
+
+        builder.redirectErrorStream(true);
+        Process process = builder.start();
+
+        // 자식 프로세스가 종료될 때까지 기다림
+        int exitval = process.waitFor();
+
+        //// 서브 프로세스가 출력하는 내용을 받기 위해
+        br = new BufferedReader(new InputStreamReader(process.getInputStream(),"euc-kr"));
+
+        ArrayList<String> al = new ArrayList<>();
+
+        //전처리 위해서 앞에 1줄(필요없는정보)을 버리기위함
+        for(int i=0; i<1; i++) {
+            br.readLine();
+        }
+        //여기서부터 읽어지는 줄이 게임제목
+        for(int i=0; i<10; i++) { //(현재는 출력목록을 10개로 설정)
+            al.add(br.readLine().trim());
+            System.out.println(">>>  "+ i + ":" + al.get(i));
+        }
+
+        if(exitval !=0){
+            //비정상종료
+            System.out.println("비정상종료");
+        }
+
+        //랜덤숫자 3개 뽑기 (중복 x)
+        Random random = new Random();
+        ArrayList<Integer> rIdx = new ArrayList<>();
+        while(rIdx.size() < 3){
+            int randomIdx = random.nextInt(al.size());
+            for(int i=0; i<rIdx.size(); i++){
+                if(rIdx.get(i) == randomIdx) {
+                    rIdx.remove(Integer.valueOf(randomIdx));
+                    break;
+                }
+            }
+            rIdx.add(randomIdx);
+        }
+
+        //게임정보 담을 리스트 선언
+        ArrayList<GameListVo> gameList = new ArrayList<>();
+
+        //추천게임 정보가져오기
+        for(int i=0; i<3; i++) {
+            map.put("g_name", al.get(rIdx.get(i)));
+            GameListVo gameListVo = boardService.getGame(map);
+            gameList.add(gameListVo);
+        }
+        model.addAttribute("gameList", gameList);
+        model.addAttribute("title", title);
+
+        return "/board/recomGameList";
+    }
+
     //선택한 게임 글목록
     @RequestMapping("/GameReviewList")
     public String gameReview(@RequestParam HashMap<String, Object> map, Model model){
@@ -238,8 +335,9 @@ public class BoardController {
         int resultCount =0;
         //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_221205_2.csv
         try{
-            BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_test7.csv"),"MS949"));
-            fw.write("g_idx,g_name,g_genre,g_company,g_service,g_platform");
+            //BufferedWriter fw = new BufferedWriter(new FileWriter("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gamelist_test7.csv", true));
+            BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:/GameReview/src/main/webapp/WEB-INF/pythonFile/GameList.csv"),"MS949"));
+            fw.write("G_IDX,G_NAME,G_GENRE,G_COMPANY,G_SERVICE,G_PLATFORM");
             fw.newLine();
 
             for(int i = 0; i < gameListVo.size(); ++i){
@@ -527,7 +625,7 @@ public class BoardController {
     @RequestMapping("/Board/GameRecom")
     public String GameList() throws InterruptedException, IOException {
         String arg1;
-        String title = "리그 오브 레전드"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
+        String title = "토탈워: 워해머3"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
         ProcessBuilder builder;
         BufferedReader br;
 
@@ -557,7 +655,7 @@ public class BoardController {
 //            br.readLine();
 //        }
         //여기서부터 읽어지는 줄이 게임제목
-        for(int i=0; i<50; i++) { //(현재는 출력목록을 5개로 설정)
+        for(int i=0; i<5; i++) { //(현재는 출력목록을 5개로 설정)
             al.add(br.readLine().trim());
             System.out.println(">>>  "+ i + ":" + al.get(i));
         }
