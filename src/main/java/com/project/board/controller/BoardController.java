@@ -82,9 +82,9 @@ public class BoardController {
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
-            path = "redirect:/GameReviewList?g_idx="+ g_idx +"&menu_id="+ menu_id +"&pageNum=1&contentNum=30";
+            path = "redirect:/GameReviewList?&pageNum=1&contentNum=30";
         } else if(menu_id.equals("3")){
-            path = "redirect:/GameReviewList?g_idx="+ g_idx +"&menu_id="+ menu_id +"&pageNum=1&contentNum=30";
+            path = "redirect:/managementList?&pageNum=1&contentNum=30";
         }
 
         return path;
