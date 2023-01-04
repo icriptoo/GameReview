@@ -37,15 +37,14 @@ public interface BoardDao {
 
     int boardCount(HashMap<String, Object> map);
 
-    List<BoardVo> getSBoardList(HashMap<String, Object> map);
-
-    int boardSCount(HashMap<String, Object> map);
-
-    int boardOneCount(HashMap<String, Object> map);
-
     List<GameListVo> getGameList();
 
     int boardCheck(HashMap<String, Object> map);
 
     BoardVo goodGame(HashMap<String, Object> map);
+
+    List<BoardVo> getSBoardList(HashMap<String, Object> map);
+
+    int boardSCount(HashMap<String, Object> map);
+
 }

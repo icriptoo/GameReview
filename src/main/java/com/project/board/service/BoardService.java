@@ -29,8 +29,6 @@ public interface BoardService {
 
     BoardVo getBoard(HashMap<String, Object> map);
 
-    void boardDelete(HashMap<String, Object> map);
-
     void boardInsert(HashMap<String, Object> map);
 
     void boardUpdate(HashMap<String, Object> map);

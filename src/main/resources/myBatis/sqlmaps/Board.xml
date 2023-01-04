@@ -40,12 +40,12 @@
         where b_idx   = #{b_idx}
     </update>
 
-    <select id="getGameList" resultType="com.project.board.vo.GameListVo">
+    <select id="GetGameList" resultType="com.project.board.vo.GameListVo">
         SELECT *
           FROM GAMELIST
     </select>
 
-    <!-- 글 전체 목록 카운트 -->
+    <!-- 글 목록 카운트 -->
     <select id="BoardCount"
             resultType="int">
         SELECT COUNT(*)
@@ -93,8 +93,8 @@
                 ORDER BY b_idx desc
             </when>
             <when test="g_idx != null">
-                select *
-                from(
+                SELECT *
+                FROM(
                 select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
                 a.b_idx,
                 a.title,
@@ -131,8 +131,8 @@
                 inner join gamelist b
                 on a.g_idx = b.g_idx
                 where menu_id = ${menu_id}
-                order by b_idx asc)
-                WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
+                order by b_idx desc)
+                WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
             </otherwise>
         </choose>
     </select>
@@ -211,7 +211,7 @@
               FROM(
                 SELECT *
                   FROM board
-                 WHERE  u_id = 'hamo'
+                 WHERE  u_id = #{u_id}
                    AND menu_id = 1
                    AND r_score >= 8
                    AND ROWNUM <= 10

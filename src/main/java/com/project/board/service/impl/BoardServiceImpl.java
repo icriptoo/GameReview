@@ -33,11 +33,6 @@ public class BoardServiceImpl implements BoardService {
         return boardVo;
     }
 
-    @Override
-    public void boardDelete(HashMap<String, Object> map) {
-        boardDao.boardDelete(map);
-    }
-
     //글 저장하기
     @Override
     public void boardInsert(HashMap<String, Object> map) {
