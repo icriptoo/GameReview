@@ -95,7 +95,7 @@
             <when test="g_idx != null">
                 SELECT *
                 FROM(
-                select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+                select ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
                 a.b_idx,
                 a.title,
                 a.cont,
@@ -110,13 +110,13 @@
                 inner join gamelist b
                 on a.g_idx = b.g_idx
                 where menu_id = ${menu_id} and a.g_idx = ${g_idx}
-                order by b_idx asc)
+                order by b_idx desc)
                 WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
             </when>
             <otherwise>
                 select *
                 from(
-                select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+                select ROW_NUMBER() OVER (ORDER BY a.B_IDX desc) RNUM,
                 a.b_idx,
                 a.title,
                 a.cont,

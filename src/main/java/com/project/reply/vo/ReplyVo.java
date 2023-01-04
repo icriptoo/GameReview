@@ -7,16 +7,26 @@ public class ReplyVo {
    private int b_idx;
    private String u_id;
    private int g_idx;
+   private String img;
 
    public ReplyVo(){}
 
-    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx) {
+    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx, String img) {
         this.r_idx = r_idx;
         this.cont = cont;
         this.indate = indate;
         this.b_idx = b_idx;
         this.u_id = u_id;
         this.g_idx = g_idx;
+        this.img = img;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public int getR_idx() {
@@ -76,6 +86,7 @@ public class ReplyVo {
                 ", b_idx=" + b_idx +
                 ", u_id='" + u_id + '\'' +
                 ", g_idx=" + g_idx +
+                ", img='" + img + '\'' +
                 '}';
     }
 }

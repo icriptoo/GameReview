@@ -46,4 +46,6 @@ public interface BoardService {
     int boardCheck(HashMap<String, Object> map);
 
     BoardVo goodGame(HashMap<String, Object> map);
+
+    void boardDelete(HashMap<String, Object> map);
 }

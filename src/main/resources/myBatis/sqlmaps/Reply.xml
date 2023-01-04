@@ -8,16 +8,17 @@
     <select id="replySelect" resultType="com.project.reply.vo.ReplyVo">
         SELECT *
         FROM(
-        SELECT ROW_NUMBER() OVER (ORDER BY INDATE ASC) RNUM,
-        R_IDX,
-        B_IDX,
-        G_IDX,
-        U_ID,
-        CONT,
-        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE
-        FROM  REPLY
-        WHERE B_IDX = ${b_idx}
-        ORDER BY INDATE ASC)
+        SELECT ROW_NUMBER() OVER (ORDER BY R.INDATE ASC) RNUM,
+        R.R_IDX,
+        R.B_IDX,
+        R.G_IDX,
+        R.U_ID,
+        R.CONT,
+        TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        U.IMG
+        FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
+        WHERE R.B_IDX = ${b_idx}
+        ORDER BY R.INDATE ASC)
         WHERE RNUM BETWEEN ${pageNum} AND ${contentNum}
     </select>
 

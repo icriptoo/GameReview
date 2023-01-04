@@ -47,4 +47,5 @@ public interface BoardDao {
 
     int boardSCount(HashMap<String, Object> map);
 
+    int boardOneCount(HashMap<String, Object> map);
 }
