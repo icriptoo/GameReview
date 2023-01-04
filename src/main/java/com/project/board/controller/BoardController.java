@@ -33,6 +33,18 @@ public class BoardController {
         return "/home";
     }
 
+    //관리게시판 글목록 managementList
+    @RequestMapping("managementList")
+    public String managementList(@RequestParam HashMap<String, Object> map, Model model){
+        List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
+        String menu_id = (String)map.get("menu_id");  //메뉴번호
+
+        model.addAttribute("menu_id", menu_id );
+        model.addAttribute("boardList", boardList );
+
+        return "/board/managementList";
+    }
+
     //글수정하기
     @RequestMapping("/boardUpdate")
     public String boardUpdate(@RequestParam HashMap<String, Object> map, Model model){
@@ -68,7 +80,14 @@ public class BoardController {
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
 
-        return "redirect:/GameReviewList";
+        String path = null;
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            path = "redirect:/GameReviewList";
+        } else if(menu_id.equals("3")){
+            path = "redirect:/managementList";
+        }
+
+        return path;
     }
 
     //글삭제하기
@@ -108,25 +127,19 @@ public class BoardController {
     //추천게임목록
     @RequestMapping("/RecomGameList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
-        System.out.println("this:"+map);
         BoardVo boardVo = boardService.goodGame(map);
-        System.out.println("왓니:"+boardVo);
-        String title_1 = boardVo.getG_name();
-        System.out.println("타이틀:"+ title_1);
+        String title = boardVo.getG_name(); // 추천알고리즘 입력값으로 넣어줄 게임
+        System.out.println("대상게임:" + title);
 
-        String arg1;
-        String title = "리그 오브 레전드"; // 나중에 리스트로 리뷰한 게임 중 평점 높은걸로 여러가지 넣는걸로 바꿔야함
         ProcessBuilder builder;
         BufferedReader br;
 
-        arg1 = "C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gameRecom.py";
-        //C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gameRecom.py
-        //C:/Users/ekrxj/PycharmProjects/pythonProject/gameRecom.py
-        //C:/Users/GGG/PycharmProjects/pythonProject1/main.py
+        String arg1 = "C:/Python/Python39/python.exe"; //파이썬프로그램 경로
+        String arg2 = "C:/GameReview/src/main/webapp/WEB-INF/pythonFile/gameRecom.py"; //파이썬코딩파일 경로
 
         //첫번째가 파이썬실행파일경로, 두번째가 추천알고리즘 파이썬파일 경로(arg1), 세번재가 넘겨줄 파라미터(title)
         //builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title); //python3 error
-        builder = new ProcessBuilder("C:/Python/Python39/python.exe", arg1, title_1); //python3 error
+        builder = new ProcessBuilder(arg1, arg2, title); //python3 error
 
         builder.redirectErrorStream(true);
         Process process = builder.start();
@@ -137,7 +150,6 @@ public class BoardController {
         //// 서브 프로세스가 출력하는 내용을 받기 위해
         br = new BufferedReader(new InputStreamReader(process.getInputStream(),"euc-kr"));
 
-
         ArrayList<String> al = new ArrayList<>();
 
         //전처리 위해서 앞에 1줄(필요없는정보)을 버리기위함
@@ -145,26 +157,43 @@ public class BoardController {
             br.readLine();
         }
         //여기서부터 읽어지는 줄이 게임제목
-        for(int i=0; i<10; i++) { //(현재는 출력목록을 5개로 설정)
+        for(int i=0; i<10; i++) { //(현재는 출력목록을 10개로 설정)
             al.add(br.readLine().trim());
             System.out.println(">>>  "+ i + ":" + al.get(i));
         }
-        //랜덤하게 추천게임중하나 뽑기 테스트 중
-        Random random = new Random();
-        int randomIndex1 = random.nextInt(al.size());
-        int randomIndex2 = random.nextInt(al.size());
-        int randomIndex3 = random.nextInt(al.size());
-        System.out.println(al.get(randomIndex1));
-        System.out.println(al.get(randomIndex2));
-        System.out.println(al.get(randomIndex3));
-
 
         if(exitval !=0){
             //비정상종료
             System.out.println("비정상종료");
         }
 
-        return "/home";
+        //랜덤숫자 3개 뽑기 (중복 x)
+        Random random = new Random();
+        ArrayList<Integer> rIdx = new ArrayList<>();
+        while(rIdx.size() < 3){
+            int randomIdx = random.nextInt(al.size());
+            for(int i=0; i<rIdx.size(); i++){
+                if(rIdx.get(i) == randomIdx) {
+                    rIdx.remove(Integer.valueOf(randomIdx));
+                    break;
+                }
+            }
+            rIdx.add(randomIdx);
+        }
+
+        //게임정보 담을 리스트 선언
+        ArrayList<GameListVo> gameList = new ArrayList<>();
+
+        //추천게임 정보가져오기
+        for(int i=0; i<3; i++) {
+            map.put("g_name", al.get(rIdx.get(i)));
+            GameListVo gameListVo = boardService.getGame(map);
+            gameList.add(gameListVo);
+        }
+        model.addAttribute("gameList", gameList);
+        model.addAttribute("title", title);
+
+        return "/board/recomGameList";
     }
 
     //선택한 게임 글목록
@@ -186,25 +215,6 @@ public class BoardController {
     public String totalList(@RequestParam HashMap<String, Object> map, Model model){
         List<BoardVo> boardList = boardService.getBoardList(map);
         String menu_id = (String)map.get("menu_id");
-
-        //페징관련 [s]
-        int PageNum = Integer.parseInt((String) map.get("pageNum"));
-        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
-        System.out.println(boardList.size());
-        boardPager.setTotalCount(boardService.boardCount(map));
-        boardPager.setPageNum(PageNum - 1);
-        boardPager.setContentNum(ContentNum);
-        boardPager.setCurrentBlock(PageNum);
-        boardPager.setLastBlock();
-        boardPager.prevNext(PageNum);
-        boardPager.setStartPage();
-        boardPager.setEndPage();
-        map.put("pageNum", boardPager.getPageNum());
-        map.put("contentNum", boardPager.getContentNum());
-        //System.out.println(boardPager);
-
-        model.addAttribute("Pager", boardPager);
-        //페징관련 [e]
 
         model.addAttribute("boardList", boardList ); //전체 글목록 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴번호

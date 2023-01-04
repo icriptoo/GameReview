@@ -125,7 +125,7 @@ ul{
     <tr>
       <th colspan="6" style="text-align:center">
         <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1'" >리뷰게시판</button>
-        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=2'" >자유게시판</button>
+        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=2&pageNum=1&contentNum=30'" >자유게시판</button>
       </th>
     </tr>
 

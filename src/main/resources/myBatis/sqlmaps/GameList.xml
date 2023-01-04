@@ -46,9 +46,18 @@
 
     <select id="GetGame"
             resultType="com.project.board.vo.GameListVo">
-        SELECT *
-          FROM GAMELIST
-         WHERE G_IDX = #{g_idx}
+        <choose>
+            <when test="g_idx != null">
+                SELECT *
+                FROM GAMELIST
+                WHERE G_IDX = #{g_idx}
+            </when>
+            <when test="g_name != null">
+                SELECT *
+                FROM GAMELIST
+                WHERE G_NAME = #{g_name}
+            </when>
+        </choose>
     </select>
 
     <select id="GetGameList"
