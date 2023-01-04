@@ -101,7 +101,7 @@ public class BoardController {
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
 
-        return "redirect:/GameReviewList";
+        return "redirect:/GameReviewList?pageNum=1&contentNum=30";
     }
 
     //글작성화면

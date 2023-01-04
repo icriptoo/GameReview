@@ -32,8 +32,18 @@ ul{
 }
 </style>
 <script>
-function btnGSearch(e){
-  e.preventDefault();
+function btnGSearchEnter(){
+  if(window.event.keyCode == 13){
+    var url = "/Board/GameList?pageNum=1&contentNum=30";
+    url += "&gameName=" + $("#gameName").val();
+    if ($("#gameName").val() === ""){
+      alert("게임명을 입력해 주세요.");
+    }else{
+      location.href = url;
+    }
+  }
+}
+function btnGSearch(){
   var url = "/Board/GameList?pageNum=1&contentNum=30";
   url += "&gameName=" + $("#gameName").val();
   if ($("#gameName").val() === ""){
@@ -42,7 +52,6 @@ function btnGSearch(e){
     location.href = url;
   }
 }
-
 </script>
 </head>
 <body class="w3-light-grey">
@@ -100,8 +109,8 @@ function btnGSearch(e){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=66" ${so == '66' ? 'selected="selected"' : '' }>기타</option>
         </td>
         <td>
-          <input id="gameName" class="gameName" type="text">
-          <button id="btnGSearch" class="btnGSearch">검색</button>
+          <input id="gameName" class="gameName" type="text" onkeyup="btnGSearchEnter()">
+          <button id="btnGSearch" class="btnGSearch" onclick="btnGSearch()">검색</button>
         </td>
       </tr>
       <c:forEach var="list" items="${GameList}">

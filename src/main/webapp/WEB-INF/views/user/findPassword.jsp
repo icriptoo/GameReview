@@ -6,15 +6,55 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<title>아이디 찾기</title>
+<title>비밀번호 찾기</title>
 <script>
+function enumsendEnter(){
+  if(window.event.keyCode == 13){
+    $("#enumsendResult").text("");
+    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let u_id = $('input[name=u_id]').val();
+    let email = $('input[name=email]').val();
+    if (u_id == ""){
+      alert("아이디를 입력해 주세요.");
+      return false;
+    }
+    if (email == ""){
+      alert("이메일을 입력해 주세요.");
+      return false;
+    }
+    if(email.match(regExp) != null){
+      $("#enumckResult").text("");
+      $.ajax({
+        type : 'POST',
+        url : "findemailck",
+        dataType : "text",
+        data : {
+          "u_id" : u_id,
+          "email" : email
+        },
+        success : function(pw){
+          $("#enumsendResult").text(pw);
+        }
+      });
+    }else {
+      $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+    }
+  }
+};
 $(function(){
   $('#enumsend').on('click', function(e){
     $("#enumsendResult").text("");
     let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     let u_id = $('input[name=u_id]').val();
     let email = $('input[name=email]').val();
-
+    if(u_id == ""){
+      alert("아이디를 입력해 주세요.");
+      return;
+    }
+    if(email == ""){
+      alert("이메일을 입력해 주세요.");
+      return;
+    }
     if(email.match(regExp) != null){
       $.ajax({
         type : 'POST',
@@ -139,10 +179,10 @@ $(function(){
 </header>
 <div style="height:70%">
   <p>
-    아이디 <input id="u_id" name="u_id" type="text" style="width:50%">
+    아이디 <input id="u_id" name="u_id" type="text" style="width:50%" onkeyup="enumsendEnter()">
   </p>
   <p>
-    이메일 <input id="email" name="email" type="text" style="width:50%">
+    이메일 <input id="email" name="email" type="text" style="width:50%" onkeyup="enumsendEnter()">
     <button id="enumsend" name="enumsend">인증번호전송</button>
     <span id="enumsendResult" name="enumsendResult"></span>
   </p>

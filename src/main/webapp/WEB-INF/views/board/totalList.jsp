@@ -32,8 +32,7 @@ ul{
 }
 </style>
 <script>
-function btnSearch(e){
-  e.preventDefault();
+function btnSearch(){
   var url = "/totalList?pageNum=1&contentNum=30";
   url += "&keyword=" + $("#keyword").val();
   url += "&searchType=" + $("#searchType").val();
@@ -42,6 +41,19 @@ function btnSearch(e){
     alert("키워드를 입력해 주세요.");
   }else{
     location.href = url;
+  }
+}
+function btnSearchEnter(){
+  if(window.event.keyCode == 13){
+    var url = "/totalList?pageNum=1&contentNum=30";
+    url += "&keyword=" + $("#keyword").val();
+    url += "&searchType=" + $("#searchType").val();
+    url += "&menu_id=${menu_id}";
+    if ($("#keyword").val() === ""){
+      alert("키워드를 입력해 주세요.");
+    }else{
+      location.href = url;
+    }
   }
 }
 </script>
@@ -148,8 +160,8 @@ function btnSearch(e){
           <option value="u_id"><strong>작성자</strong></option>
           <option value="g_name"><strong>게임명</strong></option>
         </select>
-        <input id="keyword" class="keyword" type="text">
-        <button id="btnSearch" class="searchB">검색</button>
+        <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
+        <button id="btnSearch" class="searchB" onclick="btnSearch()">검색</button>
       </td >
       <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
       <button style="font-size:20px;" onClick="location.href='/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}'" >글쓰기</button>

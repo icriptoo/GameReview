@@ -141,7 +141,7 @@
             resultType="com.project.board.vo.BoardVo">
         select *
         from(
-        select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+        select ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
         a.b_idx,
         a.title,
         a.cont,
@@ -156,7 +156,7 @@
         inner join gamelist b
         on a.g_idx = b.g_idx
         where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
-        order by b_idx asc)
+        order by b_idx desc)
         WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
     </select>
 

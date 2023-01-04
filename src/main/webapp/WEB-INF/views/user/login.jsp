@@ -78,9 +78,23 @@ function loginbtn(){
   var url = "/loginProcess?u_id=";
   var id = $('input[name=id]').val();
   var pw = $('input[name=pw]').val();
-
   location.href = url + id + "&pw=" + pw + "&next=${next}";
-
+}
+function loginbtnEnter(){
+  if(window.event.keyCode == 13){
+    if($('[name=id]').val()==''){
+      alert('아이디를 입력하세요');
+      return false;
+    }
+    if($('[name=pw]').val()==''){
+      alert('비밀번호를 입력하세요');
+      return false;
+    }
+    var url = "/loginProcess?u_id=";
+    var id = $('input[name=id]').val();
+    var pw = $('input[name=pw]').val();
+    location.href = url + id + "&pw=" + pw + "&next=${next}";
+  }
 }
 
 $(document).ready(function() {
@@ -117,10 +131,10 @@ $(function(){
     <li id="id">
       <ul>
         <li>
-          <input type="text" name="id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
+          <input type="text" name="id" placeholder="ID" style="width:180px;height:30px;font-size:15px;" onkeyup="loginbtnEnter()">
         </li>
         <li id="pw">
-          <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
+          <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;" onkeyup="loginbtnEnter()">
         </li>
       </ul>
     </li>
