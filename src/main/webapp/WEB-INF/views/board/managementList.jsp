@@ -90,8 +90,6 @@ ul{
     </aside>
   </div>
 
-
-
   <table>
     <tr>
       <th colspan="4" style="font-size:20px; text-align:center;">
@@ -107,12 +105,12 @@ ul{
           <tr>
           <th width="10%" style="text-align:center">번호</th>
           <th width="25%" style="text-align:center">제목</th>
+          <c:if test= "${menu_id eq 4}">
+            <th width="5%" style="text-align:center">답변상태</th>
+          </c:if>
           <th width="10%" style="text-align:center">작성일</th>
           <c:if test= "${menu_id eq 3}">
             <th width="5%" style="text-align:center">조회수</th>
-          </c:if>
-          <c:if test= "${menu_id eq 4}">
-            <th width="5%" style="text-align:center">답변상태</th>
           </c:if>
           </tr>
 
@@ -120,12 +118,19 @@ ul{
             <tr>
               <td width="10%" style="text-align:center">${item.b_idx}</td>
               <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+              <c:if test= "${menu_id eq 4}">
+                <c:choose>
+                  <c:when test="${item.a_cont ne null}">
+                    <td width="5%" style="text-align:center">완료</td>
+                  </c:when>
+                  <c:otherwise>
+                    <td width="5%" style="text-align:center">대기</td>
+                  </c:otherwise>
+                </c:choose>
+              </c:if>
               <td width="10%" style="text-align:center">${item.indate}</td>
               <c:if test= "${menu_id eq 3}">
                 <td width="5%" style="text-align:center">${item.b_count}</td>
-              </c:if>
-              <c:if test="${menu_id eq 4}">
-                <td width="5%" style="text-align:center">대기</td>
               </c:if>
             </tr>
           </c:forEach>
@@ -144,8 +149,15 @@ ul{
                 <button id="btnSearch" class="searchB">검색</button>
               </td >
               <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
-              <c:if test="${sessionScope.login.u_id ne null}">
-              <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30'" >글쓰기</button>
+              <c:if test= "${menu_id eq 3}">
+                <c:if test="${sessionScope.login.u_id eq 'admin'}">
+                  <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30'" >글쓰기</button>
+                </c:if>
+              </c:if>
+              <c:if test= "${menu_id eq 4}">
+                <c:if test="${sessionScope.login.u_id ne 'admin'}">
+                  <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30'" >글쓰기</button>
+                </c:if>
               </c:if>
               </td>
             </tr>

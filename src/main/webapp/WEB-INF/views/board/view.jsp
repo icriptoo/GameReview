@@ -148,6 +148,17 @@ function replyUpdate(r_idx){
         <th style="text-align:center">내용</th>
         <td>${boardVo.cont}</td>
       </tr>
+      <c:if test="${menu_id eq 4}">
+        <th style="text-align:center">답변</th>
+        <c:choose>
+          <c:when test="${boardVo.a_cont != null}">
+            <td>${boardVo.a_cont}</td>
+          </c:when>
+          <c:otherwise>
+            <td>답변대기중</td>
+          </c:otherwise>
+        </c:choose>
+      </c:if>
       <c:if test="${menu_id eq 1}">
         <tr>
           <th style=" height:10%; text-align:center">평점</th>
@@ -156,11 +167,21 @@ function replyUpdate(r_idx){
       </c:if>
       <tr>
         <td style="height:10%; text-align:right" colspan="2">
+          <c:if test="${sessionScope.login.u_id eq 'admin' && menu_id eq 4}">
+            <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&answer=1'" >답변하기</button>
+          </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >수정</button>
             <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >삭제</button>
           </c:if>
-          <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}'" >목록으로</button>
+          <c:choose>
+            <c:when test="${menu_id eq 3 || menu_id eq 4}">
+              <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=${menu_id}&pageNum=1&contentNum=30&u_id=${sessionScope.login.u_id}'" >목록으로</button>
+            </c:when>
+            <c:otherwise>
+              <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+            </c:otherwise>
+          </c:choose>
         </td>
       </tr>
     </div>
