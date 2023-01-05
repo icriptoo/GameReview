@@ -52,7 +52,6 @@ function btnSearchEnter(){
     url += "&menu_id=${menu_id}";
     if ($("#keyword").val() === ""){
       alert("키워드를 입력해 주세요.");
-      return false;
     }else{
       location.href = url;
    }

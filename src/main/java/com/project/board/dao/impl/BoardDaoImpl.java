@@ -160,7 +160,9 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public List<BoardVo> getBoardList(HashMap<String, Object> map) { // 글 목록 가져오기
+        System.out.println("1"+map);
         List<BoardVo> boardList = sqlSession.selectList("Board.List", map);
+        System.out.println("2"+boardList);
         return boardList;
     }
 

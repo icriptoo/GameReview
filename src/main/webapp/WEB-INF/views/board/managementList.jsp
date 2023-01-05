@@ -45,6 +45,32 @@ function boardCheck(){
   }
 }
 
+function btnSearch(e){
+  e.preventDefault();
+  var url = "/managementList?pageNum=1&contentNum=30";
+  url += "&keyword=" + $("#keyword").val();
+  url += "&searchType=" + $("#searchType").val();
+  url += "&menu_id=${menu_id}";
+  if ($("#keyword").val() === ""){
+    alert("키워드를 입력해 주세요.");
+
+  }else{
+    location.href = url;
+  }
+}
+function btnSearchEnter(){
+  if(window.event.keyCode == 13){
+    var url = "/managementList?pageNum=1&contentNum=30";
+    url += "&keyword=" + $("#keyword").val();
+    url += "&searchType=" + $("#searchType").val();
+    url += "&menu_id=${menu_id}";
+    if ($("#keyword").val() === ""){
+      alert("키워드를 입력해 주세요.");
+    }else{
+      location.href = url;
+   }
+  }
+}
 </script>
 <title>Insert title here</title>
 <style>
@@ -68,8 +94,6 @@ ul{
 }
 </style>
 </head>
-
-
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
@@ -172,7 +196,7 @@ ul{
           <option value="writer"><strong>작성자</strong></option>
           <option value="board_check"><strong>접수상태</strong></option>
         </select>
-        <input id="keyword" class="keyword" type="text">
+        <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>
       </td>
       <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
@@ -184,6 +208,7 @@ ul{
   </table>
 </div>
 <script>
+document.getElementById("btnSearch").addEventListener('click',btnSearch);
 </script>
 </body>
 </html>

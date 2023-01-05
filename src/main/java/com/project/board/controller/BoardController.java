@@ -49,6 +49,7 @@ public class BoardController {
         }
         // 첫 화면에 나올 게시글 페이징
         if (searchType == "a") {
+            map.put("management",1);
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
@@ -64,6 +65,7 @@ public class BoardController {
             map.put("contentNum", boardPager.getContentNum());
             boardList = boardService.getBoardList(map);  //글목록 불러오기
         }else { // 검색할때 사용하는 페이징
+            map.put("management",2);
             boardPager.setTotalCount(boardService.boardSCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
@@ -77,7 +79,7 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getSBoardList(map);
+            boardList = boardService.getBoardList(map);
         }
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("boardList", boardList );

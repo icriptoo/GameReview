@@ -116,11 +116,33 @@
     <select id="List"
             resultType="com.project.board.vo.BoardVo">
         <choose>
-            <when test="menu_id == 3">
+            <when test="management == 1">
                 SELECT *
-                FROM board
+                FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                B_IDX,
+                TITLE,
+                CONT,
+                B_COUNT,
+                INDATE
+                FROM BOARD
                 WHERE menu_id = #{menu_id}
-                ORDER BY b_idx desc
+                ORDER BY b_idx desc)
+                WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
+            </when>
+            <when test="management == 2">
+                SELECT *
+                FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                B_IDX,
+                TITLE,
+                CONT,
+                B_COUNT,
+                INDATE
+                FROM BOARD
+                WHERE menu_id = #{menu_id} and ${searchType} like '%${keyword}%'
+                ORDER BY b_idx desc)
+                WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
             </when>
             <when test="g_idx != null">
                 SELECT *
@@ -207,29 +229,6 @@
                 WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
             </otherwise>
         </choose>
-    </select>
-
-    <select id="SList"
-            resultType="com.project.board.vo.BoardVo">
-        select *
-        from(
-        select ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
-        a.b_idx,
-        a.title,
-        a.cont,
-        a.r_score,
-        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
-        a.b_count,
-        a.menu_id,
-        b.g_name,
-        a.g_idx,
-        a.u_id
-        from  board a
-        inner join gamelist b
-        on a.g_idx = b.g_idx
-        where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
-        order by b_idx desc)
-        WHERE RNUM BETWEEN ${pageNum} and ${contentNum}
     </select>
 
     <!-- 글 불러오기 -->
