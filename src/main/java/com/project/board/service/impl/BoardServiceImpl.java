@@ -79,6 +79,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public int myboardCount(HashMap<String, Object> map) {
+        return boardDao.myboardCount(map);
+    }
+
+    @Override
+    public int myboardSCount(HashMap<String, Object> map) {
+        return boardDao.myboardSCount(map);
+    }
+
+    @Override
     public int boardSCount(HashMap<String, Object> map) {
         return boardDao.boardSCount(map);
     }

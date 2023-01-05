@@ -48,4 +48,8 @@ public interface BoardService {
     BoardVo goodGame(HashMap<String, Object> map);
 
     void boardDelete(HashMap<String, Object> map);
+
+    int myboardCount(HashMap<String, Object> map);
+
+    int myboardSCount(HashMap<String, Object> map);
 }

@@ -237,6 +237,13 @@ $(function(){
   $('#emailcode').keyup(function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
+    if(("#enumsendResult").text() != "인증번호가 발송 됐습니다."){
+      $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
+      return false;
+    }
+    if (ecodeck.length == 0){
+      return false;
+    }
     $.ajax({
       type : 'POST',
       url : "ecodeck",

@@ -89,63 +89,101 @@ ul{
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-
-
-
   <table>
     <tr>
       <th colspan="4" style="font-size:20px; text-align:center;">
         공지사항
       </th>
     </tr>
-
-          <tr>
-          <th width="10%" style="text-align:center">번호</th>
-          <th width="25%" style="text-align:center">제목</th>
-          <th width="10%" style="text-align:center">작성일</th>
-          <th width="5%" style="text-align:center">조회수</th>
-          <c:if test= "${menu_id eq 4}">
-            <th width="5%" style="text-align:center">답변상태</th>
-          </c:if>
-          </tr>
-
-          <c:forEach var="item" items="${boardList}" >
+    <tr>
+      <th width="10%" style="text-align:center">번호</th>
+      <th width="25%" style="text-align:center">제목</th>
+      <th width="10%" style="text-align:center">작성일</th>
+      <th width="5%" style="text-align:center">조회수</th>
+      <c:if test= "${menu_id eq 4}">
+        <th width="5%" style="text-align:center">답변상태</th>
+      </c:if>
+    </tr>
+    <c:forEach var="item" items="${boardList}" >
+      <tr>
+        <td width="10%" style="text-align:center">${item.b_idx}</td>
+        <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+        <td width="10%" style="text-align:center">${item.indate}</td>
+        <td width="5%" style="text-align:center">${item.b_count}</td>
+        <c:if test="${menu_id eq 4}">
+          <td width="5%" style="text-align:center">${item.r_score}</td>
+        </c:if>
+      </tr>
+    </c:forEach>
+    <tr>
+      <td colspan="4">
+        <c:set var="sT" value="${sT}"/>
+        <c:choose>
+          <c:when test="${sT eq 'a'}">
             <tr>
-              <td width="10%" style="text-align:center">${item.b_idx}</td>
-              <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
-              <td width="10%" style="text-align:center">${item.indate}</td>
-              <td width="5%" style="text-align:center">${item.b_count}</td>
-              <c:if test="${menu_id eq 4}">
-                <td width="5%" style="text-align:center">${item.r_score}</td>
-              </c:if>
-            </tr>
-          </c:forEach>
-
-          <tr>
-            <td colspan="4">
-            <tr style="border-top: 1px solid #000">
-              <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
-                <select class="search" id="searchType">
-                  <option value="title"><strong>제목</strong></option>
-                  <option value="board_local"><strong>지역</strong></option>
-                  <option value="writer"><strong>작성자</strong></option>
-                  <option value="board_check"><strong>접수상태</strong></option>
-                </select>
-                <input id="keyword" class="keyword" type="text">
-                <button id="btnSearch" class="searchB">검색</button>
-              </td >
-              <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
-              <c:if test="${sessionScope.login.u_id ne null}">
-              <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30'" >글쓰기</button>
-              </c:if>
+              <td class="page" id="page" colspan="2" style="text-align:center;">
+                <div class="pager">
+                  <c:if test="${Pager.prev}">
+                    <a href="http://localhost:8080/managementList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
+                    <a class="firstPageNum" href="/managementList?pageNum=1&contentNum=30">1</a>
+                    ...
+                  </c:if>
+                  <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                    <a class="pageNum" href="/managementList?pageNum=${idx}&contentNum=${idx*30}&menu_id=${menu_id}">${idx}</a>
+                  </c:forEach>
+                  <c:if test="${Pager.next}">
+                    ...
+                    <a class="lastPageNum" href="/managementList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&menu_id=${menu_id}">${Pager.lastPageNum}</a>
+                    <a href="http://localhost:8080/managementList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&menu_id=${menu_id}">다음 ></a>
+                  </c:if>
+                </div>
               </td>
             </tr>
-
+          </c:when>
+          <c:otherwise>
+            <tr>
+              <td class="page" id="page" colspan="2" style="text-align:center;">
+                <div class="pager">
+                  <c:if test="${Pager.prev}">
+                    <a href="http://localhost:8080/managementList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">< 이전</a>
+                    <a class="firstPageNum" href="/managementList?pageNum=1&contentNum=30&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">1</a>
+                    ...
+                  </c:if>
+                  <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                  <a class="pageNum" href="/managementList?pageNum=${idx}&contentNum=${idx*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">${idx}</a>
+                  </c:forEach>
+                  <c:if test="${Pager.next}">
+                    ...
+                    <a class="lastPageNum" href="/managementList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">${Pager.lastPageNum}</a>
+                    <a href="http://localhost:8080/managementList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">다음 ></a>
+                  </c:if>
+                </div>
+              </td>
+            </tr>
+          </c:otherwise>
+        </c:choose>
+      </td>
+    </tr>
+    <tr style="border-top: 1px solid #000">
+      <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+        <select class="search" id="searchType">
+          <option value="title"><strong>제목</strong></option>
+          <option value="board_local"><strong>지역</strong></option>
+          <option value="writer"><strong>작성자</strong></option>
+          <option value="board_check"><strong>접수상태</strong></option>
+        </select>
+        <input id="keyword" class="keyword" type="text">
+        <button id="btnSearch" class="searchB">검색</button>
+      </td>
+      <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
+        <c:if test="${sessionScope.login.u_id ne null}">
+          <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30'" >글쓰기</button>
+        </c:if>
+      </td>
+    </tr>
   </table>
-
 </div>
 <script>
-console.log(${Pager});
 </script>
 </body>
 </html>

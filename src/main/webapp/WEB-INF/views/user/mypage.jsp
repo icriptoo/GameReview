@@ -91,7 +91,7 @@ ul{
       <p><a href="/user/profilupdateform">내 정보 수정</a></p>
       <p><a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))">비밀번호 변경</a></p>
       <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=700, height=700'))">프로필 사진 수정</a></p>
-      <p><a href="/user/myboards">내 게시글보기</a></p>
+      <p><a href="/myboard?pageNum=1&contentNum=30&menu_id=1">내 게시글보기</a></p>
       <p><a href="/user/WithdrawalForm">회원탈퇴</a></p>
     </div>
     <div class="mypagein">

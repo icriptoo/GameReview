@@ -60,6 +60,13 @@
         where menu_id = ${menu_id} and g_idx = ${g_idx}
     </select>
 
+    <select id="MyBoardCount"
+            resultType="int">
+        SELECT COUNT(*)
+        FROM BOARD
+        WHERE U_ID = #{u_id}
+    </select>
+
     <select id="BoardSCount"
             resultType="int">
         select count(*)
@@ -80,6 +87,29 @@
         on a.g_idx = b.g_idx
         where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
         order by b_idx asc)
+    </select>
+
+    <select id="MyBoardSCount"
+            resultType="int">
+        select count(*)
+        from(
+        select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+        a.b_idx,
+        a.title,
+        a.cont,
+        a.r_score,
+        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
+        a.b_count,
+        a.menu_id,
+        b.g_name,
+        a.g_idx,
+        a.u_id
+        from  board a
+        inner join gamelist b
+        on a.g_idx = b.g_idx
+        where u_id = #{u_id} and ${searchType} like '%${keyword}%'
+        order by b_idx asc)
+        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
     </select>
 
     <!-- 글 목록 불러오기 -->
@@ -112,6 +142,48 @@
                 where menu_id = ${menu_id} and a.g_idx = ${g_idx}
                 order by b_idx desc)
                 WHERE RNUM BETWEEN ${pageNum} and #{contentNum}
+            </when>
+            <when test="myboard == 1">
+                SELECT *
+                FROM (
+                select ROW_NUMBER() OVER (ORDER BY a.B_IDX desc) RNUM,
+                a.b_idx,
+                a.title,
+                a.cont,
+                a.r_score,
+                TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
+                a.b_count,
+                a.menu_id,
+                b.g_name,
+                a.g_idx,
+                a.u_id
+                from  board a
+                inner join gamelist b
+                on a.g_idx = b.g_idx
+                WHERE a.U_ID = #{u_id} and a.menu_id = #{menu_id}
+                ORDER BY a.B_IDX DESC)
+                WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+            </when>
+            <when test="myboard == 2">
+                SELECT *
+                FROM (
+                select ROW_NUMBER() OVER (ORDER BY a.B_IDX desc) RNUM,
+                a.b_idx,
+                a.title,
+                a.cont,
+                a.r_score,
+                TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
+                a.b_count,
+                a.menu_id,
+                b.g_name,
+                a.g_idx,
+                a.u_id
+                from  board a
+                inner join gamelist b
+                on a.g_idx = b.g_idx
+                WHERE a.U_ID = #{u_id} and ${searchType} like '%${keyword}%' and a.menu_id = #{menu_id}
+                ORDER BY a.B_IDX DESC)
+                WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
             </when>
             <otherwise>
                 select *

@@ -202,12 +202,23 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public int boardSCount(HashMap<String, Object> map) {
+        System.out.println(map);
         return sqlSession.selectOne("Board.BoardSCount",map);
     }
 
     @Override
     public int boardOneCount(HashMap<String, Object> map) {
         return sqlSession.selectOne("Board.BoardOneCount",map);
+    }
+
+    @Override
+    public int myboardCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Board.MyBoardCount",map);
+    }
+
+    @Override
+    public int myboardSCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Board.MyBoardSCount",map);
     }
 
     @Override

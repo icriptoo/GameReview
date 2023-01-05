@@ -84,8 +84,24 @@ function btnSearch(e){
   url += "&g_idx=${gameListVo.g_idx}"
   if ($("#keyword").val() === ""){
     alert("키워드를 입력해 주세요.");
+    return false;
   }else{
     location.href = url;
+  }
+}
+function btnSearchEnter(){
+  if(window.event.keyCode == 13){
+    var url = "/GameReviewList?pageNum=1&contentNum=30";
+    url += "&keyword=" + $("#keyword").val();
+    url += "&searchType=" + $("#searchType").val();
+    url += "&menu_id=${menu_id}";
+    url += "&g_idx=${gameListVo.g_idx}"
+    if ($("#keyword").val() === ""){
+      alert("키워드를 입력해 주세요.");
+      return false;
+    }else{
+      location.href = url;
+    }
   }
 }
 </script>
@@ -188,7 +204,7 @@ function btnSearch(e){
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}">< 이전</a>
-                    <a class="firstPageNum" href="/GameReviewList?pageNum=1&contentNum=30&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}"&menu_id=${menu_id}>1</a>
+                    <a class="firstPageNum" href="/GameReviewList?pageNum=1&contentNum=30&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}">1</a>
                     ...
                   </c:if>
                   <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
@@ -211,7 +227,7 @@ function btnSearch(e){
               <option value="u_id"><strong>작성자</strong></option>
               <option value="g_name"><strong>게임명</strong></option>
             </select>
-            <input id="keyword" class="keyword" type="text">
+            <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
             <button id="btnSearch" class="searchB">검색</button>
           </td>
           <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
