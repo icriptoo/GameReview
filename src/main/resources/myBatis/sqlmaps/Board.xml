@@ -72,19 +72,16 @@
         select count(*)
         from(
         select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
-        a.b_idx,
-        a.title,
-        a.cont,
-        a.r_score,
-        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
-        a.b_count,
-        a.menu_id,
-        b.g_name,
-        a.g_idx,
-        a.u_id
-        from  board a
-        inner join gamelist b
-        on a.g_idx = b.g_idx
+        b_idx,
+        title,
+        cont,
+        r_score,
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS indate,
+        b_count,
+        menu_id,
+        g_idx,
+        u_id
+        from  board
         where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
         order by b_idx asc)
     </select>

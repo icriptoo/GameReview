@@ -86,7 +86,6 @@ public class BoardController {
         model.addAttribute("Pager", boardPager);
         model.addAttribute("sT",searchType);// 페이징용 검색유무
         model.addAttribute("kw",keyword);
-
         return "/board/managementList";
     }
 
