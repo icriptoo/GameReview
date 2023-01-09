@@ -36,6 +36,9 @@ td {
 .GameListIn {
     border: 1px solid;
 }
+.genre a {
+    border: 1px solid;
+}
 </style>
 </head>
 <!-- html 시작 -->
@@ -67,8 +70,9 @@ td {
               <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
               <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
             </select>
-            <a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a>
+            <a class="plus" href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a>
           </div>
+          <div class="genre">
             <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=51">RPG</a>
             <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=52">어드벤쳐</a>
             <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=53">FPS</a>
