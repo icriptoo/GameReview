@@ -14,7 +14,7 @@
         R.G_IDX,
         R.U_ID,
         R.CONT,
-        TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
+        TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
         U.IMG
         FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
         WHERE R.B_IDX = ${b_idx}

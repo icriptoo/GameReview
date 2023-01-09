@@ -15,8 +15,9 @@
         GENRE2,
         GENRE3,
         IMG,
-        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
-        PCODE
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
+        PCODE,
+        WITHDRAWAL
 
         FROM  USERS
         WHERE U_ID = #{u_id}
@@ -33,8 +34,9 @@
         GENRE2,
         GENRE3,
         IMG,
-        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS INDATE,
-        PCODE
+        TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
+        PCODE,
+        WITHDRAWAL
 
         FROM  USERS
         WHERE U_ID = #{u_id}
@@ -132,8 +134,10 @@
         VALUES (#{u_id}, #{pw}, #{n_name}, #{genre1}, #{genre2}, #{genre3}, #{pcode}, #{email})
     </insert>
 
-    <delete id="wirthdwal">
-        DELETE FROM USERS WHERE U_ID = #{u_id}
-    </delete>
+    <update id="wirthdwal">
+        UPDATE USERS
+        SET WITHDRAWAL = #{withdrawal}
+        WHERE U_ID = #{u_id}
+    </update>
 
 </mapper>

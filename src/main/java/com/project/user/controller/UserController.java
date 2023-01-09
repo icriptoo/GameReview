@@ -2,7 +2,6 @@ package com.project.user.controller;
 
 import com.project.board.service.BoardService;
 import com.project.board.vo.BoardPager;
-import com.project.board.vo.BoardVo;
 import com.project.user.service.CheckPassword;
 import com.project.user.service.Encrypt;
 import com.project.user.service.MailSendService;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 @Controller
 public class UserController {
@@ -83,6 +81,10 @@ public class UserController {
                 httpSession.removeAttribute("login");
             }
             vo = userService.login(map);
+            if (vo == null){
+                model.addAttribute("fail","아이디와 비밀번호를 확인해 주세요.");
+                return "user/login";
+            }
             // 나중에 로그인 후 원래 있던 페이지로 이동하기 위한 주소지정 - 지금사용 안함
             /*
             model.addAttribute("next",next);
@@ -151,68 +153,6 @@ public class UserController {
         map.put("user", user);
 
         return "user/mypage";
-    }
-
-    // 마이페이지 내 개시글보기
-    @RequestMapping("/myboard")
-    public String myBoard(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
-        int PageNum = Integer.parseInt((String) map.get("pageNum"));
-        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
-        String menu_id = (String) map.get("menu_id");
-        String searchType = (String) map.get("searchType");;
-        String keyword = "";
-
-        List<BoardVo> boardList = null;
-
-        UserVo userVo = (UserVo) httpSession.getAttribute("login");
-        map.put("u_id",userVo.getU_id());
-
-        if (searchType == null){
-            searchType = "a";
-        }
-        // 첫 화면에 나올 게시글 페이징
-        if (searchType == "a") {
-            map.put("myboard",1);
-            boardPager.setTotalCount(boardService.myboardCount(map));
-            boardPager.setPageNum(PageNum - 1);
-            boardPager.setContentNum(ContentNum);
-            boardPager.setCurrentBlock(PageNum);
-            boardPager.setLastBlock();
-            boardPager.prevNext(PageNum);
-            boardPager.setStartPage();
-            boardPager.setEndPage();
-            if(boardPager.getPageNum() != 0){
-                boardPager.setPageNum((PageNum - 1) * 30 + 1);
-            }
-            map.put("pageNum", boardPager.getPageNum());
-            map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getBoardList(map);  //글목록 불러오기
-        }else { // 검색할때 사용하는 페이징
-            keyword = (String) map.get("keyword");
-            map.put("myboard",2);
-            boardPager.setTotalCount(boardService.myboardSCount(map));
-            boardPager.setPageNum(PageNum - 1);
-            boardPager.setContentNum(ContentNum);
-            boardPager.setCurrentBlock(PageNum);
-            boardPager.setLastBlock();
-            boardPager.prevNext(PageNum);
-            boardPager.setStartPage();
-            boardPager.setEndPage();
-            if(boardPager.getPageNum() != 0){
-                boardPager.setPageNum((PageNum - 1) * 30 + 1);
-            }
-            map.put("pageNum", boardPager.getPageNum());
-            map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getBoardList(map);
-        }
-
-        model.addAttribute("boardList", boardList );
-        model.addAttribute("menu_id", menu_id );
-        model.addAttribute("Pager", boardPager);
-        model.addAttribute("sT",searchType);// 페이징용 검색유무
-        model.addAttribute("kw",keyword);
-
-        return "user/myboard";
     }
 
     // 프로필 사진 업데이트 창 띄우기
@@ -493,6 +433,7 @@ public class UserController {
     //회원탈퇴
     @RequestMapping("/user/Wirthdrwal")
     public String withdrawal(HttpSession httpSession,@RequestParam HashMap<String, Object> map){
+        map.put("withdrawal","OFF");
         userService.wirthdrwal(map);
         httpSession.invalidate();
         return "/home";

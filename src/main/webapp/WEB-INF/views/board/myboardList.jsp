@@ -34,7 +34,7 @@ ul{
 <script>
 function btnSearch(e){
   e.preventDefault();
-  var url = "/myboard?pageNum=1&contentNum=30&searchType=title";
+  var url = "/myboard?pageNum=1&contentNum=30";
   url += "&keyword=" + $("#keyword").val();
   url += "&searchType=" + $("#searchType").val();
   url += "&menu_id=${menu_id}";
@@ -46,7 +46,7 @@ function btnSearch(e){
 }
 function btnSearchEnter(){
   if(window.event.keyCode == 13){
-    var url = "/myboard?pageNum=1&contentNum=30&searchType=title";
+    var url = "/myboard?pageNum=1&contentNum=30";
     url += "&keyword=" + $("#keyword").val();
     url += "&searchType=" + $("#searchType").val();
     url += "&menu_id=${menu_id}";
@@ -157,6 +157,10 @@ function btnSearchEnter(){
         </c:choose>
         <tr style="border-top: 1px solid #000">
           <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+            <select class="search" id="searchType">
+              <option value="title"><strong>제목</strong></option>
+              <option value="g_name"><strong>게임명</strong></option>
+            </select>
             <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
             <button id="btnSearch" class="searchB">검색</button>
           </td>
