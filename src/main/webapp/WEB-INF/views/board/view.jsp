@@ -115,6 +115,152 @@ function replyUpdate(r_idx){
 }
 
 </script>
+
+<style>
+
+
+
+.dropdown {
+
+	vertical-align: middle;
+
+}
+
+
+
+.dropdown .dropbtn {
+
+	width: 44px;
+
+	height: 45px;
+
+	margin: 24px 0 24px 1px;
+
+	border: 2px solid transparent;
+
+	position: relative;
+
+	left: 55px;
+
+}
+
+
+
+.dropdown-content {
+
+	display: none;
+
+	position: absolute;
+
+	background-color: #f9f9f9;
+
+	min-width: 160px;
+
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+	z-index: 1;
+
+}
+
+.dropdown-content a {
+	float: none;
+	color: black;
+	padding: 12px 16px;
+
+	text-decoration: none;
+
+	display: block;
+
+	text-align: left;
+
+}
+
+
+
+.dropdown-content a:hover {
+
+	background-color: #ddd;
+
+}
+
+
+
+.show {
+
+	display: block;
+
+}
+</style>
+
+<style>
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+</style>
+
+<script>
+
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var d = 0; d < dropdowns.length; d++) {
+      var openDropdown = dropdowns[d];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function showPopup(){
+  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id=${boardVo.u_id}","팝업창","width=500, height=600, top=10, left=10");
+}
+
+</script>
+
 </head>
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
@@ -142,7 +288,13 @@ function replyUpdate(r_idx){
       </tr>
       <tr>
         <th style= "width:6%; height:10%; text-align:center">작성자</th>
-        <td>${boardVo.u_id}</td>
+        <td>
+          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">${boardVo.u_id}</a>
+          <div class="dropdown-content" id="myDropdown">
+            <a onClick = "showPopup();" >신고하기</a>
+          </div>
+        </td>
+
       </tr>
       <tr>
         <th style="text-align:center">내용</th>

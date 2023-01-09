@@ -5,7 +5,30 @@
 
 <mapper namespace="Board">
 
-    <!-- 글 저장하기 -->
+
+    <!-- 신고 저장 -->
+    <insert  id="declarationInsert" >
+        insert into declaration
+        (
+        d_idx,
+        cont,
+        us_id,
+        ue_id,
+        b_idx,
+        type_idx
+        )
+        values
+        (
+        ( select nvl(max(b_idx),0)+1 from declaration ),
+        #{cont},
+        #{us_id},
+        #{ue_id},
+        #{b_idx},
+        #{type_idx}
+        )
+    </insert>
+
+    <!-- 글 수정하기 -->
     <update  id="BoardUpdate">
         <choose>
             <when test="a_cont != null">
@@ -26,7 +49,7 @@
     </update>
 
 
-    <!-- 글 수정 -->
+    <!-- 글 저장 -->
     <insert  id="BoardInsert" >
         insert into board
         (

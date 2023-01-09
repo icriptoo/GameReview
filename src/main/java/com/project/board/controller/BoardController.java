@@ -33,6 +33,29 @@ public class BoardController {
         return "/home";
     }
 
+    //신고데이터 저장
+    @ResponseBody
+    @RequestMapping("declarationInsert")
+    public int declarationInsert(@RequestParam HashMap<String, Object> map, Model model){
+        System.out.println(map);
+        int result = boardService.declarationInsert(map);
+
+        return result;
+    }
+
+    //신고하기 화면
+    @RequestMapping("declarationWrite")
+    public String declaration(@RequestParam HashMap<String, Object> map, Model model){
+        String us_id = (String)map.get("us_id");  //신고자 아이디
+        String ue_id = (String)map.get("ue_id");  //피신고자 아이디
+        String b_idx = (String)map.get("b_idx");  //신고 게시글번호
+
+        model.addAttribute("us_id", us_id );
+        model.addAttribute("ue_id", ue_id );
+        model.addAttribute("b_idx", b_idx );
+        return "/board/declarationWrite";
+    }
+
     //관리게시판 글목록 managementList
     @RequestMapping("managementList")
     public String managementList(@RequestParam HashMap<String, Object> map, Model model){

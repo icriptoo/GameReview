@@ -211,6 +211,12 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
+    public int declarationInsert(HashMap<String, Object> map) {
+        int result = sqlSession.insert("board.declarationInsert", map);
+        return 0;
+    }
+
+    @Override
     public List<GameListVo> getGameList() {
         List<GameListVo> gameListVo = sqlSession.selectList("Game.GetGameList");
         return gameListVo;
