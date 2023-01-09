@@ -175,7 +175,6 @@ function replyUpdate(r_idx){
   </div>
   <div id="replyP-box"></div>
 </div>
-
 </body>
 <script>
 window.onload = replyP;

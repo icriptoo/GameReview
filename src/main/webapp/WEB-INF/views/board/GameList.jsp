@@ -87,6 +87,7 @@ function btnGSearch(){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
+          </select>
         </td>
         <td>
           <select id="genre" name="genre" onchange="if(this.value) location.href=(this.value);">
@@ -107,6 +108,7 @@ function btnGSearch(){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=64" ${so == '64' ? 'selected="selected"' : '' }>SNG</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=65" ${so == '65' ? 'selected="selected"' : '' }>AOS</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=66" ${so == '66' ? 'selected="selected"' : '' }>기타</option>
+          </select>
         </td>
         <td>
           <input id="gameName" class="gameName" type="text" onkeyup="btnGSearchEnter()">
