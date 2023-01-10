@@ -5,8 +5,6 @@ import com.project.board.vo.BoardPager;
 import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
 import com.project.user.vo.UserVo;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,8 +21,6 @@ import java.util.Random;
 
 @Controller
 public class BoardController {
-    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-
     @Autowired
     BoardService boardService;
 
