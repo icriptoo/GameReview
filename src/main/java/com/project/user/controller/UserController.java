@@ -97,7 +97,7 @@ public class UserController {
             returnURL = "redirect:"+ url;
             */
             httpSession.setAttribute("login", vo);
-            return "home";
+            return "redirect:/";
         }else {
             model.addAttribute("fail","아이디와 비밀번호를 확인해 주세요.");
             returnURL = "";
@@ -122,7 +122,7 @@ public class UserController {
         HttpSession httpSession = request.getSession();
         httpSession.invalidate();
         //return "redirect:"+ url;
-        return "home";
+        return "redirect:/";
     }
 
     // 마이페이지

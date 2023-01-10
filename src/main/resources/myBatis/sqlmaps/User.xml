@@ -17,7 +17,8 @@
         IMG,
         TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
         PCODE,
-        WITHDRAWAL
+        WITHDRAWAL,
+        AUTHORITY
 
         FROM  USERS
         WHERE U_ID = #{u_id}

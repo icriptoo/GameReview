@@ -43,13 +43,13 @@ li.asd{
   /*position: relative;*/
   display: inline-block;
 }
-li a{
+.clearfix a{
   color: #FFFFFF;
   text-align: center;
   padding: 14.5px 16px;
   text-decoration: none;
 }
-li a:hover{
+.clearfix a:hover{
   /*color: #597812;*/
   color: #FFD400;
   font-weight:normal;
@@ -78,7 +78,13 @@ li a:hover{
       <li class="asd"><a href="/totalList?menu_id=2&pageNum=1&contentNum=30">전체자유게시판</a></li>
       <li class="asd"><a href="/managementList?menu_id=3&pageNum=1&contentNum=30">공지사항</a></li>
       <li class="asd"><a href="http://www._____.com/Contact">고객센터</a></li>
+      <c:set var="admin" value="${login}"/>
+      <c:if test="${admin.authority eq '0'}">
+        <li class="asd"><a href="/">신고관리</a></li>
+      </c:if>
     </ul>
   </nav>
 </div>
 </body>
+<script>
+</script>
