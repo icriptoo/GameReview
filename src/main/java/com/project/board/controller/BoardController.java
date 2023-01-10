@@ -36,9 +36,16 @@ public class BoardController {
     //신고데이터 저장
     @ResponseBody
     @RequestMapping("declarationInsert")
-    public int declarationInsert(@RequestParam HashMap<String, Object> map, Model model){
-        System.out.println(map);
-        int result = boardService.declarationInsert(map);
+    public String declarationInsert(@RequestParam HashMap<String, Object> map, Model model){
+        int code = boardService.declarationInsert(map);
+        String result = "";
+        if(code == 1){
+            result = "신고되었습니다.";
+        } else {
+            result = "실패했습니다.";
+        }
+        System.out.println("dho:"+result);
+        model.addAttribute("result", result);
 
         return result;
     }

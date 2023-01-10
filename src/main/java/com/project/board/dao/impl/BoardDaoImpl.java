@@ -212,8 +212,10 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public int declarationInsert(HashMap<String, Object> map) {
-        int result = sqlSession.insert("board.declarationInsert", map);
-        return 0;
+        System.out.println("전:"+map);
+        int result = sqlSession.insert("Board.declarationInsert", map);
+        System.out.println("후:"+result);
+        return result;
     }
 
     @Override

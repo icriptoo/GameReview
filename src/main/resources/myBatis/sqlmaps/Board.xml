@@ -19,7 +19,7 @@
         )
         values
         (
-        ( select nvl(max(b_idx),0)+1 from declaration ),
+        ( select nvl(max(d_idx),0)+1 from declaration ),
         #{cont},
         #{us_id},
         #{ue_id},

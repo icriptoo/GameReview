@@ -14,12 +14,12 @@
   function check_onclick(){
   		theForm=document.form1;
 
-  		if(theForm.cont.value==""){
-  			alert("내용을 입력해 주세요.");
-  			return false;
-  		}
   		if(theForm.type_idx.value=="none"){
   			alert("분류를 선택해 주세요.");
+  			return false;
+  		}
+  		if(theForm.cont.value==""){
+  			alert("내용을 입력해 주세요.");
   			return false;
   		}
 
@@ -29,6 +29,7 @@
         		url : "declarationInsert",
         		type : "POST",
         		data : queryString,
+        		dataType : 'json',
         		success : function(data){
         		  alert(data);
   		          window.close();
@@ -108,7 +109,7 @@ td, th {
 
       <tr>
         <td style="height:10%; text-align:center" colspan="2">
-          <input type="submit" value="저장" style="width:80px; height:40px; font-size:20px; float: center" onclick="return check_onclick()" />
+          <button type="button" style="width:80px; height:40px; font-size:20px; float: center" onclick="check_onclick()">저장</button>
           </td>
       </tr>
   </table>
