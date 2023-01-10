@@ -204,6 +204,33 @@
                 ORDER BY a.B_IDX DESC)
                 WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
             </when>
+            <when test="homeBoard == 1">
+                SELECT *
+                FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                TITLE, B_COUNT, MENU_ID, B_IDX
+                FROM BOARD
+                WHERE MENU_ID = 1
+                )
+            </when>
+            <when test="homeBoard == 2">
+                SELECT *
+                FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                TITLE, B_COUNT, MENU_ID, B_IDX
+                FROM BOARD
+                WHERE MENU_ID = 2
+                )
+            </when>
+            <when test="homeBoard == 3">
+                SELECT *
+                FROM (
+                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                TITLE, B_COUNT, MENU_ID, B_IDX
+                FROM BOARD
+                WHERE MENU_ID = 3
+                )
+            </when>
             <otherwise>
                 select *
                 from(

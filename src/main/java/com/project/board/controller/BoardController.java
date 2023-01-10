@@ -31,7 +31,16 @@ public class BoardController {
     BoardPager boardPager = new BoardPager();
 
     @RequestMapping("/")
-    public String home() {
+    public String home(HashMap<String, Object> map, Model model) {
+        map.put("homeBoard",1);
+        List<BoardVo> T1List = boardService.getBoardList(map); //리뷰게시글
+        map.put("homeBoard",2);
+        List<BoardVo> T2List = boardService.getBoardList(map); //자유게시글
+        map.put("homeBoard",3);
+        List<BoardVo> MList = boardService.getBoardList(map);  //공지사항
+        model.addAttribute("MList", MList);
+        model.addAttribute("T1ist", T1List);
+        model.addAttribute("T2List", T2List);
         return "/home";
     }
 

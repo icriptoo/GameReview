@@ -40,6 +40,8 @@ td {
     border: 1px solid;
 }
 </style>
+<script>
+</script>
 </head>
 <!-- html 시작 -->
 <body class="w3-light-grey">
@@ -53,10 +55,17 @@ td {
       <h1>left</h1>
     </aside>
   </div>
+  <div>
+    <aside class="rightAside">
+      <%@ include file="/WEB-INF/include/loginbox.jsp" %>
+      <br><br>
+      <%@ include file="/WEB-INF/include/topgame.jsp" %>
+    </aside>
+  </div>
   <div style="width: 50%;">
     <table>
       <tr>
-        <td class="boardBox">게임목록
+        <td class="boardBox">게임목록 <a class="plus" href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a>
           <div class="GameListIn">
             <select id="platform" name="platform" onchange="if(this.value) location.href=(this.value);">
               <option value="/Board/GameList?pageNum=1&contentNum=30" ${so == '0' ? 'selected="selected"' : '' }>플랫폼</option>
@@ -70,7 +79,6 @@ td {
               <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
               <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
             </select>
-            <a class="plus" href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a>
           </div>
           <div class="genre">
             <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=51">RPG</a>
@@ -91,20 +99,31 @@ td {
             <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=66">기타</a>
           </div>
         </td>
-        <td class="boardBox">공지사항</td>
+        <td class="boardBox">공지사항 <a class="plus" href="/managementList?menu_id=3&pageNum=1&contentNum=30">+더 보기</a>
+          <ul>
+            <c:forEach begin="0" end="9" var="idx">
+              <li><a href="/View?b_idx=${MList[idx].b_idx}&menu_id=${MList[idx].menu_id}&pageNum=1&contentNum=30">${MList[idx].title}</a></li>
+            </c:forEach>
+          </ul>
+        </td>
       </tr>
       <tr>
-        <td class="boardBox">전체자유게시판</td>
-        <td class="boardBox">전체리뷰게시판</td>
+        <td class="boardBox">전체리뷰게시판 <a class="plus" href="/totalList?menu_id=1&pageNum=1&contentNum=30">+더 보기</a>
+          <ul>
+            <c:forEach begin="0" end="9" var="idx">
+              <li><a href="/View?b_idx=${T1ist[idx].b_idx}&menu_id=${T1ist[idx].menu_id}&pageNum=1&contentNum=30">${T1ist[idx].title}</a></li>
+            </c:forEach>
+          </ul>
+        </td>
+        <td class="boardBox">전체자유게시판 <a class="plus" href="/totalList?menu_id=2&pageNum=1&contentNum=30">+더 보기</a>
+          <ul>
+            <c:forEach begin="0" end="9" var="idx">
+              <li><a href="/View?b_idx=${T2List[idx].b_idx}&menu_id=${T2List[idx].menu_id}&pageNum=1&contentNum=30">${T2List[idx].title}</a></li>
+            </c:forEach>
+          </ul>
+        </td>
       </tr>
     </table>
-  </div>
-  <div>
-    <aside class="rightAside">
-      <%@ include file="/WEB-INF/include/loginbox.jsp" %>
-      <br><br>
-      <%@ include file="/WEB-INF/include/topgame.jsp" %>
-    </aside>
   </div>
 </div>
 </body>
