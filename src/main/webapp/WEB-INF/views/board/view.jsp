@@ -226,7 +226,7 @@ function replyList(){
       html += '<table class="b" id="b">';
       for(let i=0; i<replylen; i++){
         html += '<tr>';
-        html += '<td rowspan="3"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="w3-circle" alt="UserProfile" style="width : 30%"/></td>';
+        html += '<td rowspan="3" style="width:52px"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="w3-circle" alt="UserProfile" style="width:80%"/></td>';
         html += '<td colspan="2">'+list[i].u_id+'</td>';
         html += '</tr>';
         html += '<tr>';

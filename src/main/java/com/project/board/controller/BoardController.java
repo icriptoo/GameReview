@@ -796,40 +796,6 @@ public class BoardController {
         return "board/myboardList";
     }
 
-    // 고객센터 Q&A 페이지
-    @RequestMapping("/supportList")
-    public String supportLIst(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
-        int PageNum = Integer.parseInt((String) map.get("pageNum"));
-        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
-        String menu_id = (String) map.get("menu_id");
-
-        UserVo userVo = (UserVo) httpSession.getAttribute("login");
-        map.put("u_id",userVo.getU_id());
-
-        // 첫 화면에 나올 게시글 페이징
-        map.put("menu_id",4);
-        map.put("MySupportCount",1);
-        boardPager.setTotalCount(boardService.boardCount(map));
-        boardPager.setPageNum(PageNum - 1);
-        boardPager.setContentNum(ContentNum);
-        boardPager.setCurrentBlock(PageNum);
-        boardPager.setLastBlock();
-        boardPager.prevNext(PageNum);
-        boardPager.setStartPage();
-        boardPager.setEndPage();
-        if(boardPager.getPageNum() != 0){
-            boardPager.setPageNum((PageNum - 1) * 30 + 1);
-        }
-        map.put("pageNum", boardPager.getPageNum());
-        map.put("contentNum", boardPager.getContentNum());
-        System.out.println(map);
-        List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
-        model.addAttribute("boardList", boardList);
-        model.addAttribute("menu_id", menu_id);
-        model.addAttribute("Pager", boardPager);
-        return "/board/supportList";
-    }
-
 }
 
 
