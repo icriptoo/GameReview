@@ -128,11 +128,21 @@
                 ORDER BY b_idx desc
             </when>
             <when test="menu_id == 4">
-                SELECT *
-                FROM board
-                WHERE menu_id = #{menu_id}
-                  AND u_id = #{u_id}
-                ORDER BY b_idx desc
+              <choose>
+                <when test="u_id.equals('admin')">
+                    SELECT *
+                    FROM board
+                    WHERE menu_id = #{menu_id}
+                    ORDER BY b_idx desc
+                </when>
+                <otherwise>
+                    SELECT *
+                    FROM board
+                    WHERE menu_id = #{menu_id}
+                    AND u_id = #{u_id}
+                    ORDER BY b_idx desc
+                </otherwise>
+              </choose>
             </when>
             <when test="g_idx != null">
                 SELECT *

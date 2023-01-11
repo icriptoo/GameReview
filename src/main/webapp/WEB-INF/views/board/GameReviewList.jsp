@@ -73,6 +73,11 @@ ul{
 .eGName{
     color:#c0c0c0;
 }
+
+td{
+    padding: 8px 16px;
+}
+
 </style>
 <script>
 function btnSearch(e){
@@ -130,7 +135,6 @@ function btnSearch(e){
         </td>
       </tr>
     </div>
-    ${boardList[0].u_id}
     <tr>
       <th colspan="6" style="text-align:center">
         <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1&pageNum=1&contentNum=30'" >리뷰게시판</button>
@@ -154,12 +158,7 @@ function btnSearch(e){
         <c:if test="${menu_id eq 1}">
           <td width="5%" style="text-align:center">${boardVo.r_score}</td>
         </c:if>
-        <td width="5%" style="text-align:center">
-          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">${status.index}:${boardVo.u_id}</a>
-          <div class="dropdown-content" id="myDropdown">
-            <a onClick = "showPopup(${boardVo.u_id});" >신고하기</a>
-          </div>
-        </td>
+        <td width="5%" style="text-align:center">${boardVo.u_id}</td>
         <td width="10%" style="text-align:center">${boardVo.indate}</td>
         <td width="5%" style="text-align:center">${boardVo.b_count}</td>
       </tr>

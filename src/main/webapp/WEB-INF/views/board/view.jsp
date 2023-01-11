@@ -173,10 +173,10 @@ window.onclick = function(e) {
   }
 }
 
-function showPopup(u_id){
-  var ue_id = u_id
-  console.log(u_id)
-  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id={ue_id}","팝업창","width=500, height=600, top=10, left=10");
+function showPopup(ue_id){
+  var ue_id = ue_id;
+  console.log(ue_id);
+  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id="+ue_id+"","팝업창","width=500, height=600, top=10, left=10");
 }
 
 </script>
@@ -244,7 +244,7 @@ function showPopup(u_id){
           </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >수정</button>
-            <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >삭제</button>
+            <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&u_id=${sessionScope.login.u_id}'" >삭제</button>
           </c:if>
           <c:choose>
             <c:when test="${menu_id eq 3 || menu_id eq 4}">

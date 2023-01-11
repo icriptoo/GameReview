@@ -83,12 +83,17 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
+        System.out.println("map:"+map);
 
         boardService.boardUpdate(map);
 
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            model.addAttribute("g_idx", g_idx ); //게임번호
+        } else if(menu_id.equals("4")){
+            model.addAttribute("u_id", u_id ); // 아이디
+        }
+
         model.addAttribute("menu_id", menu_id ); //메뉴번호
-        model.addAttribute("g_idx", g_idx ); //게임번호
-        model.addAttribute("u_id", u_id );
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
@@ -119,10 +124,17 @@ public class BoardController {
     public  String boardInsert(@RequestParam HashMap<String, Object> map, Model model){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
+        String u_id = (String)map.get("u_id");
+        System.out.println("this:"+map);
         boardService.boardInsert(map);
 
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            model.addAttribute("g_idx", g_idx ); //게임번호
+        } else if(menu_id.equals("4")){
+            model.addAttribute("u_id", u_id ); //게임번호
+        }
+
         model.addAttribute("menu_id", menu_id ); //메뉴번호
-        model.addAttribute("g_idx", g_idx ); //게임번호
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
@@ -139,13 +151,26 @@ public class BoardController {
     public String boardDelete(@RequestParam HashMap<String, Object> map, Model model){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
+        String u_id = (String)map.get("u_id");
 
         boardService.boardDelete(map);
 
-        model.addAttribute("menu_id", menu_id ); //메뉴번호
-        model.addAttribute("g_idx", g_idx ); //게임번호
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            model.addAttribute("g_idx", g_idx ); //게임번호
+        } else if(menu_id.equals("4")){
+            model.addAttribute("u_id", u_id ); //아이디
+        }
 
-        return "redirect:/GameReviewList?pageNum=1&contentNum=30";
+        model.addAttribute("menu_id", menu_id ); //메뉴번호
+
+        String path = null;
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
+        } else if(menu_id.equals("3") || menu_id.equals("4")){
+            path = "redirect:/managementList?pageNum=1&contentNum=30";
+        }
+
+        return path;
     }
 
     //글작성화면
@@ -172,6 +197,14 @@ public class BoardController {
     @RequestMapping("/RecomGameList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
         BoardVo boardVo = boardService.goodGame(map);
+
+        if(boardVo == null){
+            model.addAttribute("msg", "게임리뷰를 남겨주세요.");
+            model.addAttribute("url", "/");
+            return "/alert";
+
+        }
+
         String title = boardVo.getG_name(); // 추천알고리즘 입력값으로 넣어줄 게임
         System.out.println("대상게임:" + title);
 
