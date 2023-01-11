@@ -45,11 +45,4 @@ public interface BoardDao {
 
     List<BoardVo> getSBoardList(HashMap<String, Object> map);
 
-    int boardSCount(HashMap<String, Object> map);
-
-    int boardOneCount(HashMap<String, Object> map);
-
-    int myboardCount(HashMap<String, Object> map);
-
-    int myboardSCount(HashMap<String, Object> map);
 }

@@ -159,8 +159,9 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void boardInsert(HashMap<String, Object> map) {
         sqlSession.insert("Board.BoardInsert", map); // 글저장
-        sqlSession.update("Game.ScoreUpdate", map); //저장 후 해당게임 총평점 업데이트
-
+        if (!map.get("menu_id").equals("4")) { // 고객센터글 작성 할 땐 실행x
+            sqlSession.update("Game.ScoreUpdate", map); //저장 후 해당게임 총평점 업데이트
+        }
     }
 
     @Override
@@ -171,33 +172,13 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public int boardCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.BoardCount", map);
+        return sqlSession.selectOne("Board.Count", map);
     }
 
     @Override
     public List<BoardVo> getSBoardList(HashMap<String, Object> map) {
         List<BoardVo> boardList = sqlSession.selectList("Board.SList",map);
         return boardList;
-    }
-
-    @Override
-    public int boardSCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.BoardSCount",map);
-    }
-
-    @Override
-    public int boardOneCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.BoardOneCount",map);
-    }
-
-    @Override
-    public int myboardCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.MyBoardCount",map);
-    }
-
-    @Override
-    public int myboardSCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.MyBoardSCount",map);
     }
 
     @Override
