@@ -105,6 +105,7 @@ function btnSearchEnter(){
   }
 }
 </script>
+<%@ include file="/WEB-INF/include/declaration_Include.jsp" %>
 </head>
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
@@ -145,6 +146,7 @@ function btnSearchEnter(){
         </td>
       </tr>
     </div>
+    ${boardList[0].u_id}
     <tr>
       <th colspan="6" style="text-align:center">
         <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1&pageNum=1&contentNum=30'" >리뷰게시판</button>
@@ -161,16 +163,21 @@ function btnSearchEnter(){
       <th width="10%" style="text-align:center">작성일</th>
       <th width="5%" style="text-align:center">조회수</th>
     </tr>
-    <c:forEach var="item" items="${boardList}" >
+    <c:forEach var="boardVo" items="${boardList}" varStatus="status" >
       <tr>
-        <td width="10%" style="text-align:center">${item.b_idx}</td>
-        <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&pageNum=1&contentNum=30">${item.title}</a></td>
+        <td width="10%" style="text-align:center">${boardVo.b_idx}</td>
+        <td width="25%" style="text-align:left"><a href="/View?b_idx=${boardVo.b_idx}&menu_id=${menu_id}&pageNum=1&contentNum=30">${boardVo.title}</a></td>
         <c:if test="${menu_id eq 1}">
-          <td width="5%" style="text-align:center">${item.r_score}</td>
+          <td width="5%" style="text-align:center">${boardVo.r_score}</td>
         </c:if>
-        <td width="5%" style="text-align:center">${item.u_id}</td>
-        <td width="10%" style="text-align:center">${item.indate}</td>
-        <td width="5%" style="text-align:center">${item.b_count}</td>
+        <td width="5%" style="text-align:center">
+          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">${status.index}:${boardVo.u_id}</a>
+          <div class="dropdown-content" id="myDropdown">
+            <a onClick = "showPopup(${boardVo.u_id});" >신고하기</a>
+          </div>
+        </td>
+        <td width="10%" style="text-align:center">${boardVo.indate}</td>
+        <td width="5%" style="text-align:center">${boardVo.b_count}</td>
       </tr>
     </c:forEach>
     <tr>

@@ -116,7 +116,12 @@ ul{
   <table>
     <tr>
       <th colspan="4" style="font-size:20px; text-align:center;">
+      <c:if test="${menu_id eq 3}">
         공지사항
+      </c:if>
+      <c:if test="${menu_id eq 4}">
+        Q & A
+      </c:if>
       </th>
     </tr>
     <tr>

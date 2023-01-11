@@ -45,4 +45,5 @@ public interface BoardService {
 
     void boardDelete(HashMap<String, Object> map);
 
+    int declarationInsert(HashMap<String, Object> map);
 }

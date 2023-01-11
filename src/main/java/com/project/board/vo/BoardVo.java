@@ -11,11 +11,11 @@ public class BoardVo {
     private int menu_id;
     private String u_id;
     private int g_idx;
-
+    private String a_cont;
     private String g_name;
 
     public BoardVo(){};
-    public BoardVo(int b_idx, String title, String cont, int r_score, String indate, int b_count, int menu_id, String u_id, int g_idx, String g_name) {
+    public BoardVo(int b_idx, String title, String cont, int r_score, String indate, int b_count, int menu_id, String u_id, int g_idx, String a_cont, String g_name) {
         this.b_idx = b_idx;
         this.title = title;
         this.cont = cont;
@@ -25,6 +25,7 @@ public class BoardVo {
         this.menu_id = menu_id;
         this.u_id = u_id;
         this.g_idx = g_idx;
+        this.a_cont = a_cont;
         this.g_name = g_name;
     }
 
@@ -100,6 +101,14 @@ public class BoardVo {
         this.g_idx = g_idx;
     }
 
+    public String getA_cont() {
+        return a_cont;
+    }
+
+    public void setA_cont(String a_cont) {
+        this.a_cont = a_cont;
+    }
+
     public String getG_name() {
         return g_name;
     }
@@ -120,6 +129,7 @@ public class BoardVo {
                 ", menu_id=" + menu_id +
                 ", u_id='" + u_id + '\'' +
                 ", g_idx=" + g_idx +
+                ", a_cont='" + a_cont + '\'' +
                 ", g_name='" + g_name + '\'' +
                 '}';
     }

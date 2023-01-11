@@ -79,6 +79,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public int declarationInsert(HashMap<String, Object> map) {
+        int result = boardDao.declarationInsert(map);
+        return result;
+    }
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
     @Override

@@ -40,6 +40,36 @@ public class BoardController {
         return "/home";
     }
 
+    //신고데이터 저장
+    @ResponseBody
+    @RequestMapping("declarationInsert")
+    public String declarationInsert(@RequestParam HashMap<String, Object> map, Model model){
+        int code = boardService.declarationInsert(map);
+        String result = "";
+        if(code == 1){
+            result = "신고되었습니다.";
+        } else {
+            result = "실패했습니다.";
+        }
+        System.out.println("dho:"+result);
+        model.addAttribute("result", result);
+
+        return result;
+    }
+
+    //신고하기 화면
+    @RequestMapping("declarationWrite")
+    public String declaration(@RequestParam HashMap<String, Object> map, Model model){
+        String us_id = (String)map.get("us_id");  //신고자 아이디
+        String ue_id = (String)map.get("ue_id");  //피신고자 아이디
+        String b_idx = (String)map.get("b_idx");  //신고 게시글번호
+
+        model.addAttribute("us_id", us_id );
+        model.addAttribute("ue_id", ue_id );
+        model.addAttribute("b_idx", b_idx );
+        return "/board/declarationWrite";
+    }
+
     //관리게시판 글목록 managementList
     @RequestMapping("managementList")
     public String managementList(@RequestParam HashMap<String, Object> map, Model model){
@@ -48,6 +78,7 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");  //메뉴번호
         String searchType = (String) map.get("searchType");
         String keyword = (String) map.get("keyword");
+        String u_id = (String)map.get("u_id");
 
         List<BoardVo> boardList = null;
 
@@ -91,6 +122,7 @@ public class BoardController {
             boardList = boardService.getBoardList(map);
         }
         model.addAttribute("menu_id", menu_id );
+        model.addAttribute("u_id", u_id );
         model.addAttribute("boardList", boardList );
         model.addAttribute("Pager", boardPager);
         model.addAttribute("sT",searchType);// 페이징용 검색유무
@@ -103,12 +135,22 @@ public class BoardController {
     public String boardUpdate(@RequestParam HashMap<String, Object> map, Model model){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
+        String u_id = (String)map.get("u_id");
+
         boardService.boardUpdate(map);
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
+        model.addAttribute("u_id", u_id );
 
-        return "redirect:/GameReviewList?pageNum=1&contentNum=30";
+        String path = null;
+        if(menu_id.equals("1") || menu_id.equals("2")){
+            path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
+        } else if(menu_id.equals("3") || menu_id.equals("4")){
+            path = "redirect:/managementList?pageNum=1&contentNum=30";
+        }
+
+        return path;
     }
 
     //글수정화면
@@ -116,9 +158,11 @@ public class BoardController {
     public String updateForm(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
         String menu_id = (String)map.get("menu_id");
+        String answer = (String)map.get("answer");
 
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
+        model.addAttribute("answer", answer ); //답변여부
 
         return "/board/updateForm";
     }
@@ -138,10 +182,8 @@ public class BoardController {
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
             path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
-        } else if(menu_id.equals("3")){
+        } else if(menu_id.equals("3") || menu_id.equals("4")){
             path = "redirect:/managementList?pageNum=1&contentNum=30";
-        } else if(menu_id.equals("4")){
-            path = "redirect:/supportList?pageNum=1&contentNum=30";
         }
 
         return path;
@@ -219,7 +261,7 @@ public class BoardController {
             System.out.println(">>>  "+ i + ":" + al.get(i));
         }
 
-        if(exitval !=0) {
+        if(exitval !=0){
             //비정상종료
             System.out.println("비정상종료");
         }

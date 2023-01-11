@@ -5,28 +5,75 @@
 
 <mapper namespace="Board">
 
-    <!-- 글 저장하기 -->
-    <insert  id="BoardInsert" parameterType="com.project.board.vo.BoardVo" >
-        <choose>
-        <when test="menu_id == 4">
-            INSERT INTO board(U_ID,TITLE,CONT,MENU_ID,B_IDX,b_count)
-            VALUES(#{u_id}, #{title}, #{cont}, 4, (select nvl(max(b_idx),0)+1 from board), 0)
-        </when>
-        <otherwise>
-            insert into board(b_idx, title, cont, r_score, b_count, menu_id, u_id, g_idx)
-            values((select nvl(max(b_idx),0)+1 from board), #{title}, #{cont}, #{r_score}, 0, #{menu_id}, #{u_id}, #{g_idx})
-        </otherwise>
-        </choose>
+
+    <!-- 신고 저장 -->
+    <insert  id="declarationInsert" >
+        insert into declaration
+        (
+        d_idx,
+        cont,
+        us_id,
+        ue_id,
+        b_idx,
+        type_idx
+        )
+        values
+        (
+        ( select nvl(max(d_idx),0)+1 from declaration ),
+        #{cont},
+        #{us_id},
+        #{ue_id},
+        #{b_idx},
+        #{type_idx}
+        )
     </insert>
 
-    <!-- 글 수정 -->
+    <!-- 글 수정하기 -->
     <update  id="BoardUpdate">
-        update board
-        set   title   = #{title},
-              cont    = #{cont},
-              r_score = #{r_score}
-        where b_idx   = #{b_idx}
+        <choose>
+            <when test="a_cont != null">
+                update board
+                set   title   = #{title},
+                cont    = #{cont},
+                a_cont = #{a_cont}
+                where b_idx   = #{b_idx}
+            </when>
+            <otherwise>
+                update board
+                set   title   = #{title},
+                cont    = #{cont},
+                r_score = #{r_score}
+                where b_idx   = #{b_idx}
+            </otherwise>
+        </choose>
     </update>
+
+
+    <!-- 글 저장 -->
+    <insert  id="BoardInsert" >
+        insert into board
+        (
+        b_idx,
+        title,
+        cont,
+        r_score,
+        b_count,
+        menu_id,
+        u_id,
+        g_idx
+        )
+        values
+        (
+        ( select nvl(max(b_idx),0)+1 from board ),
+        #{title},
+        #{cont},
+        #{r_score},
+        0,
+        #{menu_id},
+        #{u_id},
+        #{g_idx}
+        )
+    </insert>
 
     <select id="GetGameList" resultType="com.project.board.vo.GameListVo">
         SELECT *
@@ -123,6 +170,14 @@
                 WHERE menu_id = #{menu_id} and ${searchType} like '%${keyword}%'
                 ORDER BY b_idx desc)
                 WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                ORDER BY b_idx desc
+            </when>
+            <when test="menu_id == 4">
+                SELECT *
+                FROM board
+                WHERE menu_id = #{menu_id}
+                  AND u_id = #{u_id}
+                ORDER BY b_idx desc
             </when>
             <when test="g_idx != null">
                 SELECT *

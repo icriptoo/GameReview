@@ -12,9 +12,7 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>Insert title here</title>
 <style>
-
 .headerB{ font-size: 80px!important }
-
 .rightAside {
 	float: right;
 	width: 350px;
@@ -27,7 +25,6 @@
 ul{
     list-style:none;
 }
-
 .eGName{
     color:#c0c0c0;
 }
@@ -66,7 +63,41 @@ textarea {
   border: none;
   resize: none;
 }
+.dropbtn {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
+.dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
 </style>
 <script>
 function replyDelete(r_idx){
@@ -114,6 +145,30 @@ function replyUpdate(r_idx){
   });
 }
 
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var d = 0; d < dropdowns.length; d++) {
+      var openDropdown = dropdowns[d];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function showPopup(u_id){
+  var ue_id = u_id
+  console.log(u_id)
+  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id={ue_id}","팝업창","width=500, height=600, top=10, left=10");
+}
+
 </script>
 </head>
 <body class="w3-light-grey">
@@ -142,12 +197,29 @@ function replyUpdate(r_idx){
       </tr>
       <tr>
         <th style= "width:6%; height:10%; text-align:center">작성자</th>
-        <td>${boardVo.u_id}</td>
+        <td>
+          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">${boardVo.u_id}</a>
+          <div class="dropdown-content" id="myDropdown">
+            <a onClick = "showPopup('${boardVo.u_id}');" >신고하기</a>
+          </div>
+        </td>
+
       </tr>
       <tr>
         <th style="text-align:center">내용</th>
         <td>${boardVo.cont}</td>
       </tr>
+      <c:if test="${menu_id eq 4}">
+        <th style="text-align:center">답변</th>
+        <c:choose>
+          <c:when test="${boardVo.a_cont != null}">
+            <td>${boardVo.a_cont}</td>
+          </c:when>
+          <c:otherwise>
+            <td>답변대기중</td>
+          </c:otherwise>
+        </c:choose>
+      </c:if>
       <c:if test="${menu_id eq 1}">
         <tr>
           <th style=" height:10%; text-align:center">평점</th>
@@ -156,11 +228,21 @@ function replyUpdate(r_idx){
       </c:if>
       <tr>
         <td style="height:10%; text-align:right" colspan="2">
+          <c:if test="${sessionScope.login.u_id eq 'admin' && menu_id eq 4}">
+            <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&answer=1'" >답변하기</button>
+          </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >수정</button>
             <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >삭제</button>
           </c:if>
-          <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+          <c:choose>
+            <c:when test="${menu_id eq 3 || menu_id eq 4}">
+              <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=${menu_id}&pageNum=1&contentNum=30&u_id=${sessionScope.login.u_id}'" >목록으로</button>
+            </c:when>
+            <c:otherwise>
+              <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+            </c:otherwise>
+          </c:choose>
         </td>
       </tr>
     </div>
