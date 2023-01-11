@@ -166,19 +166,23 @@ function replyUpdate(r_idx){
     </div>
   </table>
   <div id="replylist-box"></div>
-  <div>
-    <div class="replyin_box">
+    <div class="replyin_box" id="replyin_box">
       <div>${login.u_id}</div><br>
       <div><textarea type="textarea" id="replytext" placeholder="내용을 입력해 주세요."></textarea></div>
       <div style="float: center" id="replybtn"><button>작성</button></div>
     </div>
-  </div>
   <div id="replyP-box"></div>
 </div>
 </body>
 <script>
-window.onload = replyP;
-window.addEventListener('load',replyList);
+document.getElementById('replylist-box').style.display = 'none'
+document.getElementById('replyin_box').style.display = 'none'
+if(${boardVo.menu_id} < 3){
+  document.getElementById('replyin_box').style.display = 'block'
+  document.getElementById('replylist-box').style.display = 'block'
+  window.addEventListener('load',replyList);
+  window.onload = replyP;
+}
 $("#replybtn").click(function(){
   let cont  = $("#replytext").val();
   let g_idx = "${boardVo.g_idx }";
