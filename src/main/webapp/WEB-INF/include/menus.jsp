@@ -76,7 +76,7 @@ li.asd{
       <li class="asd"><a href="/totalList?menu_id=1&pageNum=1&contentNum=30">전체리뷰게시판</a></li>
       <li class="asd"><a href="/totalList?menu_id=2&pageNum=1&contentNum=30">전체자유게시판</a></li>
       <li class="asd"><a href="/managementList?menu_id=3&pageNum=1&contentNum=30">공지사항</a></li>
-      <li class="asd"><a href="/managementList?menu_id=4&u_id=${ sessionScope.login.u_id }">고객센터</a></li>
+      <li class="asd"><a href="/managementList?menu_id=4&u_id=${sessionScope.login.u_id}&pageNum=1&contentNum=30">고객센터</a></li>
       <c:set var="admin" value="${login}"/>
       <c:if test="${admin.authority eq '0'}">
         <li class="asd"><a href="/">관리페이지</a></li>
@@ -86,3 +86,6 @@ li.asd{
   </nav>
 </div>
 </body>
+<script>
+console.log(${login});
+</script>
