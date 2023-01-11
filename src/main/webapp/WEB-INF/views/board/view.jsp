@@ -179,7 +179,6 @@ function replyUpdate(r_idx){
 <script>
 window.onload = replyP;
 window.addEventListener('load',replyList);
-
 $("#replybtn").click(function(){
   let cont  = $("#replytext").val();
   let g_idx = "${boardVo.g_idx }";
@@ -220,7 +219,7 @@ function replyList(){
       let replylen = list.length;
       let u_id = "${login.u_id}";
       let html = "";
-      html += '<table class="b">';
+      html += '<table class="b" id="b">';
       for(let i=0; i<replylen; i++){
         html += '<tr>';
         html += '<td rowspan="3"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="w3-circle" alt="UserProfile" style="width : 30%"/></td>';
@@ -238,8 +237,10 @@ function replyList(){
         html += '</tr>';
       }
       html += '</table>';
+      if (replylen == 0){
+        document.getElementById('b').style.display = 'none'
+      }
       $('#replylist-box').html(html);
-      console.log(list);
     }
   });
 };
