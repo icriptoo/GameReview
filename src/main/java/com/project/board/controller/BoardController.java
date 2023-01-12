@@ -498,7 +498,7 @@ public class BoardController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return "/home";
+        return "redirect:/";
     }
 
     // 게임목록 조회 게시판
