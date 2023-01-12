@@ -4,8 +4,7 @@ import com.project.board.service.BoardService;
 import com.project.board.vo.BoardPager;
 import com.project.board.vo.BoardVo;
 import com.project.board.vo.GameListVo;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
+import com.project.user.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,15 +21,22 @@ import java.util.Random;
 
 @Controller
 public class BoardController {
-    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-
     @Autowired
     BoardService boardService;
 
     BoardPager boardPager = new BoardPager();
 
     @RequestMapping("/")
-    public String home() {
+    public String home(HashMap<String, Object> map, Model model) {
+        map.put("homeBoard",1);
+        List<BoardVo> T1List = boardService.getBoardList(map); //리뷰게시글
+        map.put("homeBoard",2);
+        List<BoardVo> T2List = boardService.getBoardList(map); //자유게시글
+        map.put("homeBoard",3);
+        List<BoardVo> MList = boardService.getBoardList(map);  //공지사항
+        model.addAttribute("MList", MList);
+        model.addAttribute("T1ist", T1List);
+        model.addAttribute("T2List", T2List);
         return "/home";
     }
 
@@ -66,14 +73,33 @@ public class BoardController {
     //관리게시판 글목록 managementList
     @RequestMapping("managementList")
     public String managementList(@RequestParam HashMap<String, Object> map, Model model){
-        List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String menu_id = (String)map.get("menu_id");  //메뉴번호
-        String u_id = (String)map.get("u_id");  //메뉴번호
+        String u_id = (String)map.get("u_id");
+
+        map.put("BoardCount",1);
+        boardPager.setTotalCount(boardService.boardCount(map));
+        boardPager.setPageNum(PageNum - 1);
+        boardPager.setContentNum(ContentNum);
+        boardPager.setCurrentBlock(PageNum);
+        boardPager.setLastBlock();
+        boardPager.prevNext(PageNum);
+        boardPager.setStartPage();
+        boardPager.setEndPage();
+        if(boardPager.getPageNum() != 0){
+            boardPager.setPageNum((PageNum - 1) * 30 + 1);
+        }
+        map.put("pageNum", boardPager.getPageNum());
+        map.put("contentNum", boardPager.getContentNum());
+        // 검색기능 추가 공지사항, 고객센터
+
+        List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
 
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("u_id", u_id );
         model.addAttribute("boardList", boardList );
-
+        model.addAttribute("Pager", boardPager);
         return "/board/managementList";
     }
 
@@ -83,7 +109,6 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
-        System.out.println("map:"+map);
 
         boardService.boardUpdate(map);
 
@@ -125,7 +150,6 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
-        System.out.println("this:"+map);
         boardService.boardInsert(map);
 
         if(menu_id.equals("1") || menu_id.equals("2")){
@@ -289,9 +313,10 @@ public class BoardController {
             searchType = "a";
         }
 
-        // 첫 화면에 나올 게시글 가져오기
+        // 첫 화면에 나올 게시글 페이징
         if (searchType == "a") {
-            boardPager.setTotalCount(boardService.boardOneCount(map));
+            map.put("BoardOneCount",1);
+            boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
             boardPager.setCurrentBlock(PageNum);
@@ -306,7 +331,8 @@ public class BoardController {
             map.put("contentNum", boardPager.getContentNum());
             boardList = boardService.getBoardList(map);
         }else { // 검색할때 사용하는 페이징
-            boardPager.setTotalCount(boardService.boardSCount(map));
+            map.put("BoardSCount",1);
+            boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
             boardPager.setCurrentBlock(PageNum);
@@ -344,8 +370,9 @@ public class BoardController {
         if (searchType == null){
             searchType = "a";
         }
-        // 첫 화면에 나올 게시글 가져오기
+        // 첫 화면에 나올 게시글 페이징
         if (searchType == "a") {
+            map.put("BoardCount",1);
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
@@ -362,7 +389,8 @@ public class BoardController {
 
             boardList = boardService.getBoardList(map);
         }else { // 검색할때 사용하는 페이징
-            boardPager.setTotalCount(boardService.boardSCount(map));
+            map.put("BoardSCount",1);
+            boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
             boardPager.setCurrentBlock(PageNum);
@@ -459,7 +487,6 @@ public class BoardController {
         int searchType = 0;
         String gN = "";
         String sType = "";
-
 
         if (map.get("searchType") != null) {
             searchType = Integer.parseInt((String) map.get("searchType"));
@@ -751,6 +778,68 @@ public class BoardController {
         return "/home";
 
     }
+
+    // 마이페이지 내 개시글보기
+    @RequestMapping("/myboard")
+    public String myBoard(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+        String searchType = (String) map.get("searchType");;
+        String keyword = "";
+
+        List<BoardVo> boardList = null;
+
+        UserVo userVo = (UserVo) httpSession.getAttribute("login");
+        map.put("u_id",userVo.getU_id());
+
+        if (searchType == null){
+            searchType = "a";
+        }
+        // 첫 화면에 나올 게시글 페이징
+        if (searchType == "a") {
+            map.put("myboard",1);
+            map.put("MyBoardCount",1);
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if(boardPager.getPageNum() != 0){
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getBoardList(map);  //글목록 불러오기
+        }else { // 검색할때 사용하는 페이징
+            keyword = (String) map.get("keyword");
+            map.put("myboard",2);
+            map.put("MyBoardSCount",1);
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if(boardPager.getPageNum() != 0){
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getBoardList(map);
+        }
+        model.addAttribute("boardList", boardList );
+        model.addAttribute("Pager", boardPager);
+        model.addAttribute("sT",searchType);// 페이징용 검색유무
+        model.addAttribute("kw",keyword);
+
+        return "board/myboardList";
+    }
+
 }
 
 

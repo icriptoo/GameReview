@@ -57,6 +57,58 @@ ul{
 }
 </style>
 <script>
+function nnCheckEnter(){
+  if(window.event.keyCode == 13){
+    let cn_name = $('input[name=n_name]').val();
+    let n_name = "${user.n_name}";
+    if(cn_name != n_name){
+      $.ajax({
+        type : 'POST',
+        url : "nnCheck",
+        dataType : "text",
+        data : {
+          "n_name" : cn_name
+        },
+        success : function(nnCheck){
+          $("#nnCheckResult").text(nnCheck);
+        }
+      })
+    } else{
+     $("#nnCheckResult").text("현재 닉네임과 동일한 닉네임입니다.");
+    }
+  }
+};
+function enumsendEnter(){
+  if(window.event.keyCode == 13){
+    $("#enumsendResult").text("");
+    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let email = $('input[name=email]').val();
+
+    if(email == ""){
+      $("#enumsendResult").text("이메일을 입력해 주세요.");
+      return false;
+    }
+
+    if(email == '' || email == 'undefined') return false;
+    if(email.match(regExp) != null){
+      $.ajax({
+        type : 'POST',
+        url : "email",
+        dataType : "text",
+        data : {
+          "email" : email
+        },
+        success : function(enumsend){
+          $("#enumsendResult").text(enumsend);
+        }
+      });
+      return false;
+    }else {
+      $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+      return false;
+    }
+  }
+};
 $(function(){
   $('form').on('submit',function(e){
     let n_name = "${user.n_name}";
@@ -153,41 +205,45 @@ $(function(){
     let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     let cemail = $('input[name=email]').val();
     let email = "${user.email}";
-
     if(cemail == ""){
       $("#enumsendResult").text("이메일을 입력해 주세요.");
       return false;
     }
+    if(cemail == email){
+      $("#enumsendResult").text("현재 이메일과 동일한 이메일입니다.");
+      return false;
+    }
 
     if(cemail == '' || cemail == 'undefined') return false;
-    if(cemail == email){
-      $("#enumsendResult").text("현재 이메일과 같은 이메일 입니다.");
+    if(cemail.match(regExp) != null){
+      $.ajax({
+        type : 'POST',
+        url : "email",
+        dataType : "text",
+        data : {
+          "email" : cemail
+        },
+        success : function(enumsend){
+          $("#enumsendResult").text(enumsend);
+        }
+      });
       return false;
-    } else {
-      if(cemail.match(regExp) != null || $("#enumsendResult").text() != "현재 이메일과 같은 이메일 입니다."){
-        $("#enumsendResult").text("올바른 이메일 형식이 맞습니다.");
-        $.ajax({
-          type : 'POST',
-          url : "email",
-          dataType : "text",
-          data : {
-            "email" : cemail
-          },
-          success : function(enumsend){
-            $("#enumsendResult").text(enumsend);
-          }
-        });
-        return false;
-      }else {
-        $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
-        return false;
-      }
+    }else {
+      $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+      return false;
     }
   });
 
   $('#emailcode').keyup(function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
+    if(("#enumsendResult").text() != "인증번호가 발송 됐습니다."){
+      $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
+      return false;
+    }
+    if (ecodeck.length == 0){
+      return false;
+    }
     $.ajax({
       type : 'POST',
       url : "ecodeck",
@@ -224,7 +280,7 @@ $(function(){
     </aside>
   </div>
   <div class="mypage">
-    <form action="/user/profilupdate" method="POST" encType = "multipart/form-data">
+    <form action="/user/profilupdate" method="POST" encType = "multipart/form-data" onsubmit="return false">
       <div class="profile">
         <p>
           <c:set var="img" value="${user.img}"/>
@@ -243,21 +299,13 @@ $(function(){
       <div class="mypagein">
         <input type="hidden" name="pw" value="${user.pw}">
         <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${user.u_id}" readonly/></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}"/>
-          <button id="nnCheck" name="nnCheck">중복확인</button>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}" onkeyup="nnCheckEnter()"/>
+          <button type="button" id="nnCheck" name="nnCheck">중복확인</button>
           <span id="nnCheckResult" name="nnCheckResult"></span>
         </p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
-          <c:set var="email" value="${user.email}"/>
-          <c:choose>
-            <c:when test="${emile eq null}">
-              <input type="text" name="email" value="${user.email}">
-            </c:when>
-            <c:otherwise>
-              <input type="text" name="email">
-            </c:otherwise>
-          </c:choose>
-          <button id="enumsend" name="enumsend">인증번호전송</button>
+          <input type="text" name="email" value="${user.email}" onkeyup="enumsendEnter()">
+          <button type="button" id="enumsend" name="enumsend">인증번호전송</button>
           <span id="enumsendResult" name="enumsendResult"></span>
         </p>
         <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode">

@@ -68,7 +68,7 @@ td, th {
   </div>
   <form action = "/boardUpdate" method="POST" id="form1">
     <input type="hidden" name="menu_id" value="${boardVo.menu_id}" />
-    <input type="hidden" name="u_id" value="${ sessionScope.login.u_id }" />
+    <input type="hidden" name="u_id" value="${login.u_id}" />
     <input type="hidden" name="g_idx" value="${boardVo.g_idx}" />
     <input type="hidden" name="b_idx" value="${boardVo.b_idx}" />
   <table >
@@ -132,8 +132,6 @@ td, th {
       </tr>
   </table>
   </form>
-
 </div>
-
 </body>
 </html>

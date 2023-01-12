@@ -17,6 +17,9 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserVo login(HashMap<String, Object> map) {
         UserVo uVo = sqlSession.selectOne("User.login",map);
+        if (uVo.getWithdrawal().equals("OFF")){
+            uVo = null;
+        }
         return uVo;
     }
 
@@ -107,7 +110,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void wirthdwal(HashMap<String, Object> map) {
-        sqlSession.delete("User.wirthdwal",map);
+        sqlSession.update("User.wirthdwal",map);
     }
 
     @Override

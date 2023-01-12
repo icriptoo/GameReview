@@ -1,5 +1,7 @@
 package com.project.user.controller;
 
+import com.project.board.service.BoardService;
+import com.project.board.vo.BoardPager;
 import com.project.user.service.CheckPassword;
 import com.project.user.service.Encrypt;
 import com.project.user.service.MailSendService;
@@ -32,6 +34,11 @@ public class UserController {
 
     @Autowired
     private CheckPassword checkPassword;
+
+    @Autowired
+    BoardService boardService;
+
+    BoardPager boardPager = new BoardPager();
 
     // 이메일 인증번호 저장변수
     private String ecode = "";
@@ -74,6 +81,10 @@ public class UserController {
                 httpSession.removeAttribute("login");
             }
             vo = userService.login(map);
+            if (vo == null){
+                model.addAttribute("fail","아이디와 비밀번호를 확인해 주세요.");
+                return "user/login";
+            }
             // 나중에 로그인 후 원래 있던 페이지로 이동하기 위한 주소지정 - 지금사용 안함
             /*
             model.addAttribute("next",next);
@@ -86,7 +97,7 @@ public class UserController {
             returnURL = "redirect:"+ url;
             */
             httpSession.setAttribute("login", vo);
-            return "home";
+            return "redirect:/";
         }else {
             model.addAttribute("fail","아이디와 비밀번호를 확인해 주세요.");
             returnURL = "";
@@ -111,7 +122,7 @@ public class UserController {
         HttpSession httpSession = request.getSession();
         httpSession.invalidate();
         //return "redirect:"+ url;
-        return "home";
+        return "redirect:/";
     }
 
     // 마이페이지
@@ -422,6 +433,7 @@ public class UserController {
     //회원탈퇴
     @RequestMapping("/user/Wirthdrwal")
     public String withdrawal(HttpSession httpSession,@RequestParam HashMap<String, Object> map){
+        map.put("withdrawal","OFF");
         userService.wirthdrwal(map);
         httpSession.invalidate();
         return "/home";

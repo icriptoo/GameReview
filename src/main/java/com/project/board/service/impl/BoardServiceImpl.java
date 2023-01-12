@@ -85,16 +85,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int boardSCount(HashMap<String, Object> map) {
-        return boardDao.boardSCount(map);
-    }
-
-    @Override
-    public int boardOneCount(HashMap<String, Object> map) {
-        return boardDao.boardOneCount(map);
-    }
-
-    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
     @Override

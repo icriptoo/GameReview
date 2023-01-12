@@ -64,25 +64,6 @@ h2{
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
-
-
-function loginbtn(){
-  if($('[name=id]').val()==''){
-    alert('아이디를 입력하세요');
-    return false;
-  }
-  if($('[name=pw]').val()==''){
-    alert('비밀번호를 입력하세요');
-    return false;
-  }
-  var url = "/loginProcess?u_id=";
-  var id = $('input[name=id]').val();
-  var pw = $('input[name=pw]').val();
-
-  location.href = url + id + "&pw=" + pw + "&next=${next}";
-
-}
-
 $(document).ready(function() {
   let message = "${fail}";
   if (message != "") {
@@ -93,7 +74,7 @@ $(document).ready(function() {
 })
 $(function(){
   $('form').on('submit',function(e){
-    if($('[name=id]').val()==''){
+    if($('[name=u_id]').val()==''){
       alert('아이디를 입력하세요');
       return false;
     }
@@ -113,27 +94,29 @@ $(function(){
 </header>
 <div id="login_box">
   <h2>Member-Login</h2>
-  <ul id="input_button">
-    <li id="id">
-      <ul>
-        <li>
-          <input type="text" name="id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
-        </li>
-        <li id="pw">
-          <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
-        </li>
-      </ul>
-    </li>
-    <br><br>
-    <li id="login_btn">
-      <button onclick="loginbtn()" class="login" style="font-size:15px;">로그인</button>
-      <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
-    </li>
-  </ul>
-  <ul id="btns">
-    <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
-    <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 변경</a>
-  </ul>
+  <form action="/loginProcess" method="POST" onsubmit="return ture">
+    <ul id="input_button">
+      <li id="u_id">
+        <ul>
+          <li>
+            <input type="text" name="u_id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
+          </li>
+          <li id="pw">
+            <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
+          </li>
+        </ul>
+      </li>
+      <br><br>
+      <li id="login_btn">
+        <button onclick="loginbtn()" class="login" style="font-size:15px;">로그인</button>
+        <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
+      </li>
+    </ul>
+    <ul id="btns">
+      <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
+      <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 변경</a>
+    </ul>
+  </form>
 </div>
 <script>
 </script>

@@ -32,8 +32,18 @@ ul{
 }
 </style>
 <script>
-function btnGSearch(e){
-  e.preventDefault();
+function btnGSearchEnter(){
+  if(window.event.keyCode == 13){
+    var url = "/Board/GameList?pageNum=1&contentNum=30";
+    url += "&gameName=" + $("#gameName").val();
+    if ($("#gameName").val() === ""){
+      alert("게임명을 입력해 주세요.");
+    }else{
+      location.href = url;
+    }
+  }
+}
+function btnGSearch(){
   var url = "/Board/GameList?pageNum=1&contentNum=30";
   url += "&gameName=" + $("#gameName").val();
   if ($("#gameName").val() === ""){
@@ -42,7 +52,6 @@ function btnGSearch(e){
     location.href = url;
   }
 }
-
 </script>
 </head>
 <body class="w3-light-grey">
@@ -78,6 +87,7 @@ function btnGSearch(e){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
+          </select>
         </td>
         <td>
           <select id="genre" name="genre" onchange="if(this.value) location.href=(this.value);">
@@ -98,10 +108,11 @@ function btnGSearch(e){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=64" ${so == '64' ? 'selected="selected"' : '' }>SNG</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=65" ${so == '65' ? 'selected="selected"' : '' }>AOS</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=66" ${so == '66' ? 'selected="selected"' : '' }>기타</option>
+          </select>
         </td>
         <td>
-          <input id="gameName" class="gameName" type="text">
-          <button id="btnGSearch" class="btnGSearch">검색</button>
+          <input id="gameName" class="gameName" type="text" onkeyup="btnGSearchEnter()">
+          <button id="btnGSearch" class="btnGSearch" onclick="btnGSearch()">검색</button>
         </td>
       </tr>
       <c:forEach var="list" items="${GameList}">

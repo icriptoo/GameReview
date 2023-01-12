@@ -11,11 +11,13 @@ public class UserVo {
     private String genre3;
     private String img;
     private String indate;
-    private String pcode;
+    private String pcode; // 비밀번호salt
+    private String withdrawal; // 회원정보 on/off 기능 탈퇴하면 off
+    private String authority; // 관리자 구분자 0=관리자 1=일반회원
 
-    public UserVo (String u_id){}
+    public UserVo (){}
 
-    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode) {
+    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode, String withdrawal, String authority) {
         this.u_id = u_id;
         this.n_name = n_name;
         this.pw = pw;
@@ -26,6 +28,24 @@ public class UserVo {
         this.img = img;
         this.indate = indate;
         this.pcode = pcode;
+        this.withdrawal = withdrawal;
+        this.authority = authority;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public String getWithdrawal() {
+        return withdrawal;
+    }
+
+    public void setWithdrawal(String withdrawal) {
+        this.withdrawal = withdrawal;
     }
 
     public String getPw() { return pw; }
@@ -117,6 +137,8 @@ public class UserVo {
                 ", img='" + img + '\'' +
                 ", indate='" + indate + '\'' +
                 ", pcode='" + pcode + '\'' +
+                ", withdrawal='" + withdrawal + '\'' +
+                ", authority='" + authority + '\'' +
                 '}';
     }
 }

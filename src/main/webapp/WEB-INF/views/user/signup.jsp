@@ -27,7 +27,6 @@ div.signup{
 }
 </style>
 <script>
-
 $(function(){
   $('form').on('submit',function(e){
     let g1 = $('[name=genre1]').val();
@@ -283,18 +282,18 @@ $(function(){
   </div>
   <div class="signup">
     <form action="/signup" method="POST" encType = "multipart/form-data">
-      <p>아이디 : <input type="text" name="u_id"/>
+      <p>아이디 : <input type="text" name="u_id">
         <button id="idCheck" type="button">중복확인</button>
         <span id="idCheckResult" name="idCheckResult"></span>
       </p>
-      <p>닉네임 : <input type="text" name="n_name"/>
+      <p>닉네임 : <input type="text" name="n_name">
         <button id="nnCheck" type="button">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p>비밀번호는 영문과 특수문자(!@#$%^*+=-), 숫자를 포함한 8자 이상이어야 합니다.</p>
+      <p>비밀번호는 영문과 특수문자(!@$%^*+=-), 숫자를 포함한 8자 이상이어야 합니다.</p>
       <p>비밀번호 : <input type="password" name="pw"><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
       <p>비밀번호 확인 : <input type="password" name="pwck"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
-      <p>이메일 : <input type="text" name="email"><button id="enumsend" name="enumsend" type="button">인증번호전송</button><span id="enumsendResult" name="enumsendResult"></span></p>
+      <p>이메일 : <input type="text" name="email"><button id="enumsend" name="enumsend" type="button" >인증번호전송</button><span id="enumsendResult" name="enumsendResult"></span></p>
       <p>인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode"><span id="enumckResult" name="enumckResult"></span></p>
       <p><span id="enumckResult" name="enumckResult"></span></p>
       <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택해 주세요.</p>

@@ -40,16 +40,16 @@ public class BoardDaoImpl implements BoardDao {
 
         // 인벤게임db 사이트에서 게임정보 크롤링
         for (int k = 1; k <= end; k++) {
+            System.out.println(k);
             HashMap<String, Object> map = new HashMap<>();
             ArrayList<String> G = new ArrayList<>();
             ArrayList<String> GE = new ArrayList<>();
             ArrayList<String> IM = new ArrayList<>();
-            ArrayList<String> SC = new ArrayList<>();
             ArrayList<String> GR = new ArrayList<>();
             GameListVo gamese = null;
             int len = 0;
-            int de = 0;
             int insize = 0;
+            int i = 1;
 
             Document doc = Jsoup.connect("https://www.inven.co.kr/webzine/game/?of=post&page=" + k).get();
             // 게임명, 게임명(영문), 이미지, 평점, 게임정보 가져오기
@@ -62,17 +62,6 @@ public class BoardDaoImpl implements BoardDao {
             for (Element e : elemGR) {
                 GR.add(e.text());
             }
-
-            len = GR.size() / 6;
-//            Elements elemSC = doc.select("td[class=\"score\"]").select("div");
-//            // 평점 저장
-//            for (Element e : elemSC) {
-//                SC.add(e.text());
-//            }
-//            for (int j = 0; j < GR.size(); j++) {
-//                map.put("sc" + j, SC.get(j));
-//            }
-
             // 게임명 저장
             for (Element e : elemG) {
                 G.add(e.text());
@@ -85,47 +74,38 @@ public class BoardDaoImpl implements BoardDao {
             for (Element e : elemGE) {
                 GE.add(e.text());
             }
-            // 장르명 저장
-            int grC = 0;
-            // 개발사 저장
-            int cpC = 0;
-            // 서비스 저장
-            int svC = 0;
-            // 플랫폼 저장
-            int pfC = 0;
-            // 출시일 저장
-            int idC = 0;
-
-            int i = 1;
-
+            // 한 페이지에 나와 있는 게임 갯수
+            len = GR.size() / 6;
             for (int j = 0; j < len; j++) {
-                map.put("test" + j, G.get(j));
+                int gck = 0;
                 insize += 1;
                 String[] Genre = GR.get(i).split(":");
                 String[] Company = GR.get(i + 1).split(":");
                 String[] Service = GR.get(i + 2).split(":");
                 String[] FlatForm = GR.get(i + 3).split(":");
                 String[] Date = GR.get(i + 4).split(":");
-                map.put("g" + j, G.get(j));
-                map.put("im" + j, IM.get(j));
-                map.put("ge" + j, GE.get(j));
-
-                map.put("gr" + grC, Genre[1]);
-                map.put("cp" + cpC, Company[1]);
-                map.put("sv" + svC, Service[1]);
-                map.put("pf" + pfC, FlatForm[1]);
-                map.put("id" + idC, Date[1]);
-
-                if (!G.get(j).equals("삭제")){
-                    sqlSession.insert("Game.G" + j, map);
+                map.put("g", G.get(j));
+                map.put("im", IM.get(j));
+                map.put("ge", GE.get(j));
+                map.put("gr", Genre[1]);
+                map.put("cp", Company[1]);
+                map.put("sv", Service[1]);
+                map.put("pf", FlatForm[1]);
+                map.put("id", Date[1]);
+                if (!G.get(j).contains("삭제")){
+                    gck = sqlSession.selectOne("Game.ckGame", map);
+                    if (gck == 0) {
+                        sqlSession.insert("Game.GInsert", map);
+                    }
                }
-                map.remove("test"+j);
-
-                grC += 1;
-                cpC += 1;
-                svC += 1;
-                pfC += 1;
-                idC += 1;
+                map.remove("g");
+                map.remove("im");
+                map.remove("ge");
+                map.remove("gr");
+                map.remove("cp");
+                map.remove("sv");
+                map.remove("pf");
+                map.remove("id");
 
                 i += 6;
             }
@@ -191,7 +171,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public int boardCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.BoardCount", map);
+        return sqlSession.selectOne("Board.Count", map);
     }
 
     @Override
@@ -201,20 +181,8 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public int boardSCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.BoardSCount",map);
-    }
-
-    @Override
-    public int boardOneCount(HashMap<String, Object> map) {
-        return sqlSession.selectOne("Board.BoardOneCount",map);
-    }
-
-    @Override
     public int declarationInsert(HashMap<String, Object> map) {
-        System.out.println("전:"+map);
         int result = sqlSession.insert("Board.declarationInsert", map);
-        System.out.println("후:"+result);
         return result;
     }
 

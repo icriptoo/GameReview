@@ -8,13 +8,20 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>아이디 찾기</title>
 <script>
-$(function(){
-  $('#enumsend').on('click', function(e){
+function enumsendEnter(){
+  if(window.event.keyCode == 13){
     $("#enumsendResult").text("");
     let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     let n_name = $('input[name=n_name]').val();
     let email = $('input[name=email]').val();
-
+    if (n_name == ""){
+      alert("닉네임을 입력해 주세요.");
+      return false;
+    }
+    if (email == ""){
+      alert("이메일을 입력해 주세요.");
+      return false;
+    }
     if(email.match(regExp) != null){
       $("#enumckResult").text("");
       $.ajax({
@@ -32,8 +39,40 @@ $(function(){
     }else {
       $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
     }
-    e.preventDefault();
-    e.stopPropagation();
+  }
+};
+$(function(){
+
+  $('#enumsend').on('click',function(){
+    $("#enumsendResult").text("");
+    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let n_name = $('input[name=n_name]').val();
+    let email = $('input[name=email]').val();
+    if (n_name == ""){
+      alert("닉네임을 입력해 주세요.");
+      return false;
+    }
+    if (email == ""){
+      alert("이메일을 입력해 주세요.");
+      return false;
+    }
+    if(email.match(regExp) != null){
+      $("#enumckResult").text("");
+      $.ajax({
+        type : 'POST',
+        url : "findemailck",
+        dataType : "text",
+        data : {
+          "n_name" : n_name,
+          "email" : email
+        },
+        success : function(u_id){
+          $("#enumsendResult").text(u_id);
+        }
+      });
+    }else {
+      $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
+    }
   });
 
   $('#emailcode').keyup(function(){
@@ -112,10 +151,10 @@ $(function(){
 </header>
 <div style="height:70%">
   <p>
-    닉네임 <input id="n_name" name="n_name" type="text" style="width:50%"/>
+    닉네임 <input id="n_name" name="n_name" type="text" style="width:50%" onkeyup="enumsendEnter()"/>
   </p>
   <p>
-    이메일 <input id="email" name="email" type="text" style="width:50%"/>
+    이메일 <input id="email" name="email" type="text" style="width:50%" onkeyup="enumsendEnter()"/>
     <button id="enumsend" name="enumsend">인증번호전송</button>
     <span id="enumsendResult" name="enumsendResult"></span>
   </p>

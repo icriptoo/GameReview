@@ -87,7 +87,7 @@ td, th {
   </div>
   <form action = "/boardInsert" method="POST" name="form1" id="form1">
     <input type="hidden" name="menu_id" value="${menu_id}" />
-    <input type="hidden" name="u_id" value="${ sessionScope.login.u_id }" />
+    <input type="hidden" name="u_id" value="${sessionScope.login.u_id}" />
     <input type="hidden" name="g_idx" value="${g_idx}" />
   <table>
 
