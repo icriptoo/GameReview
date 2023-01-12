@@ -69,36 +69,60 @@ public class BoardController {
         return "/board/declarationWrite";
     }
 
-    //관리게시판 글목록 managementList
+    //공지사항,고객센터 글목록 managementList
     @RequestMapping("managementList")
     public String managementList(@RequestParam HashMap<String, Object> map, Model model){
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+        String searchType = (String) map.get("searchType");
+        String keyword = (String) map.get("keyword");
         String menu_id = (String)map.get("menu_id");  //메뉴번호
         String u_id = (String)map.get("u_id");
+        List<BoardVo> boardList = null;
 
-        map.put("BoardCount",1);
-        boardPager.setTotalCount(boardService.boardCount(map));
-        boardPager.setPageNum(PageNum - 1);
-        boardPager.setContentNum(ContentNum);
-        boardPager.setCurrentBlock(PageNum);
-        boardPager.setLastBlock();
-        boardPager.prevNext(PageNum);
-        boardPager.setStartPage();
-        boardPager.setEndPage();
-        if(boardPager.getPageNum() != 0){
-            boardPager.setPageNum((PageNum - 1) * 30 + 1);
+        if (searchType == null){
+            searchType = "a";
         }
-        map.put("pageNum", boardPager.getPageNum());
-        map.put("contentNum", boardPager.getContentNum());
-        // 검색기능 추가 공지사항, 고객센터
-
-        List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
-
+        // 검색기능 추가 필요 공지사항, 고객센터
+        if (searchType.equals("a")) {
+            map.put("BoardCount", 1);
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if (boardPager.getPageNum() != 0) {
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getBoardList(map);
+        } else {
+            map.put("BoardCount", 1);
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if (boardPager.getPageNum() != 0) {
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            boardList = boardService.getBoardList(map);
+        }
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("u_id", u_id );
         model.addAttribute("boardList", boardList );
         model.addAttribute("Pager", boardPager);
+        model.addAttribute("sT",searchType);// 페이징용 검색유무
+        model.addAttribute("kw",keyword);
         return "/board/managementList";
     }
 
@@ -108,7 +132,6 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
-        System.out.println(map);
         boardService.boardUpdate(map);
 
         if(menu_id.equals("1") || menu_id.equals("2")){
