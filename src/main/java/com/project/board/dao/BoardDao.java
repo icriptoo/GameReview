@@ -1,6 +1,7 @@
 package com.project.board.dao;
 
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.DeclarationVo;
 import com.project.board.vo.GameListVo;
 
 import java.io.IOException;
@@ -46,4 +47,6 @@ public interface BoardDao {
     List<BoardVo> getSBoardList(HashMap<String, Object> map);
 
     int declarationInsert(HashMap<String, Object> map);
+
+    List<DeclarationVo> getDeclarationList();
 }

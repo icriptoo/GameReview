@@ -127,20 +127,31 @@ ul{
     <tr>
       <th width="10%" style="text-align:center">번호</th>
       <th width="25%" style="text-align:center">제목</th>
-      <th width="10%" style="text-align:center">작성일</th>
-      <th width="5%" style="text-align:center">조회수</th>
       <c:if test= "${menu_id eq 4}">
         <th width="5%" style="text-align:center">답변상태</th>
+      </c:if>
+      <th width="10%" style="text-align:center">작성일</th>
+      <c:if test= "${menu_id eq 3}">
+        <th width="5%" style="text-align:center">조회수</th>
       </c:if>
     </tr>
     <c:forEach var="item" items="${boardList}" >
       <tr>
         <td width="10%" style="text-align:center">${item.b_idx}</td>
         <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
-        <td width="10%" style="text-align:center">${item.indate}</td>
-        <td width="5%" style="text-align:center">${item.b_count}</td>
         <c:if test="${menu_id eq 4}">
-          <td width="5%" style="text-align:center">${item.r_score}</td>
+          <c:choose>
+            <c:when test="${empty item.a_cont}">
+              <td width="5%" style="text-align:center">대기</td>
+            </c:when>
+            <c:otherwise>
+              <td width="5%" style="text-align:center">완료</td>
+            </c:otherwise>
+            </c:choose>
+        </c:if>
+        <td width="10%" style="text-align:center">${item.indate}</td>
+        <c:if test= "${menu_id eq 3}">
+          <td width="5%" style="text-align:center">${item.b_count}</td>
         </c:if>
       </tr>
     </c:forEach>

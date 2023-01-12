@@ -5,6 +5,12 @@
 
 <mapper namespace="Board">
 
+    <!-- 신고글 가져오기 -->
+    <select id="getDeclarationList" resultType="com.project.board.vo.DeclarationVo">
+        SELECT *
+          FROM declaration
+         ORDER BY d_idx asc
+    </select>
 
     <!-- 신고 저장 -->
     <insert  id="declarationInsert" >
@@ -168,7 +174,8 @@
                         TITLE,
                         CONT,
                         B_COUNT,
-                        INDATE
+                        INDATE,
+                        A_CONT
                         FROM BOARD
                         WHERE menu_id = #{menu_id}
                         ORDER BY b_idx desc)

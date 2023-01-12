@@ -3,6 +3,7 @@ package com.project.board.controller;
 import com.project.board.service.BoardService;
 import com.project.board.vo.BoardPager;
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.DeclarationVo;
 import com.project.board.vo.GameListVo;
 import com.project.user.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,17 @@ public class BoardController {
         model.addAttribute("T2List", T2List);
         return "/home";
     }
+
+    //신고관리 페이지
+    @RequestMapping("declarationList")
+    public String declarationList(@RequestParam HashMap<String, Object> map, Model model){
+        List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
+
+        model.addAttribute("list", declarationVoList);
+
+        return "/board/declarationList";
+    }
+
 
     //신고데이터 저장
     @ResponseBody
@@ -95,6 +107,7 @@ public class BoardController {
         // 검색기능 추가 공지사항, 고객센터
 
         List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
+        System.out.println("dd:"+boardList);
 
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("u_id", u_id );

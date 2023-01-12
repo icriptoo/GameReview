@@ -3,6 +3,7 @@ package com.project.board.service.impl;
 import com.project.board.dao.BoardDao;
 import com.project.board.service.BoardService;
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.DeclarationVo;
 import com.project.board.vo.GameListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,12 @@ public class BoardServiceImpl implements BoardService {
     public int declarationInsert(HashMap<String, Object> map) {
         int result = boardDao.declarationInsert(map);
         return result;
+    }
+
+    @Override
+    public List<DeclarationVo> getDeclarationList() {
+        List<DeclarationVo> declarationVoList = boardDao.getDeclarationList();
+        return declarationVoList;
     }
 
     @Override

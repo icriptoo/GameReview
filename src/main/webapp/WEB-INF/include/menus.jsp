@@ -79,13 +79,10 @@ li.asd{
       <li class="asd"><a href="/managementList?menu_id=4&u_id=${sessionScope.login.u_id}&pageNum=1&contentNum=30">고객센터</a></li>
       <c:set var="admin" value="${login}"/>
       <c:if test="${admin.authority eq '0'}">
-        <li class="asd"><a href="/">관리페이지</a></li>
+        <li class="asd"><a href="/declarationList">관리페이지</a></li>
         <li class="asd"><a href="/GameListInsert">게임목록db에 넣기</a></li>
       </c:if>
     </ul>
   </nav>
 </div>
 </body>
-<script>
-console.log(${login});
-</script>

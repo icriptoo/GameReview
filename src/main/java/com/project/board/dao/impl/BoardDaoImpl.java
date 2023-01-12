@@ -2,6 +2,7 @@ package com.project.board.dao.impl;
 
 import com.project.board.dao.BoardDao;
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.DeclarationVo;
 import com.project.board.vo.GameListVo;
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.Jsoup;
@@ -184,6 +185,12 @@ public class BoardDaoImpl implements BoardDao {
     public int declarationInsert(HashMap<String, Object> map) {
         int result = sqlSession.insert("Board.declarationInsert", map);
         return result;
+    }
+
+    @Override
+    public List<DeclarationVo> getDeclarationList() {
+        List<DeclarationVo> declarationVoList = sqlSession.selectList("Board.getDeclarationList");
+        return declarationVoList;
     }
 
     @Override
