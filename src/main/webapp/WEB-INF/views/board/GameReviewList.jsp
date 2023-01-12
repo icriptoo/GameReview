@@ -13,8 +13,6 @@
 <script>
 
 function boardCheck(){
-  console.log('${ sessionScope.login.u_id }');
-  console.log('${gameListVo.g_idx}');
   let u_id = '${ sessionScope.login.u_id }'; // 유저아이디 들고오기
   let g_idx = '${gameListVo.g_idx}'; // 게임idx 들고오기
 

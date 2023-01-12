@@ -5,6 +5,7 @@ public class UserVo {
     private String u_id;
     private String n_name;
     private String pw;
+    private String cpw; // 비밀번호 변경할때 기존 비밀번호 확인용
     private String email;
     private String genre1;
     private String genre2;
@@ -17,7 +18,7 @@ public class UserVo {
 
     public UserVo (){}
 
-    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode, String withdrawal, String authority) {
+    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode, String withdrawal, String authority,String cpw) {
         this.u_id = u_id;
         this.n_name = n_name;
         this.pw = pw;
@@ -30,6 +31,15 @@ public class UserVo {
         this.pcode = pcode;
         this.withdrawal = withdrawal;
         this.authority = authority;
+        this.cpw = cpw;
+    }
+
+    public String getCpw() {
+        return cpw;
+    }
+
+    public void setCpw(String cpw) {
+        this.cpw = cpw;
     }
 
     public String getAuthority() {
@@ -130,6 +140,7 @@ public class UserVo {
                 "u_id='" + u_id + '\'' +
                 ", n_name='" + n_name + '\'' +
                 ", pw='" + pw + '\'' +
+                ", cpw='" + cpw + '\'' +
                 ", email='" + email + '\'' +
                 ", genre1='" + genre1 + '\'' +
                 ", genre2='" + genre2 + '\'' +

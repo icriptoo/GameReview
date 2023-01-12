@@ -57,67 +57,24 @@ ul{
 }
 </style>
 <script>
-function nnCheckEnter(){
-  if(window.event.keyCode == 13){
-    let cn_name = $('input[name=n_name]').val();
-    let n_name = "${user.n_name}";
-    if(cn_name != n_name){
-      $.ajax({
-        type : 'POST',
-        url : "nnCheck",
-        dataType : "text",
-        data : {
-          "n_name" : cn_name
-        },
-        success : function(nnCheck){
-          $("#nnCheckResult").text(nnCheck);
-        }
-      })
-    } else{
-     $("#nnCheckResult").text("현재 닉네임과 동일한 닉네임입니다.");
-    }
-  }
-};
-function enumsendEnter(){
-  if(window.event.keyCode == 13){
-    $("#enumsendResult").text("");
-    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    let email = $('input[name=email]').val();
-
-    if(email == ""){
-      $("#enumsendResult").text("이메일을 입력해 주세요.");
-      return false;
-    }
-
-    if(email == '' || email == 'undefined') return false;
-    if(email.match(regExp) != null){
-      $.ajax({
-        type : 'POST',
-        url : "email",
-        dataType : "text",
-        data : {
-          "email" : email
-        },
-        success : function(enumsend){
-          $("#enumsendResult").text(enumsend);
-        }
-      });
-      return false;
-    }else {
-      $("#enumsendResult").text("올바른 이메일 형식이 아닙니다.");
-      return false;
-    }
-  }
-};
 $(function(){
   $('form').on('submit',function(e){
-    let n_name = "${user.n_name}";
+    let n_name  = "${user.n_name}";
     let cn_name = $('input[name=n_name]').val();
-    let email = "${user.email}";
-    let cemail = $('input[name=email]').val();
-    let g1 = $('[name=genre1]').val();
-    let g2 = $('[name=genre2]').val();
-    let g3 = $('[name=genre3]').val();
+    let email   = "${user.email}";
+    let cemail  = $('input[name=email]').val();
+    let cg1     = $('[name=genre1]').val();
+    let g1      = "${user.genre1}";
+    let cg2     = $('[name=genre2]').val();
+    let g2      = "${user.genre2}";
+    let cg3     = $('[name=genre3]').val();
+    let g3      = "${user.genre3}";
+
+    if(n_name == cn_name && email == cemail && g1 == cg1 && g2 == cg2 && g3 == cg3){
+      alert("변경된 내용이 없습니다.");
+      return false;
+    }
+
     if(cn_name != n_name){
       if($('[name=nnCheckResult]').text() == "중복된 닉네임입니다."){
         alert('아이디 중복체크를 확인해 주세요.');
@@ -156,19 +113,19 @@ $(function(){
         }
       }
     }
-    if(g1==''){
+    if(cg1==''){
       alert('첫번째 장르를 선택해 주세요.');
       return false;
     }
-    if(g2==''){
+    if(cg2==''){
       alert('두번째 장르를 선택해 주세요.');
       return false;
     }
-    if(g3==''){
+    if(cg3==''){
       alert('세번째 장르를 선택해 주세요.');
       return false;
     }
-    if(g1==g2 || g1==g3 || g2==g3){
+    if(cg1==cg2 || cg1==cg3 || cg2==cg3){
       alert('장르가 중복입니다. 다시 확인해 주세요.');
       return false;
     }
@@ -191,10 +148,12 @@ $(function(){
         },
         success : function(nnCheck){
           $("#nnCheckResult").text(nnCheck);
+          return false;
         }
       })
     } else{
      $("#nnCheckResult").text("현재 닉네임과 동일한 닉네임입니다.");
+     return false;
     }
     e.preventDefault();
     e.stopPropagation();
@@ -225,6 +184,7 @@ $(function(){
         },
         success : function(enumsend){
           $("#enumsendResult").text(enumsend);
+          return false;
         }
       });
       return false;
@@ -258,7 +218,6 @@ $(function(){
   });
 
 });
-
 </script>
 </head>
 <body class="w3-light-grey">
@@ -280,7 +239,7 @@ $(function(){
     </aside>
   </div>
   <div class="mypage">
-    <form action="/user/profilupdate" method="POST" encType = "multipart/form-data" onsubmit="return false">
+    <form action="/user/profilupdate" method="POST" encType = "multipart/form-data">
       <div class="profile">
         <p>
           <c:set var="img" value="${user.img}"/>
@@ -293,18 +252,18 @@ $(function(){
             </c:otherwise>
           </c:choose>
         </p>
-        <button name="update">수정완료</button>
+        <button type="submit" name="update">수정완료</button>
         <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
       </div>
       <div class="mypagein">
         <input type="hidden" name="pw" value="${user.pw}">
         <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${user.u_id}" readonly/></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}" onkeyup="nnCheckEnter()"/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}"/>
           <button type="button" id="nnCheck" name="nnCheck">중복확인</button>
           <span id="nnCheckResult" name="nnCheckResult"></span>
         </p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
-          <input type="text" name="email" value="${user.email}" onkeyup="enumsendEnter()">
+          <input type="text" name="email" value="${user.email}">
           <button type="button" id="enumsend" name="enumsend">인증번호전송</button>
           <span id="enumsendResult" name="enumsendResult"></span>
         </p>

@@ -71,21 +71,23 @@ public class BoardController {
 
     //공지사항,고객센터 글목록 managementList
     @RequestMapping("managementList")
-    public String managementList(@RequestParam HashMap<String, Object> map, Model model){
+    public String managementList(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
+        List<BoardVo> boardList = null;
+        UserVo userVo = (UserVo) httpSession.getAttribute("login");
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String searchType = (String) map.get("searchType");
         String keyword = (String) map.get("keyword");
         String menu_id = (String)map.get("menu_id");  //메뉴번호
-        String u_id = (String)map.get("u_id");
-        List<BoardVo> boardList = null;
-
-        if (searchType == null){
+        if(menu_id.equals("4")) { // 고객센터 페이지에 필요
+            String u_id = userVo.getU_id();
+            map.put("u_id",u_id);
+            model.addAttribute("u_id", u_id );
+        }
+        if (searchType == null){ // 검색유무 확인
             searchType = "a";
         }
-        // 검색기능 추가 필요 공지사항, 고객센터
         if (searchType.equals("a")) {
-            map.put("BoardCount", 1);
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
@@ -101,7 +103,6 @@ public class BoardController {
             map.put("contentNum", boardPager.getContentNum());
             boardList = boardService.getBoardList(map);
         } else {
-            map.put("BoardCount", 1);
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
@@ -118,7 +119,6 @@ public class BoardController {
             boardList = boardService.getBoardList(map);
         }
         model.addAttribute("menu_id", menu_id );
-        model.addAttribute("u_id", u_id );
         model.addAttribute("boardList", boardList );
         model.addAttribute("Pager", boardPager);
         model.addAttribute("sT",searchType);// 페이징용 검색유무
@@ -807,9 +807,9 @@ public class BoardController {
     public String myBoard(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+        String menu_id = (String) map.get("menu_id");
         String searchType = (String) map.get("searchType");;
         String keyword = "";
-
         List<BoardVo> boardList = null;
 
         UserVo userVo = (UserVo) httpSession.getAttribute("login");
@@ -857,6 +857,7 @@ public class BoardController {
         }
         model.addAttribute("boardList", boardList );
         model.addAttribute("Pager", boardPager);
+        model.addAttribute("menu_id", menu_id);
         model.addAttribute("sT",searchType);// 페이징용 검색유무
         model.addAttribute("kw",keyword);
 

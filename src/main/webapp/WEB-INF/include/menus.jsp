@@ -87,5 +87,4 @@ li.asd{
 </div>
 </body>
 <script>
-console.log(${login});
 </script>

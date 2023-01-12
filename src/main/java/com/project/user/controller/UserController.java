@@ -73,7 +73,6 @@ public class UserController {
         String Epw = encrypt.getEncrypt(pw,salt);
         // db에 id에 등록되어 있는 암호화된 비밀번호 가져옴
         String ckpw = userService.getckpw(map);
-
         // 암호화된 비밀번호 비교
         if ( Epw.equals(ckpw)){
             map.put("pw",Epw);
@@ -96,6 +95,7 @@ public class UserController {
             }
             returnURL = "redirect:"+ url;
             */
+            vo.setCpw(pw);
             httpSession.setAttribute("login", vo);
             return "redirect:/";
         }else {
@@ -146,13 +146,12 @@ public class UserController {
     public String profilupdate(@RequestParam HashMap<String, Object> map, HttpSession httpSession){
         userService.userupdate(map);
         UserVo user = userService.getUser(httpSession.getAttribute("login"));
-
         httpSession.removeAttribute("login");
         httpSession.setAttribute("login", user);
 
         map.put("user", user);
 
-        return "user/mypage";
+        return "redirect:/mypage";
     }
 
     // 프로필 사진 업데이트 창 띄우기
@@ -255,15 +254,11 @@ public class UserController {
     public String ckPwJ(@RequestParam HashMap<String, Object> map){
         String mse ="";
         String ck = "";
-        String signupck = null;
-        String ckpw = "";
         String u_id = (String)map.get("u_id");
         String pw = (String)map.get("pw");
-        signupck = (String)map.get("ck");
+        UserVo vo = userService.getUserChPw(map);
 
-        if (!signupck.equals("ck")) {
-            ckpw = userService.findpwck(map);
-        }
+        String ckpw = userService.findpwck(map);
         if (map.size() >= 3) {
             ck = (String) map.get("ck");
         }
@@ -275,13 +270,13 @@ public class UserController {
             }
         } else{
             mse = checkPassword.ckPw(pw, u_id);
-            if (mse == "") {
-                mse = "올바른 비밀번호입니다.";
-            }
             String Pcode = userService.getPcode(map);
             String Epw = encrypt.getEncrypt(pw, Pcode);
             if (Epw.equals(ckpw)) {
                 mse = "기존 비밀번호와 동일합니다.";
+            }
+            if (mse == "") {
+                mse = "올바른 비밀번호입니다.";
             }
         }
         return mse;
@@ -330,12 +325,12 @@ public class UserController {
     // 비밀번호 변경
     @RequestMapping("/changePw")
     public String changePw(@RequestParam HashMap<String, Object> map){
-        String mse = "비밀번호가 변경됐습니다.";
         String pw = (String)map.get("pw");
         String Pcode = userService.getPcode(map);
         String Epw = encrypt.getEncrypt(pw,Pcode);
         map.put("pw",Epw);
         map.put("pcode",Pcode);
+
         userService.changePw(map);
 
         return "popupout";

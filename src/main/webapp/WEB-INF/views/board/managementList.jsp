@@ -13,8 +13,6 @@
 <script>
 
 function boardCheck(){
-  console.log('${ sessionScope.login.u_id }');
-  console.log('${gameListVo.g_idx}');
   let u_id = '${ sessionScope.login.u_id }'; // 유저아이디 들고오기
   let g_idx = '${gameListVo.g_idx}'; // 게임idx 들고오기
 
@@ -194,12 +192,9 @@ ul{
       </td>
     </tr>
     <tr style="border-top: 1px solid #000">
-      <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+      <td colspan="2" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
-          <option value="board_local"><strong>지역</strong></option>
-          <option value="writer"><strong>작성자</strong></option>
-          <option value="board_check"><strong>접수상태</strong></option>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>

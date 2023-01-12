@@ -173,7 +173,6 @@ window.onclick = function(e) {
 
 function showPopup(u_id){
   var ue_id = u_id
-  console.log(u_id)
   newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id="+ue_id+"","팝업창","width=500, height=600, top=10, left=10");
 }
 
