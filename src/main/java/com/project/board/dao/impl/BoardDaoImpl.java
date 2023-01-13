@@ -194,6 +194,12 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
+    public DeclarationVo getDeclaration(HashMap<String, Object> map) {
+        DeclarationVo declarationVo = sqlSession.selectOne("Board.getDeclaration", map);
+        return declarationVo;
+    }
+
+    @Override
     public List<GameListVo> getGameList() {
         List<GameListVo> gameListVo = sqlSession.selectList("Game.GetGameList");
         return gameListVo;

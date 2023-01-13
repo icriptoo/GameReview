@@ -67,7 +67,32 @@ function btnSearchEnter(){
   }
 }
 </script>
-<%@ include file="/WEB-INF/include/declaration_Include.jsp" %>
+
+<style>
+    .type a{cursor:pointer;}
+    .cont {display:none;}
+    #btn1 {
+      display : none;
+    }
+</style>
+<script>
+function toggleBtn1() {
+
+  // 토글 할 버튼 선택 (btn1)
+  const btn1 = document.getElementById('btn1');
+
+  // btn1 숨기기 (display: none)
+  if(btn1.style.display !== 'none') {
+    btn1.style.display = 'none';
+  }
+  // btn` 보이기 (display: block)
+  else {
+    btn1.style.display = 'block';
+  }
+
+}
+</script>
+
 </head>
 <body class="w3-light-grey">
 <%@ include file="/WEB-INF/include/menus.jsp" %>
@@ -90,8 +115,8 @@ function btnSearchEnter(){
   <table>
     <tr>
       <th colspan="6" style="text-align:center">
-        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=1&pageNum=1&contentNum=30'" >리뷰게시판</button>
-        <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=2&pageNum=1&contentNum=30'" >자유게시판</button>
+        <button style="font-size:20px;" onClick="location.href='#'" >신고관리</button>
+        <button style="font-size:20px;" onClick="location.href='#'" >유저관리</button>
       </th>
     </tr>
     <tr>
@@ -106,22 +131,22 @@ function btnSearchEnter(){
         <td width="10%" style="text-align:center">${list.ue_id}</td>
         <c:choose>
           <c:when test="${list.type_idx eq 1}">
-            <td width="10%" style="text-align:left"><a href="/">불건전한 내용</a></td>
+            <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=불건전한 내용">불건전한 내용</a></td>
           </c:when>
           <c:when test="${list.type_idx eq 2}">
-            <td width="10%" style="text-align:left"><a href="/">스팸 및 부적절한 홍보</a></td>
+            <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=스팸 및 부적절한 홍보">스팸 및 부적절한 홍보</a></td>
           </c:when>
           <c:when test="${list.type_idx eq 3}">
-            <td width="10%" style="text-align:left"><a href="/">명예훼손 및 비방</a></td>
+            <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=명예훼손 및 비방">명예훼손 및 비방</a></td>
           </c:when>
           <c:when test="${list.type_idx eq 4}">
-            <td width="10%" style="text-align:left"><a href="/">초상권 및 저작권 침해</a></td>
+            <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=초상권 및 저작권 침해">초상권 및 저작권 침해</a></td>
           </c:when>
           <c:when test="${list.type_idx eq 5}">
-            <td width="10%" style="text-align:left"><a href="/">개인정보 도용</a></td>
+            <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=개인정보 도용">개인정보 도용</a></td>
           </c:when>
           <c:when test="${list.type_idx eq 6}">
-            <td width="10%" style="text-align:left"><a href="/">기타</a></td>
+            <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=기타">기타</a></td>
           </c:when>
         </c:choose>
         <td width="10%" style="text-align:center">${list.us_id}</td>
@@ -129,6 +154,8 @@ function btnSearchEnter(){
       </tr>
       <tr style="border-top: 1px solid #999999">
       </tr>
+
+
     </c:forEach>
 
   </table>

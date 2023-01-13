@@ -92,6 +92,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public DeclarationVo getDeclaration(HashMap<String, Object> map) {
+        DeclarationVo declarationVo = boardDao.getDeclaration(map);
+        return declarationVo;
+    }
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
     @Override

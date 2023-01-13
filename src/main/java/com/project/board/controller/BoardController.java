@@ -41,7 +41,20 @@ public class BoardController {
         return "/home";
     }
 
-    //신고관리 페이지
+    //신고 디테일 페이지
+    @RequestMapping("declarationView")
+    public String declarationView(@RequestParam HashMap<String, Object> map, Model model){
+        String title = (String)map.get("title");  //분류 제목 가져오기
+        DeclarationVo declarationVo = boardService.getDeclaration(map);
+        System.out.println(declarationVo);
+
+        model.addAttribute("title", title);
+        model.addAttribute("detail", declarationVo);
+
+        return "/admin/declarationView";
+    }
+
+    //신고관리글 페이지
     @RequestMapping("declarationList")
     public String declarationList(@RequestParam HashMap<String, Object> map, Model model){
         List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
