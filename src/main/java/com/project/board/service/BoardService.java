@@ -1,6 +1,7 @@
 package com.project.board.service;
 
 import com.project.board.vo.BoardVo;
+import com.project.board.vo.DeclarationVo;
 import com.project.board.vo.GameListVo;
 
 import java.io.IOException;
@@ -46,4 +47,8 @@ public interface BoardService {
     void boardDelete(HashMap<String, Object> map);
 
     int declarationInsert(HashMap<String, Object> map);
+
+    List<DeclarationVo> getDeclarationList();
+
+    DeclarationVo getDeclaration(HashMap<String, Object> map);
 }
