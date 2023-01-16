@@ -188,7 +188,7 @@ function btnSearchEnter(){
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}">< 이전</a>
-                    <a class="firstPageNum" href="/GameReviewList?pageNum=1&contentNum=30">1</a>
+                    <a class="firstPageNum" href="/GameReviewList?pageNum=1&contentNum=30&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}">1</a>
                     ...
                   </c:if>
                   <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
@@ -226,11 +226,10 @@ function btnSearchEnter(){
           </c:otherwise>
         </c:choose>
         <tr style="border-top: 1px solid #000">
-          <td style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+          <td colspan="3" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
             <select class="search" id="searchType">
               <option value="title"><strong>제목</strong></option>
               <option value="u_id"><strong>작성자</strong></option>
-              <option value="g_name"><strong>게임명</strong></option>
             </select>
             <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
             <button id="btnSearch" class="searchB">검색</button>

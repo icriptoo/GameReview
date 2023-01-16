@@ -46,7 +46,6 @@ public class BoardController {
     public String declarationView(@RequestParam HashMap<String, Object> map, Model model){
         String title = (String)map.get("title");  //분류 제목 가져오기
         DeclarationVo declarationVo = boardService.getDeclaration(map);
-        System.out.println(declarationVo);
 
         model.addAttribute("title", title);
         model.addAttribute("detail", declarationVo);
@@ -106,8 +105,11 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");  //메뉴번호
         if(menu_id.equals("4")) { // 고객센터 페이지에 필요
             String u_id = userVo.getU_id();
+            String authority = userVo.getAuthority();
+            map.put("authority",authority);
             map.put("u_id",u_id);
             model.addAttribute("u_id", u_id );
+            model.addAttribute("authority", authority );
         }
         if (searchType == null){ // 검색유무 확인
             searchType = "a";
@@ -143,6 +145,7 @@ public class BoardController {
             map.put("contentNum", boardPager.getContentNum());
             boardList = boardService.getBoardList(map);
         }
+
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("boardList", boardList );
         model.addAttribute("Pager", boardPager);
@@ -393,7 +396,7 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getSBoardList(map);
+            boardList = boardService.getBoardList(map);
         }
 
         model.addAttribute("gameListVo", gameListVo ); //해당게임정보 불러오기
@@ -418,6 +421,7 @@ public class BoardController {
         if (searchType == null){
             searchType = "a";
         }
+        map.put("total",1);
         // 첫 화면에 나올 게시글 페이징
         if (searchType == "a") {
             map.put("BoardCount",1);
@@ -451,7 +455,7 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getSBoardList(map);
+            boardList = boardService.getBoardList(map);
         }
 
         model.addAttribute("boardList", boardList ); //전체 글목록 불러오기

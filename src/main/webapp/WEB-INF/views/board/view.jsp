@@ -43,19 +43,40 @@ table.b {
   border-collapse: collapse;
   border-radius: 10px;
   border-style: hidden;
-  box-shadow: 0 0 0 1px #000;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  margin-top: 20px;
 }
 table.a td, th {
   border : 1px solid black;
   border-collapse : collapse;
 }
 table.b tr {
-  border : 1px solid black;
   border-collapse : collapse;
 }
-table.b td {
-  border : 1px solid black;
+table.b td.cont {
+  padding : 5px 10px 5px 10px;
   border-collapse : collapse;
+}
+table.b td.updateForm {
+  border-collapse : collapse;
+  text-align: right;
+}
+.profile{
+  width: 90%;
+  border-radius: 50%;
+  border: 1px solid #bfbfbf
+}
+.img-box{
+  width: 52px;
+  padding-bottom: 15px;
+}
+.comment-box{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 60px;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
 }
 textarea {
   width: 50%;
@@ -63,57 +84,6 @@ textarea {
   border: none;
   resize: none;
 }
-
-</style>
-<script>
-function replyDelete(r_idx){
-  let out = confirm("댓글을 삭제 하시겠습니까?");
-  let b_idx = "${boardVo.b_idx}";
-  let menu_id = "${boardVo.menu_id}";
-  if (out){
-    location.href='/replyDelete?r_idx='+r_idx+'&b_idx='+b_idx+'&menu_id='+menu_id;
-  }
-}
-
-function replyUpdateForm(r_idx){
-  let ck = confirm("댓글을 수정 하시겠습니까?");
-  if (ck) {
-    let k = document.getElementById("replycont"+r_idx);
-    let form = "";
-    form += '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
-    form += '<textarea class="replyUpdateCont" id="replyUpdateCont" cols="80" rows="3">';
-    form += k.textContent;
-    form += '</textarea><br/>';
-    form += '<button type = "button" class="UpdateBtn" onClick="replyUpdate('+ r_idx +')"> 완료 </button>';
-    form += '<button type = "button" class="DeleteBtn" onClick="replyList()"> 취소 </button></div></dr>';
-    document.getElementById("replycont"+r_idx).innerHTML = form;
-    $("[id=replyUpdate]").css("display", "none");
-    $("[id=replyDelete]").css("display", "none");
-  }
-}
-
-function replyUpdate(r_idx){
-  let replycont = $("#replyUpdateCont").val();
-  let param = {"r_idx":r_idx, "cont":replycont};
-  $.ajax({
-    type: "POST",
-    url:  "/replyUpdate",
-    data: param,
-    success: function(result){
-      alert("댓글이 수정 됐습니다.");
-      replyList();
-    },
-    error: function(error_){
-      if($('#replycontent').val() == ''){
-        alert('댓글을 입력해 주세요.')
-      }
-    }
-  });
-}
-
-</script>
-
-<style>
 .dropbtn {
     display: inline-block;
     color: black;
@@ -149,9 +119,62 @@ function replyUpdate(r_idx){
 .dropdown-content a:hover {background-color: #f1f1f1}
 
 .show {display:block;}
-</style>
 
+</style>
 <script>
+function replyDelete(r_idx){
+  let out = confirm("댓글을 삭제 하시겠습니까?");
+  let b_idx = "${boardVo.b_idx}";
+  let menu_id = "${boardVo.menu_id}";
+  if (out){
+    location.href='/replyDelete?r_idx='+r_idx+'&b_idx='+b_idx+'&menu_id='+menu_id;
+  }
+}
+
+function replyUpdateForm(r_idx){
+  let ck = confirm("댓글을 수정 하시겠습니까?");
+  if (ck) {
+  // 수정버튼 누르면 다른수정버튼 모두 비활성화 만들어야함
+    document.getElementById('replyUpdate').style.display = 'none'
+    let k = document.getElementById("replycont"+r_idx);
+
+    let form = '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
+    form += '<textarea class="replyUpdateCont" id="replyUpdateCont" cols="80" rows="3">';
+    form += k.textContent;
+    form += '</textarea></br>';
+    form += '<div style="text-align:right;"><button type = "button" class="UpdateBtn" onclick="replyUpdate('+ r_idx +')"> 완료 </button>';
+    form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></div></dr>';
+    document.getElementById("replycont"+r_idx).innerHTML = form;
+  }
+}
+
+function comment_button(r_idx){
+
+  let form = '<div class="comment-write-box"><input type="hidden" name="r_idx" id="comment_number" value='+r_idx+'>';
+  form += '<textarea class="commentWriteCont" id="commentWriteCont" cols="80" rows="3"></textarea></br>';
+  form += '<button type="button" class="UpdateBtn" onclick="commentUpdate('+ r_idx +')"> 완료 </button>';
+  form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></dr></div>';
+  document.getElementById("comment"+r_idx).innerHTML = form;
+}
+
+function replyUpdate(r_idx){
+  let replycont = $("#replyUpdateCont").val();
+  let param = {"r_idx":r_idx, "cont":replycont};
+  $.ajax({
+    type: "POST",
+    url:  "/replyUpdate",
+    data: param,
+    success: function(result){
+      alert("댓글이 수정 됐습니다.");
+      replyList();
+    },
+    error: function(error_){
+      if($('#replycontent').val() == ''){
+        alert('댓글을 입력해 주세요.')
+      }
+    }
+  });
+}
 
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -210,7 +233,6 @@ function showPopup(u_id){
             <a onClick = "showPopup('${boardVo.u_id}');" >신고하기</a>
           </div>
         </td>
-
       </tr>
       <tr>
         <th style="text-align:center">내용</th>
@@ -235,7 +257,7 @@ function showPopup(u_id){
       </c:if>
       <tr>
         <td style="height:10%; text-align:right" colspan="2">
-          <c:if test="${sessionScope.login.u_id eq 'admin' && menu_id eq 4}">
+          <c:if test="${login.authority eq 0  && menu_id eq 4}">
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >답변하기</button>
           </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
@@ -314,19 +336,31 @@ function replyList(){
       html += '<table class="b" id="b">';
       for(let i=0; i<replylen; i++){
         html += '<tr>';
-        html += '<td rowspan="3" style="width:52px"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="w3-circle" alt="UserProfile" style="width:80%"/></td>';
-        html += '<td colspan="2">'+list[i].u_id+'</td>';
+        if(list[i].img == null){
+          html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+        } else {
+          html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+        }
+        html += '<td class="cont" colspan="2"><strong>'+list[i].u_id+'</strong></td>';
         html += '</tr>';
         html += '<tr>';
-        html += '<td colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+        html += '<td class="cont" colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
         html += '</tr>';
         html += '<tr>';
-        html += '<td>'+list[i].indate+'</td>';
+        html += '<td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
         if(list[i].u_id === u_id){
-          html += '<td><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
-          html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button></td>';
+          html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+          html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+          html += '<button style="font-size:20px;" onclick="myFunction()">답글</button>';
+          html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
+        } else {
+          html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
+          html += '<button style="font-size:20px;" onclick="myFunction()">답글</button>';
+          html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
         }
         html += '</tr>';
+        //답글
+        html += '<div><tr><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr></div>';
       }
       html += '</table>';
       if (replylen == 0){
@@ -354,24 +388,37 @@ function replyP(){
       let endP = list.Pager.endPage;
       let lastP = list.Pager.lastPageNum;
       let html = "";
-      html += '<table><tr>';
-      html += '<td class="page" id="page" colspan="2" style="text-align:center;"><div class="pager">';
+      html += '<table><tr><td class="page" id="page" colspan="2" style="text-align:center;"><div class="pager">';
       if (list.Pager.prev === true){
-        html += '<a href="http://localhost:8080/View?pageNum='+startP-1+'&contentNum='+(startP-1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">< 이전</a>';
-        html += '<a class="firstPageNum" href="/View?pageNum=1&contentNum=30">1</a> ... ';
+        html += '<a href="http://localhost:8080/View?pageNum='+(startP-1)+'&contentNum='+(startP-1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">< 이전</a>';
+        html += '<a class="firstPageNum" href="/View?pageNum=1&contentNum=30&menu_id=${menu_id}&b_idx='+list.b_idx+'"> 1 </a> ... ';
       }
       for (startP; startP <= endP; startP++){
-        html += '<a class="pageNum" href="/View?pageNum='+startP+'&contentNum='+startP*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">'+ startP +'</a>';
+        html += '<a class="pageNum" href="/View?pageNum='+startP+'&contentNum='+startP*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'"> '+startP+' </a>';
       }
       if(list.Pager.next === true){
         html += ' ... <a class="lastPageNum" href="/View?pageNum='+lastP+'&contentNum='+lastP*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">'+lastP+'</a>';
-        html += '<a href="http://localhost:8080/View?pageNum='+endP+1+'&contentNum='+(endP+1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">다음 ></a>';
+        html += '<a href="http://localhost:8080/View?pageNum='+(endP+1)+'&contentNum='+(endP+1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'"> 다음 ></a>';
       }
       html += '</div></td></tr></table>';
       $('#replyP-box').html(html);
     }
   });
 };
-
+// 답글 누르면 답글창 나오는 함수
+function myFunction() {
+  var x = document.getElementById('replylist-box');
+  var y = document.getElementById('replyin_box');
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+  if (y.className.indexOf("w3-show") == -1) {
+    y.className += " w3-show";
+  } else {
+    y.className = y.className.replace(" w3-show", "");
+  }
+}
 </script>
 </html>

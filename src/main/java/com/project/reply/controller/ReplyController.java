@@ -51,7 +51,7 @@ public class ReplyController {
     public HashMap<String, Object> replyP(@RequestParam HashMap<String, Object> map){
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
-        int i = replyService.replyCount(map);
+
         boardPager.setTotalCount(replyService.replyCount(map));
         boardPager.setPageNum(PageNum - 1);
         boardPager.setContentNum(ContentNum);

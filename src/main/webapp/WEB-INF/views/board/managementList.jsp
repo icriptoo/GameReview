@@ -126,6 +126,9 @@ ul{
       <th width="10%" style="text-align:center">번호</th>
       <th width="25%" style="text-align:center">제목</th>
       <c:if test= "${menu_id eq 4}">
+        <th width="5%" style="text-align:center">작성자</th>
+      </c:if>
+      <c:if test= "${menu_id eq 4}">
         <th width="5%" style="text-align:center">답변상태</th>
       </c:if>
       <th width="10%" style="text-align:center">작성일</th>
@@ -138,6 +141,7 @@ ul{
         <td width="10%" style="text-align:center">${item.b_idx}</td>
         <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
         <c:if test="${menu_id eq 4}">
+        <td width="10%" style="text-align:center">${item.u_id}</td>
           <c:choose>
             <c:when test="${empty item.a_cont}">
               <td width="5%" style="text-align:center">대기</td>
@@ -159,11 +163,11 @@ ul{
         <c:choose>
           <c:when test="${sT eq 'a'}">
             <tr>
-              <td class="page" id="page" colspan="2" style="text-align:center;">
+              <td class="page" id="page" colspan="4" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/managementList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
-                    <a class="firstPageNum" href="/managementList?pageNum=1&contentNum=30">1</a>
+                    <a class="firstPageNum" href="/managementList?pageNum=1&contentNum=30&menu_id=${menu_id}">1</a>
                     ...
                   </c:if>
                   <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
@@ -180,7 +184,7 @@ ul{
           </c:when>
           <c:otherwise>
             <tr>
-              <td class="page" id="page" colspan="2" style="text-align:center;">
+              <td class="page" id="page" colspan="4" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/managementList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">< 이전</a>
@@ -206,6 +210,9 @@ ul{
       <td colspan="2" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
+          <c:if test="${authority eq 0}">
+            <option value="u_id"><strong>작성자</strong></option>
+          </c:if>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>

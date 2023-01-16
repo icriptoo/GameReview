@@ -118,7 +118,7 @@ function btnSearchEnter(){
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/myboard?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
-                    <a class="firstPageNum" href="/myboard?pageNum=1&contentNum=30">1</a>
+                    <a class="firstPageNum" href="/myboard?pageNum=1&contentNum=30&menu_id=${menu_id}">1</a>
                     ...
                   </c:if>
                   <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">

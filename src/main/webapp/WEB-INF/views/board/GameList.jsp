@@ -111,7 +111,7 @@ function btnGSearch(){
           </select>
         </td>
         <td>
-          <input id="gameName" class="gameName" type="text" onkeyup="btnGSearchEnter()">
+          <input id="gameName" class="gameName" type="text" placeholder="제목을 입력해 주세요." onkeyup="btnGSearchEnter()">
           <button id="btnGSearch" class="btnGSearch" onclick="btnGSearch()">검색</button>
         </td>
       </tr>
