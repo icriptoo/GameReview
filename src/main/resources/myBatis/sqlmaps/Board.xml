@@ -5,9 +5,17 @@
 
 <mapper namespace="Board">
 
+    <!-- 신고처리하기 -->
+    <update id="declarationProcess">
+        UPDATE declaration
+           SET process = #{process}
+         WHERE d_idx = #{d_idx}
+    </update>
+
     <!-- 신고글 가져오기 -->
     <select id="getDeclaration" resultType="com.project.board.vo.DeclarationVo">
-        SELECT type_idx,
+        SELECT d_idx,
+               type_idx,
                us_id,
                cont,
                ue_id,
@@ -24,6 +32,7 @@
                ue_id,
                type_idx
           FROM declaration
+         WHERE process = 0
          ORDER BY d_idx asc
     </select>
 

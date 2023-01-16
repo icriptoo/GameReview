@@ -51,4 +51,6 @@ public interface BoardService {
     List<DeclarationVo> getDeclarationList();
 
     DeclarationVo getDeclaration(HashMap<String, Object> map);
+
+    void declarationProcess(HashMap<String, Object> map);
 }

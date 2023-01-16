@@ -41,6 +41,17 @@ public class BoardController {
         return "/home";
     }
 
+    //신고처리
+    @RequestMapping("declarationProcess")
+    public String declarationProcess(@RequestParam HashMap<String, Object> map, Model model){
+        boardService.declarationProcess(map);
+        List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
+
+        model.addAttribute("list", declarationVoList);
+
+        return "/admin/declarationList";
+    }
+
     //신고 디테일 페이지
     @RequestMapping("declarationView")
     public String declarationView(@RequestParam HashMap<String, Object> map, Model model){
@@ -61,9 +72,8 @@ public class BoardController {
 
         model.addAttribute("list", declarationVoList);
 
-        return "/board/declarationList";
+        return "/admin/declarationList";
     }
-
 
     //신고데이터 저장
     @ResponseBody
@@ -76,7 +86,6 @@ public class BoardController {
         } else {
             result = "실패했습니다.";
         }
-        System.out.println("dho:"+result);
         model.addAttribute("result", result);
 
         return result;
@@ -92,7 +101,7 @@ public class BoardController {
         model.addAttribute("us_id", us_id );
         model.addAttribute("ue_id", ue_id );
         model.addAttribute("b_idx", b_idx );
-        return "/board/declarationWrite";
+        return "/admin/declarationWrite";
     }
 
     //관리게시판 글목록 managementList
@@ -120,7 +129,6 @@ public class BoardController {
         // 검색기능 추가 공지사항, 고객센터
 
         List<BoardVo> boardList = boardService.getBoardList(map);  //글목록 불러오기
-        System.out.println("dd:"+boardList);
 
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("u_id", u_id );
@@ -445,7 +453,7 @@ public class BoardController {
     @RequestMapping("/View")
     public String view(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
-        String menu_id = (String)map.get("menu_id");
+        String menu_id = String.valueOf(boardVo.getMenu_id());
         String pageNum = (String)map.get("pageNum");
         String contentNum = (String)map.get("contentNum");
 

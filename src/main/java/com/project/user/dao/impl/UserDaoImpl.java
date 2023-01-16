@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Repository("UserDao")
 public class UserDaoImpl implements UserDao {
@@ -126,5 +127,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void changePw(HashMap<String, Object> map) {
         sqlSession.update("User.changePw",map);
+    }
+
+    @Override
+    public List<UserVo> getUserList() {
+        List<UserVo> userVoList = sqlSession.selectList("User.getUserList");
+        return userVoList;
     }
 }

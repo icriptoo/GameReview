@@ -200,6 +200,11 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
+    public void declarationProcess(HashMap<String, Object> map) {
+        sqlSession.update("Board.declarationProcess", map);
+    }
+
+    @Override
     public List<GameListVo> getGameList() {
         List<GameListVo> gameListVo = sqlSession.selectList("Game.GetGameList");
         return gameListVo;

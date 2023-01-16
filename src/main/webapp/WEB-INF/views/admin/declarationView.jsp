@@ -97,7 +97,7 @@ textarea {
       <tr>
         <th style= "width:8%; height:10%; text-align:center">관련게시글</th>
         <td>
-          <button style="font-size:20px;" onClick="location.href='#'" >글보러가기</button>
+          <a  href="/View?b_idx=${detail.b_idx}&pageNum=1&contentNum=30" target='_blank' style="font-size:15px;" >게시글보기</button>
         </td>
       </tr>
       <tr>
@@ -111,8 +111,8 @@ textarea {
       <tr>
         <th style="width:8%; height:10%; text-align:center">신고처리</th>
         <td>
-          <button style="font-size:20px;" onClick="location.href='/declarationList'" >접수</button>
-          <button style="font-size:20px;" onClick="location.href='/declarationList'" >거부</button>
+          <button style="font-size:20px;" onClick="location.href='/declarationProcess?d_idx=${detail.d_idx}&process=1'" >접수</button>
+          <button style="font-size:20px;" onClick="location.href='/declarationProcess?d_idx=${detail.d_idx}&process=2'" >거부</button>
         </td>
       </tr>
 

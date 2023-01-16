@@ -73,7 +73,7 @@ td, th {
     <input type="hidden" name="b_idx" value="${boardVo.b_idx}" />
   <table >
       <c:choose>
-        <c:when test="${empty a_cont}">
+        <c:when test="${menu_id eq 4 && empty a_cont}">
         <tr>
           <th style= "width:6%; height:10%; text-align:center">제목</th>
           <td>${boardVo.title}</td>

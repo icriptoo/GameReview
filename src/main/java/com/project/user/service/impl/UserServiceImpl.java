@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @Service("UserService")
 public class UserServiceImpl implements UserService {
@@ -113,5 +114,11 @@ public class UserServiceImpl implements UserService {
     public UserVo getUser(Object login) {
         UserVo user = userDao.getUser(login);
         return user;
+    }
+
+    @Override
+    public List<UserVo> getUserList() {
+        List<UserVo> userVoList = userDao.getUserList();
+        return userVoList;
     }
 }

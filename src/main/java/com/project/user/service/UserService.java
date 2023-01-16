@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public interface UserService {
 
@@ -43,4 +44,6 @@ public interface UserService {
     void changePw(HashMap<String, Object> map);
 
     UserVo getUser(Object login);
+
+    List<UserVo> getUserList();
 }
