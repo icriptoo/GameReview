@@ -134,7 +134,7 @@ function replyDelete(r_idx){
 function replyUpdateForm(r_idx){
   let ck = confirm("댓글을 수정 하시겠습니까?");
   if (ck) {
-  // 수정버튼 누르면 다른수정버튼 모두 비활성화 만들어야함
+    // 수정버튼 누르면 다른수정버튼 모두 비활성화 만들어야함 or 다른 수정버튼 누르면 이미 눌러진 수정버튼 꺼지게 만들어야함
     document.getElementById('replyUpdate').style.display = 'none'
     let k = document.getElementById("replycont"+r_idx);
 
@@ -149,12 +149,69 @@ function replyUpdateForm(r_idx){
 }
 
 function comment_button(r_idx){
-
+  document.getElementById("c-box").style.display ='table-row';
   let form = '<div class="comment-write-box"><input type="hidden" name="r_idx" id="comment_number" value='+r_idx+'>';
-  form += '<textarea class="commentWriteCont" id="commentWriteCont" cols="80" rows="3"></textarea></br>';
-  form += '<button type="button" class="UpdateBtn" onclick="commentUpdate('+ r_idx +')"> 완료 </button>';
+  form += '<textarea class="commentInsertCont" id="commentInsertCont" cols="80" rows="3"></textarea></br>';
+  form += '<button type="button" class="UpdateBtn" onclick="commentInsert('+ r_idx +')"> 완료 </button>';
   form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></dr></div>';
   document.getElementById("comment"+r_idx).innerHTML = form;
+}
+
+function commentInsert(r_idx){
+  let commentcont = $("#commentInsertCont").val();
+  let b_idx = "";
+  let param = {"c_idx":r_idx, "cont":commentcont, "b_idx":${boardVo.b_idx}, "u_id":"${login.u_id}", "g_idx":${boardVo.g_idx}};
+  $.ajax({
+    type:"post",
+    url:"/commentInsert",
+    data: param,
+    success:function(result){
+      alert("답글이 등록됐습니다.");
+      replyList();
+    }, error:function(){
+      if($('#commentInsertCont').val() == ''){
+        alert('답글을 입력해 주세요.')
+      }
+    }
+  });
+}
+
+// 답글 누르면 답글창 나오는 함수
+function commentList(r_idx) {
+  let param = {"c_idx":r_idx};
+  $.ajax({
+    type: "POST",
+    url:  "/commentList",
+    data: param,
+    success: function(list){
+      commentListIn(list);
+    }
+  });
+}
+
+function commentListIn(list){
+  let len = list.length;
+  let u_id = "${login.u_id}";
+  html = "";
+  for(i=0; i<len;i++){
+    if(list[i].img == null){
+      html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+    } else {
+      html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+    }
+    html += '<td class="cont" colspan="2"><strong>'+list[i].u_id+'</strong></td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td class="cont" colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+    html += '</tr>';
+    html += '<tr>';
+    html += '<td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+    if(list[i].u_id === u_id){
+      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+      html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+    }
+  }
+  $('#commentList').html(html);
 }
 
 function replyUpdate(r_idx){
@@ -167,8 +224,7 @@ function replyUpdate(r_idx){
     success: function(result){
       alert("댓글이 수정 됐습니다.");
       replyList();
-    },
-    error: function(error_){
+    }, error: function(){
       if($('#replycontent').val() == ''){
         alert('댓글을 입력해 주세요.')
       }
@@ -312,7 +368,7 @@ $("#replybtn").click(function(){
     url: "/replywrite",
     data: param,
     success: function(result){
-      alert("댓글이 등록되었습니다");
+      alert("댓글이 등록됐습니다.");
       $("#replytext").val('');
       replyList();
       window.location.reload();
@@ -335,32 +391,36 @@ function replyList(){
       let html = "";
       html += '<table class="b" id="b">';
       for(let i=0; i<replylen; i++){
-        html += '<tr>';
-        if(list[i].img == null){
-          html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
-        } else {
-          html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+        if(list[i].c_idx == 0){
+          html += '<tr>';
+          if(list[i].img == null){
+            html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+          } else {
+            html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+          }
+          html += '<td class="cont" colspan="2"><strong>'+list[i].u_id+'</strong></td>';
+          html += '</tr>';
+          html += '<tr>';
+          html += '<td class="cont" colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+          html += '</tr>';
+          html += '<tr>';
+          html += '<td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+          if(list[i].u_id === u_id){
+            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+            html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+            html += '<button style="font-size:20px;" onclick="commentList('+list[i].r_idx+')">답글</button>';
+            html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
+          } else {
+            html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
+            html += '<button style="font-size:20px;" onclick="commentList('+list[i].r_idx+')">답글</button>';
+            html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
+          }
+          html += '</tr>';
+          //답글리스트
+          html += '<tr id="commentList"></tr>';
+          //답글입력
+          html += '<tr id="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
         }
-        html += '<td class="cont" colspan="2"><strong>'+list[i].u_id+'</strong></td>';
-        html += '</tr>';
-        html += '<tr>';
-        html += '<td class="cont" colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
-        html += '</tr>';
-        html += '<tr>';
-        html += '<td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
-        if(list[i].u_id === u_id){
-          html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
-          html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
-          html += '<button style="font-size:20px;" onclick="myFunction()">답글</button>';
-          html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
-        } else {
-          html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
-          html += '<button style="font-size:20px;" onclick="myFunction()">답글</button>';
-          html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
-        }
-        html += '</tr>';
-        //답글
-        html += '<div><tr><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr></div>';
       }
       html += '</table>';
       if (replylen == 0){
@@ -405,20 +465,6 @@ function replyP(){
     }
   });
 };
-// 답글 누르면 답글창 나오는 함수
-function myFunction() {
-  var x = document.getElementById('replylist-box');
-  var y = document.getElementById('replyin_box');
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else {
-    x.className = x.className.replace(" w3-show", "");
-  }
-  if (y.className.indexOf("w3-show") == -1) {
-    y.className += " w3-show";
-  } else {
-    y.className = y.className.replace(" w3-show", "");
-  }
-}
+
 </script>
 </html>

@@ -42,5 +42,10 @@ public class ReplyServiceImpl implements ReplyService {
         replyDao.replyUpdate(map);
     }
 
+    @Override
+    public void commentInsert(HashMap<String, Object> map) {
+        replyDao.commentInsert(map);
+    }
+
 
 }

@@ -41,6 +41,7 @@ public class ReplyController {
             boardPager.setPageNum((PageNum - 1) * 30 + 1);
         }
         map.put("pageNum",boardPager.getPageNum());
+        map.put("c",1); // mapper구분자
         replyVo = replyService.replySelect(map);
         return replyVo;
     }
@@ -88,5 +89,21 @@ public class ReplyController {
     public String replyUpdate(@RequestParam HashMap<String, Object> map){
         replyService.replyUpdate(map);
         return "";
+    }
+
+    // 답글등록
+    @RequestMapping("/commentInsert")
+    @ResponseBody
+    public String commentInsert(@RequestParam HashMap<String, Object> map){
+        replyService.commentInsert(map);
+        return "";
+    }
+
+    // 답글조회
+    @RequestMapping("/commentList")
+    @ResponseBody
+    public List<ReplyVo> commentList(@RequestParam HashMap<String, Object> map){
+        List<ReplyVo> replyVo = replyService.replySelect(map);
+        return replyVo;
     }
 }

@@ -41,5 +41,10 @@ public class ReplyDaoImpl implements ReplyDao {
         sqlSession.update("Reply.replyUpdate",map);
     }
 
+    @Override
+    public void commentInsert(HashMap<String, Object> map) {
+        sqlSession.insert("Reply.commentInsert",map);
+    }
+
 
 }

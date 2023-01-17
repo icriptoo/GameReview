@@ -6,20 +6,40 @@
 <mapper namespace="Reply">
 
     <select id="replySelect" resultType="com.project.reply.vo.ReplyVo">
-        SELECT *
-        FROM(
-        SELECT ROW_NUMBER() OVER (ORDER BY R.INDATE ASC) RNUM,
-        R.R_IDX,
-        R.B_IDX,
-        R.G_IDX,
-        R.U_ID,
-        R.CONT,
-        TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
-        U.IMG
-        FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
-        WHERE R.B_IDX = ${b_idx}
-        ORDER BY R.INDATE ASC)
-        WHERE RNUM BETWEEN ${pageNum} AND ${contentNum}
+        <choose>
+            <when test="c == 1">
+                SELECT *
+                FROM(
+                SELECT ROW_NUMBER() OVER (ORDER BY R.INDATE ASC) RNUM,
+                R.R_IDX,
+                R.B_IDX,
+                R.G_IDX,
+                R.U_ID,
+                R.CONT,
+                TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
+                U.IMG,
+                R.C_IDX
+                FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
+                WHERE R.B_IDX = ${b_idx}
+                ORDER BY R.INDATE ASC)
+                WHERE RNUM BETWEEN ${pageNum} AND ${contentNum}
+            </when>
+            <otherwise>
+                SELECT
+                R.R_IDX,
+                R.B_IDX,
+                R.G_IDX,
+                R.U_ID,
+                R.CONT,
+                TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
+                U.IMG,
+                R.C_IDX
+                FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
+                WHERE R.C_IDX = ${c_idx}
+                ORDER BY INDATE ASC
+            </otherwise>
+        </choose>
+
     </select>
 
     <select id="replyCount" resultType="int">
@@ -30,7 +50,12 @@
 
     <insert id="replyWrite">
         INSERT INTO REPLY(R_IDX ,CONT, B_IDX, U_ID, G_IDX)
-        VALUES(( SELECT NVL(MAX(R_IDX),0)+1 FROM REPLY ),'${cont}', ${b_idx}, '${u_id}', ${g_idx})
+        VALUES(( SELECT NVL(MAX(R_IDX),0)+1 FROM REPLY ),#{cont}, ${b_idx}, #{u_id}, ${g_idx})
+    </insert>
+
+    <insert id="commentInsert">
+        INSERT INTO REPLY(R_IDX ,CONT, B_IDX, U_ID, G_IDX, C_IDX)
+        VALUES(( SELECT NVL(MAX(R_IDX),0)+1 FROM REPLY ),#{cont}, ${b_idx}, #{u_id}, ${g_idx}, ${c_idx})
     </insert>
 
     <delete id="replyDelete">
