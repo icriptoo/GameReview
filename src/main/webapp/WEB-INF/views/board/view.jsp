@@ -70,6 +70,7 @@ table.b td.updateForm {
 .img-box{
   width: 52px;
   padding-bottom: 15px;
+  border-bottom: 1px solid #dfdfdf;
 }
 .comment-box{
   padding-top: 10px;
@@ -123,6 +124,7 @@ textarea {
 </style>
 <script>
 function replyDelete(r_idx){
+// 댓글 삭제할때 답글 있으면 댓글내용만 삭제
   let out = confirm("댓글을 삭제 하시겠습니까?");
   let b_idx = "${boardVo.b_idx}";
   let menu_id = "${boardVo.menu_id}";
@@ -134,8 +136,7 @@ function replyDelete(r_idx){
 function replyUpdateForm(r_idx){
   let ck = confirm("댓글을 수정 하시겠습니까?");
   if (ck) {
-    // 수정버튼 누르면 다른수정버튼 모두 비활성화 만들어야함 or 다른 수정버튼 누르면 이미 눌러진 수정버튼 꺼지게 만들어야함
-    document.getElementById('replyUpdate').style.display = 'none'
+    $("button[name='updatebutton']").hide();
     let k = document.getElementById("replycont"+r_idx);
 
     let form = '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
@@ -149,7 +150,8 @@ function replyUpdateForm(r_idx){
 }
 
 function comment_button(r_idx){
-  document.getElementById("c-box").style.display ='table-row';
+  $("tr[name='c-box']").hide();
+  document.getElementById("c-box"+r_idx).style.display ='table-row';
   let form = '<div class="comment-write-box"><input type="hidden" name="r_idx" id="comment_number" value='+r_idx+'>';
   form += '<textarea class="commentInsertCont" id="commentInsertCont" cols="80" rows="3"></textarea></br>';
   form += '<button type="button" class="UpdateBtn" onclick="commentInsert('+ r_idx +')"> 완료 </button>';
@@ -194,24 +196,25 @@ function commentListIn(list){
   let u_id = "${login.u_id}";
   html = "";
   for(i=0; i<len;i++){
+  console.log($("tbody[name='commentList"+list[i].r_idx+"']").is(':visible'));
+// 답글 누르면 나왔다 들어갔다 할 수 있게 만들어야함
     if(list[i].img == null){
-      html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+      html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
     } else {
-      html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+      html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
     }
-    html += '<td class="cont" colspan="2"><strong>'+list[i].u_id+'</strong></td>';
-    html += '</tr>';
-    html += '<tr>';
-    html += '<td class="cont" colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
-    html += '</tr>';
-    html += '<tr>';
-    html += '<td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+    html += '<td class="cont"><strong>'+list[i].u_id+'</strong></td></tr>';
+    html += '<tr><td colspan="2" class="cont" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td></tr>';
+    html += '<tr><td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
     if(list[i].u_id === u_id){
-      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
-      html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="updatebutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+      html += '<button id="replyDelete" name="updatebutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+    } else {
+      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;">';
     }
+    html += '</tr>';
+    $('#commentList'+list[i].c_idx).html(html);
   }
-  $('#commentList').html(html);
 }
 
 function replyUpdate(r_idx){
@@ -398,28 +401,28 @@ function replyList(){
           } else {
             html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
           }
-          html += '<td class="cont" colspan="2"><strong>'+list[i].u_id+'</strong></td>';
+          html += '<td class="cont" colspan="3"><strong>'+list[i].u_id+'</strong></td>';
           html += '</tr>';
           html += '<tr>';
-          html += '<td class="cont" colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+          html += '<td class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
           html += '</tr>';
           html += '<tr>';
-          html += '<td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+          html += '<td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
           if(list[i].u_id === u_id){
-            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
-            html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
-            html += '<button style="font-size:20px;" onclick="commentList('+list[i].r_idx+')">답글</button>';
-            html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
+            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+            html += '<button id="replyDelete" name="replybutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+')">답글 쓰기</button></td>';
           } else {
             html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
-            html += '<button style="font-size:20px;" onclick="commentList('+list[i].r_idx+')">답글</button>';
-            html += '<button style="font-size:20px;" onclick="comment_button('+list[i].r_idx+')">답글쓰기</button></td>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+')">답글 쓰기</button></td>';
           }
           html += '</tr>';
           //답글리스트
-          html += '<tr id="commentList"></tr>';
+          html += '<tbody id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
           //답글입력
-          html += '<tr id="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
+          html += '<tr id="c-box'+list[i].r_idx+'" name="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
         }
       }
       html += '</table>';
