@@ -124,8 +124,6 @@ textarea {
 </style>
 <script>
 function replyDelete(r_idx){
-
-// 댓글 삭제할때 답글 있으면 댓글내용만 삭제 하도록 변경해야함
   let out = confirm("댓글을 삭제 하시겠습니까?");
   let b_idx = "${boardVo.b_idx}";
   let menu_id = "${boardVo.menu_id}";
