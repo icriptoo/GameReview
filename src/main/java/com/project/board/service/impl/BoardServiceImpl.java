@@ -103,6 +103,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<GameListVo> getTopGame() {
+        List<GameListVo> topList = boardDao.getTopGame();
+        return topList;
+    }
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
     @Override

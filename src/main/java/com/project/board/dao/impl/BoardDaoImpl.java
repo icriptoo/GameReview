@@ -205,6 +205,12 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
+    public List<GameListVo> getTopGame() {
+        List<GameListVo> topList = sqlSession.selectList("Game.getTopGame");
+        return topList;
+    }
+
+    @Override
     public List<GameListVo> getGameList() {
         List<GameListVo> gameListVo = sqlSession.selectList("Game.GetGameList");
         return gameListVo;

@@ -64,21 +64,41 @@
 
     </style>
 </head>
+<script>
+
+$(document).ready(function() {
+    let none = "none"
+    let obj={ "none" : none };
+
+    console.log(obj);
+
+    $.ajax({
+        url : "/topGame",
+        type : "POST",
+        data : "",
+        success : function(data){
+            var text = "";
+            console.log(data);
+            var g_idx =  JSON.stringify(data[0].g_idx);
+            var g_name =  JSON.stringify(data[0].g_name);
+            console.log(g_idx + g_name);
+            for (var i = 1; i < 11; i++){
+                text += "<a href='/GameReviewList?g_idx=" + data[i-1].g_idx +"&menu_id=1&pageNum=1&contentNum=30'>"+ i + ".  " + data[i-1].g_name + "</a><br>"
+            }
+            $('#show').html( text );
+        },
+        error : function() {
+            alert("요청실패");
+        }
+    })
+});
+
+</script>
 <body>
     <form>
         <div id="top_box">
             <h3>인기순위 Top10</h3>
-            <a href="">1.  리그오브레전드 </a><br>
-            <a href="">2.  리그오브레전드 </a><br>
-            <a href="">3.  리그오브레전드 </a><br>
-            <a href="">4.  리그오브레전드 </a><br>
-            <a href="">5.  리그오브레전드 </a><br>
-            <a href="">6.  리그오브레전드 </a><br>
-            <a href="">7.  리그오브레전드 </a><br>
-            <a href="">8.  리그오브레전드 </a><br>
-            <a href="">9.  리그오브레전드 </a><br>
-            <a href="">10. 리그오브레전드 </a>
-
+            <p id="show"></p>
         </div>
     </form>
 </body>

@@ -53,4 +53,6 @@ public interface BoardService {
     DeclarationVo getDeclaration(HashMap<String, Object> map);
 
     void declarationProcess(HashMap<String, Object> map);
+
+    List<GameListVo> getTopGame();
 }

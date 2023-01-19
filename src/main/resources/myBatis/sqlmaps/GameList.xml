@@ -5,6 +5,19 @@
 
 <mapper namespace="Game">
 
+
+    <!-- 인기순위top10 -->
+    <select id="getTopGame" resultType="com.project.board.vo.GameListVo">
+        <![CDATA[
+          SELECT g_idx, g_name, NVL(g_score, 0) g_score
+            FROM
+                (SELECT g_idx, g_name, NVL(g_score, 0) g_score
+                   FROM gamelist
+                  ORDER BY g_score DESC)
+           WHERE ROWNUM <= 10
+        ]]>
+    </select>
+
     <!-- 게임 평점 업데이트 -->
     <update  id="ScoreUpdate">
         UPDATE GAMELIST

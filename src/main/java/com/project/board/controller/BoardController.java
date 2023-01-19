@@ -41,6 +41,15 @@ public class BoardController {
         return "/home";
     }
 
+    //인기순위 top10
+    @ResponseBody
+    @RequestMapping("/topGame")
+    public List<GameListVo> topGame(@RequestParam HashMap<String, Object> map, Model model){
+        List<GameListVo> topList = boardService.getTopGame();
+        System.out.println("인기:" + topList);
+        return topList;
+    }
+
     //신고처리
     @RequestMapping("declarationProcess")
     public String declarationProcess(@RequestParam HashMap<String, Object> map, Model model){
