@@ -26,7 +26,7 @@
         	var queryString = $("form[name=form1]").serialize() ; // 폼 데이터 가져오기
 
         	$.ajax({
-        		url : "declarationInsert",
+        		url : "/declarationInsert",
         		type : "POST",
         		data : queryString,
         		dataType : 'json',

@@ -67,11 +67,6 @@
 <script>
 
 $(document).ready(function() {
-    let none = "none"
-    let obj={ "none" : none };
-
-    console.log(obj);
-
     $.ajax({
         url : "/topGame",
         type : "POST",
