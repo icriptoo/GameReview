@@ -177,6 +177,8 @@ function btnSearchEnter(){
         <td width="10%" style="text-align:center">${boardVo.indate}</td>
         <td width="5%" style="text-align:center">${boardVo.b_count}</td>
       </tr>
+      <tr style="border-top: 1px solid #999999">
+      </tr>
     </c:forEach>
     <tr>
       <td colspan="4">

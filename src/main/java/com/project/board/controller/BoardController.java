@@ -41,6 +41,26 @@ public class BoardController {
         return "/home";
     }
 
+    //인기순위 top10
+    @ResponseBody
+    @RequestMapping("/topGame")
+    public List<GameListVo> topGame(@RequestParam HashMap<String, Object> map, Model model){
+        List<GameListVo> topList = boardService.getTopGame();
+        System.out.println("인기:" + topList);
+        return topList;
+    }
+
+    //신고처리
+    @RequestMapping("declarationProcess")
+    public String declarationProcess(@RequestParam HashMap<String, Object> map, Model model){
+        boardService.declarationProcess(map);
+        List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
+
+        model.addAttribute("list", declarationVoList);
+
+        return "/admin/declarationList";
+    }
+
     //신고 디테일 페이지
     @RequestMapping("declarationView")
     public String declarationView(@RequestParam HashMap<String, Object> map, Model model){
@@ -60,9 +80,8 @@ public class BoardController {
 
         model.addAttribute("list", declarationVoList);
 
-        return "/board/declarationList";
+        return "/admin/declarationList";
     }
-
 
     //신고데이터 저장
     @ResponseBody
@@ -90,7 +109,7 @@ public class BoardController {
         model.addAttribute("us_id", us_id );
         model.addAttribute("ue_id", ue_id );
         model.addAttribute("b_idx", b_idx );
-        return "/board/declarationWrite";
+        return "/admin/declarationWrite";
     }
 
     //공지사항,고객센터 글목록 managementList
@@ -471,7 +490,7 @@ public class BoardController {
     @RequestMapping("/View")
     public String view(@RequestParam HashMap<String, Object> map, Model model){
         BoardVo boardVo = boardService.getBoard(map);
-        String menu_id = (String)map.get("menu_id");
+        String menu_id = String.valueOf(boardVo.getMenu_id());
         String pageNum = (String)map.get("pageNum");
         String contentNum = (String)map.get("contentNum");
 

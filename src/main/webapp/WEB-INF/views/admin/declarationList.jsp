@@ -75,23 +75,6 @@ function btnSearchEnter(){
       display : none;
     }
 </style>
-<script>
-function toggleBtn1() {
-
-  // 토글 할 버튼 선택 (btn1)
-  const btn1 = document.getElementById('btn1');
-
-  // btn1 숨기기 (display: none)
-  if(btn1.style.display !== 'none') {
-    btn1.style.display = 'none';
-  }
-  // btn` 보이기 (display: block)
-  else {
-    btn1.style.display = 'block';
-  }
-
-}
-</script>
 
 </head>
 <body class="w3-light-grey">
@@ -115,8 +98,8 @@ function toggleBtn1() {
   <table>
     <tr>
       <th colspan="6" style="text-align:center">
-        <button style="font-size:20px;" onClick="location.href='#'" >신고관리</button>
-        <button style="font-size:20px;" onClick="location.href='#'" >유저관리</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고관리</button>
+        <button style="font-size:20px;" onClick="location.href='userList'" >유저관리</button>
       </th>
     </tr>
     <tr>

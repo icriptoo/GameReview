@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -42,6 +43,16 @@ public class UserController {
 
     // 이메일 인증번호 저장변수
     private String ecode = "";
+
+    //회원정보리스트
+    @RequestMapping("userList")
+    public String userList(@RequestParam HashMap<String, Object> map, Model model){
+        List<UserVo> userVoList = userService.getUserList();
+
+        model.addAttribute("list", userVoList);
+
+        return "/admin/userList";
+    }
 
     // 로그인 창 이동
     @RequestMapping("login")
@@ -427,9 +438,15 @@ public class UserController {
 
     //회원탈퇴
     @RequestMapping("/user/Wirthdrwal")
-    public String withdrawal(HttpSession httpSession,@RequestParam HashMap<String, Object> map){
+    public String withdrawal(HttpSession httpSession,@RequestParam HashMap<String, Object> map, Model model){
         map.put("withdrawal","OFF");
         userService.wirthdrwal(map);
+        String chk = (String)map.get("path");
+        if(chk.equals("1")){
+            List<UserVo> userVoList = userService.getUserList();
+            model.addAttribute("list", userVoList);
+            return "/admin/userList";
+        }
         httpSession.invalidate();
         return "/home";
     }

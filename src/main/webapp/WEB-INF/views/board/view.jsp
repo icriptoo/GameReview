@@ -48,6 +48,7 @@ table.b {
   margin-top: 20px;
 }
 table.a td, th {
+  padding: 0px 5px;
   border : 1px solid black;
   border-collapse : collapse;
 }
@@ -89,7 +90,7 @@ textarea {
     display: inline-block;
     color: black;
     text-align: center;
-    padding: 14px 16px;
+    padding: 14px 5px;
     text-decoration: none;
 }
 
@@ -294,7 +295,7 @@ function showPopup(u_id){
       <tr>
         <th style= "width:6%; height:10%; text-align:center">작성자</th>
         <td>
-          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()">${boardVo.u_id}</a>
+          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()" style="font-size:18px;" >${boardVo.u_id}</a>
           <div class="dropdown-content" id="myDropdown">
             <a onClick = "showPopup('${boardVo.u_id}');" >신고하기</a>
           </div>

@@ -15,10 +15,11 @@ public class UserVo {
     private String pcode; // 비밀번호salt
     private String withdrawal; // 회원정보 on/off 기능 탈퇴하면 off
     private String authority; // 관리자 구분자 0=관리자 1=일반회원
+    private int declaration;
 
     public UserVo (){}
 
-    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode, String withdrawal, String authority,String cpw) {
+    public UserVo(String u_id, String n_name, String pw, String email, String genre1, String genre2, String genre3, String img, String indate, String pcode, String withdrawal, String authority, int declaration, String cpw) {
         this.u_id = u_id;
         this.n_name = n_name;
         this.pw = pw;
@@ -31,6 +32,7 @@ public class UserVo {
         this.pcode = pcode;
         this.withdrawal = withdrawal;
         this.authority = authority;
+        this.declaration = declaration;
         this.cpw = cpw;
     }
 
@@ -134,6 +136,10 @@ public class UserVo {
         this.pcode = pcode;
     }
 
+    public int getDeclaration() { return declaration; }
+
+    public void setDeclaration(int declaration){ this.declaration = declaration; }
+
     @Override
     public String toString() {
         return "UserVo{" +
@@ -150,6 +156,7 @@ public class UserVo {
                 ", pcode='" + pcode + '\'' +
                 ", withdrawal='" + withdrawal + '\'' +
                 ", authority='" + authority + '\'' +
+                ", declaration='" + declaration + '\'' +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package com.project.user.dao;
 import com.project.user.vo.UserVo;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface UserDao {
 
@@ -37,4 +38,6 @@ public interface UserDao {
     String getckpw(HashMap<String, Object> map);
 
     void changePw(HashMap<String, Object> map);
+
+    List<UserVo> getUserList();
 }
