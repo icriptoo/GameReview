@@ -18,7 +18,8 @@
                 R.CONT,
                 TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
                 U.IMG,
-                R.C_IDX
+                R.C_IDX,
+                R.D_CK
                 FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
                 WHERE R.B_IDX = ${b_idx}
                 ORDER BY R.INDATE ASC)
@@ -33,13 +34,19 @@
                 R.CONT,
                 TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
                 U.IMG,
-                R.C_IDX
+                R.C_IDX,
+                R.D_CK
                 FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
                 WHERE R.C_IDX = ${c_idx}
                 ORDER BY INDATE ASC
             </otherwise>
         </choose>
+    </select>
 
+    <select id="replyCSelect" resultType="int">
+        SELECT COUNT(*)
+          FROM REPLY
+         WHERE C_IDX = ${r_idx}
     </select>
 
     <select id="replyCount" resultType="int">
@@ -59,13 +66,19 @@
     </insert>
 
     <delete id="replyDelete">
-        DELETE FROM REPLY WHERE R_IDX = #{r_idx}
+        DELETE FROM REPLY WHERE R_IDX = ${r_idx}
     </delete>
 
     <update id="replyUpdate">
         UPDATE REPLY
-        SET CONT = '${cont}'
-        WHERE R_IDX = #{r_idx}
+           SET CONT = #{cont}
+         WHERE R_IDX = ${r_idx}
+    </update>
+
+    <update id="replyDUpdate">
+        UPDATE REPLY
+           SET D_CK = 1
+         WHERE R_IDX = ${r_idx}
     </update>
 
 </mapper>

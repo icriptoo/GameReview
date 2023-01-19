@@ -9,10 +9,11 @@ public class ReplyVo {
    private int g_idx;
    private String img;
    private int c_idx;
+   private int d_ck;
 
    public ReplyVo(){}
 
-    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx, String img, int c_idx) {
+    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx, String img, int c_idx, int d_ck) {
         this.r_idx = r_idx;
         this.cont = cont;
         this.indate = indate;
@@ -21,6 +22,15 @@ public class ReplyVo {
         this.g_idx = g_idx;
         this.img = img;
         this.c_idx = c_idx;
+        this.d_ck = d_ck;
+    }
+
+    public int getD_ck() {
+        return d_ck;
+    }
+
+    public void setD_ck(int d_ck) {
+        this.d_ck = d_ck;
     }
 
     public int getC_idx() {
@@ -98,6 +108,7 @@ public class ReplyVo {
                 ", g_idx=" + g_idx +
                 ", img='" + img + '\'' +
                 ", c_idx=" + c_idx +
+                ", d_ck=" + d_ck +
                 '}';
     }
 }

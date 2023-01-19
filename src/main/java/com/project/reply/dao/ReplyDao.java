@@ -18,4 +18,8 @@ public interface ReplyDao {
     void replyUpdate(HashMap<String, Object> map);
 
     void commentInsert(HashMap<String, Object> map);
+
+    int replyCSelect(HashMap<String, Object> map);
+
+    void replyDUpdate(HashMap<String, Object> map);
 }

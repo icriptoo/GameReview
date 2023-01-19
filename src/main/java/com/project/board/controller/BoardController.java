@@ -46,7 +46,6 @@ public class BoardController {
     @RequestMapping("/topGame")
     public List<GameListVo> topGame(@RequestParam HashMap<String, Object> map, Model model){
         List<GameListVo> topList = boardService.getTopGame();
-        System.out.println("인기:" + topList);
         return topList;
     }
 
@@ -300,7 +299,7 @@ public class BoardController {
         }
 
         String title = boardVo.getG_name(); // 추천알고리즘 입력값으로 넣어줄 게임
-        System.out.println("대상게임:" + title);
+        //System.out.println("대상게임:" + title);
 
         ProcessBuilder builder;
         BufferedReader br;
