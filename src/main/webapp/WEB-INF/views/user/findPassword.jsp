@@ -75,8 +75,6 @@ $(function(){
     e.stopPropagation();
   });
 
-
-
   $('#findpw').on('click', function(e){
     if($('[name=u_id]').val() == ""){
       alert('아이디을 입력해 주세요.');
@@ -142,11 +140,16 @@ $(function(){
   });
 
   $('#chPw').keyup(function(e){
-    let pw = $('input[name=chPw]').val();
+    let pw = "${login.cpw}";
+    let cpw = $('input[name=chPw]').val();
     let u_id = $('[name=u_id]').val();
     let email = $('input[name=email]').val();
-    let ck = "ck";
-    let param = {"pw":pw, "u_id":u_id, "ck":ck, "email":email};
+    let param = {"pw":cpw, "u_id":u_id, "email":email};
+
+    if (pw == cpw){
+      $("#pwJCheckResult").text("현재 비밀번호와 동일합니다.");
+      return false;
+    }
 
     $.ajax({
       type : 'POST',
@@ -212,6 +215,10 @@ function chpwbtn(){
   }
   if($('#chPwCk').val() == ""){
     alert('변경할 비밀번호 확인을 입력해 주세요.');
+    return false;
+  }
+  if($('#pwJCheckResult').text()== "현재 비밀번호와 동일합니다."){
+    alert('비밀번호를 확인해 주세요.');
     return false;
   }
   if($('#pwJCheckResult').text()== "영문과 특수문자 숫자를 포함하며 8자 이상이어야 합니다."){

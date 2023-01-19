@@ -16,4 +16,6 @@ public interface ReplyDao {
     void replyDelete(HashMap<String, Object> map);
 
     void replyUpdate(HashMap<String, Object> map);
+
+    void commentInsert(HashMap<String, Object> map);
 }

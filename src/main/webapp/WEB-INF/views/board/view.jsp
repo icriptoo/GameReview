@@ -43,7 +43,9 @@ table.b {
   border-collapse: collapse;
   border-radius: 10px;
   border-style: hidden;
-  box-shadow: 0 0 0 1px #000;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
+  margin-top: 20px;
 }
 table.a td, th {
   padding: 0px 5px;
@@ -51,12 +53,32 @@ table.a td, th {
   border-collapse : collapse;
 }
 table.b tr {
-  border : 1px solid black;
   border-collapse : collapse;
 }
-table.b td {
-  border : 1px solid black;
+table.b td.cont {
+  padding : 5px 10px 5px 10px;
   border-collapse : collapse;
+}
+table.b td.updateForm {
+  border-collapse : collapse;
+  text-align: right;
+}
+.profile{
+  width: 90%;
+  border-radius: 50%;
+  border: 1px solid #bfbfbf
+}
+.img-box{
+  width: 52px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #dfdfdf;
+}
+.comment-box{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 60px;
+  border-top: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
 }
 textarea {
   width: 50%;
@@ -64,57 +86,6 @@ textarea {
   border: none;
   resize: none;
 }
-
-</style>
-<script>
-function replyDelete(r_idx){
-  let out = confirm("댓글을 삭제 하시겠습니까?");
-  let b_idx = "${boardVo.b_idx}";
-  let menu_id = "${boardVo.menu_id}";
-  if (out){
-    location.href='/replyDelete?r_idx='+r_idx+'&b_idx='+b_idx+'&menu_id='+menu_id;
-  }
-}
-
-function replyUpdateForm(r_idx){
-  let ck = confirm("댓글을 수정 하시겠습니까?");
-  if (ck) {
-    let k = document.getElementById("replycont"+r_idx);
-    let form = "";
-    form += '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
-    form += '<textarea class="replyUpdateCont" id="replyUpdateCont" cols="80" rows="3">';
-    form += k.textContent;
-    form += '</textarea><br/>';
-    form += '<button type = "button" class="UpdateBtn" onClick="replyUpdate('+ r_idx +')"> 완료 </button>';
-    form += '<button type = "button" class="DeleteBtn" onClick="replyList()"> 취소 </button></div></dr>';
-    document.getElementById("replycont"+r_idx).innerHTML = form;
-    $("[id=replyUpdate]").css("display", "none");
-    $("[id=replyDelete]").css("display", "none");
-  }
-}
-
-function replyUpdate(r_idx){
-  let replycont = $("#replyUpdateCont").val();
-  let param = {"r_idx":r_idx, "cont":replycont};
-  $.ajax({
-    type: "POST",
-    url:  "/replyUpdate",
-    data: param,
-    success: function(result){
-      alert("댓글이 수정 됐습니다.");
-      replyList();
-    },
-    error: function(error_){
-      if($('#replycontent').val() == ''){
-        alert('댓글을 입력해 주세요.')
-      }
-    }
-  });
-}
-
-</script>
-
-<style>
 .dropbtn {
     display: inline-block;
     color: black;
@@ -150,9 +121,129 @@ function replyUpdate(r_idx){
 .dropdown-content a:hover {background-color: #f1f1f1}
 
 .show {display:block;}
-</style>
 
+</style>
 <script>
+function replyDelete(r_idx){
+
+// 댓글 삭제할때 답글 있으면 댓글내용만 삭제 하도록 변경해야함
+  let out = confirm("댓글을 삭제 하시겠습니까?");
+  let b_idx = "${boardVo.b_idx}";
+  let menu_id = "${boardVo.menu_id}";
+  if (out){
+    location.href='/replyDelete?r_idx='+r_idx+'&b_idx='+b_idx+'&menu_id='+menu_id;
+  }
+}
+
+function replyUpdateForm(r_idx,c_idx){
+  let ck = confirm("댓글을 수정 하시겠습니까?");
+  if (ck) {
+    $("button[name='updatebutton']").hide();
+    let k = document.getElementById("replycont"+r_idx);
+
+    let form = '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
+    form += '<textarea style="white-space:pre;" class="replyUpdateCont" id="replyUpdateCont" cols="80" rows="3">';
+    form += k.textContent;
+    form += '</textarea></br>';
+    form += '<div style="text-align:right;"><button type = "button" class="UpdateBtn" onclick="replyUpdate('+ r_idx +')"> 완료 </button>';
+    if(c_idx == 0){
+      form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></div></dr>';
+    } else {
+      form += '<button type="button" class="DeleteBtn" onclick="commentList('+c_idx+','+1+')"> 취소 </button></div></div></dr>';
+    }
+    document.getElementById("replycont"+r_idx).innerHTML = form;
+  }
+}
+
+function comment_button(r_idx,c_idx){
+  $("tr[name='c-box']").hide();
+  document.getElementById("c-box"+r_idx).style.display ='table-row';
+  let form = '<div class="comment-write-box"><input type="hidden" name="r_idx" id="comment_number" value='+r_idx+'>';
+  form += '<textarea style="white-space:pre;" class="commentInsertCont" id="commentInsertCont" cols="80" rows="3"></textarea></br>';
+  form += '<button type="button" class="UpdateBtn" onclick="commentInsert('+ r_idx +')"> 완료 </button>';
+  form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></dr></div>';
+  document.getElementById("comment"+r_idx).innerHTML = form;
+}
+
+function commentInsert(r_idx){
+  let commentcont = $("#commentInsertCont").val();
+  let b_idx = "";
+  let param = {"c_idx":r_idx, "cont":commentcont, "b_idx":${boardVo.b_idx}, "u_id":"${login.u_id}", "g_idx":${boardVo.g_idx}};
+  $.ajax({
+    type:"post",
+    url:"/commentInsert",
+    data: param,
+    success:function(result){
+      alert("답글이 등록됐습니다.");
+      replyList();
+    }, error:function(){
+      if($('#commentInsertCont').val() == ''){
+        alert('답글을 입력해 주세요.')
+      }
+    }
+  });
+}
+
+// 답글 누르면 답글창 나오는 함수
+function commentList(r_idx,c) {
+  let check = ($('#commentList'+r_idx).is(':visible'));
+  if(check == false || c == 1){
+    document.getElementById('commentList'+r_idx).style.display = ""
+    let param = {"c_idx":r_idx};
+    $.ajax({
+      type: "POST",
+      url:  "/commentList",
+      data: param,
+      success: function(list){
+        commentListIn(list);
+      }
+    });
+  } else {
+    document.getElementById('commentList'+r_idx).style.display = "none"
+  }
+}
+
+function commentListIn(list){
+  let len = list.length;
+  let u_id = "${login.u_id}";
+  html = "";
+  for(i=0; i<len;i++){
+    if(list[i].img == null){
+      html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+    } else {
+      html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+    }
+    html += '<td class="cont"><strong>'+list[i].u_id+'</strong></td></tr>';
+    html += '<tr><td style="white-space:pre;" colspan="2" class="cont" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td></tr>';
+    html += '<tr><td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+    if(list[i].u_id === u_id){
+      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="updatebutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
+      html += '<button id="replyDelete" name="updatebutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+    } else {
+      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;">';
+    }
+    html += '</tr>';
+    $('#commentList'+list[i].c_idx).html(html);
+  }
+}
+
+function replyUpdate(r_idx){
+  let replycont = $("#replyUpdateCont").val();
+  let param = {"r_idx":r_idx, "cont":replycont};
+  $.ajax({
+    type: "POST",
+    url:  "/replyUpdate",
+    data: param,
+    success: function(result){
+      alert("댓글이 수정 됐습니다.");
+      replyList();
+    }, error: function(){
+      if($('#replycontent').val() == ''){
+        alert('댓글을 입력해 주세요.')
+      }
+    }
+  });
+}
 
 function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
@@ -174,7 +265,6 @@ window.onclick = function(e) {
 
 function showPopup(u_id){
   var ue_id = u_id
-  console.log(u_id)
   newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id="+ue_id+"","팝업창","width=500, height=600, top=10, left=10");
 }
 
@@ -212,7 +302,6 @@ function showPopup(u_id){
             <a onClick = "showPopup('${boardVo.u_id}');" >신고하기</a>
           </div>
         </td>
-
       </tr>
       <tr>
         <th style="text-align:center">내용</th>
@@ -237,7 +326,7 @@ function showPopup(u_id){
       </c:if>
       <tr>
         <td style="height:10%; text-align:right" colspan="2">
-          <c:if test="${sessionScope.login.u_id eq 'admin' && menu_id eq 4}">
+          <c:if test="${login.authority eq 0  && menu_id eq 4}">
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >답변하기</button>
           </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
@@ -292,7 +381,7 @@ $("#replybtn").click(function(){
     url: "/replywrite",
     data: param,
     success: function(result){
-      alert("댓글이 등록되었습니다");
+      alert("댓글이 등록됐습니다.");
       $("#replytext").val('');
       replyList();
       window.location.reload();
@@ -304,7 +393,7 @@ function replyList(){
   let pageNum = "${pageNum}";
   let contentNum = "${contentNum}";
   let param = {"b_idx":b_idx, "pageNum":pageNum, "contentNum":contentNum};
-
+  let u_id = "${login.u_id}";
   $.ajax({
     type: "post",
     url: "/replyselect",
@@ -315,30 +404,47 @@ function replyList(){
       let html = "";
       html += '<table class="b" id="b">';
       for(let i=0; i<replylen; i++){
-        html += '<tr>';
-        html += '<td rowspan="3" style="width:52px"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="w3-circle" alt="UserProfile" style="width:80%"/></td>';
-        html += '<td colspan="2">'+list[i].u_id+'</td>';
-        html += '</tr>';
-        html += '<tr>';
-        html += '<td colspan="2" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
-        html += '</tr>';
-        html += '<tr>';
-        html += '<td>'+list[i].indate+'</td>';
-        if(list[i].u_id === u_id){
-          html += '<td><button id="replyUpdate" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
-          html += '<button id="replyDelete" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button></td>';
+        if(list[i].c_idx == 0){
+          html += '<tr>';
+          if(list[i].img == null){
+            html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+          } else {
+            html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+          }
+          html += '<td class="cont" colspan="3"><strong>'+list[i].u_id+'</strong></td>';
+          html += '</tr>';
+          html += '<tr>';
+          html += '<td style="white-space:pre;" class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+          html += '</tr>';
+          html += '<tr>';
+          html += '<td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+          if(list[i].u_id === u_id){
+            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
+            html += '<button id="replyDelete" name="replybutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
+          } else {
+            html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
+            if(u_id != ""){
+              html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
+            }
+          }
+          html += '</tr>';
+          //답글리스트
+          html += '<tbody style="display:none" id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
+          //답글입력
+          html += '<tr id="c-box'+list[i].r_idx+'" name="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
         }
-        html += '</tr>';
       }
       html += '</table>';
       if (replylen == 0){
-        document.getElementById('b').style.display = 'none'
+        document.getElementById('b').style.display = "none"
       }
       $('#replylist-box').html(html);
     }
   });
 };
-
 function replyP(){
   let b_idx = "${boardVo.b_idx}";
   let pageNum = "${pageNum}";
@@ -356,18 +462,17 @@ function replyP(){
       let endP = list.Pager.endPage;
       let lastP = list.Pager.lastPageNum;
       let html = "";
-      html += '<table><tr>';
-      html += '<td class="page" id="page" colspan="2" style="text-align:center;"><div class="pager">';
+      html += '<table><tr><td class="page" id="page" colspan="2" style="text-align:center;"><div class="pager">';
       if (list.Pager.prev === true){
-        html += '<a href="http://localhost:8080/View?pageNum='+startP-1+'&contentNum='+(startP-1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">< 이전</a>';
-        html += '<a class="firstPageNum" href="/View?pageNum=1&contentNum=30">1</a> ... ';
+        html += '<a href="http://localhost:8080/View?pageNum='+(startP-1)+'&contentNum='+(startP-1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">< 이전</a>';
+        html += '<a class="firstPageNum" href="/View?pageNum=1&contentNum=30&menu_id=${menu_id}&b_idx='+list.b_idx+'"> 1 </a> ... ';
       }
       for (startP; startP <= endP; startP++){
-        html += '<a class="pageNum" href="/View?pageNum='+startP+'&contentNum='+startP*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">'+ startP +'</a>';
+        html += '<a class="pageNum" href="/View?pageNum='+startP+'&contentNum='+startP*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'"> '+startP+' </a>';
       }
       if(list.Pager.next === true){
         html += ' ... <a class="lastPageNum" href="/View?pageNum='+lastP+'&contentNum='+lastP*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">'+lastP+'</a>';
-        html += '<a href="http://localhost:8080/View?pageNum='+endP+1+'&contentNum='+(endP+1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'">다음 ></a>';
+        html += '<a href="http://localhost:8080/View?pageNum='+(endP+1)+'&contentNum='+(endP+1)*30+'&menu_id=${menu_id}&b_idx='+list.b_idx+'"> 다음 ></a>';
       }
       html += '</div></td></tr></table>';
       $('#replyP-box').html(html);

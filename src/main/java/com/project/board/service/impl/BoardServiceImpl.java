@@ -51,11 +51,6 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardVo> getSBoardList(HashMap<String, Object> map) {
-        List<BoardVo> boardList = boardDao.getSBoardList(map);
-        return boardList;
-    }
-    @Override
     public List<GameListVo> getGameList() {
         List<GameListVo> gameListVo = boardDao.getGameList();
 

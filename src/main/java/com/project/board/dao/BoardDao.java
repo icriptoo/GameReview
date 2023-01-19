@@ -44,8 +44,6 @@ public interface BoardDao {
 
     BoardVo goodGame(HashMap<String, Object> map);
 
-    List<BoardVo> getSBoardList(HashMap<String, Object> map);
-
     int declarationInsert(HashMap<String, Object> map);
 
     List<DeclarationVo> getDeclarationList();
