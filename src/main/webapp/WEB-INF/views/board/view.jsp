@@ -124,7 +124,8 @@ textarea {
 </style>
 <script>
 function replyDelete(r_idx){
-// 댓글 삭제할때 답글 있으면 댓글내용만 삭제
+
+// 댓글 삭제할때 답글 있으면 댓글내용만 삭제 하도록 변경해야함
   let out = confirm("댓글을 삭제 하시겠습니까?");
   let b_idx = "${boardVo.b_idx}";
   let menu_id = "${boardVo.menu_id}";
@@ -133,27 +134,31 @@ function replyDelete(r_idx){
   }
 }
 
-function replyUpdateForm(r_idx){
+function replyUpdateForm(r_idx,c_idx){
   let ck = confirm("댓글을 수정 하시겠습니까?");
   if (ck) {
     $("button[name='updatebutton']").hide();
     let k = document.getElementById("replycont"+r_idx);
 
     let form = '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
-    form += '<textarea class="replyUpdateCont" id="replyUpdateCont" cols="80" rows="3">';
+    form += '<textarea style="white-space:pre;" class="replyUpdateCont" id="replyUpdateCont" cols="80" rows="3">';
     form += k.textContent;
     form += '</textarea></br>';
     form += '<div style="text-align:right;"><button type = "button" class="UpdateBtn" onclick="replyUpdate('+ r_idx +')"> 완료 </button>';
-    form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></div></dr>';
+    if(c_idx == 0){
+      form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></div></dr>';
+    } else {
+      form += '<button type="button" class="DeleteBtn" onclick="commentList('+c_idx+','+1+')"> 취소 </button></div></div></dr>';
+    }
     document.getElementById("replycont"+r_idx).innerHTML = form;
   }
 }
 
-function comment_button(r_idx){
+function comment_button(r_idx,c_idx){
   $("tr[name='c-box']").hide();
   document.getElementById("c-box"+r_idx).style.display ='table-row';
   let form = '<div class="comment-write-box"><input type="hidden" name="r_idx" id="comment_number" value='+r_idx+'>';
-  form += '<textarea class="commentInsertCont" id="commentInsertCont" cols="80" rows="3"></textarea></br>';
+  form += '<textarea style="white-space:pre;" class="commentInsertCont" id="commentInsertCont" cols="80" rows="3"></textarea></br>';
   form += '<button type="button" class="UpdateBtn" onclick="commentInsert('+ r_idx +')"> 완료 </button>';
   form += '<button type="button" class="DeleteBtn" onclick="replyList()"> 취소 </button></div></dr></div>';
   document.getElementById("comment"+r_idx).innerHTML = form;
@@ -179,16 +184,22 @@ function commentInsert(r_idx){
 }
 
 // 답글 누르면 답글창 나오는 함수
-function commentList(r_idx) {
-  let param = {"c_idx":r_idx};
-  $.ajax({
-    type: "POST",
-    url:  "/commentList",
-    data: param,
-    success: function(list){
-      commentListIn(list);
-    }
-  });
+function commentList(r_idx,c) {
+  let check = ($('#commentList'+r_idx).is(':visible'));
+  if(check == false || c == 1){
+    document.getElementById('commentList'+r_idx).style.display = ""
+    let param = {"c_idx":r_idx};
+    $.ajax({
+      type: "POST",
+      url:  "/commentList",
+      data: param,
+      success: function(list){
+        commentListIn(list);
+      }
+    });
+  } else {
+    document.getElementById('commentList'+r_idx).style.display = "none"
+  }
 }
 
 function commentListIn(list){
@@ -196,18 +207,16 @@ function commentListIn(list){
   let u_id = "${login.u_id}";
   html = "";
   for(i=0; i<len;i++){
-  console.log($("tbody[name='commentList"+list[i].r_idx+"']").is(':visible'));
-// 답글 누르면 나왔다 들어갔다 할 수 있게 만들어야함
     if(list[i].img == null){
       html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
     } else {
       html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
     }
     html += '<td class="cont"><strong>'+list[i].u_id+'</strong></td></tr>';
-    html += '<tr><td colspan="2" class="cont" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td></tr>';
+    html += '<tr><td style="white-space:pre;" colspan="2" class="cont" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td></tr>';
     html += '<tr><td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
     if(list[i].u_id === u_id){
-      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="updatebutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+      html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="updatebutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
       html += '<button id="replyDelete" name="updatebutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
     } else {
       html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;">';
@@ -383,7 +392,7 @@ function replyList(){
   let pageNum = "${pageNum}";
   let contentNum = "${contentNum}";
   let param = {"b_idx":b_idx, "pageNum":pageNum, "contentNum":contentNum};
-
+  let u_id = "${login.u_id}";
   $.ajax({
     type: "post",
     url: "/replyselect",
@@ -404,36 +413,37 @@ function replyList(){
           html += '<td class="cont" colspan="3"><strong>'+list[i].u_id+'</strong></td>';
           html += '</tr>';
           html += '<tr>';
-          html += '<td class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+          html += '<td style="white-space:pre;" class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
           html += '</tr>';
           html += '<tr>';
           html += '<td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
           if(list[i].u_id === u_id){
-            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+')">수정</button>';
+            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
             html += '<button id="replyDelete" name="replybutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
             html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
-            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+')">답글 쓰기</button></td>';
+            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
           } else {
             html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
             html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
-            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+')">답글 쓰기</button></td>';
+            if(u_id != ""){
+              html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
+            }
           }
           html += '</tr>';
           //답글리스트
-          html += '<tbody id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
+          html += '<tbody style="display:none" id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
           //답글입력
           html += '<tr id="c-box'+list[i].r_idx+'" name="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
         }
       }
       html += '</table>';
       if (replylen == 0){
-        document.getElementById('b').style.display = 'none'
+        document.getElementById('b').style.display = "none"
       }
       $('#replylist-box').html(html);
     }
   });
 };
-
 function replyP(){
   let b_idx = "${boardVo.b_idx}";
   let pageNum = "${pageNum}";
