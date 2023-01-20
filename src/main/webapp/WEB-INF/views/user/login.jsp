@@ -114,7 +114,7 @@ $(function(){
     </ul>
     <ul id="btns">
       <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
-      <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 변경</a>
+      <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 찾기</a>
     </ul>
   </form>
 </div>
