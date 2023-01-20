@@ -53,7 +53,7 @@ public class BoardController {
     @RequestMapping("/declarationProcess")
     public String declarationProcess(@RequestParam HashMap<String, Object> map, Model model){
         boardService.declarationProcess(map);
-        List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
+        List<DeclarationVo> declarationVoList = boardService.getDeclarationList(map);
 
         model.addAttribute("list", declarationVoList);
 
@@ -75,7 +75,7 @@ public class BoardController {
     //신고관리글 페이지
     @RequestMapping("/declarationList")
     public String declarationList(@RequestParam HashMap<String, Object> map, Model model){
-        List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
+        List<DeclarationVo> declarationVoList = boardService.getDeclarationList(map);
 
         model.addAttribute("list", declarationVoList);
 
@@ -120,22 +120,26 @@ public class BoardController {
             model.addAttribute("msg", "로그인을 해주세요.");
             model.addAttribute("url", "/");
             return "/alert";
-
         }
 
         List<BoardVo> boardList = null;
+        List<DeclarationVo> deList = null;
         UserVo userVo = (UserVo) httpSession.getAttribute("login");
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String searchType = (String) map.get("searchType");
         String keyword = (String) map.get("keyword");
+        String authority = userVo.getAuthority();
+        String a = (String) map.get("authority");
         if(menu_id.equals("4")) { // 고객센터 페이지에 필요
             String u_id = userVo.getU_id();
-            String authority = userVo.getAuthority();
             map.put("authority",authority);
             map.put("u_id",u_id);
             model.addAttribute("u_id", u_id );
             model.addAttribute("authority", authority );
+            if (a.equals("11")){
+                map.put("au",11);
+            }
         }
         if (searchType == null){ // 검색유무 확인
             searchType = "a";
@@ -154,7 +158,11 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getBoardList(map);
+            if(a.equals("11")) {
+                deList = boardService.getDeclarationList(map);
+            } else {
+                boardList = boardService.getBoardList(map);
+            }
         } else {
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
@@ -169,9 +177,14 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            boardList = boardService.getBoardList(map);
+            if(a.equals("11")) {
+                deList = boardService.getDeclarationList(map);
+            } else {
+                boardList = boardService.getBoardList(map);
+            }
         }
-
+        model.addAttribute("authority",a);
+        model.addAttribute("deList",deList);
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("boardList", boardList );
         model.addAttribute("Pager", boardPager);
@@ -298,7 +311,6 @@ public class BoardController {
     @RequestMapping("/RecomGameList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
         BoardVo boardVo = boardService.goodGame(map);
-        System.out.println("see:"+map);
 
         if(boardVo == null){
             model.addAttribute("msg", "게임리뷰를 남겨주세요.");

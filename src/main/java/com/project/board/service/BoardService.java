@@ -46,11 +46,12 @@ public interface BoardService {
 
     int declarationInsert(HashMap<String, Object> map);
 
-    List<DeclarationVo> getDeclarationList();
 
     DeclarationVo getDeclaration(HashMap<String, Object> map);
 
     void declarationProcess(HashMap<String, Object> map);
 
     List<GameListVo> getTopGame();
+
+    List<DeclarationVo> getDeclarationList(HashMap<String, Object> map);
 }

@@ -454,7 +454,6 @@ public class UserController {
         return "/home";
     }
 
-
     // 창닫기
     @RequestMapping("/popupout")
     public String popupout(){ return "popupout"; }

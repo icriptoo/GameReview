@@ -25,15 +25,39 @@
     </select>
 
     <!-- 신고글목록 가져오기 -->
-    <select id="getDeclarationList" resultType="com.project.board.vo.DeclarationVo">
-        SELECT d_idx,
-               indate,
-               us_id,
-               ue_id,
-               type_idx
-          FROM declaration
-         WHERE process = 0
-         ORDER BY d_idx asc
+    <select id="getDeclarationList1" resultType="com.project.board.vo.DeclarationVo">
+        SELECT d.d_idx,
+        d.indate,
+        d.us_id,
+        u.n_name us_name,
+        d.ue_id,
+        s.n_name ue_name,
+        d.type_idx
+        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+        ORDER BY d_idx asc
+    </select>
+
+    <select id="getDeclarationList2" resultType="com.project.board.vo.DeclarationVo">
+        SELECT a.d_idx,
+        a.indate,
+        a.us_id,
+        a.us_name,
+        a.ue_id,
+        b.n_name ue_name,
+        a.type_idx
+        FROM
+        (SELECT d.d_idx,
+        d.indate,
+        d.us_id,
+        u.n_name us_name,
+        d.ue_id,
+        d.type_idx
+        FROM declaration d
+        inner join users u on d.us_id = u.u_id
+        ORDER BY d_idx asc) a
+        INNER JOIN users b
+        ON a.ue_id = b.u_id
+        where a.us_id = #{u_id}
     </select>
 
     <!-- 신고 저장 -->
@@ -531,12 +555,11 @@
          WHERE    u_id = #{u_id}
            AND   g_idx = ${g_idx}
            AND menu_id = 1
-
     </select>
 
     <!-- 유저 고평가 게임 출력 -->
     <select id="GoodGame"
-            resultType="com.project.board.vo.BoardVo">
+            resultType="com.project.board.vo.DeclarationVo">
         <![CDATA[
         SELECT  a.b_idx,
                 a.title,

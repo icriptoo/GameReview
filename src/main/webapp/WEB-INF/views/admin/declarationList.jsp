@@ -111,7 +111,7 @@ function btnSearchEnter(){
     </tr>
     <c:forEach var="list" items="${list}" varStatus="status" >
       <tr>
-        <td width="10%" style="text-align:center">${list.ue_id}</td>
+        <td width="10%" style="text-align:center">${list.ue_name}</td>
         <c:choose>
           <c:when test="${list.type_idx eq 1}">
             <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=불건전한 내용">불건전한 내용</a></td>
@@ -132,7 +132,7 @@ function btnSearchEnter(){
             <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=기타">기타</a></td>
           </c:when>
         </c:choose>
-        <td width="10%" style="text-align:center">${list.us_id}</td>
+        <td width="10%" style="text-align:center">${list.us_name}</td>
         <td width="10%" style="text-align:center">${list.indate}</td>
       </tr>
       <tr style="border-top: 1px solid #999999">

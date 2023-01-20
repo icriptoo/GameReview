@@ -97,7 +97,6 @@ ul{
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
-
 <div style="width: 100%; height: 500px; ">
   <div>
     <aside class="leftAside">
@@ -118,45 +117,88 @@ ul{
         공지사항
       </c:if>
       <c:if test="${menu_id eq 4}">
-        Q & A
+        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&authority=${login.authority}&pageNum=1&contentNum=30'">Q&A</button>
+        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&authority=11&pageNum=1&contentNum=30'">신고목록</button>
       </c:if>
       </th>
     </tr>
-    <tr>
-      <th width="10%" style="text-align:center">번호</th>
-      <th width="25%" style="text-align:center">제목</th>
-      <c:if test= "${menu_id eq 4}">
-        <th width="5%" style="text-align:center">작성자</th>
-      </c:if>
-      <c:if test= "${menu_id eq 4}">
-        <th width="5%" style="text-align:center">답변상태</th>
-      </c:if>
-      <th width="10%" style="text-align:center">작성일</th>
-      <c:if test= "${menu_id eq 3}">
-        <th width="5%" style="text-align:center">조회수</th>
-      </c:if>
-    </tr>
-    <c:forEach var="item" items="${boardList}" >
-      <tr>
-        <td width="10%" style="text-align:center">${item.b_idx}</td>
-        <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
-        <c:if test="${menu_id eq 4}">
-        <td width="10%" style="text-align:center">${item.u_id}</td>
-          <c:choose>
-            <c:when test="${empty item.a_cont}">
-              <td width="5%" style="text-align:center">대기</td>
-            </c:when>
-            <c:otherwise>
-              <td width="5%" style="text-align:center">완료</td>
-            </c:otherwise>
+    <c:set var="au" value="${authority}"/>
+    <c:choose>
+      <c:when test="${au ne 11}">
+        <tr>
+          <th width="10%" style="text-align:center">번호</th>
+          <th width="25%" style="text-align:center">제목</th>
+          <c:if test= "${menu_id eq 4}">
+            <th width="5%" style="text-align:center">작성자</th>
+          </c:if>
+          <c:if test= "${menu_id eq 4}">
+            <th width="5%" style="text-align:center">답변상태</th>
+          </c:if>
+          <th width="10%" style="text-align:center">작성일</th>
+          <c:if test= "${menu_id eq 3}">
+            <th width="5%" style="text-align:center">조회수</th>
+          </c:if>
+        </tr>
+        <c:forEach var="item" items="${boardList}" >
+          <tr>
+            <td width="10%" style="text-align:center">${item.b_idx}</td>
+            <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+            <c:if test="${menu_id eq 4}">
+            <td width="10%" style="text-align:center">${item.u_id}</td>
+              <c:choose>
+                <c:when test="${empty item.a_cont}">
+                  <td width="5%" style="text-align:center">대기</td>
+                </c:when>
+                <c:otherwise>
+                  <td width="5%" style="text-align:center">완료</td>
+                </c:otherwise>
+              </c:choose>
+            </c:if>
+            <td width="10%" style="text-align:center">${item.indate}</td>
+            <c:if test= "${menu_id eq 3}">
+              <td width="5%" style="text-align:center">${item.b_count}</td>
+            </c:if>
+          </tr>
+        </c:forEach>
+      </c:when>
+      <c:otherwise>
+        <tr>
+          <th width="10%" style="text-align:center">신고대상 아이디</th>
+          <th width="10%" style="text-align:center">분류</th>
+          <th width="10%" style="text-align:center">신고자 아이디</th>
+          <th width="10%" style="text-align:center">신고일</th>
+        </tr>
+        <c:forEach var="list" items="${deList}" varStatus="status" >
+          <tr>
+            <td width="10%" style="text-align:center">${list.ue_name}</td>
+            <c:choose>
+              <c:when test="${list.type_idx eq 1}">
+                <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=불건전한 내용">불건전한 내용</a></td>
+              </c:when>
+              <c:when test="${list.type_idx eq 2}">
+                <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=스팸 및 부적절한 홍보">스팸 및 부적절한 홍보</a></td>
+              </c:when>
+              <c:when test="${list.type_idx eq 3}">
+                <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=명예훼손 및 비방">명예훼손 및 비방</a></td>
+              </c:when>
+              <c:when test="${list.type_idx eq 4}">
+                <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=초상권 및 저작권 침해">초상권 및 저작권 침해</a></td>
+              </c:when>
+              <c:when test="${list.type_idx eq 5}">
+                <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=개인정보 도용">개인정보 도용</a></td>
+              </c:when>
+              <c:when test="${list.type_idx eq 6}">
+                <td width="10%" style="text-align:left"><a href="/declarationView?d_idx=${list.d_idx}&title=기타">기타</a></td>
+              </c:when>
             </c:choose>
-        </c:if>
-        <td width="10%" style="text-align:center">${item.indate}</td>
-        <c:if test= "${menu_id eq 3}">
-          <td width="5%" style="text-align:center">${item.b_count}</td>
-        </c:if>
-      </tr>
-    </c:forEach>
+            <td width="10%" style="text-align:center">${list.us_name}</td>
+            <td width="10%" style="text-align:center">${list.indate}</td>
+          </tr>
+          <tr style="border-top: 1px solid #999999">
+          </tr>
+        </c:forEach>
+      </c:otherwise>
+    </c:choose>
     <tr>
       <td colspan="4">
         <c:set var="sT" value="${sT}"/>
