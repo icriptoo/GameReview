@@ -87,7 +87,7 @@ function logoutbtn(){
   <c:set var="img" value="${login.img}"/>
   <c:choose>
     <c:when test="${empty login}">
-      <h2>Login</h2>
+      <h2 style="text-align:center">Login</h2>
       <ul id="input_button">
         <br>
         <li id="login_btn">
