@@ -209,33 +209,39 @@
                 <choose>
                     <when test="searchType == null">
                         SELECT *
-                        FROM (
-                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
-                        B_IDX,
-                        TITLE,
-                        CONT,
-                        B_COUNT,
-                        INDATE,
-                        U_ID
-                        FROM BOARD
-                        WHERE menu_id = #{menu_id}
-                        ORDER BY b_idx desc)
+                          FROM (SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                       a.B_IDX,
+                                       a.TITLE,
+                                       a.CONT,
+                                       a.B_COUNT,
+                                       a.INDATE,
+                                       a.U_ID,
+                                       b.n_name
+                                  FROM BOARD a
+                                 INNER JOIN users b
+                                    ON a.u_id = b.u_id
+                                 WHERE menu_id = #{menu_id}
+                                 ORDER BY b_idx DESC)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                         ORDER BY b_idx desc
                     </when>
                     <otherwise>
                         SELECT *
-                        FROM (
-                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
-                        B_IDX,
-                        TITLE,
-                        CONT,
-                        B_COUNT,
-                        INDATE,
-                        U_ID
-                        FROM BOARD
-                        WHERE menu_id = #{menu_id} and ${searchType} like '%${keyword}%'
-                        ORDER BY b_idx desc)
+                          FROM (
+                            SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                   a.B_IDX,
+                                   a.TITLE,
+                                   a.CONT,
+                                   a.B_COUNT,
+                                   a.INDATE,
+                                   a.U_ID,
+                                   b.N_NAME
+                              FROM BOARD a
+                             INNER JOIN users b
+                                ON a.u_id = b.u_id
+                             WHERE menu_id = #{menu_id}
+                               AND ${searchType} LIKE '%${keyword}%'
+                             ORDER BY b_idx DESC)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </otherwise>
                 </choose>
@@ -244,46 +250,79 @@
                 <choose>
                     <when test="authority == 0 and searchType == null">
                         SELECT *
-                        FROM (
-                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
-                        B_IDX,
-                        TITLE,
-                        CONT,
-                        B_COUNT,
-                        INDATE,
-                        A_CONT,
-                        U_ID
-                        FROM BOARD
-                        WHERE menu_id = #{menu_id}
-                        ORDER BY b_idx desc)
-                        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                          FROM (
+                            SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                   a.B_IDX,
+                                   a.TITLE,
+                                   a.CONT,
+                                   a.B_COUNT,
+                                   a.INDATE,
+                                   a.A_CONT,
+                                   a.U_ID,
+                                   b.n_name
+                              FROM BOARD a
+                             INNER JOIN users b
+                                ON a.u_id = b.u_id
+                             WHERE menu_id = #{menu_id}
+                             ORDER BY b_idx DESC)
+                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </when>
                     <when test="authority == 0 and searchType != null">
                         SELECT *
-                        FROM (
-                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
-                        B_IDX,
-                        TITLE,
-                        CONT,
-                        B_COUNT,
-                        INDATE,
-                        U_ID
-                        FROM BOARD
-                        WHERE menu_id = #{menu_id} and ${searchType} like '%${keyword}%'
-                        ORDER BY b_idx desc)
-                        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                          FROM (
+                            SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                   a.B_IDX,
+                                   a.TITLE,
+                                   a.CONT,
+                                   a.B_COUNT,
+                                   a.INDATE,
+                                   a.U_ID,
+                                   b.n_name
+                              FROM BOARD a
+                             INNER JOIN users b
+                                ON a.u_id = b.u_id
+                             WHERE a.menu_id = #{menu_id} AND a.${searchType} LIKE '%${keyword}%'
+                             ORDER BY b_idx DESC)
+                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </when>
                     <when test="authority != 0 and searchType == null">
-                        SELECT *
-                        FROM board
-                        WHERE menu_id = #{menu_id} AND u_id = #{u_id}
-                        ORDER BY b_idx desc
+                        SELECT a.b_idx,
+                              a.title,
+                              a.cont,
+                              a.r_score,
+                              a.indate,
+                              a.b_count,
+                              a.menu_id,
+                              a.u_id,
+                              a.g_idx,
+                              a.a_cont,
+                              b.n_name
+                         FROM board a
+                        INNER JOIN users b
+                           ON a.u_id = b.u_id
+                        WHERE a.menu_id = #{menu_id}
+                          AND a.u_id = #{u_id}
+                        ORDER BY b_idx DESC
                     </when>
                     <when test="authority != 0 and searchType != null">
-                        SELECT *
-                        FROM board
-                        WHERE menu_id = #{menu_id} AND u_id = #{u_id} AND ${searchType} like '%${keyword}%'
-                        ORDER BY b_idx desc
+                        SELECT a.b_idx,
+                               a.title,
+                               a.cont,
+                               a.r_score,
+                               a.indate,
+                               a.b_count,
+                               a.menu_id,
+                               a.u_id,
+                               a.g_idx,
+                               a.a_cont,
+                               b.n_name
+                          FROM board a
+                         INNER JOIN users b
+                            ON a.u_id = b.u_id
+                         WHERE a.menu_id = #{menu_id}
+                           AND a.u_id = #{u_id}
+                           AND ${searchType} like '%${keyword}%'
+                         ORDER BY b_idx DESC
                     </when>
                 </choose>
             </when>

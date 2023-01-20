@@ -204,6 +204,12 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
+    public List<GameListVo> getGenreGame(HashMap<String, Object> map) {
+        List<GameListVo> genreGameList = sqlSession.selectList("Game.getGenreGame", map);
+        return genreGameList;
+    }
+
+    @Override
     public List<GameListVo> getGameList() {
         List<GameListVo> gameListVo = sqlSession.selectList("Game.GetGameList");
         return gameListVo;

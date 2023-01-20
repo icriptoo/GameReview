@@ -88,6 +88,29 @@ function btnGSearch(e){
           </td>
         </tr>
       </c:forEach>
+      <td colspan="4" style="font-size:25px;">
+             "${genre}" 추천게임입니다.
+            </td>
+            <c:forEach var="list" items="${gameList2}">
+              <tr onClick="location.href='/GameReviewList?g_idx=${list.g_idx}&menu_id=1&pageNum=1&contentNum=30'">
+                <td>
+                  <img src="${list.g_img}" alt="${list.g_name}" style="width: 165px; height: 115px;">
+                </td>
+                <td colspan="2">
+                  <ul class="gList">
+                    <li><strong>게임명 : </strong><span class="gName">${list.g_name}</span> <span class="eGName">${list.g_ename}</span></li>
+                    <li><strong>장르명 : </strong>${list.g_genre}</li>
+                    <li><strong>개발사 : </strong>${list.g_company}</li>
+                    <li><strong>서비스 : </strong>${list.g_service}</li>
+                    <li><strong>플랫폼 : </strong>${list.g_platform}</li>
+                    <li><strong>출시일 : </strong>${list.g_date}</li>
+                  </ul>
+                </td>
+                <td style="font-size:20px;">
+                  평점 : ${list.g_score}
+                </td>
+              </tr>
+            </c:forEach>
     </table>
   </div>
 </div>

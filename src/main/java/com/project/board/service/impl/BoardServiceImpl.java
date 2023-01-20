@@ -104,6 +104,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<GameListVo> getGenreGame(HashMap<String, Object> map) {
+        List<GameListVo> genreGameList = boardDao.getGenreGame(map);
+        return genreGameList;
+    }
+
+    @Override
     public void GameInsert() throws IOException { boardDao.GameInsert(); }
 
     @Override

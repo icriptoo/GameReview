@@ -360,7 +360,7 @@ public class BoardController {
             rIdx.add(randomIdx);
         }
 
-        //게임정보 담을 리스트 선언
+        //유사도추천 게임정보 담을 리스트 선언
         ArrayList<GameListVo> gameList = new ArrayList<>();
 
         //추천게임 정보가져오기
@@ -371,13 +371,27 @@ public class BoardController {
         }
 
         //유저 선호장르 기반 추천게임 가져오기
-
-        //램덤장르뽑기
+        //선호장르3개중 하나랜덤뽑기
         int rd = random.nextInt(3) + 1; // 1,2,3 랜덤 숫자
-        map.put("genre", map.get("genre"+ rd));
+        String genre = (String)map.get("genre"+ rd);
+        map.put("genre", genre);
+
+        List<GameListVo> genreGameList = boardService.getGenreGame(map);
+
+        //장르추천 게임정보 담을 리스트 선언
+        ArrayList<GameListVo> gameList2 = new ArrayList<>();
+
+        //장르top10 중에 3개 랜덤 뽑기
+        for(int i=0; i<3; i++) {
+            gameList2.add(genreGameList.get(rIdx.get(i)));
+        }
+        System.out.println("1:"+ gameList);
+        System.out.println("2:"+ gameList2);
 
         model.addAttribute("gameList", gameList);
+        model.addAttribute("gameList2", gameList2);
         model.addAttribute("title", title);
+        model.addAttribute("genre", genre);
 
         return "/board/recomGameList";
     }

@@ -53,4 +53,6 @@ public interface BoardDao {
     void declarationProcess(HashMap<String, Object> map);
 
     List<GameListVo> getTopGame();
+
+    List<GameListVo> getGenreGame(HashMap<String, Object> map);
 }

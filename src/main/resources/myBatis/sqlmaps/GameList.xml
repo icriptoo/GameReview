@@ -6,6 +6,36 @@
 <mapper namespace="Game">
 
 
+    <!-- 장르추천 10개 뽑기 -->
+    <select id="getGenreGame" resultType="com.project.board.vo.GameListVo">
+        <![CDATA[
+          SELECT g_idx,
+                 g_name,
+                 g_ename,
+                 g_genre,
+                 g_company,
+                 g_service,
+                 g_platform,
+                 g_date,
+                 g_img,
+                 g_score
+            FROM
+              (SELECT g_idx,
+                      g_name,
+                      g_ename,
+                      g_genre,
+                      g_company,
+                      g_service,
+                      g_platform,
+                      g_date,
+                      g_img,
+                      NVL(g_score, 0) g_score
+                 FROM gamelist
+                WHERE g_genre LIKE '%'||#{genre}||'%'
+                ORDER BY g_score DESC)
+           WHERE ROWNUM <= 10
+        ]]>
+    </select>
     <!-- 인기순위top10 -->
     <select id="getTopGame" resultType="com.project.board.vo.GameListVo">
         <![CDATA[
