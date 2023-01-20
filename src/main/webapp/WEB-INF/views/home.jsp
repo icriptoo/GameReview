@@ -32,6 +32,7 @@
     width: 300px;
     height: 300px;
     padding: 25px 35px 25px 35px;
+    margin: 30px 30px 30px 30px;
 }
 .genre a {
     border: 1px solid;
