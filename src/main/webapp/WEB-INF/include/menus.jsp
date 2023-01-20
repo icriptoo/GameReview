@@ -72,7 +72,7 @@ li.asd{
     <ul class="clearfix">
       <li class="asd"><a href="/">메인화면</a></li>
       <li class="asd"><a href="/Board/GameList?pageNum=1&contentNum=30">게임 리스트</a></li>
-      <li class="asd"><a href="/RecomGameList?u_id=${ sessionScope.login.u_id }">게임 추천</a></li>
+      <li class="asd"><a href="/RecomGameList?u_id=${login.u_id }&genre1=${login.genre1}&genre2=${login.genre2}&genre3=${login.genre3}">게임 추천</a></li>
       <li class="asd"><a href="/totalList?menu_id=1&pageNum=1&contentNum=30">전체리뷰게시판</a></li>
       <li class="asd"><a href="/totalList?menu_id=2&pageNum=1&contentNum=30">전체자유게시판</a></li>
       <li class="asd"><a href="/managementList?menu_id=3&pageNum=1&contentNum=30">공지사항</a></li>

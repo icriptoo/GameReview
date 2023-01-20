@@ -50,7 +50,7 @@ public class BoardController {
     }
 
     //신고처리
-    @RequestMapping("declarationProcess")
+    @RequestMapping("/declarationProcess")
     public String declarationProcess(@RequestParam HashMap<String, Object> map, Model model){
         boardService.declarationProcess(map);
         List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
@@ -61,7 +61,7 @@ public class BoardController {
     }
 
     //신고 디테일 페이지
-    @RequestMapping("declarationView")
+    @RequestMapping("/declarationView")
     public String declarationView(@RequestParam HashMap<String, Object> map, Model model){
         String title = (String)map.get("title");  //분류 제목 가져오기
         DeclarationVo declarationVo = boardService.getDeclaration(map);
@@ -73,7 +73,7 @@ public class BoardController {
     }
 
     //신고관리글 페이지
-    @RequestMapping("declarationList")
+    @RequestMapping("/declarationList")
     public String declarationList(@RequestParam HashMap<String, Object> map, Model model){
         List<DeclarationVo> declarationVoList = boardService.getDeclarationList();
 
@@ -84,7 +84,7 @@ public class BoardController {
 
     //신고데이터 저장
     @ResponseBody
-    @RequestMapping("declarationInsert")
+    @RequestMapping("/declarationInsert")
     public String declarationInsert(@RequestParam HashMap<String, Object> map, Model model){
         int code = boardService.declarationInsert(map);
         String result = "";
@@ -99,7 +99,7 @@ public class BoardController {
     }
 
     //신고하기 화면
-    @RequestMapping("declarationWrite")
+    @RequestMapping("/declarationWrite")
     public String declaration(@RequestParam HashMap<String, Object> map, Model model){
         String us_id = (String)map.get("us_id");  //신고자 아이디
         String ue_id = (String)map.get("ue_id");  //피신고자 아이디
@@ -112,15 +112,23 @@ public class BoardController {
     }
 
     //공지사항,고객센터 글목록 managementList
-    @RequestMapping("managementList")
+    @RequestMapping("/managementList")
     public String managementList(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
+        String menu_id = (String)map.get("menu_id");  //메뉴번호
+
+        if(menu_id.equals("4") && httpSession.getAttribute("login") == null ){
+            model.addAttribute("msg", "로그인을 해주세요.");
+            model.addAttribute("url", "/");
+            return "/alert";
+
+        }
+
         List<BoardVo> boardList = null;
         UserVo userVo = (UserVo) httpSession.getAttribute("login");
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String searchType = (String) map.get("searchType");
         String keyword = (String) map.get("keyword");
-        String menu_id = (String)map.get("menu_id");  //메뉴번호
         if(menu_id.equals("4")) { // 고객센터 페이지에 필요
             String u_id = userVo.getU_id();
             String authority = userVo.getAuthority();
@@ -290,6 +298,7 @@ public class BoardController {
     @RequestMapping("/RecomGameList")
     public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
         BoardVo boardVo = boardService.goodGame(map);
+        System.out.println("see:"+map);
 
         if(boardVo == null){
             model.addAttribute("msg", "게임리뷰를 남겨주세요.");
@@ -360,6 +369,13 @@ public class BoardController {
             GameListVo gameListVo = boardService.getGame(map);
             gameList.add(gameListVo);
         }
+
+        //유저 선호장르 기반 추천게임 가져오기
+
+        //램덤장르뽑기
+        int rd = random.nextInt(3) + 1; // 1,2,3 랜덤 숫자
+        map.put("genre", map.get("genre"+ rd));
+
         model.addAttribute("gameList", gameList);
         model.addAttribute("title", title);
 
