@@ -98,7 +98,7 @@ public class BoardDaoImpl implements BoardDao {
                     if (gck == 0) {
                         sqlSession.insert("Game.GInsert", map);
                     }
-               }
+                }
                 map.remove("g");
                 map.remove("im");
                 map.remove("ge");
