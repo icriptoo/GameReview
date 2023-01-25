@@ -102,7 +102,7 @@
                   <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
                   <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
                 </select>
-                <span style="padding-left:125px; font-weight:bold"><a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a></span>
+                <span style="padding-left:75px; font-weight:bold"><a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a></span>
               </p>
               <div class="genre">
                 <p>
