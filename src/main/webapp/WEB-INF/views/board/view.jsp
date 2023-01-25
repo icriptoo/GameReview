@@ -72,6 +72,7 @@ table.b td.updateForm {
   width: 52px;
   padding-bottom: 15px;
   border-bottom: 1px solid #dfdfdf;
+  border-top: 1px solid #dfdfdf;
 }
 .comment-box{
   padding-top: 10px;
@@ -125,8 +126,6 @@ textarea {
 </style>
 <script>
 function replyDelete(r_idx){
-
-// 댓글 삭제할때 답글 있으면 댓글내용만 삭제 하도록 변경해야함
   let out = confirm("댓글을 삭제 하시겠습니까?");
   let b_idx = "${boardVo.b_idx}";
   let menu_id = "${boardVo.menu_id}";
@@ -270,7 +269,7 @@ function showPopup(u_id){
 
 </script>
 </head>
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
   <h1 class="headerB"><b>Game List</b></h1>
@@ -405,36 +404,52 @@ function replyList(){
       html += '<table class="b" id="b">';
       for(let i=0; i<replylen; i++){
         if(list[i].c_idx == 0){
-          html += '<tr>';
-          if(list[i].img == null){
-            html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
-          } else {
-            html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
-          }
-          html += '<td class="cont" colspan="3"><strong>'+list[i].u_id+'</strong></td>';
-          html += '</tr>';
-          html += '<tr>';
-          html += '<td style="white-space:pre;" class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
-          html += '</tr>';
-          html += '<tr>';
-          html += '<td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
-          if(list[i].u_id === u_id){
-            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
-            html += '<button id="replyDelete" name="replybutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
-            html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
-            html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
-          } else {
-            html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
+          if(list[i].d_ck == 1){
+            html += '<tr><td rowspan="3" class="img-box"></td>';
+            html += '<td class="cont" colspan="3"><strong>삭제된 댓글</strong></td></tr>';
+            html += '<tr><td class="cont" colspan="3">삭제된 댓글입니다.</td></tr>'
+            html += '<tr><td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;"></td>';
+            html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;">';
             html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
             if(u_id != ""){
-              html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
+              html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td></tr>';
             }
+            //답글리스트
+            html += '<tbody style="display:none" id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
+            //답글입력
+            html += '<tr id="c-box'+list[i].r_idx+'" name="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
+          } else {
+            html += '<tr>';
+            if(list[i].img == null){
+              html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/default/default.png" class="profile" alt="UserProfile"/></td>';
+            } else {
+              html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
+            }
+            html += '<td class="cont" colspan="3"><strong>'+list[i].u_id+'</strong></td>';
+            html += '</tr>';
+            html += '<tr>';
+            html += '<td style="white-space:pre;" class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
+            html += '</tr>';
+            html += '<tr>';
+            html += '<td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
+            if(list[i].u_id === u_id){
+              html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
+              html += '<button id="replyDelete" name="replybutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
+              html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
+              html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
+            } else {
+              html += '<td class="updateForm" style="border-bottom:1px solid #dfdfdf;">';
+              html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
+              if(u_id != ""){
+                html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';
+              }
+            }
+            html += '</tr>';
+            //답글리스트
+            html += '<tbody style="display:none" id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
+            //답글입력
+            html += '<tr id="c-box'+list[i].r_idx+'" name="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
           }
-          html += '</tr>';
-          //답글리스트
-          html += '<tbody style="display:none" id="commentList'+list[i].r_idx+'" name="commentList'+list[i].r_idx+'"></tbody>';
-          //답글입력
-          html += '<tr id="c-box'+list[i].r_idx+'" name="c-box" style="display:none"><td colspan="3" class="comment-box" id="comment'+list[i].r_idx+'"></td></tr>';
         }
       }
       html += '</table>';

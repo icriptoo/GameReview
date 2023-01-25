@@ -78,7 +78,7 @@ td, th {
 
 </style>
 </head>
-<body class="w3-light-grey">
+<body>
     <h3 style = "text-align:center"><b>신고하기</b></h3>
 
 <div style="width: 100%; height: 500px; ">

@@ -81,8 +81,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<DeclarationVo> getDeclarationList() {
-        List<DeclarationVo> declarationVoList = boardDao.getDeclarationList();
+    public List<DeclarationVo> getDeclarationList(HashMap<String, Object> map) {
+        List<DeclarationVo> declarationVoList = boardDao.getDeclarationList(map);
         return declarationVoList;
     }
 

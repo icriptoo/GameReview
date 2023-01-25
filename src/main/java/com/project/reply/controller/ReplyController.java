@@ -43,6 +43,17 @@ public class ReplyController {
         map.put("pageNum",boardPager.getPageNum());
         map.put("c",1); // mapper구분자
         replyVo = replyService.replySelect(map);
+        // 답글이 남아 있어 틀만 남아 있는 삭제된 댓글에 답글이 없을 경우 삭제된 댓글 완전히 삭제
+        for (int i=0;i<replyVo.size();i++){
+            if(replyVo.get(i).getD_ck() == 1){
+                map.put("r_idx",replyVo.get(i).getR_idx());
+                int j = replyService.replyCSelect(map);
+                if(j == 0){
+                    replyService.replyDelete(map);
+                    replyVo = replyService.replySelect(map);
+                }
+            }
+        }
         return replyVo;
     }
 
@@ -74,8 +85,13 @@ public class ReplyController {
         String b_idx = (String) map.get("b_idx");
         String menu_id = (String) map.get("menu_id");
 
-        replyService.replyDelete(map);
-
+        // 삭제 할려는 댓글에 답글 달려 있으면 댓글 내용만 지우고 답글을 볼 수 있는 형태로 업데이트
+        int c = replyService.replyCSelect(map);
+        if(c == 0) {
+            replyService.replyDelete(map);
+        } else {
+            replyService.replyDUpdate(map);
+        }
         model.addAttribute("b_idx",b_idx);
         model.addAttribute("menu_id",menu_id);
         model.addAttribute("contentNum",30);

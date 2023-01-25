@@ -140,6 +140,10 @@ public class UserController {
     @RequestMapping("/mypage")
     public String mypage(HttpSession httpSession, HashMap<String, Object> map){
         UserVo user = userService.getUser(httpSession.getAttribute("login"));
+        if (user == null){
+            httpSession.invalidate();
+            return "redirect:/";
+        }
         map.put("user",user);
         return "user/mypage";
     }
@@ -335,13 +339,12 @@ public class UserController {
 
     // 비밀번호 변경
     @RequestMapping("/changePw")
-    public String changePw(@RequestParam HashMap<String, Object> map){
+    public String changePw(@RequestParam HashMap<String, Object> map, HttpSession httpSession){
         String pw = (String)map.get("pw");
         String Pcode = userService.getPcode(map);
         String Epw = encrypt.getEncrypt(pw,Pcode);
         map.put("pw",Epw);
         map.put("pcode",Pcode);
-
         userService.changePw(map);
 
         return "popupout";
@@ -450,7 +453,6 @@ public class UserController {
         httpSession.invalidate();
         return "/home";
     }
-
 
     // 창닫기
     @RequestMapping("/popupout")

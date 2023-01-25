@@ -87,7 +87,7 @@ function logoutbtn(){
   <c:set var="img" value="${login.img}"/>
   <c:choose>
     <c:when test="${empty login}">
-      <h2>Member-Login</h2>
+      <h2 style="text-align:center">Login</h2>
       <ul id="input_button">
         <br>
         <li id="login_btn">
@@ -98,16 +98,16 @@ function logoutbtn(){
       </ul>
       <ul id="btns">
         <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=700, height=700'))" style="font-size:15px;">아이디 찾기</a> /
-        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))" style="font-size:15px;">비밀번호 변경</a>
+        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))" style="font-size:15px;">비밀번호 찾기</a>
       </ul>
     </c:when>
     <c:otherwise>
       <c:choose>
         <c:when test="${img eq null}">
-          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 50%"/></p>
+          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 50%; border: 1px solid #bfbfbf;"/></p>
         </c:when>
         <c:otherwise>
-          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 50%"/></p>
+          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 50%; border: 1px solid #bfbfbf;"/></p>
         </c:otherwise>
       </c:choose>
       <h4>${login.n_name}님</h4>

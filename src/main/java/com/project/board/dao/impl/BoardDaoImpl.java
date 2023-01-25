@@ -98,7 +98,7 @@ public class BoardDaoImpl implements BoardDao {
                     if (gck == 0) {
                         sqlSession.insert("Game.GInsert", map);
                     }
-               }
+                }
                 map.remove("g");
                 map.remove("im");
                 map.remove("ge");
@@ -181,8 +181,14 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public List<DeclarationVo> getDeclarationList() {
-        List<DeclarationVo> declarationVoList = sqlSession.selectList("Board.getDeclarationList");
+    public List<DeclarationVo> getDeclarationList(HashMap<String, Object> map) {
+        String au = String.valueOf(map.get("au"));
+        List<DeclarationVo> declarationVoList = null;
+        if(au.equals("11")){//고객센터 신고목록
+            declarationVoList = sqlSession.selectList("Board.getDeclarationList2",map);
+        }else {//관리페이지 신고목록
+            declarationVoList = sqlSession.selectList("Board.getDeclarationList1",map);
+        }
         return declarationVoList;
     }
 

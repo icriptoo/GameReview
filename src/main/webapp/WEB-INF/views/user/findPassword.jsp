@@ -178,7 +178,7 @@ $(function(){
 </head>
 <body>
 <header>
-    <h1>비밀번호 변경</h1>
+    <h1>비밀번호 찾기</h1>
 </header>
 <div style="height:70%">
   <p>

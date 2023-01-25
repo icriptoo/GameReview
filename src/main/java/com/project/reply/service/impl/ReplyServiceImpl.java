@@ -47,5 +47,15 @@ public class ReplyServiceImpl implements ReplyService {
         replyDao.commentInsert(map);
     }
 
+    @Override
+    public int replyCSelect(HashMap<String, Object> map) {
+        return replyDao.replyCSelect(map);
+    }
+
+    @Override
+    public void replyDUpdate(HashMap<String, Object> map) {
+        replyDao.replyDUpdate(map);
+    }
+
 
 }
