@@ -296,7 +296,7 @@ function showPopup(u_id){
       <tr>
         <th style= "width:6%; height:10%; text-align:center">작성자</th>
         <td>
-          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()" style="font-size:18px;" >${boardVo.u_id}</a>
+          <a href="javascript:void(0)" class="dropbtn" onclick="myFunction()" style="font-size:18px;" >${boardVo.n_name}</a>
           <div class="dropdown-content" id="myDropdown">
             <a onClick = "showPopup('${boardVo.u_id}');" >신고하기</a>
           </div>

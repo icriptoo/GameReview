@@ -97,7 +97,7 @@ function btnSearchEnter(){
         <c:if test="${menu_id eq 1}">
           <td width="5%" style="text-align:center">${item.r_score}</td>
         </c:if>
-        <td width="5%" style="text-align:center">${item.u_id}</td>
+        <td width="5%" style="text-align:center">${item.n_name}</td>
         <td width="10%" style="text-align:center">${item.indate}</td>
         <td width="5%" style="text-align:center">${item.b_count}</td>
       </tr>

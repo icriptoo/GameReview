@@ -173,7 +173,7 @@ function btnSearchEnter(){
         <c:if test="${menu_id eq 1}">
           <td width="5%" style="text-align:center">${boardVo.r_score}</td>
         </c:if>
-        <td width="5%" style="text-align:center">${boardVo.u_id}</td>
+        <td width="5%" style="text-align:center">${boardVo.n_name}</td>
         <td width="10%" style="text-align:center">${boardVo.indate}</td>
         <td width="5%" style="text-align:center">${boardVo.b_count}</td>
       </tr>
