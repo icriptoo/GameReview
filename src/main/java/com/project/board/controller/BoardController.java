@@ -44,8 +44,9 @@ public class BoardController {
     //인기순위 top10
     @ResponseBody
     @RequestMapping("/topGame")
-    public List<GameListVo> topGame(@RequestParam HashMap<String, Object> map, Model model){
+    public List<GameListVo> topGame(@RequestParam HashMap<String, Object> map, Model model,HttpSession httpSession){
         List<GameListVo> topList = boardService.getTopGame();
+        httpSession.setAttribute("topList", topList);
         return topList;
     }
 
@@ -318,7 +319,7 @@ public class BoardController {
         BoardVo boardVo = boardService.goodGame(map);
 
         if(boardVo == null){
-            model.addAttribute("msg", "게임리뷰를 남겨주세요.");
+            model.addAttribute("msg", "더 많은 게임리뷰를 남겨주세요.");
             model.addAttribute("url", "/");
             return "/alert";
 
@@ -368,6 +369,9 @@ public class BoardController {
         ArrayList<Integer> rIdx = new ArrayList<>();
         while(rIdx.size() < 3){
             int randomIdx = random.nextInt(al.size());
+            if(randomIdx == 0){ // 0번은 입력값 게임이므로 제외시킴
+                continue;
+            }
             for(int i=0; i<rIdx.size(); i++){
                 if(rIdx.get(i) == randomIdx) {
                     rIdx.remove(Integer.valueOf(randomIdx));

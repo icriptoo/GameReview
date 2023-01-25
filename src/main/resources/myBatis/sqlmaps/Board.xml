@@ -622,7 +622,7 @@
 
     <!-- 유저 고평가 게임 출력 -->
     <select id="GoodGame"
-            resultType="com.project.board.vo.DeclarationVo">
+            resultType="com.project.board.vo.BoardVo">
         <![CDATA[
         SELECT  a.b_idx,
                 a.title,
