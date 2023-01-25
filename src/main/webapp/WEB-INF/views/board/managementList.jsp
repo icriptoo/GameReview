@@ -144,7 +144,7 @@ ul{
             <td width="10%" style="text-align:center">${item.b_idx}</td>
             <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
             <c:if test="${menu_id eq 4}">
-            <td width="10%" style="text-align:center">${item.u_id}</td>
+            <td width="10%" style="text-align:center">${item.n_name}</td>
               <c:choose>
                 <c:when test="${empty item.a_cont}">
                   <td width="5%" style="text-align:center">대기</td>
