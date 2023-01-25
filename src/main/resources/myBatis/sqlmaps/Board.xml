@@ -14,14 +14,17 @@
 
     <!-- 신고글 가져오기 -->
     <select id="getDeclaration" resultType="com.project.board.vo.DeclarationVo">
-        SELECT d_idx,
-               type_idx,
-               us_id,
-               cont,
-               ue_id,
-               b_idx
-          FROM declaration
-         WHERE d_idx = #{d_idx}
+        SELECT d.d_idx,
+        d.type_idx,
+        d.us_id,
+        u.n_name us_name,
+        d.cont,
+        d.ue_id,
+        s.n_name ue_name,
+        d.b_idx,
+        d.process
+        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+        WHERE d_idx = ${d_idx}
     </select>
 
     <!-- 신고글목록 가져오기 -->
@@ -32,9 +35,10 @@
         u.n_name us_name,
         d.ue_id,
         s.n_name ue_name,
-        d.type_idx
+        d.type_idx,
+        d.process
         FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
-        ORDER BY d_idx asc
+        ORDER BY d_idx desc
     </select>
 
     <select id="getDeclarationList2" resultType="com.project.board.vo.DeclarationVo">
@@ -51,7 +55,8 @@
         d.us_id,
         u.n_name us_name,
         d.ue_id,
-        d.type_idx
+        d.type_idx,
+        d.process
         FROM declaration d
         inner join users u on d.us_id = u.u_id
         ORDER BY d_idx asc) a

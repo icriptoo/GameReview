@@ -9,11 +9,12 @@ public class DeclarationVo {
     private String ue_id;
     private int b_idx;
     private int type_idx;
+    private int process;
     private String us_name;
     private String ue_name;
 
     public DeclarationVo(){};
-    public DeclarationVo(int d_idx, String cont, String indate, String us_id, String ue_id, int b_idx, int type_idx, String us_name, String ue_name) {
+    public DeclarationVo(int d_idx, String cont, String indate, String us_id, String ue_id, int b_idx, int type_idx, String us_name, String ue_name, int process) {
         this.d_idx = d_idx;
         this.cont = cont;
         this.indate = indate;
@@ -23,8 +24,16 @@ public class DeclarationVo {
         this.type_idx = type_idx;
         this.us_name = us_name;
         this.ue_name = ue_name;
+        this.process = process;
     }
 
+    public int getProcess() {
+        return process;
+    }
+
+    public void setProcess(int process) {
+        this.process = process;
+    }
 
     public String getUs_name() {
         return us_name;
@@ -108,6 +117,7 @@ public class DeclarationVo {
                 ", ue_id='" + ue_id + '\'' +
                 ", b_idx=" + b_idx +
                 ", type_idx=" + type_idx +
+                ", process=" + process +
                 ", us_name='" + us_name + '\'' +
                 ", ue_name='" + ue_name + '\'' +
                 '}';

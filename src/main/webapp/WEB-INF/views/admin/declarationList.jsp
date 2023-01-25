@@ -34,7 +34,11 @@ ul{
 td{
     padding: 8px 16px;
 }
-
+.type a{cursor:pointer;}
+.cont {display:none;}
+#btn1 {
+  display : none;
+}
 </style>
 <script>
 function btnSearch(e){
@@ -67,17 +71,8 @@ function btnSearchEnter(){
   }
 }
 </script>
-
-<style>
-    .type a{cursor:pointer;}
-    .cont {display:none;}
-    #btn1 {
-      display : none;
-    }
-</style>
-
 </head>
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
   <h1 class="headerB"><b>Game List</b></h1>
@@ -106,8 +101,8 @@ function btnSearchEnter(){
       <th width="10%" style="text-align:center">신고대상 아이디</th>
       <th width="10%" style="text-align:center">분류</th>
       <th width="10%" style="text-align:center">신고자 아이디</th>
+      <th width="10%" style="text-align:center">답변상태</th>
       <th width="10%" style="text-align:center">신고일</th>
-
     </tr>
     <c:forEach var="list" items="${list}" varStatus="status" >
       <tr>
@@ -133,19 +128,27 @@ function btnSearchEnter(){
           </c:when>
         </c:choose>
         <td width="10%" style="text-align:center">${list.us_name}</td>
+        <c:choose>
+          <c:when test="${list.process eq 0}">
+            <td width="10%" style="text-align:center">대기</td>
+          </c:when>
+          <c:when test="${list.process eq 1}">
+            <td width="10%" style="text-align:center">1번</td>
+          </c:when>
+          <c:when test="${list.process eq 2}">
+            <td width="10%" style="text-align:center">2번</td>
+          </c:when>
+        </c:choose>
         <td width="10%" style="text-align:center">${list.indate}</td>
       </tr>
       <tr style="border-top: 1px solid #999999">
       </tr>
-
-
     </c:forEach>
-
   </table>
 </div>
 <script>
+console.log(${list});
 document.getElementById("btnSearch").addEventListener('click',btnSearch);
 </script>
 </body>
-
 </html>

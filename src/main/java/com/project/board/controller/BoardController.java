@@ -115,31 +115,36 @@ public class BoardController {
     @RequestMapping("/managementList")
     public String managementList(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
         String menu_id = (String)map.get("menu_id");  //메뉴번호
-
         if(menu_id.equals("4") && httpSession.getAttribute("login") == null ){
             model.addAttribute("msg", "로그인을 해주세요.");
             model.addAttribute("url", "/");
             return "/alert";
         }
-
         List<BoardVo> boardList = null;
         List<DeclarationVo> deList = null;
-        UserVo userVo = (UserVo) httpSession.getAttribute("login");
+        //페이징에 사용
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String searchType = (String) map.get("searchType");
         String keyword = (String) map.get("keyword");
-        String authority = userVo.getAuthority();
-        String a = (String) map.get("authority");
-        if(menu_id.equals("4")) { // 고객센터 페이지에 필요
+        //유저정보
+        UserVo userVo = (UserVo) httpSession.getAttribute("login");
+        //고객센터 페이지에 사용
+        String authority = "";
+        String a = ""; //신고목록 페이지에 갈 때 사용
+        if(userVo != null) {
+            authority = userVo.getAuthority();
+        }
+        if(menu_id.equals("4")) {
+            a = (String) map.get("authority"); //신고목록
+            if (a.equals("11")){
+                map.put("au",11);
+            }
             String u_id = userVo.getU_id();
             map.put("authority",authority);
             map.put("u_id",u_id);
             model.addAttribute("u_id", u_id );
             model.addAttribute("authority", authority );
-            if (a.equals("11")){
-                map.put("au",11);
-            }
         }
         if (searchType == null){ // 검색유무 확인
             searchType = "a";

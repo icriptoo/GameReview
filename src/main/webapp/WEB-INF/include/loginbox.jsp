@@ -104,10 +104,10 @@ function logoutbtn(){
     <c:otherwise>
       <c:choose>
         <c:when test="${img eq null}">
-          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 50%"/></p>
+          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 50%; border: 1px solid #bfbfbf;"/></p>
         </c:when>
         <c:otherwise>
-          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 50%"/></p>
+          <p><img src="/img/userProfile/${login.u_id}/${login.img}" class="w3-circle" alt="UserProfile" style="width : 50%; border: 1px solid #bfbfbf;"/></p>
         </c:otherwise>
       </c:choose>
       <h4>${login.n_name}님</h4>

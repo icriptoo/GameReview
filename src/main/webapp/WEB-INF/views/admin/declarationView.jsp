@@ -66,7 +66,7 @@ textarea {
 </style>
 
 </head>
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
   <h1 class="headerB"><b>Game List</b></h1>
@@ -92,7 +92,7 @@ textarea {
       </tr>
       <tr>
         <th style= "width:8%; height:10%; text-align:center">신고대상</th>
-        <td>${detail.ue_id}</td>
+        <td>${detail.ue_name}</td>
       </tr>
       <tr>
         <th style= "width:8%; height:10%; text-align:center">관련게시글</th>
@@ -106,7 +106,7 @@ textarea {
       </tr>
       <tr>
         <th style="width:8%; height:10%; text-align:center">신고자</th>
-        <td>${detail.us_id}</td>
+        <td>${detail.us_name}</td>
       </tr>
       <tr>
         <th style="width:8%; height:10%; text-align:center">신고처리</th>

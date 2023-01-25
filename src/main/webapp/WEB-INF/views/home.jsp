@@ -26,31 +26,51 @@
 	width: 350px;
 	width: 20%;
 }
-.boardBox {
+.boardBox1 {
     border: 1px solid #aaa;
-    border-radius: 15px;
     width: 300px;
     height: 300px;
-    padding: 25px 35px 25px 35px;
-    margin: 30px 30px 30px 30px;
+    padding: 10px;
+    margin: 30px;
+    background-color: #bac8d6;
+}
+.boardBox {
+    border: 1px solid #aaa;
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    margin: 30px;
+    background-color: #bac8d6;
+}
+.boardBox p{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.bg {
+    width: 100%;
+    height: 100%;
+    background-color: #deecf6;
+    padding: 10px;
 }
 .genre a {
-    border: 1px solid;
+    padding: 2px;
+}
+.genre p{
+    padding: 10px 10px 10px 10px;
+    background-color: #fff;
+    margin-bottom: 1px;
+    margin-top: 1px;
 }
 .plus {
     text-align: right;
     width: 30px;
 }
-p {
-    margin-bottom: 5px;
-    margin-top: 5px;
-}
+
 </style>
 <script>
 </script>
 </head>
-<!-- html 시작 -->
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-white" style="padding-top: 80px; padding-bottom: 80px;">
   <h1 class="headerB"><b>게임 리뷰 사이트</b></h1>
@@ -66,48 +86,50 @@ p {
     <table>
       <tr>
         <td>
-          <div class="boardBox">
-            <p>게임목록</p>
-            <p>
-              <select id="platform" name="platform" onchange="if(this.value) location.href=(this.value);">
-                <option value="/Board/GameList?pageNum=1&contentNum=30" ${so == '0' ? 'selected="selected"' : '' }>플랫폼</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=1" ${so == '1' ? 'selected="selected"' : '' }>PC패키지</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=2" ${so == '2' ? 'selected="selected"' : '' }>PC온라인</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=3" ${so == '3' ? 'selected="selected"' : '' }>모바일</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=4" ${so == '4' ? 'selected="selected"' : '' }>PS</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=5" ${so == '5' ? 'selected="selected"' : '' }>XBOX</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=6" ${so == '6' ? 'selected="selected"' : '' }>switch</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
-                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
-              </select>
-              <span style="padding-left:95px; font-weight:bold"><a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a></span>
-            </p>
-            <div class="genre">
+          <div class="boardBox1">
+            <div class="bg">
               <p>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=51">RPG</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=52">어드벤쳐</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=53">FPS</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=54">스포츠</a>
+                게임목록
+                <select id="platform" name="platform" onchange="if(this.value) location.href=(this.value);">
+                  <option value="/Board/GameList?pageNum=1&contentNum=30" ${so == '0' ? 'selected="selected"' : '' }>플랫폼</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=1" ${so == '1' ? 'selected="selected"' : '' }>PC패키지</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=2" ${so == '2' ? 'selected="selected"' : '' }>PC온라인</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=3" ${so == '3' ? 'selected="selected"' : '' }>모바일</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=4" ${so == '4' ? 'selected="selected"' : '' }>PS</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=5" ${so == '5' ? 'selected="selected"' : '' }>XBOX</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=6" ${so == '6' ? 'selected="selected"' : '' }>switch</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
+                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
+                </select>
+                <span style="padding-left:125px; font-weight:bold"><a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a></span>
               </p>
-              <p>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=55">TCG</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=56">보드</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=57">레이싱</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=58">슈팅</a>
-              </p>
-              <p>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=59">액션</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=60">시뮬레이션</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=61">RTS</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=62">퍼즐</a>
-              </p>
-              <p>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=63">리듬액션</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=64">SNG</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=65">AOS</a>
-                <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=66">기타</a>
-              </p>
+              <div class="genre">
+                <p>
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=51">RPG</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=52">어드벤쳐</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=53">FPS</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=54">스포츠</a>
+                </p>
+                <p>
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=55">TCG</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=56">보드</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=57">레이싱</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=58">슈팅</a>
+                </p>
+                <p>
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=59">액션</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=60">시뮬레이션</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=61">RTS</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=62">퍼즐</a>
+                </p>
+                <p>
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=63">리듬액션</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=64">SNG</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=65">AOS</a> │
+                  <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=66">기타</a>
+                </p>
+              </div>
             </div>
           </div>
         </td>
@@ -116,7 +138,7 @@ p {
           <p style="font-weight:bold">공지사항</p>
           <p><span style="padding-left:175px; font-weight:bold"><a href="/managementList?menu_id=3&pageNum=1&contentNum=30">+더 보기</a></span></p>
             <c:forEach begin="0" end="7" var="idx">
-              <p><a href="/View?b_idx=${MList[idx].b_idx}&menu_id=${MList[idx].menu_id}&pageNum=1&contentNum=30">${MList[idx].title}</a></p>
+              <p><a class="genre" href="/View?b_idx=${MList[idx].b_idx}&menu_id=${MList[idx].menu_id}&pageNum=1&contentNum=30">${MList[idx].title}</a></p>
             </c:forEach>
           </div>
         </td>

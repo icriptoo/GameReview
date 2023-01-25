@@ -24,7 +24,7 @@
                   GROUP BY a.u_id) y
             ON x.u_id = y.u_id
          WHERE withdrawal = 'ON'
-         ORDER BY declaration desc
+         ORDER BY INDATE desc
     </select>
 
     <select id="login"

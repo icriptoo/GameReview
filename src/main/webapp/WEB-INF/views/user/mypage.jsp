@@ -59,7 +59,7 @@ ul{
 
 </script>
 </head>
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
@@ -92,7 +92,6 @@ ul{
       <p><a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))">비밀번호 변경</a></p>
       <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=700, height=700'))">프로필 사진 수정</a></p>
       <p><a href="/myboard?pageNum=1&contentNum=30&menu_id=1&u_id=${login.u_id}">내 게시글 보기</a></p>
-      <p><a href="/myDeclaration?pageNum=1&contentNum=30&menu_id=1&u_id=${login.u_id}">내 신고목록 보기</a></p>
       <p><a href="/user/WithdrawalForm">회원탈퇴</a></p>
     </div>
     <div class="mypagein">

@@ -269,7 +269,7 @@ function showPopup(u_id){
 
 </script>
 </head>
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
   <h1 class="headerB"><b>Game List</b></h1>

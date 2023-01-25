@@ -74,9 +74,7 @@ function chk(u_id){
     location.href = "/user/Wirthdrwal?u_id=" + u_id + "&path=1";
   }
 }
-
 </script>
-
 <style>
     .type a{cursor:pointer;}
     .cont {display:none;}
@@ -86,7 +84,7 @@ function chk(u_id){
 </style>
 
 </head>
-<body class="w3-light-grey">
+<body>
 <%@ include file="/WEB-INF/include/menus.jsp" %>
 <header class="w3-container w3-center w3-padding-48 w3-white">
   <h1 class="headerB"><b>Game List</b></h1>
@@ -127,11 +125,11 @@ function chk(u_id){
       <tr>
         <td width="10%" style="text-align:center">${list.indate}</td>
         <td width="10%" style="text-align:center">${list.u_id}</td>
-        <td width="10%" style="text-align:left">${list.n_name}</td>
-        <td width="10%" style="text-align:left">${list.email}</td>
-        <td width="5%" style="text-align:left">${list.genre1}</td>
-        <td width="5%" style="text-align:left">${list.genre2}</td>
-        <td width="5%" style="text-align:left">${list.genre3}</td>
+        <td width="10%" style="text-align:center">${list.n_name}</td>
+        <td width="10%" style="text-align:center">${list.email}</td>
+        <td width="5%" style="text-align:center">${list.genre1}</td>
+        <td width="5%" style="text-align:center">${list.genre2}</td>
+        <td width="5%" style="text-align:center">${list.genre3}</td>
         <td width="5%" style="text-align:center">${list.declaration}</td>
         <td width="5%" style="text-align:center"><button style="font-size:15px;" onClick="chk('${list.u_id}');" >탈퇴</button></td>
       </tr>

@@ -184,12 +184,9 @@ public class BoardDaoImpl implements BoardDao {
     public List<DeclarationVo> getDeclarationList(HashMap<String, Object> map) {
         String au = String.valueOf(map.get("au"));
         List<DeclarationVo> declarationVoList = null;
-        System.out.println(map);
-        if(au.equals("11")){
+        if(au.equals("11")){//고객센터 신고목록
             declarationVoList = sqlSession.selectList("Board.getDeclarationList2",map);
-
-            System.out.println(declarationVoList);
-        }else {
+        }else {//관리페이지 신고목록
             declarationVoList = sqlSession.selectList("Board.getDeclarationList1",map);
         }
         return declarationVoList;
