@@ -54,4 +54,5 @@ public interface BoardDao {
 
     List<GameListVo> getTopGame();
 
+    List<GameListVo> getGenreGame(HashMap<String, Object> map);
 }
