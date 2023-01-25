@@ -26,7 +26,8 @@ body{
     height:270px;
     border:solid 1px #bbbbbb;
     border-radius: 15px;
-    margin:10px 0 0 10px;
+    margin-top: 15%;
+    margin-left: 45%;
     padding:10px 0 0 15px;
 }
 h2{
@@ -37,9 +38,15 @@ h2{
     width:100px;
     height:18px;
 }
-#id,#login_btn{
+#id{
     display:inline-block;
     vertical-align:top;
+}
+#login_btn {
+    padding-left: 25px;
+}
+#input_login {
+    padding-left: 10px;
 }
 #id span{
     display: inline-block;
@@ -48,9 +55,9 @@ h2{
 #pw{
     margin-top:3px;
 }
-#login_btn button{
+.login{
     margin-left:5px;
-    padding:12px;
+    padding:5px;
     border-radius: 5px;
 }
 #btns{
@@ -60,6 +67,10 @@ h2{
 #btns li{
     margin-left: 10px;
     display:inline;
+}
+#box {
+    width: 100%;
+    height: 100%;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
@@ -92,31 +103,33 @@ $(function(){
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
-<div id="login_box">
-  <h2>Member-Login</h2>
-  <form action="/loginProcess" method="POST" onsubmit="return ture">
-    <ul id="input_button">
-      <li id="u_id">
-        <ul>
-          <li>
-            <input type="text" name="u_id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
-          </li>
-          <li id="pw">
-            <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
-          </li>
-        </ul>
-      </li>
-      <br><br>
-      <li id="login_btn">
+<div id="box">
+  <div id="login_box">
+    <h2>Member-Login</h2>
+    <form action="/loginProcess" method="POST" onsubmit="return ture">
+      <ul id="input_login">
+        <li id="u_id">
+          <ul>
+            <li>
+              <input type="text" name="u_id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
+            </li>
+            <li id="pw">
+              <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
+            </li>
+          </ul>
+        </li>
+        <br>
+      </ul>
+      <p id="login_btn">
         <button onclick="loginbtn()" class="login" style="font-size:15px;">로그인</button>
         <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
-      </li>
-    </ul>
-    <ul id="btns">
-      <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
-      <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 찾기</a>
-    </ul>
-  </form>
+      </p>
+      <ul id="btns" style="text-decoration-line: none;">
+        <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
+        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 찾기</a>
+      </ul>
+    </form>
+  </div>
 </div>
 <script>
 </script>

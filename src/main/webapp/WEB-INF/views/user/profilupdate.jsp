@@ -17,11 +17,13 @@
 
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 ul{
     list-style:none;
@@ -32,23 +34,26 @@ ul{
 }
 
 .mypage{
-  height: 800px;
-  border: 1px solid #000;
+  height: 500px;
+  width: 50%;
+  border: 1px solid #aaa;
   border-radius: 10px;
   text-align: center;
   margin: 50px 450px 0px 350px;
-  background-color: #fff;
-
+  padding: 30px;
+  background-color: #bac8d6;
 }
 .mypagein{
-  width: 500px;
-  height: 600px;
-  border: 1px solid #000;
+  width: 80%;
+  height: 100%;
+  border: 1px solid #aaa;
   border-radius: 10px;
-  text-align: left;
   padding: 40px 40px;
+  margin-left: 20px;
+  text-align: left;
   font-family:'d2coding';
   float:left;
+  background-color: #deecf6;
 }
 .profile{
   width: 100px;
@@ -197,7 +202,7 @@ $(function(){
   $('#emailcode').keyup(function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
-    if(("#enumsendResult").text() != "인증번호가 발송 됐습니다."){
+    if($('#enumsendResult').text() != "인증번호가 발송 됐습니다."){
       $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
       return false;
     }
@@ -245,15 +250,19 @@ $(function(){
           <c:set var="img" value="${user.img}"/>
           <c:choose>
             <c:when test="${img eq null}">
-              <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+              <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%; border: 1px solid #bfbfbf; background-color: #fff;"/></p>
             </c:when>
             <c:otherwise>
-              <p><img src="/img/userProfile/${user.u_id}/${user.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+              <p><img src="/img/userProfile/${user.u_id}/${user.img}" class="w3-circle" alt="UserProfile" style="width : 100%; border: 1px solid #bfbfbf; background-color: #fff;"/></p>
             </c:otherwise>
           </c:choose>
         </p>
-        <button type="submit" name="update">수정완료</button>
-        <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
+        <p>
+          <button type="submit" name="update">수정완료</button>
+        </p>
+        <p>
+          <a class="undo" href="/mypage" style="font-size:15px;">취소하기</a>
+        </p>
       </div>
       <div class="mypagein">
         <input type="hidden" name="pw" value="${user.pw}">

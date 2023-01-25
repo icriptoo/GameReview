@@ -9,11 +9,13 @@
 <style>
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 div.signup{
   width: 600px;
@@ -134,6 +136,11 @@ $(function(){
 
   $('#idCheck').on('click', function(e){
     let u_id = $('[name=u_id]').val();
+    let regx = /^[a-zA-Z0-9]*$/;
+    if(!regx.test(u_id)){
+      $("#idCheckResult").text('아이디는 영문 대소문자, 숫자만 입력 가능합니다.');
+      return false;
+    }
     $.ajax({
       type : 'POST',
       url : "useridCheck",
@@ -211,7 +218,7 @@ $(function(){
     });
   });
 
-  $('#emailcode').keyup(function(){
+  $('#enumck').on('click', function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
     $.ajax({
@@ -294,7 +301,7 @@ $(function(){
       <p>비밀번호 : <input type="password" name="pw"><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
       <p>비밀번호 확인 : <input type="password" name="pwck"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
       <p>이메일 : <input type="text" name="email"><button id="enumsend" name="enumsend" type="button" >인증번호전송</button><span id="enumsendResult" name="enumsendResult"></span></p>
-      <p>인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode"><span id="enumckResult" name="enumckResult"></span></p>
+      <p>인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode"><button id="enumck" name="enumck" type="button" >인증번호확인</button><span id="enumckResult" name="enumckResult"></span></p>
       <p><span id="enumckResult" name="enumckResult"></span></p>
       <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택해 주세요.</p>
       <p>선호 장르1 :

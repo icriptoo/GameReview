@@ -17,11 +17,13 @@
 
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 40%;
+	height: 100%;
 }
 ul{
     list-style:none;
@@ -32,26 +34,30 @@ ul{
 }
 
 .mypage{
-  height: 800px;
-  border: 1px solid #000;
+  height: 500px;
+  width: 50%;
+  border: 1px solid #aaa;
   border-radius: 10px;
   text-align: center;
   margin: 50px 450px 0px 350px;
-  background-color: #fff;
+  padding: 30px;
+  background-color: #bac8d6;
 }
 .mypagein{
-  width: 500px;
-  height: 600px;
-  border: 1px solid #000;
+  width: 80%;
+  height: 100%;
+  border: 1px solid #aaa;
   border-radius: 10px;
-  text-align: left;
   padding: 40px 40px;
+  margin-left: 20px;
+  text-align: left;
   font-family:'d2coding';
   float:left;
+  background-color: #deecf6;
 }
 .profile{
   width: 100px;
-  height: 100px;
+  height: 100%;
   float:left;
 }
 </style>
@@ -64,10 +70,10 @@ ul{
 <header class="w3-container w3-center w3-padding-48 w3-white">
     <h1 class="headerB"><b>Game List</b></h1>
 </header>
-<div style="width: 100%; height: 500px;  ">
+<div style="width: 100%; height: 100%;">
   <div>
     <aside class="leftAside">
-      <h1>왼쪽사이드</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>
@@ -82,10 +88,10 @@ ul{
       <c:set var="img" value="${user.img}"/>
       <c:choose>
         <c:when test="${img eq null}">
-          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+          <p><img src="/img/userProfile/default/default.png" class="w3-circle" alt="UserProfile" style="width : 100%; border: 1px solid #bfbfbf; background-color: #fff;"/></p>
         </c:when>
         <c:otherwise>
-          <p><img src="/img/userProfile/${user.u_id}/${user.img}" class="w3-circle" alt="UserProfile" style="width : 100%"/></p>
+          <p><img src="/img/userProfile/${user.u_id}/${user.img}" class="w3-circle" alt="UserProfile" style="width : 100%; border: 1px solid #bfbfbf; background-color: #fff;"/></p>
         </c:otherwise>
       </c:choose>
       <p><a href="/user/profilupdateform">내 정보 수정</a></p>

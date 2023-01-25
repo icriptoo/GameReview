@@ -15,12 +15,13 @@
 .headerB{ font-size: 80px!important }
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
-	height: 2000px;
+	width: 20%;
+	height: 100%;
 }
 ul{
     list-style:none;

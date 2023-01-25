@@ -101,6 +101,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public String findpwck(HashMap<String, Object> map) {
+        System.out.println(map);
         String pw = sqlSession.selectOne("User.findpw",map);
         if (pw != null){
             return pw;

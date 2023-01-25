@@ -249,7 +249,7 @@ function chpwbtn(){
     let u_id = $('input[name=u_id]').val();
     let changePw = $('#chPwCk').val();
     let param = {"u_id":u_id, "pw":changePw}
-    alert("비밀번호가 변경됐습니다.");
+    alert("비밀번호가 변경됐습니다.\n다시 로그인해 주세요.");
     location.href = "/changePw?u_id="+u_id+"&pw="+changePw;
   }
 }

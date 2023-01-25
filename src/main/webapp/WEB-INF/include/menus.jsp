@@ -66,7 +66,7 @@ li.asd{
 }
 </style>
 
-<body style="background-color:#F6F6F6">
+<body style="background-color:#F6F6F6; height: 100%;">
 <div class="menu">
   <nav class="clearfix">
     <ul class="clearfix">
