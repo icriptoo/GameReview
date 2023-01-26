@@ -144,7 +144,7 @@ ul{
         <c:forEach var="item" items="${boardList}" >
           <tr>
             <td width="10%" style="text-align:center">${item.b_idx}</td>
-            <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+            <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&authority=${authority}">${item.title}</a></td>
             <c:if test="${menu_id eq 4}">
             <td width="10%" style="text-align:center">${item.n_name}</td>
               <c:choose>
@@ -263,7 +263,7 @@ ul{
       </td>
       <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
         <c:if test="${sessionScope.login.u_id ne null}">
-          <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30'" >글쓰기</button>
+          <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30&authority=${authority}'" >글쓰기</button>
         </c:if>
       </td>
     </tr>

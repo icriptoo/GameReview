@@ -75,6 +75,10 @@ h2{
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
+function checkSpacebar(){
+  let kcode = event.keyCode;
+  if(kcode == 32) event.returnValue = false;
+}
 $(document).ready(function() {
   let message = "${fail}";
   if (message != "") {
@@ -111,10 +115,10 @@ $(function(){
         <li id="u_id">
           <ul>
             <li>
-              <input type="text" name="u_id" placeholder="ID" style="width:180px;height:30px;font-size:15px;">
+              <input type="text" name="u_id" placeholder="ID" style="width:180px;height:30px;font-size:15px;" maxlength="20" onkeydown="checkSpacebar();"/>
             </li>
             <li id="pw">
-              <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;">
+              <input type="password" name="pw" placeholder="PW" style="width:180px;height:30px;font-size:15px;" maxlength="15" onkeydown="checkSpacebar();"/>
             </li>
           </ul>
         </li>
@@ -125,8 +129,8 @@ $(function(){
         <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
       </p>
       <ul id="btns" style="text-decoration-line: none;">
-        <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=500, height=500'))" style="font-size:15px;">아이디 찾기</a> /
-        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=500, height=500'))" style="font-size:15px;">비밀번호 찾기</a>
+        <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=450, height=400'))" style="font-size:15px;">아이디 찾기</a> /
+        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=600, height=550'))" style="font-size:15px;">비밀번호 찾기</a>
       </ul>
     </form>
   </div>

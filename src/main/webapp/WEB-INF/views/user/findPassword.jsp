@@ -8,6 +8,10 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <title>비밀번호 찾기</title>
 <script>
+function checkSpacebar(){
+  let kcode = event.keyCode;
+  if(kcode == 32) event.returnValue = false;
+}
 function enumsendEnter(){
   if(window.event.keyCode == 13){
     $("#enumsendResult").text("");
@@ -123,9 +127,16 @@ $(function(){
     e.stopPropagation();
   });
 
-  $('#emailcode').keyup(function(){
+  $('#enumck').on('click',function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
+    if($('#enumsendResult').text() != "인증번호가 발송 됐습니다."){
+      $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
+      return false;
+    }
+    if(ecodeck == ""){
+      $("#enumckResult").text("인증번호를 입력해 주세요.");
+    }
     $.ajax({
       type : 'POST',
       url : "findecodeck",
@@ -139,7 +150,7 @@ $(function(){
     });
   });
 
-  $('#chPw').keyup(function(e){
+  $('#chPw').focusout(function(){
     let pw = "${login.cpw}";
     let cpw = $('input[name=chPw]').val();
     let u_id = $('[name=u_id]').val();
@@ -163,7 +174,7 @@ $(function(){
     })
   });
 
-  $('#chPwCk').keyup(function(e){
+  $('#chPwCk').focusout(function(){
     let passwd = $('[name=chPw]').val();
     let passwdCheck = $('[name=chPwCk]').val();
 
@@ -182,25 +193,32 @@ $(function(){
 </header>
 <div style="height:70%">
   <p>
-    아이디 <input id="u_id" name="u_id" type="text" style="width:50%" onkeyup="enumsendEnter()">
+    아이디 <input id="u_id" name="u_id" type="text" style="width:50%" maxlength="20" onkeydown="checkSpacebar();"/ onkeyup="enumsendEnter()"/>
   </p>
   <p>
-    이메일 <input id="email" name="email" type="text" style="width:50%" onkeyup="enumsendEnter()">
+    이메일 <input id="email" name="email" type="text" style="width:50%" onkeydown="checkSpacebar();"/ onkeyup="enumsendEnter()">
     <button id="enumsend" name="enumsend">인증번호전송</button>
+  </p>
+  <p>
     <span id="enumsendResult" name="enumsendResult"></span>
   </p>
   <p>
-    인증번호 <input type="text" id="emailcode" name="emailcode" placeholder="인증번호 6자리를 입력해 주세요." style="width:50%">
+    인증번호 <input type="text" id="emailcode" name="emailcode" placeholder="인증번호 6자리를 입력해 주세요." style="width:50%" maxlength="6" onkeydown="checkSpacebar();"/>
+    <button id="enumck" name="enumck" type="button" >인증번호확인</button>
+  </p>
+  <p>
     <span id="enumckResult" name="enumckResult"></span>
   </p>
   <div id="changePw">
-    <p>변경할 비밀번호 <input type="password" id="chPw" name="chPw"><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
-    <p>변경할 비밀번호 확인 <input type="password" id="chPwCk" name="chPwCk"><span id="pwCheckResult" name="pwCheckResult"></p>
+    <p>변경할 비밀번호 <input type="password" id="chPw" name="chPw"></p>
+    <p><span id="pwJCheckResult" name="pwJCheckResult" maxlength="15" onkeydown="checkSpacebar();"/></span></p>
+    <p>변경할 비밀번호 확인 <input type="password" id="chPwCk" name="chPwCk" maxlength="15" onkeydown="checkSpacebar();"/></p>
+    <p><span id="pwCheckResult" name="pwCheckResult"></p>
     <p><button id="changePwbtn" onclick="chpwbtn()">변경하기</button></p>
   </div>
   <p><span id="userpwCheck" name="userpwCheck"></span></p>
   <p>
-   <a id="findpw" href=''>인증</a>
+    <a id="findpw" href=''>찾기</a>
     <a id="close" href='javascript:window.close();'>닫기</a>
   </p>
 </div>

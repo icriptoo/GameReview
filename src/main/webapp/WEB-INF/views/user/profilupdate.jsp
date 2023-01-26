@@ -62,7 +62,14 @@ ul{
 }
 </style>
 <script>
+function checkSpacebar(){
+  let kcode = event.keyCode;
+  if(kcode == 32) event.returnValue = false;
+}
 $(function(){
+  let lastName = "";
+  let lastEmail = "";
+  let lastEmailCode = "";
   $('form').on('submit',function(e){
     let n_name  = "${user.n_name}";
     let cn_name = $('input[name=n_name]').val();
@@ -74,13 +81,16 @@ $(function(){
     let g2      = "${user.genre2}";
     let cg3     = $('[name=genre3]').val();
     let g3      = "${user.genre3}";
-
     if(n_name == cn_name && email == cemail && g1 == cg1 && g2 == cg2 && g3 == cg3){
       alert("변경된 내용이 없습니다.");
       return false;
     }
-
     if(cn_name != n_name){
+      if(cn_name != lastName){
+        $('[name=nnCheckResult]').empty();
+        alert('입력한 아이디가 변경 됐습니다. 확인해 주세요.');
+        return false;
+      }
       if($('[name=nnCheckResult]').text() == "중복된 닉네임입니다."){
         alert('아이디 중복체크를 확인해 주세요.');
         return false;
@@ -91,6 +101,11 @@ $(function(){
       }
     }
     if(cemail != email){
+      if(cemail != lastEmail){
+        $('[name=enumsendResult]').empty();
+        alert('입력한 이메일이 변경 됐습니다. 확인해 주세요.');
+        return false;
+      }
       if($('[name=enumsendResult]').text() == "중복된 이메일입니다."){
         alert('이메일을 확인해 주세요.');
         return false;
@@ -107,7 +122,12 @@ $(function(){
         alert('이메일을 확인해 주세요.');
         return false;
       }
-      if($('[name=enumckResult]').text() == "인증번호가 발송 됐습니다."){
+      if($('[name=enumsendResult]').text() == "인증번호가 발송 됐습니다."){
+        if($('input[name=emailcode]').val() != lastEmailCode){
+          $('[name=enumckResult]').empty();
+          alert('입력한 인증번호가 변경 됐습니다. 확인해 주세요.');
+          return false;
+        }
         if($('[name=enumckResult]').text() == ""){
           alert('인증번호를 입력해 주세요.');
           return false;
@@ -135,14 +155,13 @@ $(function(){
       return false;
     }
   });
-
   function back(){
     location.href = "/user/mypage";
   }
-
   $('#nnCheck').on('click', function(e){
     let cn_name = $('input[name=n_name]').val();
     let n_name = "${user.n_name}";
+    lastName = cn_name;
     if(cn_name != n_name){
       $.ajax({
         type : 'POST',
@@ -169,6 +188,7 @@ $(function(){
     let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     let cemail = $('input[name=email]').val();
     let email = "${user.email}";
+    lastEmail = cemail;
     if(cemail == ""){
       $("#enumsendResult").text("이메일을 입력해 주세요.");
       return false;
@@ -189,6 +209,7 @@ $(function(){
         },
         success : function(enumsend){
           $("#enumsendResult").text(enumsend);
+          $("#enumckResult").empty();
           return false;
         }
       });
@@ -199,12 +220,16 @@ $(function(){
     }
   });
 
-  $('#emailcode').keyup(function(){
+  $('#enumck').on('click',function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
+    lastEmailCode = ecodeck;
     if($('#enumsendResult').text() != "인증번호가 발송 됐습니다."){
       $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
       return false;
+    }
+    if(ecodeck == ""){
+      $("#enumckResult").text("인증번호를 입력해 주세요.");
     }
     if (ecodeck.length == 0){
       return false;
@@ -233,7 +258,7 @@ $(function(){
 <div style="width: 100%; height: 500px;  ">
   <div>
     <aside class="leftAside">
-      <h1>왼쪽사이드</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>
@@ -267,16 +292,17 @@ $(function(){
       <div class="mypagein">
         <input type="hidden" name="pw" value="${user.pw}">
         <p>&nbsp;&nbsp;&nbsp;&nbsp;아이디 : <input type="text" name="u_id" value="${user.u_id}" readonly/></p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}"/>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;닉네임 : <input type="text" name="n_name" value="${user.n_name}" maxlength="12" onkeydown="checkSpacebar();"/>
           <button type="button" id="nnCheck" name="nnCheck">중복확인</button>
           <span id="nnCheckResult" name="nnCheckResult"></span>
         </p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;이메일 :
-          <input type="text" name="email" value="${user.email}">
+          <input type="text" name="email" value="${user.email}" onkeydown="checkSpacebar();"/>
           <button type="button" id="enumsend" name="enumsend">인증번호전송</button>
           <span id="enumsendResult" name="enumsendResult"></span>
         </p>
-        <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode">
+        <p>&nbsp;&nbsp;인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode" maxlength="6" onkeydown="checkSpacebar();"/>
+          <button id="enumck" name="enumck" type="button" >인증번호확인</button>
           <span id="enumckResult" name="enumckResult"></span>
         </p>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;선호 장르는 중복되지 않도록 선택해 주세요.</p>

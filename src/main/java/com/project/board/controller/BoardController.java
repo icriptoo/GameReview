@@ -144,7 +144,6 @@ public class BoardController {
             map.put("authority",authority);
             map.put("u_id",u_id);
             model.addAttribute("u_id", u_id );
-            model.addAttribute("authority", authority );
         }
         if (searchType == null){ // 검색유무 확인
             searchType = "a";
@@ -204,7 +203,7 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
-
+        String authority = (String)map.get("authority");
         boardService.boardUpdate(map);
 
         if(menu_id.equals("1") || menu_id.equals("2")){
@@ -214,12 +213,17 @@ public class BoardController {
         }
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("authority",authority); //고객센터 Q&A, 신고목록 구분자
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
             path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
         } else if(menu_id.equals("3") || menu_id.equals("4")){
-            path = "redirect:/managementList?pageNum=1&contentNum=30";
+            if (authority.equals("0")){
+                path = "redirect:/managementList?pageNum=1&contentNum=30&authority=0";
+            }else {
+                path = "redirect:/managementList?pageNum=1&contentNum=30&authority=11";
+            }
         }
 
         return path;
@@ -231,7 +235,9 @@ public class BoardController {
         BoardVo boardVo = boardService.getBoard(map);
         String menu_id = (String)map.get("menu_id");
         String answer = (String)map.get("answer");
+        String authority = (String)map.get("authority");
 
+        model.addAttribute("authority",authority); //고객센터 Q&A, 신고목록 구분자
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
         model.addAttribute("answer", answer ); //답변여부
@@ -245,6 +251,7 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
+        String authority = (String)map.get("authority");
         boardService.boardInsert(map);
 
         if(menu_id.equals("1") || menu_id.equals("2")){
@@ -254,12 +261,17 @@ public class BoardController {
         }
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("authority",authority); //고객센터 Q&A, 신고목록 구분자
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
             path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
         } else if(menu_id.equals("3") || menu_id.equals("4")){
-            path = "redirect:/managementList?pageNum=1&contentNum=30";
+            if (authority.equals("0")){
+                path = "redirect:/managementList?pageNum=1&contentNum=30&authority=0";
+            }else {
+                path = "redirect:/managementList?pageNum=1&contentNum=30&authority=11";
+            }
         }
 
         return path;
@@ -271,6 +283,7 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
+        String authority = (String)map.get("authority");
 
         boardService.boardDelete(map);
 
@@ -281,12 +294,17 @@ public class BoardController {
         }
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
+        model.addAttribute("authority",authority); //고객센터 Q&A, 신고목록 구분자
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
             path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
         } else if(menu_id.equals("3") || menu_id.equals("4")){
-            path = "redirect:/managementList?pageNum=1&contentNum=30";
+            if (authority.equals("0")){
+                path = "redirect:/managementList?pageNum=1&contentNum=30&authority=0";
+            }else {
+                path = "redirect:/managementList?pageNum=1&contentNum=30&authority=11";
+            }
         }
 
         return path;
@@ -297,7 +315,8 @@ public class BoardController {
     public String boardWrite(@RequestParam HashMap<String, Object> map, Model model){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
-
+        String authority = (String)map.get("authority");
+        model.addAttribute("authority",authority); //고객센터 Q&A, 신고목록 구분자
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
 
@@ -539,7 +558,9 @@ public class BoardController {
         String menu_id = String.valueOf(boardVo.getMenu_id());
         String pageNum = (String)map.get("pageNum");
         String contentNum = (String)map.get("contentNum");
+        String authority = (String)map.get("authority");
 
+        model.addAttribute("authority",authority); //고객센터 Q&A, 신고목록 구분자
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
         model.addAttribute("pageNum", pageNum); // 댓글페이지번호

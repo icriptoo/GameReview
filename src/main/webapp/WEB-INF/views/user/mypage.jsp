@@ -95,8 +95,8 @@ ul{
         </c:otherwise>
       </c:choose>
       <p><a href="/user/profilupdateform">내 정보 수정</a></p>
-      <p><a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))">비밀번호 변경</a></p>
-      <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=700, height=700'))">프로필 사진 수정</a></p>
+      <p><a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=450, height=550'))">비밀번호 변경</a></p>
+      <p><a href="javascript:void(window.open('/user/profileupdateform', '프로필 사진 수정','width=500, height=300'))">프로필 사진 수정</a></p>
       <p><a href="/myboard?pageNum=1&contentNum=30&menu_id=1&u_id=${login.u_id}">내 게시글 보기</a></p>
       <p><a href="/user/WithdrawalForm">회원탈퇴</a></p>
     </div>

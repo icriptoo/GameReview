@@ -73,6 +73,7 @@ td, th {
     <input type="hidden" name="u_id" value="${login.u_id}" />
     <input type="hidden" name="g_idx" value="${boardVo.g_idx}" />
     <input type="hidden" name="b_idx" value="${boardVo.b_idx}" />
+    <input type="hidden" name="authority" value="${authority}" />
   <table >
       <c:choose>
         <c:when test="${menu_id eq 4 && empty a_cont}">
