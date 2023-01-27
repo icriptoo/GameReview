@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 public class BoardController {
@@ -38,6 +35,9 @@ public class BoardController {
         model.addAttribute("MList", MList);
         model.addAttribute("T1ist", T1List);
         model.addAttribute("T2List", T2List);
+
+
+
         return "/home";
     }
 
@@ -46,7 +46,6 @@ public class BoardController {
     @RequestMapping("/topGame")
     public List<GameListVo> topGame(@RequestParam HashMap<String, Object> map, Model model,HttpSession httpSession){
         List<GameListVo> topList = boardService.getTopGame();
-        httpSession.setAttribute("topList", topList);
         return topList;
     }
 
@@ -481,6 +480,8 @@ public class BoardController {
     //전체 글목록
     @RequestMapping("/totalList")
     public String totalList(@RequestParam HashMap<String, Object> map, Model model){
+
+
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String menu_id = (String)map.get("menu_id");
