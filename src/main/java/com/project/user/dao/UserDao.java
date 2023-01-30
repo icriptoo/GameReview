@@ -40,4 +40,6 @@ public interface UserDao {
     void changePw(HashMap<String, Object> map);
 
     List<UserVo> getUserList();
+
+    UserVo authorityCheck(String u_id);
 }

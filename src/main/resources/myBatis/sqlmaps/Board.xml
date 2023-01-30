@@ -28,17 +28,34 @@
     </select>
 
     <!-- 신고글목록 가져오기 -->
-    <select id="getDeclarationList1" resultType="com.project.board.vo.DeclarationVo">
-        SELECT d.d_idx,
-        d.indate,
-        d.us_id,
-        u.n_name us_name,
-        d.ue_id,
-        s.n_name ue_name,
-        d.type_idx,
-        d.process
-        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
-        ORDER BY d_idx desc
+    <select id="getDeclarationList" resultType="com.project.board.vo.DeclarationVo">
+        <choose>
+            <when test="authority == 0">
+                SELECT d.d_idx,
+                d.indate,
+                d.us_id,
+                u.n_name us_name,
+                d.ue_id,
+                s.n_name ue_name,
+                d.type_idx,
+                d.process
+                FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                ORDER BY d_idx desc
+            </when>
+            <otherwise>
+                SELECT d.d_idx,
+                d.indate,
+                d.us_id,
+                u.n_name us_name,
+                d.ue_id,
+                s.n_name ue_name,
+                d.type_idx,
+                d.process
+                FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                WHERE d.us_id = #{u_id}
+                ORDER BY d_idx desc
+            </otherwise>
+        </choose>
     </select>
 
     <select id="getDeclarationList2" resultType="com.project.board.vo.DeclarationVo">

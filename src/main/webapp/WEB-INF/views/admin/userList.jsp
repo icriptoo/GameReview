@@ -105,8 +105,9 @@ function chk(u_id){
   <table>
     <tr>
       <th colspan="9" style="text-align:center">
-        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고관리</button>
-        <button style="font-size:20px;" onClick="location.href='/userList'" >유저관리</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList'" >Q&A</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고목록</button>
+        <button style="font-size:20px;" onClick="location.href='/userList'" >유저목록</button>
       </th>
     </tr>
     <tr>

@@ -5,6 +5,7 @@ import com.project.board.vo.BoardPager;
 import com.project.board.vo.BoardVo;
 import com.project.board.vo.DeclarationVo;
 import com.project.board.vo.GameListVo;
+import com.project.user.service.UserService;
 import com.project.user.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,8 @@ import java.util.*;
 public class BoardController {
     @Autowired
     BoardService boardService;
-
+    @Autowired
+    UserService userService;
     BoardPager boardPager = new BoardPager();
 
     @RequestMapping("/")
@@ -35,8 +37,6 @@ public class BoardController {
         model.addAttribute("MList", MList);
         model.addAttribute("T1ist", T1List);
         model.addAttribute("T2List", T2List);
-
-
 
         return "/home";
     }
@@ -74,7 +74,10 @@ public class BoardController {
 
     //신고관리글 페이지
     @RequestMapping("/declarationList")
-    public String declarationList(@RequestParam HashMap<String, Object> map, Model model){
+    public String declarationList(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
+        UserVo userVo = (UserVo) httpSession.getAttribute("login");
+        map.put("authority", userVo.getAuthority());
+        map.put("u_id", userVo.getU_id());
         List<DeclarationVo> declarationVoList = boardService.getDeclarationList(map);
 
         model.addAttribute("list", declarationVoList);
@@ -101,6 +104,24 @@ public class BoardController {
     //신고하기 화면
     @RequestMapping("/declarationWrite")
     public String declaration(@RequestParam HashMap<String, Object> map, Model model){
+        /*
+        System.out.println("asd:" + map);
+        String u_id = (String) map.get("us_id");
+        if(userService.getUser(u_id).getAuthority().equals("0")){
+            System.out.println("11");
+            model.addAttribute("msg", "관리자는 신고할 수 없습니다.");
+            model.addAttribute("url", "/");
+            return "/alert";
+        }
+        u_id = (String) map.get("ue_id");
+        if(userService.getUser(u_id).getAuthority().equals("0")){
+            System.out.println("22");
+            model.addAttribute("msg", "관리자는 신고할 수 없습니다.");
+            model.addAttribute("url", "/");
+            return "/alert";
+        }
+        */
+
         String us_id = (String)map.get("us_id");  //신고자 아이디
         String ue_id = (String)map.get("ue_id");  //피신고자 아이디
         String b_idx = (String)map.get("b_idx");  //신고 게시글번호
@@ -109,6 +130,22 @@ public class BoardController {
         model.addAttribute("ue_id", ue_id );
         model.addAttribute("b_idx", b_idx );
         return "/admin/declarationWrite";
+    }
+
+    @ResponseBody
+    @RequestMapping("/authorityCheck")
+    public int authorityCheck(@RequestParam HashMap<String, Object> map, Model model){
+        String u_id = (String) map.get("us_id");
+        userService.authorityCheck(u_id).getAuthority();
+        if(userService.authorityCheck(u_id).getAuthority().equals("0")){
+            System.out.println("us_id - 관리자");
+        }
+        u_id = (String) map.get("ue_id");
+        if(userService.authorityCheck(u_id).getAuthority().equals("0")){
+            System.out.println("ue_id - 관리자");
+        }
+
+        return 1;
     }
 
     //공지사항,고객센터 글목록 managementList
@@ -120,6 +157,11 @@ public class BoardController {
             model.addAttribute("url", "/");
             return "/alert";
         }
+        if(menu_id.equals("4")){
+            UserVo userVo = (UserVo) httpSession.getAttribute("login");
+            map.put("authority", userVo.getAuthority());
+        }
+
         List<BoardVo> boardList = null;
         List<DeclarationVo> deList = null;
         //페이징에 사용
@@ -127,25 +169,11 @@ public class BoardController {
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String searchType = (String) map.get("searchType");
         String keyword = (String) map.get("keyword");
-        //유저정보
-        UserVo userVo = (UserVo) httpSession.getAttribute("login");
+
         //고객센터 페이지에 사용
-        String authority = "";
+
         String a = ""; //신고목록 페이지에 갈 때 사용
-        if(userVo != null) {
-            authority = userVo.getAuthority();
-        }
-        if(menu_id.equals("4")) {
-            a = (String) map.get("authority"); //신고목록
-            if (a.equals("11")){
-                map.put("au",11);
-            }
-            String u_id = userVo.getU_id();
-            map.put("authority",authority);
-            map.put("u_id",u_id);
-            model.addAttribute("u_id", u_id );
-            model.addAttribute("authority", authority );
-        }
+
         if (searchType == null){ // 검색유무 확인
             searchType = "a";
         }
@@ -163,11 +191,8 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            if(a.equals("11")) {
-                deList = boardService.getDeclarationList(map);
-            } else {
-                boardList = boardService.getBoardList(map);
-            }
+
+            boardList = boardService.getBoardList(map);
         } else {
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
@@ -182,13 +207,9 @@ public class BoardController {
             }
             map.put("pageNum", boardPager.getPageNum());
             map.put("contentNum", boardPager.getContentNum());
-            if(a.equals("11")) {
-                deList = boardService.getDeclarationList(map);
-            } else {
-                boardList = boardService.getBoardList(map);
-            }
+
+            boardList = boardService.getBoardList(map);
         }
-        model.addAttribute("authority",a);
         model.addAttribute("deList",deList);
         model.addAttribute("menu_id", menu_id );
         model.addAttribute("boardList", boardList );
@@ -294,9 +315,16 @@ public class BoardController {
 
     //글작성화면
     @RequestMapping("/boardWrite")
-    public String boardWrite(@RequestParam HashMap<String, Object> map, Model model){
+    public String boardWrite(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
+        UserVo userVo = (UserVo) httpSession.getAttribute("login");
+        map.put("authority", userVo.getAuthority());
+        if(menu_id.equals("3") && userVo.getAuthority().equals("1")){
+            model.addAttribute("msg", "관리자만 작성가능합니다.");
+            model.addAttribute("url", "/managementList?menu_id=3&pageNum=1&contentNum=30");
+            return "/alert";
+        }
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
         model.addAttribute("g_idx", g_idx ); //게임번호
@@ -314,9 +342,13 @@ public class BoardController {
 
     //추천게임목록
     @RequestMapping("/RecomGameList")
-    public String recomList(@RequestParam HashMap<String, Object> map, Model model) throws IOException, InterruptedException {
+    public String recomList(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession) throws IOException, InterruptedException {
+        if(httpSession.getAttribute("login") == null ){
+            model.addAttribute("msg", "로그인을 해주세요.");
+            model.addAttribute("url", "/");
+            return "/alert";
+        }
         BoardVo boardVo = boardService.goodGame(map);
-
         if(boardVo == null){
             model.addAttribute("msg", "더 많은 게임리뷰를 남겨주세요.");
             model.addAttribute("url", "/");

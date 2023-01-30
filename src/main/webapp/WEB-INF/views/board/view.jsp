@@ -264,7 +264,23 @@ window.onclick = function(e) {
 
 function showPopup(u_id){
   var ue_id = u_id
-  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id=${ sessionScope.login.u_id }&ue_id="+ue_id+"","팝업창","width=500, height=600, top=10, left=10");
+  var us_id = "${ sessionScope.login.u_id }"
+  let param = {"ue_id":ue_id, "us_id":us_id};
+
+  $.ajax({
+      type: "POST",
+      url:  "/authorityCheck",
+      data: param,
+      success: function(result){
+        alert("댓글이 수정 됐습니다.");
+      }, error: function(){
+        if($('#replycontent').val() == ''){
+          alert('댓글을 입력해 주세요.')
+        }
+      }
+    });
+
+  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id="+us_id+"&ue_id="+ue_id,"팝업창","width=500, height=600, top=10, left=10");
 }
 
 </script>

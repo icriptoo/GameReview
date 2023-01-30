@@ -134,4 +134,10 @@ public class UserDaoImpl implements UserDao {
         List<UserVo> userVoList = sqlSession.selectList("User.getUserList");
         return userVoList;
     }
+
+    @Override
+    public UserVo authorityCheck(String u_id) {
+        UserVo user = sqlSession.selectOne("User.authorityCheck", u_id);
+        return user;
+    }
 }

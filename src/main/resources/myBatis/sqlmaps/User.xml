@@ -67,6 +67,14 @@
         AND   PW = #{pw}
     </select>
 
+    <select id="authorityCheck"
+            resultType="com.project.user.vo.UserVo">
+        SELECT U_ID,
+               AUTHORITY
+          FROM USERS
+         WHERE U_ID = #{u_id}
+    </select>
+
     <select id="idCheck"
             resultType="com.project.user.vo.UserVo">
         SELECT U_ID

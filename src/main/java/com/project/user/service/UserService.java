@@ -46,4 +46,6 @@ public interface UserService {
     UserVo getUser(Object login);
 
     List<UserVo> getUserList();
+
+    UserVo authorityCheck(String u_id);
 }
