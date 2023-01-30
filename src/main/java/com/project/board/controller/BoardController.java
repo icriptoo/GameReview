@@ -132,7 +132,6 @@ public class BoardController {
         //고객센터 페이지에 사용
         String authority = "";
         String a = ""; //신고목록 페이지에 갈 때 사용
-        System.out.println(map);
         if(userVo != null) {
             authority = userVo.getAuthority();
         }
