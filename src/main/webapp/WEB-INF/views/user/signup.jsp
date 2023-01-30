@@ -40,6 +40,8 @@ $(function(){
   let lastPwCk = "";
   let lastEmail = "";
   let lastEmailCode = "";
+  let timer = null;
+  let isRunning = false;
   $('form').on('submit',function(e){
     let g1 = $('[name=genre1]').val();
     let g2 = $('[name=genre2]').val();
@@ -253,20 +255,22 @@ $(function(){
       },
       success : function(en){
         $("#enumckResult").text(en);
+        $("#timer").empty();
+        isRunning = false;
       }
     });
   });
 
   $('#enumsend').on('click', function(e){
     $("#enumsendResult").text("");
-    let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    // let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
     let email = $('input[name=email]').val();
     lastEmail = email;
     if(email == ""){
       $("#enumsendResult").text("이메일을 입력 주세요.");
       return false;
     }
-
     if(email == '' || email == 'undefined') return false;
     if(email.match(regExp) != null){
       $("#enumsendResult").text("");
@@ -279,7 +283,21 @@ $(function(){
           },
           success : function(enumsend){
             $("#enumsendResult").text(enumsend);
+            $("#enumck").attr("disabled", false);
             $("#enumckResult").empty();
+            /*
+            let display = $("#timer");
+            // 유효시간 설정
+            let leftSec = 15;
+            // 버튼 클릭 시 시간 연장
+            if(isRunning){
+              clearInterval(timer);
+              display.html("");
+              startTimer(leftSec, display);
+            }else{
+            	startTimer(leftSec, display);
+            }
+            */
           }
         });
         return false;
@@ -288,6 +306,31 @@ $(function(){
         return false;
       }
   });
+/*
+  //인증 완료하면 시간 멈추게 하고 번호 다시 보내면 시간 새롭게 갱신 되도록 하기
+  //이메일 인증 타이머
+  function startTimer(count, display) {
+    let minutes, seconds;
+    timer = setInterval(function () {
+      minutes = parseInt(count / 60, 10);
+      seconds = parseInt(count % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      display.html(minutes + ":" + seconds);
+
+      // 타이머 끝
+      if (--count < 0) {
+        clearInterval(timer);
+        display.html("시간초과");
+        $("#enumck").attr("disabled", true);
+        isRunning = false;
+      }
+    }, 1000);
+    isRunning = true;
+  }
+*/
 });
 
 </script>
@@ -320,16 +363,16 @@ $(function(){
         <button id="nnCheck" type="button">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p>비밀번호는 영문과 특수문자(!@$%^*+=-), 숫자를 포함한 8자 이상 15자 이하 이어야 합니다.</p>
       <p>비밀번호 : <input type="password" name="pw" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
       <p>비밀번호 확인 : <input type="password" name="pwck" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
+      <p>8~15자 영문 대 소문자, 숫자, 특수문자를 사용해 주세요.</p>
       <p>이메일 : <input type="text" name="email" onkeydown="checkSpacebar();"/><button id="enumsend" name="enumsend" type="button">인증번호전송</button>
         <span id="enumsendResult" name="enumsendResult"></span>
       </p>
       <p>인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode" maxlength="6" onkeydown="checkSpacebar();"/>
+        <span id="timer" name="timer"></span>
         <button id="enumck" name="enumck" type="button" >인증번호확인</button><span id="enumckResult" name="enumckResult"></span>
       </p>
-      <p>선호 장르는 3가지를 선택해 주셔야 하며 중복되지 않도록 선택해 주세요.</p>
       <p>선호 장르1 :
         <select name="genre1">
           <option value="">선호 장르1</option>
@@ -393,6 +436,7 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
+      <p>중복되지 않도록 선택해 주세요.</p>
       <p><button>가입하기</button></p>
     </form>
   <div>

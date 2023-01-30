@@ -94,7 +94,7 @@ function chk(u_id){
 <div style="width: 100%; height: 500px; ">
   <div>
     <aside class="leftAside">
-      <h1>왼쪽</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>

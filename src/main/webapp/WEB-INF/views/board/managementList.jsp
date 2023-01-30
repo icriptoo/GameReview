@@ -251,17 +251,14 @@ ul{
       </td>
     </tr>
     <tr style="border-top: 1px solid #000">
-      <td colspan="2" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+      <td colspan="2" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
-          <c:if test="${authority eq 0}">
-            <option value="u_id"><strong>작성자</strong></option>
-          </c:if>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>
       </td>
-      <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
+      <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
         <c:if test="${sessionScope.login.u_id ne null}">
           <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30&authority=${authority}'" >글쓰기</button>
         </c:if>

@@ -132,11 +132,14 @@ public class BoardController {
         //고객센터 페이지에 사용
         String authority = "";
         String a = ""; //신고목록 페이지에 갈 때 사용
+        System.out.println(map);
         if(userVo != null) {
             authority = userVo.getAuthority();
         }
         if(menu_id.equals("4")) {
-            a = (String) map.get("authority"); //신고목록
+            if(map.get("authority") != null) {
+                a = (String) map.get("authority"); //신고목록
+            }
             if (a.equals("11")){
                 map.put("au",11);
             }

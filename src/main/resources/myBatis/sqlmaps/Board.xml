@@ -200,8 +200,8 @@
                 a.g_idx,
                 a.u_id
                 from board a
-                inner join gamelist b
-                on a.g_idx = b.g_idx
+                inner join gamelist b ON a.g_idx = b.g_idx
+                INNER JOIN users c ON a.u_id = c.u_id
                 where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
                 order by b_idx asc)
                 WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
@@ -221,8 +221,8 @@
                 a.g_idx,
                 a.u_id
                 from board a
-                inner join gamelist b
-                on a.g_idx = b.g_idx
+                inner join gamelist b ON a.g_idx = b.g_idx
+                INNER JOIN users c ON a.u_id = c.u_id
                 where u_id = #{u_id} and ${searchType} like '%${keyword}%' and menu_id not in ('3','4')
                 order by b_idx asc)
                 WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
@@ -397,7 +397,7 @@
                         from  board a
                         INNER JOIN gamelist b ON a.g_idx = b.g_idx
                         INNER JOIN users c ON a.u_id = c.u_id
-                        WHERE menu_id = ${menu_id} AND a.g_idx = ${g_idx} AND a.${searchType} LIKE '%${keyword}%'
+                        WHERE menu_id = ${menu_id} AND a.g_idx = ${g_idx} AND ${searchType} LIKE '%${keyword}%'
                         ORDER BY b_idx desc)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </otherwise>

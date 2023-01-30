@@ -75,7 +75,7 @@ textarea {
 <div>
   <div>
     <aside class="leftAside">
-      <h1>left</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>

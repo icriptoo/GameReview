@@ -12,8 +12,9 @@ public class GameListVo {
     private String g_date;
     private double g_score;
     private String g_img;
+    private String in_idx;
 
-    public GameListVo(int g_idx, String g_name, String g_ename, String g_genre, String g_company, String g_service, String g_platform, String g_date, double g_score, String g_img) {
+    public GameListVo(int g_idx, String g_name, String g_ename, String g_genre, String g_company, String g_service, String g_platform, String g_date, double g_score, String g_img, String in_idx) {
         this.g_idx = g_idx;
         this.g_name = g_name;
         this.g_ename = g_ename;
@@ -24,9 +25,18 @@ public class GameListVo {
         this.g_date = g_date;
         this.g_score = g_score;
         this.g_img = g_img;
+        this.in_idx = in_idx;
     }
 
     public GameListVo(){}
+
+    public String getIn_idx() {
+        return in_idx;
+    }
+
+    public void setIn_idx(String in_idx) {
+        this.in_idx = in_idx;
+    }
 
     public int getG_idx() {
         return g_idx;
@@ -119,8 +129,9 @@ public class GameListVo {
                 ", g_service='" + g_service + '\'' +
                 ", g_platform='" + g_platform + '\'' +
                 ", g_date='" + g_date + '\'' +
-                ", g_score='" + g_score + '\'' +
+                ", g_score=" + g_score +
                 ", g_img='" + g_img + '\'' +
+                ", in_idx='" + in_idx + '\'' +
                 '}';
     }
 }

@@ -90,8 +90,6 @@ function btnGSearch(){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
           </select>
-        </td>
-        <td>
           <select id="genre" name="genre" onchange="if(this.value) location.href=(this.value);">
           <option value="/Board/GameList?pageNum=1&contentNum=30" ${so == '0' ? 'selected="selected"' : '' }>장르</option>
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=51" ${so == '51' ? 'selected="selected"' : '' }>RPG</option>
@@ -112,8 +110,8 @@ function btnGSearch(){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=66" ${so == '66' ? 'selected="selected"' : '' }>기타</option>
           </select>
         </td>
-        <td>
-          <input id="gameName" class="gameName" type="text" placeholder="제목을 입력해 주세요." onkeyup="btnGSearchEnter()">
+        <td colspan="3" style="padding-left: 45%;">
+          <input id="gameName" class="gameName" type="text" placeholder="게임명을 입력해 주세요." onkeyup="btnGSearchEnter()">
           <button id="btnGSearch" class="btnGSearch" onclick="btnGSearch()">검색</button>
         </td>
       </tr>

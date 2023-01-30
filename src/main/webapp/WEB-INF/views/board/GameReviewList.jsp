@@ -41,13 +41,6 @@ function boardCheck(){
   } else{
      location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
   }
-
-
-
-
-
-
-
 }
 
 </script>
@@ -120,7 +113,7 @@ function btnSearchEnter(){
 <div style="width: 100%; height: 500px; ">
   <div>
     <aside class="leftAside">
-      <h1>왼쪽</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>
@@ -230,15 +223,15 @@ function btnSearchEnter(){
           </c:otherwise>
         </c:choose>
         <tr style="border-top: 1px solid #000">
-          <td colspan="3" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+          <td colspan="3" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
             <select class="search" id="searchType">
               <option value="title"><strong>제목</strong></option>
-              <option value="u_id"><strong>작성자</strong></option>
+              <option value="n_name"><strong>작성자</strong></option>
             </select>
             <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
             <button id="btnSearch" class="searchB">검색</button>
           </td>
-          <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
+          <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
             <c:if test="${sessionScope.login.u_id ne null}">
               <button style="font-size:20px;" onClick="boardCheck()" >글쓰기</button>
             </c:if>

@@ -69,7 +69,7 @@ function btnSearchEnter(){
 <div style="width: 100%; height: 500px; ">
   <div>
     <aside class="leftAside">
-      <h1>왼쪽</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>
@@ -158,7 +158,7 @@ function btnSearchEnter(){
           </c:otherwise>
         </c:choose>
         <tr style="border-top: 1px solid #000">
-          <td colspan="6" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+          <td colspan="6" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
             <select class="search" id="searchType">
               <option value="title"><strong>제목</strong></option>
               <option value="g_name"><strong>게임명</strong></option>
