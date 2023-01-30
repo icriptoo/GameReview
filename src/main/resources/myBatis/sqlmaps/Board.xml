@@ -180,11 +180,6 @@
                 FROM BOARD
                 where menu_id = ${menu_id} and g_idx = ${g_idx}
             </when>
-            <when test="MyBoardCount == 1">
-                SELECT COUNT(*)
-                FROM BOARD
-                WHERE U_ID = #{u_id} and menu_id not in ('3','4')
-            </when>
             <when test="BoardSCount == 1">
                 select count(*)
                 from(
@@ -206,26 +201,65 @@
                 order by b_idx asc)
                 WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
             </when>
+            <when test="MyBoardCount == 1">
+                <choose>
+                    <when test="menu_id == 1">
+                        SELECT COUNT(*)
+                        FROM BOARD b INNER JOIN USERS u on b.u_id = u.u_id
+                        WHERE n_name = #{n_name} and menu_id = 1
+                    </when>
+                    <otherwise>
+                        SELECT COUNT(*)
+                        FROM BOARD b INNER JOIN USERS u on b.u_id = u.u_id
+                        WHERE n_name = #{n_name} and menu_id = 2
+                    </otherwise>
+                </choose>
+            </when>
             <when test="MyBoardSCount">
-                select count(*)
-                from(
-                select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
-                a.b_idx,
-                a.title,
-                a.cont,
-                a.r_score,
-                TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS indate,
-                a.b_count,
-                a.menu_id,
-                b.g_name,
-                a.g_idx,
-                a.u_id
-                from board a
-                inner join gamelist b ON a.g_idx = b.g_idx
-                INNER JOIN users c ON a.u_id = c.u_id
-                where u_id = #{u_id} and ${searchType} like '%${keyword}%' and menu_id not in ('3','4')
-                order by b_idx asc)
-                WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                <choose>
+                    <when test="menu_id == 1">
+                        select count(*)
+                        from(
+                        select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+                        a.b_idx,
+                        a.title,
+                        a.cont,
+                        a.r_score,
+                        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS indate,
+                        a.b_count,
+                        a.menu_id,
+                        b.g_name,
+                        a.g_idx,
+                        a.u_id
+                        from board a
+                        inner join gamelist b ON a.g_idx = b.g_idx
+                        INNER JOIN users c ON a.u_id = c.u_id
+                        where n_name = #{n_name} and ${searchType} like '%${keyword}%' and menu_id = 1
+                        order by b_idx asc)
+                        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                    </when>
+                    <otherwise>
+                        select count(*)
+                        from(
+                        select ROW_NUMBER() OVER (ORDER BY B_IDX ASC) RNUM,
+                        a.b_idx,
+                        a.title,
+                        a.cont,
+                        a.r_score,
+                        TO_CHAR(a.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS indate,
+                        a.b_count,
+                        a.menu_id,
+                        b.g_name,
+                        a.g_idx,
+                        a.u_id
+                        from board a
+                        inner join gamelist b ON a.g_idx = b.g_idx
+                        INNER JOIN users c ON a.u_id = c.u_id
+                        where n_name = #{n_name} and ${searchType} like '%${keyword}%' and menu_id = 2
+                        order by b_idx asc)
+                        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                    </otherwise>
+                </choose>
             </when>
         </choose>
     </select>
@@ -423,7 +457,7 @@
                         from  board a
                         INNER JOIN gamelist b ON a.g_idx = b.g_idx
                         INNER JOIN users c ON a.u_id = c.u_id
-                        WHERE a.U_ID = #{u_id} and a.menu_id NOT IN ('3','4') and a.menu_id = 1
+                        WHERE n_name = #{n_name} and a.menu_id NOT IN ('3','4') and a.menu_id = 1
                         ORDER BY a.B_IDX DESC)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </when>
@@ -445,7 +479,7 @@
                         from  board a
                         INNER JOIN gamelist b ON a.g_idx = b.g_idx
                         INNER JOIN users c ON a.u_id = c.u_id
-                        WHERE a.U_ID = #{u_id} AND a.menu_id NOT IN ('3','4') AND menu_id = 2
+                        WHERE n_name = #{n_name} AND a.menu_id NOT IN ('3','4') AND menu_id = 2
                         ORDER BY a.B_IDX DESC)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </otherwise>
@@ -471,7 +505,7 @@
                         from  board a
                         INNER JOIN gamelist b ON a.g_idx = b.g_idx
                         INNER JOIN users c ON a.u_id = c.u_id
-                        WHERE a.U_ID = #{u_id} AND ${searchType} like '%${keyword}%' AND a.menu_id = 1 and a.menu_id NOT IN ('3','4')
+                        WHERE N_NAME = #{n_name} AND ${searchType} like '%${keyword}%' AND a.menu_id = 1 and a.menu_id NOT IN ('3','4')
                         ORDER BY a.B_IDX DESC)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </when>
@@ -493,7 +527,7 @@
                         from  board a
                         INNER JOIN gamelist b ON a.g_idx = b.g_idx
                         INNER JOIN users c ON a.u_id = c.u_id
-                        WHERE a.U_ID = #{u_id} and ${searchType} like '%${keyword}%' and a.menu_id = 2 and a.menu_id NOT IN ('3','4')
+                        WHERE n_name = #{n_name} and ${searchType} like '%${keyword}%' and a.menu_id = 2 and a.menu_id NOT IN ('3','4')
                         ORDER BY a.B_IDX DESC)
                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </otherwise>

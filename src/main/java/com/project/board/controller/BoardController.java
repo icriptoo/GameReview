@@ -931,7 +931,7 @@ public class BoardController {
         List<BoardVo> boardList = null;
 
         UserVo userVo = (UserVo) httpSession.getAttribute("login");
-        map.put("u_id",userVo.getU_id());
+        map.put("n_name",userVo.getN_name());
 
         if (searchType == null){
             searchType = "a";
@@ -940,6 +940,7 @@ public class BoardController {
         if (searchType == "a") {
             map.put("myboard",1);
             map.put("MyBoardCount",1);
+            map.put("menu_id",map.get("menu_id"));
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
@@ -958,6 +959,7 @@ public class BoardController {
             keyword = (String) map.get("keyword");
             map.put("myboard",2);
             map.put("MyBoardSCount",1);
+            map.put("menu_id",map.get("menu_id"));
             boardPager.setTotalCount(boardService.boardCount(map));
             boardPager.setPageNum(PageNum - 1);
             boardPager.setContentNum(ContentNum);
