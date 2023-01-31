@@ -33,6 +33,37 @@ function checkSpacebar(){
   let kcode = event.keyCode;
   if(kcode == 32) event.returnValue = false;
 }
+//인증 완료하면 시간 멈추게 하고 번호 다시 보내면 시간 새롭게 갱신 되도록 하기
+//이메일 인증 타이머
+let timer = null;
+let isRunning = false;
+function startTimer(count, display) {
+  let minutes, seconds;
+  timer = setInterval(function () {
+    minutes = parseInt(count / 60, 10);
+    seconds = parseInt(count % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    display.html(minutes + ":" + seconds);
+
+    if($('#enumckResult').text() == "인증번호가 일치합니다."){
+      isRunning = false;
+      $("#timer").html("");
+      return true;
+    } else{
+      // 타이머 끝
+      if (--count < 0) {
+        clearInterval(timer);
+        display.html("시간초과");
+        $("#enumck").attr("disabled", true);
+        isRunning = false;
+      }
+    }
+  }, 1000);
+  isRunning = true;
+}
 $(function(){
   let lastId = "";
   let lastName = "";
@@ -40,8 +71,6 @@ $(function(){
   let lastPwCk = "";
   let lastEmail = "";
   let lastEmailCode = "";
-  let timer = null;
-  let isRunning = false;
   $('form').on('submit',function(e){
     let g1 = $('[name=genre1]').val();
     let g2 = $('[name=genre2]').val();
@@ -255,8 +284,6 @@ $(function(){
       },
       success : function(en){
         $("#enumckResult").text(en);
-        $("#timer").empty();
-        isRunning = false;
       }
     });
   });
@@ -285,19 +312,18 @@ $(function(){
             $("#enumsendResult").text(enumsend);
             $("#enumck").attr("disabled", false);
             $("#enumckResult").empty();
-            /*
+
             let display = $("#timer");
             // 유효시간 설정
-            let leftSec = 15;
+            let leftSec = 180;
             // 버튼 클릭 시 시간 연장
             if(isRunning){
               clearInterval(timer);
               display.html("");
               startTimer(leftSec, display);
             }else{
-            	startTimer(leftSec, display);
+              startTimer(leftSec, display);
             }
-            */
           }
         });
         return false;
@@ -306,31 +332,6 @@ $(function(){
         return false;
       }
   });
-/*
-  //인증 완료하면 시간 멈추게 하고 번호 다시 보내면 시간 새롭게 갱신 되도록 하기
-  //이메일 인증 타이머
-  function startTimer(count, display) {
-    let minutes, seconds;
-    timer = setInterval(function () {
-      minutes = parseInt(count / 60, 10);
-      seconds = parseInt(count % 60, 10);
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-      display.html(minutes + ":" + seconds);
-
-      // 타이머 끝
-      if (--count < 0) {
-        clearInterval(timer);
-        display.html("시간초과");
-        $("#enumck").attr("disabled", true);
-        isRunning = false;
-      }
-    }, 1000);
-    isRunning = true;
-  }
-*/
 });
 
 </script>
