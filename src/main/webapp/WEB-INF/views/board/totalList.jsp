@@ -17,11 +17,13 @@
 
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 ul{
     list-style:none;
@@ -78,6 +80,12 @@ function btnSearchEnter(){
     </aside>
   </div>
   <table>
+    <tr>
+      <td colspan="7" style="text-align:center">
+        <button style="font-size:20px;" onClick="location.href='/totalList?menu_id=1&pageNum=1&contentNum=30'" >리뷰게시판</button>
+        <button style="font-size:20px;" onClick="location.href='/totalList?menu_id=2&pageNum=1&contentNum=30'" >자유게시판</button>
+      </td>
+    </tr>
     <tr>
       <th width="10%" style="text-align:center">번호</th>
       <th width="13%" style="text-align:center">제목</th>
@@ -152,10 +160,10 @@ function btnSearchEnter(){
       </td>
     </tr>
     <tr style="border-top: 1px solid #000">
-      <td colspan="3" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+      <td colspan="3" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
-          <option value="u_id"><strong>작성자</strong></option>
+          <option value="n_name"><strong>작성자</strong></option>
           <option value="g_name"><strong>게임명</strong></option>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">

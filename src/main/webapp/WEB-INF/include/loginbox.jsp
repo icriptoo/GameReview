@@ -27,7 +27,8 @@ body{
     border:solid 1px #bbbbbb;
     border-radius: 15px;
     margin:10px 0 0 10px;
-    padding:10px 0 0 15px;
+    text-align: center;
+    padding-top: 20px;
 }
 h2{
     font-family:"Arial";
@@ -48,9 +49,9 @@ h2{
 #pw{
     margin-top:3px;
 }
-#login_btn button{
-    margin-left:5px;
-    padding:12px;
+.login{
+    margin-left: 5px;
+    padding: 5px;
     border-radius: 5px;
 }
 #btns{
@@ -64,7 +65,6 @@ h2{
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
-
 var next = document.location.href;
 
 function loginbtn(){
@@ -96,9 +96,9 @@ function logoutbtn(){
           <a class="signup" href="/signupform" style="font-size:15px;">회원가입</a>
         </li>
       </ul>
-      <ul id="btns">
-        <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=700, height=700'))" style="font-size:15px;">아이디 찾기</a> /
-        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=700, height=700'))" style="font-size:15px;">비밀번호 찾기</a>
+      <ul id="btns" style="text-decoration-line: none;">
+        <a href="javascript:void(window.open('/findUseridform', '아이디 찾기','width=600, height=400'))" style="font-size:15px;">아이디 찾기</a> /
+        <a href="javascript:void(window.open('/findPasswordform', '비밀번호 변경','width=750, height=550'))" style="font-size:15px;">비밀번호 찾기</a>
       </ul>
     </c:when>
     <c:otherwise>
@@ -113,9 +113,11 @@ function logoutbtn(){
       <h4>${login.n_name}님</h4>
       <ul>
         <li>
+          <a class="mypagebt" href="/mypage" style="font-size:15px;">마이페이지</a>
+        </li>
+        <li>
           <button class="logout" onclick="logoutbtn()" style="font-size:15px;">로그아웃</button>
         </li>
-          <a class="mypagebt" href="/mypage" style="font-size:15px;">마이페이지</a>
       </ul>
     </c:otherwise>
   </c:choose>

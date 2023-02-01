@@ -17,11 +17,13 @@
 
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 ul{
     list-style:none;
@@ -80,7 +82,7 @@ ul{
 <div style="width: 100%; height: 500px;  ">
   <div>
     <aside class="leftAside">
-      <h1>왼쪽사이드</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>

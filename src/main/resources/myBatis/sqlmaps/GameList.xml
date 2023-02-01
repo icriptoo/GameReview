@@ -120,7 +120,7 @@
             resultType="com.project.board.vo.GameListVo">
         SELECT *
         FROM (
-        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX ASC) RNUM,
+        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX DESC) RNUM,
         G_IDX,
         G_NAME,
         G_ENAME,
@@ -133,7 +133,7 @@
         G_IMG
         FROM GAMELIST
         WHERE G_NAME LIKE '%'||#{gameName}||'%'
-        ORDER BY G_IDX ASC)
+        ORDER BY G_IDX DESC)
         WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
     </select>
 
@@ -141,7 +141,8 @@
             resultType="com.project.board.vo.GameListVo">
         SELECT *
         FROM (
-        SELECT G_IDX,
+        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX DESC) RNUM,
+        G_IDX,
         G_NAME,
         G_ENAME,
         G_GENRE,
@@ -152,15 +153,15 @@
         G_SCORE,
         G_IMG
         FROM GAMELIST
-        ORDER BY G_IDX ASC)
-        WHERE G_IDX BETWEEN #{pageNum} AND #{contentNum}
+        ORDER BY G_IDX DESC)
+        WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
     </select>
 
     <select id="GSList"
             resultType="com.project.board.vo.GameListVo">
         SELECT *
         FROM (
-        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX ASC) RNUM,
+        SELECT ROW_NUMBER() OVER (ORDER BY G_IDX DESC) RNUM,
         G_IDX,
         G_NAME,
         G_ENAME,
@@ -173,7 +174,7 @@
         G_IMG
         FROM GAMELIST
         WHERE ${type} LIKE '%'||#{sType}||'%'
-        ORDER BY G_IDX ASC)
+        ORDER BY G_IDX DESC)
         WHERE RNUM BETWEEN #{pageNum} AND #{contentNum}
     </select>
 

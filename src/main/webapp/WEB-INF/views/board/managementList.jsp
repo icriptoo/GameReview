@@ -12,6 +12,37 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 
+function boardCheck(){
+  let u_id = '${ sessionScope.login.u_id }'; // 유저아이디 들고오기
+  let g_idx = '${gameListVo.g_idx}'; // 게임idx 들고오기
+
+  let obj={ // 넘겨줄 데이터
+      			"u_id" : u_id,
+      			"g_idx" : g_idx
+      		};
+
+  if('${menu_id}' == 1){
+      $.ajax({
+            url : "boardCheck",
+            type : "POST",
+            data : obj,
+            success : function(chk){
+                if(chk>0){ // 작성리뷰 있음 --> false
+                    alert('이미 리뷰를 작성하였습니다.');
+                    return false;
+                } else { // 작성리뷰 없음 --> 작성화면
+                    location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
+                }
+            },
+            error : function() {
+                alert("요청실패");
+            }
+        })
+  } else{
+     location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
+  }
+}
+
 function btnSearch(e){
   e.preventDefault();
   var url = "/managementList?pageNum=1&contentNum=30";
@@ -38,15 +69,6 @@ function btnSearchEnter(){
    }
   }
 }
-
-function check(){
-  if("${login.authority}" == 1){
-    alert("관리자만 작성가능합니다.")
-    return false;
-  }
-  location.href = "/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30";
-}
-
 </script>
 <title>Insert title here</title>
 <style>
@@ -55,11 +77,13 @@ function check(){
 
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 ul{
     list-style:none;
@@ -123,7 +147,7 @@ ul{
         <c:forEach var="item" items="${boardList}" >
           <tr>
             <td width="10%" style="text-align:center">${item.b_idx}</td>
-            <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}">${item.title}</a></td>
+            <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&authority=${authority}">${item.title}</a></td>
             <c:if test="${menu_id eq 4}">
             <td width="10%" style="text-align:center">${item.n_name}</td>
               <c:choose>
@@ -230,19 +254,16 @@ ul{
       </td>
     </tr>
     <tr style="border-top: 1px solid #000">
-      <td colspan="2" style="padding-left: 50px; border-radius: 4px; background: #f1f1f1; padding: 15px 0px 15px 20px;">
+      <td colspan="2" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
-          <c:if test="${authority eq 0}">
-            <option value="u_id"><strong>작성자</strong></option>
-          </c:if>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>
       </td>
-      <td colspan="5" style="text-align: right; border-radius: 4px; background: #f1f1f1; padding: 15px 20px 15px 0px;">
+      <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
         <c:if test="${sessionScope.login.u_id ne null}">
-          <button style="font-size:20px;" onClick="check()" >글쓰기</button>
+          <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30&authority=${authority}'" >글쓰기</button>
         </c:if>
       </td>
     </tr>

@@ -271,11 +271,14 @@ public class UserController {
         String ck = "";
         String u_id = (String)map.get("u_id");
         String pw = (String)map.get("pw");
-        UserVo vo = userService.getUserChPw(map);
+        UserVo vo = null;
+        String ckpw = "";
 
-        String ckpw = userService.findpwck(map);
         if (map.size() >= 3) {
             ck = (String) map.get("ck");
+        } else {
+            ckpw = userService.findpwck(map);
+            vo = userService.getUserChPw(map);
         }
 
         if (ck == "") {
@@ -445,13 +448,13 @@ public class UserController {
         map.put("withdrawal","OFF");
         userService.wirthdrwal(map);
         String chk = (String)map.get("path");
-        if(chk.equals("1")){
+        if(chk != null){
             List<UserVo> userVoList = userService.getUserList();
             model.addAttribute("list", userVoList);
-            return "/admin/userList";
+            return "redirect:/userList";
         }
         httpSession.invalidate();
-        return "/home";
+        return "redirect:/";
     }
 
     // 창닫기

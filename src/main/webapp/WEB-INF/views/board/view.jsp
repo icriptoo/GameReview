@@ -15,12 +15,13 @@
 .headerB{ font-size: 80px!important }
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100vh;
 }
 .leftAside {
 	float: left;
-	width: 350px;
-	height: 2000px;
+	width: 20%;
+	height: 100vh;
 }
 ul{
     list-style:none;
@@ -138,6 +139,8 @@ function replyUpdateForm(r_idx,c_idx){
   let ck = confirm("댓글을 수정 하시겠습니까?");
   if (ck) {
     $("button[name='updatebutton']").hide();
+    $("button[name='replybutton']").hide();
+
     let k = document.getElementById("replycont"+r_idx);
 
     let form = '<div><input type= "hidden" name="r_idx" id ="reply_number" value= '+r_idx+'>';
@@ -188,6 +191,7 @@ function commentList(r_idx,c) {
   let check = ($('#commentList'+r_idx).is(':visible'));
   if(check == false || c == 1){
     document.getElementById('commentList'+r_idx).style.display = ""
+    $("button[name='replybutton']").show();
     let param = {"c_idx":r_idx};
     $.ajax({
       type: "POST",
@@ -302,7 +306,7 @@ function showPopup(u_id){
 <div>
   <div>
     <aside class="leftAside">
-      <h1>left</h1>
+      <h1> </h1>
     </aside>
   </div>
   <div>
@@ -354,7 +358,7 @@ function showPopup(u_id){
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >답변하기</button>
           </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
-            <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >수정</button>
+            <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&authority=${authority}'" >수정</button>
             <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&u_id=${sessionScope.login.u_id}'" >삭제</button>
           </c:if>
           <c:choose>
@@ -370,7 +374,7 @@ function showPopup(u_id){
     </div>
   </table>
   <div id="replylist-box"></div>
-    <div class="replyin_box" id="replyin_box">
+    <div class="replyin_box" id="replyin_box" style="padding-left:20%">
       <div>${login.u_id}</div><br>
       <div><textarea type="textarea" id="replytext" placeholder="내용을 입력해 주세요."></textarea></div>
       <div style="float: center" id="replybtn"><button>작성</button></div>
@@ -458,7 +462,7 @@ function replyList(){
             html += '<tr>';
             html += '<td class="cont" colspan="2" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
             if(list[i].u_id === u_id){
-              html += '<td class="updateForm" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
+              html += '<td class="updateForm" id="up" style="border-bottom : 1px solid #dfdfdf;"><button id="replyUpdate" name="replybutton" style="font-size:20px;" onclick="replyUpdateForm('+list[i].r_idx+','+list[i].c_idx+')">수정</button>';
               html += '<button id="replyDelete" name="replybutton" style="font-size:20px;" onclick="replyDelete('+list[i].r_idx+')">삭제</button>';
               html += '<button style="font-size:20px;" name="replybutton" onclick="commentList('+list[i].r_idx+')">답글</button>';
               html += '<button style="font-size:20px;" name="replybutton" onclick="comment_button('+list[i].r_idx+','+list[i].c_idx+')">답글 쓰기</button></td>';

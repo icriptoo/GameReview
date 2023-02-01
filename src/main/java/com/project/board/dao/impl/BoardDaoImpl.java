@@ -38,16 +38,14 @@ public class BoardDaoImpl implements BoardDao {
         String EnP = EP.get(9);
 
         int end = Integer.parseInt(EnP);
-
         // 인벤게임db 사이트에서 게임정보 크롤링
-        for (int k = 1; k <= end; k++) {
+        for (int k = end; k >= 1 ; k--) {
             System.out.println(k);
             HashMap<String, Object> map = new HashMap<>();
             ArrayList<String> G = new ArrayList<>();
             ArrayList<String> GE = new ArrayList<>();
             ArrayList<String> IM = new ArrayList<>();
             ArrayList<String> GR = new ArrayList<>();
-            GameListVo gamese = null;
             int len = 0;
             int insize = 0;
             int i = 1;
@@ -58,7 +56,6 @@ public class BoardDaoImpl implements BoardDao {
             Elements elemGE = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li").select("span[class=\"gameEn\"]");
             Elements elemIM = doc.select("td[class=\"thumb\"]").select("a[class=\"imgbox\"]").select("img");
             Elements elemGR = doc.select("td[class=\"info\"]").select("ul[class=\"list\"]").select("li");
-
             // 게임정보 저장
             for (Element e : elemGR) {
                 GR.add(e.text());
@@ -77,17 +74,19 @@ public class BoardDaoImpl implements BoardDao {
             }
             // 한 페이지에 나와 있는 게임 갯수
             len = GR.size() / 6;
+            i = len * 6 - 1;
+            int ak = G.size() -1;
             for (int j = 0; j < len; j++) {
                 int gck = 0;
                 insize += 1;
-                String[] Genre = GR.get(i).split(":");
-                String[] Company = GR.get(i + 1).split(":");
-                String[] Service = GR.get(i + 2).split(":");
-                String[] FlatForm = GR.get(i + 3).split(":");
-                String[] Date = GR.get(i + 4).split(":");
-                map.put("g", G.get(j));
-                map.put("im", IM.get(j));
-                map.put("ge", GE.get(j));
+                String[] Genre = GR.get(i - 4).split(":");
+                String[] Company = GR.get(i - 3).split(":");
+                String[] Service = GR.get(i - 2).split(":");
+                String[] FlatForm = GR.get(i - 1).split(":");
+                String[] Date = GR.get(i).split(":");
+                map.put("g", G.get(ak));
+                map.put("im", IM.get(ak));
+                map.put("ge", GE.get(ak));
                 map.put("gr", Genre[1]);
                 map.put("cp", Company[1]);
                 map.put("sv", Service[1]);
@@ -107,8 +106,8 @@ public class BoardDaoImpl implements BoardDao {
                 map.remove("sv");
                 map.remove("pf");
                 map.remove("id");
-
-                i += 6;
+                ak -= 1;
+                i -= 6;
             }
         }
     }

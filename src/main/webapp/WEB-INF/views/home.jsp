@@ -20,37 +20,50 @@
 .rightAside {
 	float: right;
 	width: 20%;
+	height: 100vh;
 }
 .leftAside {
 	float: left;
-	width: 350px;
 	width: 20%;
+	height: 100vh;
 }
 .boardBox1 {
     border: 1px solid #aaa;
-    width: 300px;
-    height: 300px;
+    width: 75%;
+    min-width: 300px;
+    max-width: 310px;
+    height: 310px;
+    min-height: 300px;
+    max-height: 310px;
     padding: 10px;
-    margin: 30px;
+    margin: 50px;
     background-color: #bac8d6;
 }
 .boardBox {
     border: 1px solid #aaa;
-    width: 300px;
-    height: 300px;
+    width: 75%;
+    min-width: 300px;
+    max-width: 310px;
+    height: 310px;
+    min-height: 300px;
+    max-height: 310px;
     padding: 10px;
-    margin: 30px;
+    margin: 50px;
     background-color: #bac8d6;
 }
 .boardBox p{
     margin-bottom: 5px;
     margin-top: 5px;
 }
+.boardBox1 p{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
 .bg {
     width: 100%;
-    height: 100%;
+    height: 85%;
     background-color: #deecf6;
-    padding: 10px;
+    padding: 35px 10px 10px 10px;
 }
 .genre a {
     padding: 2px;
@@ -58,8 +71,8 @@
 .genre p{
     padding: 10px 10px 10px 10px;
     background-color: #fff;
-    margin-bottom: 1px;
-    margin-top: 1px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 .plus {
     text-align: right;
@@ -77,7 +90,7 @@
 </header>
 <div style="width:100%; height:100%;">
   <aside class="leftAside">
-    <h1>left</h1>
+    <h1> </h1>
   </aside>
   <aside class="rightAside">
     <%@ include file="/WEB-INF/include/loginbox.jsp" %><br><br>
@@ -87,23 +100,23 @@
       <tr>
         <td>
           <div class="boardBox1">
+            <p style="padding-left:10px">
+              <span style="font-weight:bold; font-size:20px;">게임목록</span>
+              <select id="platform" name="platform" onchange="if(this.value) location.href=(this.value);">
+                <option value="/Board/GameList?pageNum=1&contentNum=30" ${so == '0' ? 'selected="selected"' : '' }>플랫폼</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=1" ${so == '1' ? 'selected="selected"' : '' }>PC패키지</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=2" ${so == '2' ? 'selected="selected"' : '' }>PC온라인</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=3" ${so == '3' ? 'selected="selected"' : '' }>모바일</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=4" ${so == '4' ? 'selected="selected"' : '' }>PS</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=5" ${so == '5' ? 'selected="selected"' : '' }>XBOX</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=6" ${so == '6' ? 'selected="selected"' : '' }>switch</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
+                <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
+              </select>
+              <span style="padding-left:55px; font-weight:bold"><a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a></span>
+            </p>
             <div class="bg">
-              <p>
-                게임목록
-                <select id="platform" name="platform" onchange="if(this.value) location.href=(this.value);">
-                  <option value="/Board/GameList?pageNum=1&contentNum=30" ${so == '0' ? 'selected="selected"' : '' }>플랫폼</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=1" ${so == '1' ? 'selected="selected"' : '' }>PC패키지</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=2" ${so == '2' ? 'selected="selected"' : '' }>PC온라인</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=3" ${so == '3' ? 'selected="selected"' : '' }>모바일</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=4" ${so == '4' ? 'selected="selected"' : '' }>PS</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=5" ${so == '5' ? 'selected="selected"' : '' }>XBOX</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=6" ${so == '6' ? 'selected="selected"' : '' }>switch</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=7" ${so == '7' ? 'selected="selected"' : '' }>AR/VR</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=8" ${so == '8' ? 'selected="selected"' : '' }>인디</option>
-                  <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=9" ${so == '9' ? 'selected="selected"' : '' }>HTML5</option>
-                </select>
-                <span style="padding-left:125px; font-weight:bold"><a href="/Board/GameList?pageNum=1&contentNum=30">+더 보기</a></span>
-              </p>
               <div class="genre">
                 <p>
                   <a href="/Board/GameList?pageNum=1&contentNum=30&searchType=51">RPG</a> │
@@ -135,31 +148,40 @@
         </td>
         <td>
           <div class="boardBox">
-          <p style="font-weight:bold">공지사항</p>
-          <p><span style="padding-left:175px; font-weight:bold"><a href="/managementList?menu_id=3&pageNum=1&contentNum=30">+더 보기</a></span></p>
-            <c:forEach begin="0" end="7" var="idx">
-              <p><a class="genre" href="/View?b_idx=${MList[idx].b_idx}&menu_id=${MList[idx].menu_id}&pageNum=1&contentNum=30">${MList[idx].title}</a></p>
-            </c:forEach>
+            <p style="padding-left:10px">
+              <span style="font-weight:bold; font-size:20px;">공지사항</span><span style="padding-left:135px; font-weight:bold"><a href="/managementList?menu_id=3&pageNum=1&contentNum=30">+더 보기</a></span>
+            </p>
+            <div class="bg">
+              <c:forEach begin="0" end="7" var="idx">
+                <p><a class="genre" href="/View?b_idx=${MList[idx].b_idx}&menu_id=${MList[idx].menu_id}&pageNum=1&contentNum=30">${MList[idx].title}</a></p>
+              </c:forEach>
+            </div>
           </div>
         </td>
       </tr>
       <tr>
         <td>
           <div class="boardBox">
-          <p style="font-weight:bold">전체리뷰게시판</p>
-          <p><span style="padding-left:175px; font-weight:bold"><a href="/totalList?menu_id=1&pageNum=1&contentNum=30">+더 보기</a></span></p>
-            <c:forEach begin="0" end="7" var="idx">
-              <p><a href="/View?b_idx=${T1ist[idx].b_idx}&menu_id=${T1ist[idx].menu_id}&pageNum=1&contentNum=30">${T1ist[idx].title}</a></p>
-            </c:forEach>
+            <p style="padding-left:10px">
+              <span style="font-weight:bold; font-size:20px;">전체리뷰게시판</span><span style="padding-left:75px; font-weight:bold"><a href="/totalList?menu_id=1&pageNum=1&contentNum=30">+더 보기</a></span>
+            </p>
+            <div class="bg">
+              <c:forEach begin="0" end="7" var="idx">
+                <p><a href="/View?b_idx=${T1ist[idx].b_idx}&menu_id=${T1ist[idx].menu_id}&pageNum=1&contentNum=30">${T1ist[idx].title}</a></p>
+              </c:forEach>
+            </div>
           </div>
         </td>
         <td>
           <div class="boardBox">
-          <p style="font-weight:bold">전체자유게시판</p>
-          <p><span style="padding-left:175px; font-weight:bold"><a href="/totalList?menu_id=2&pageNum=1&contentNum=30">+더 보기</a></span></p>
-            <c:forEach begin="0" end="7" var="idx">
-              <p><a href="/View?b_idx=${T2List[idx].b_idx}&menu_id=${T2List[idx].menu_id}&pageNum=1&contentNum=30">${T2List[idx].title}</a></p>
-            </c:forEach>
+            <p style="padding-left:10px">
+              <span style="font-weight:bold; font-size:20px;">전체자유게시판</span><span style="padding-left:75px; font-weight:bold"><a href="/totalList?menu_id=2&pageNum=1&contentNum=30">+더 보기</a></span>
+            </p>
+            <div class="bg">
+              <c:forEach begin="0" end="7" var="idx">
+                <p><a href="/View?b_idx=${T2List[idx].b_idx}&menu_id=${T2List[idx].menu_id}&pageNum=1&contentNum=30">${T2List[idx].title}</a></p>
+              </c:forEach>
+            </div>
           </div>
         </td>
       </tr>

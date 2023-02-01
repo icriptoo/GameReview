@@ -36,11 +36,13 @@
 
 .rightAside {
 	float: right;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 .leftAside {
 	float: left;
-	width: 350px;
+	width: 20%;
+	height: 100%;
 }
 ul{
     list-style:none;
@@ -89,8 +91,8 @@ td, th {
     <input type="hidden" name="menu_id" value="${menu_id}" />
     <input type="hidden" name="u_id" value="${sessionScope.login.u_id}" />
     <input type="hidden" name="g_idx" value="${g_idx}" />
+    <input type="hidden" name="authority" value="${authority}" />
   <table>
-
       <tr>
         <th style= "width:6%; height:10%; text-align:center">제목</th>
         <td><input  type="text" name="title" id="title" style="width:1000px ;font-size:15px;" /></td>
