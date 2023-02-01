@@ -49,10 +49,12 @@ html {
     <a href="/RecomGameList?u_id=${login.u_id }&genre1=${login.genre1}&genre2=${login.genre2}&genre3=${login.genre3}">게임 추천</a>
     <a href="/totalList?menu_id=1&pageNum=1&contentNum=30">전체게시판</a>
     <a href="/managementList?menu_id=3&pageNum=1&contentNum=30">공지사항</a>
-    <a href="/managementList?menu_id=4&u_id=${login.u_id}&authority=0&pageNum=1&contentNum=30">고객센터</a>
+    <c:if test="${login.authority eq '1'}">
+      <a href="/managementList?menu_id=4&u_id=${login.u_id}&pageNum=1&contentNum=30">고객센터</a>
+    </c:if>
     <c:set var="admin" value="${login}"/>
     <c:if test="${admin.authority eq '0'}">
-      <a href="/declarationList">관리페이지</a>
+      <a href="/managementList?menu_id=4&u_id=${login.u_id}&pageNum=1&contentNum=30">관리페이지</a>
       <a href="/GameListInsert">게임목록db에 넣기</a>
     </c:if>
   </p>

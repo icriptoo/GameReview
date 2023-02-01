@@ -58,14 +58,9 @@ public class UserController {
     @RequestMapping("login")
     public String login(@RequestParam HashMap<String, Object> map, Model model){
         String url= "";
-        String next = (String) map.get("next");
-        String next1 = next.substring(21);
         if(map.get("contentNum") != null) {
             String conN = (String) map.get("contentNum");
-            url = next + "&contentNum=" + conN;
             model.addAttribute("next",url);
-        }else {
-            model.addAttribute("next", next1);
         }
         return "user/login";
     }

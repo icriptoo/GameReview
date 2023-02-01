@@ -114,7 +114,7 @@ ul{
   </div>
   <table>
     <tr>
-      <th colspan="4" style="font-size:20px; text-align:center;">
+      <th colspan="6" style="font-size:20px; text-align:center;">
       <c:if test="${menu_id eq 3}">
         공지사항
       </c:if>
