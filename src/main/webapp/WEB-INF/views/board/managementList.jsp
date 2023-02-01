@@ -12,37 +12,6 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script>
 
-function boardCheck(){
-  let u_id = '${ sessionScope.login.u_id }'; // 유저아이디 들고오기
-  let g_idx = '${gameListVo.g_idx}'; // 게임idx 들고오기
-
-  let obj={ // 넘겨줄 데이터
-      			"u_id" : u_id,
-      			"g_idx" : g_idx
-      		};
-
-  if('${menu_id}' == 1){
-      $.ajax({
-            url : "boardCheck",
-            type : "POST",
-            data : obj,
-            success : function(chk){
-                if(chk>0){ // 작성리뷰 있음 --> false
-                    alert('이미 리뷰를 작성하였습니다.');
-                    return false;
-                } else { // 작성리뷰 없음 --> 작성화면
-                    location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
-                }
-            },
-            error : function() {
-                alert("요청실패");
-            }
-        })
-  } else{
-     location.href = "/boardWrite?g_idx=${gameListVo.g_idx}&menu_id=${menu_id}";
-  }
-}
-
 function btnSearch(e){
   e.preventDefault();
   var url = "/managementList?pageNum=1&contentNum=30";
@@ -69,6 +38,15 @@ function btnSearchEnter(){
    }
   }
 }
+
+function check(){
+  if("${login.authority}" == 1){
+    alert("관리자만 작성가능합니다.")
+    return false;
+  }
+  location.href = "/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30";
+}
+
 </script>
 <title>Insert title here</title>
 <style>
@@ -263,7 +241,7 @@ ul{
       </td>
       <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
         <c:if test="${sessionScope.login.u_id ne null}">
-          <button style="font-size:20px;" onClick="location.href='/boardWrite?menu_id=${menu_id}&pageNum=1&contentNum=30&authority=${authority}'" >글쓰기</button>
+          <button style="font-size:20px;" onClick="check()" >글쓰기</button>
         </c:if>
       </td>
     </tr>
