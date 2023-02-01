@@ -358,15 +358,25 @@ function showPopup(u_id){
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >답변하기</button>
           </c:if>
           <c:if test="${boardVo.u_id eq sessionScope.login.u_id}">
-            <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&authority=${authority}'" >수정</button>
-            <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&u_id=${sessionScope.login.u_id}'" >삭제</button>
+            <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&place=${place}'" >수정</button>
+            <button style="font-size:20px;" onClick="location.href='/boardDelete?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}&u_id=${sessionScope.login.u_id}&place=${place}'" >삭제</button>
           </c:if>
           <c:choose>
             <c:when test="${menu_id eq 3 || menu_id eq 4}">
               <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=${menu_id}&pageNum=1&contentNum=30&u_id=${sessionScope.login.u_id}'" >목록으로</button>
             </c:when>
             <c:otherwise>
-              <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+              <c:choose>
+                <c:when test="${place eq 1}">
+                  <button style="font-size:20px;" onClick="location.href='/totalList?&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+                </c:when>
+                <c:when test="${place eq 2}">
+                  <button style="font-size:20px;" onClick="location.href='/myboard?&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+                </c:when>
+                <c:otherwise>
+                  <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${boardVo.g_idx}&menu_id=${boardVo.menu_id}&pageNum=1&contentNum=30'" >목록으로</button>
+                </c:otherwise>
+              </c:choose>
             </c:otherwise>
           </c:choose>
         </td>

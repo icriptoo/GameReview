@@ -68,7 +68,7 @@ td, th {
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-  <form action = "/boardUpdate" method="POST" id="form1">
+  <form action = "/boardUpdate?place=${place}" method="POST" id="form1">
     <input type="hidden" name="menu_id" value="${boardVo.menu_id}" />
     <input type="hidden" name="u_id" value="${login.u_id}" />
     <input type="hidden" name="g_idx" value="${boardVo.g_idx}" />

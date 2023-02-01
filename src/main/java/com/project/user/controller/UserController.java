@@ -46,7 +46,13 @@ public class UserController {
 
     //회원정보리스트
     @RequestMapping("userList")
-    public String userList(@RequestParam HashMap<String, Object> map, Model model){
+    public String userList(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
+        UserVo vo = userService.getUser(httpSession.getAttribute("login"));
+        if(!vo.getAuthority().equals("0")){
+            model.addAttribute("msg", "권한이 없습니다.");
+            model.addAttribute("url", "/");
+            return "/alert";
+        }
         List<UserVo> userVoList = userService.getUserList();
 
         model.addAttribute("list", userVoList);
