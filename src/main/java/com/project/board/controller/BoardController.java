@@ -104,23 +104,6 @@ public class BoardController {
     //신고하기 화면
     @RequestMapping("/declarationWrite")
     public String declaration(@RequestParam HashMap<String, Object> map, Model model){
-        /*
-        System.out.println("asd:" + map);
-        String u_id = (String) map.get("us_id");
-        if(userService.getUser(u_id).getAuthority().equals("0")){
-            System.out.println("11");
-            model.addAttribute("msg", "관리자는 신고할 수 없습니다.");
-            model.addAttribute("url", "/");
-            return "/alert";
-        }
-        u_id = (String) map.get("ue_id");
-        if(userService.getUser(u_id).getAuthority().equals("0")){
-            System.out.println("22");
-            model.addAttribute("msg", "관리자는 신고할 수 없습니다.");
-            model.addAttribute("url", "/");
-            return "/alert";
-        }
-        */
 
         String us_id = (String)map.get("us_id");  //신고자 아이디
         String ue_id = (String)map.get("ue_id");  //피신고자 아이디
