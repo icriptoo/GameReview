@@ -267,20 +267,29 @@ function showPopup(u_id){
   var us_id = "${ sessionScope.login.u_id }"
   let param = {"ue_id":ue_id, "us_id":us_id};
 
+  if(us_id == '') {
+    alert('로그인을 해주세요.')
+    return false;
+  }
+
   $.ajax({
       type: "POST",
       url:  "/authorityCheck",
       data: param,
       success: function(result){
-        alert("댓글이 수정 됐습니다.");
-      }, error: function(){
-        if($('#replycontent').val() == ''){
-          alert('댓글을 입력해 주세요.')
+        if(result == 1){
+          alert('관리자는 신고할 수 없습니다.')
+          return false;
+        } else if(ue_id == us_id) {
+          alert('자신은 신고할 수 없습니다.')
+          return false;
         }
+        newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id="+us_id+"&ue_id="+ue_id,"팝업창","width=500, height=600, top=10, left=10");
+      }, error: function(){
+        alert('요청실패')
       }
     });
 
-  newWindow = window.open("/declarationWrite?b_idx=${boardVo.b_idx}&us_id="+us_id+"&ue_id="+ue_id,"팝업창","width=500, height=600, top=10, left=10");
 }
 
 </script>

@@ -138,14 +138,13 @@ public class BoardController {
         String u_id = (String) map.get("us_id");
         userService.authorityCheck(u_id).getAuthority();
         if(userService.authorityCheck(u_id).getAuthority().equals("0")){
-            System.out.println("us_id - 관리자");
+            return 1;
         }
         u_id = (String) map.get("ue_id");
         if(userService.authorityCheck(u_id).getAuthority().equals("0")){
-            System.out.println("ue_id - 관리자");
+            return 1;
         }
-
-        return 1;
+        return 2;
     }
 
     //공지사항,고객센터 글목록 managementList
