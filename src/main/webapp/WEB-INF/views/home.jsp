@@ -20,25 +20,33 @@
 .rightAside {
 	float: right;
 	width: 20%;
-	height: 100%;
+	height: 100vh;
 }
 .leftAside {
 	float: left;
 	width: 20%;
-	height: 100%;
+	height: 100vh;
 }
 .boardBox1 {
     border: 1px solid #aaa;
-    width: 300px;
-    height: 300px;
+    width: 75%;
+    min-width: 300px;
+    max-width: 310px;
+    height: 310px;
+    min-height: 300px;
+    max-height: 310px;
     padding: 10px;
     margin: 50px;
     background-color: #bac8d6;
 }
 .boardBox {
     border: 1px solid #aaa;
-    width: 300px;
-    height: 300px;
+    width: 75%;
+    min-width: 300px;
+    max-width: 310px;
+    height: 310px;
+    min-height: 300px;
+    max-height: 310px;
     padding: 10px;
     margin: 50px;
     background-color: #bac8d6;
