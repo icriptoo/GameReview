@@ -119,8 +119,11 @@ ul{
         공지사항
       </c:if>
       <c:if test="${menu_id eq 4}">
-        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&authority=${login.authority}&pageNum=1&contentNum=30'">Q&A</button>
-        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&authority=11&pageNum=1&contentNum=30'">신고목록</button>
+        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&pageNum=1&contentNum=30'">Q&A</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList?pageNum=1&contentNum=30'">신고목록</button>
+        <c:if test="${login.authority == 0}">
+        <button style="font-size:20px;" onClick="location.href='/userList?pageNum=1&contentNum=30'">유저목록</button>
+        </c:if>
       </c:if>
       </th>
     </tr>

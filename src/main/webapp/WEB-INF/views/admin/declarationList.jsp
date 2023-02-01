@@ -95,8 +95,11 @@ function btnSearchEnter(){
   <table>
     <tr>
       <th colspan="6" style="text-align:center">
-        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고관리</button>
-        <button style="font-size:20px;" onClick="location.href='userList'" >유저관리</button>
+        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&pageNum=1&contentNum=30'">Q&A</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고목록</button>
+        <c:if test="${login.authority == 0}">
+          <button style="font-size:20px;" onClick="location.href='/userList?pageNum=1&contentNum=30'">유저목록</button>
+        </c:if>
       </th>
     </tr>
     <tr>
@@ -135,10 +138,10 @@ function btnSearchEnter(){
             <td width="10%" style="text-align:center">대기</td>
           </c:when>
           <c:when test="${list.process eq 1}">
-            <td width="10%" style="text-align:center">1번</td>
+            <td width="10%" style="text-align:center">접수완료</td>
           </c:when>
           <c:when test="${list.process eq 2}">
-            <td width="10%" style="text-align:center">2번</td>
+            <td width="10%" style="text-align:center">거부</td>
           </c:when>
         </c:choose>
         <td width="10%" style="text-align:center">${list.indate}</td>

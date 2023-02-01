@@ -140,6 +140,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public List<BoardVo> getBoardList(HashMap<String, Object> map) { // 글 목록 가져오기
+        System.out.println("입구:" + map);
         List<BoardVo> boardList = sqlSession.selectList("Board.List", map);
         return boardList;
     }
@@ -181,13 +182,8 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public List<DeclarationVo> getDeclarationList(HashMap<String, Object> map) {
-        String au = String.valueOf(map.get("au"));
-        List<DeclarationVo> declarationVoList = null;
-        if(au.equals("11")){//고객센터 신고목록
-            declarationVoList = sqlSession.selectList("Board.getDeclarationList2",map);
-        }else {//관리페이지 신고목록
-            declarationVoList = sqlSession.selectList("Board.getDeclarationList1",map);
-        }
+        System.out.println(map);
+        List<DeclarationVo> declarationVoList = sqlSession.selectList("Board.getDeclarationList",map);
         return declarationVoList;
     }
 

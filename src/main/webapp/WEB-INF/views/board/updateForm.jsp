@@ -76,21 +76,36 @@ td, th {
     <input type="hidden" name="authority" value="${authority}" />
   <table >
       <c:choose>
-        <c:when test="${menu_id eq 4 && empty a_cont}">
-        <tr>
-          <th style= "width:6%; height:10%; text-align:center">제목</th>
-          <td>${boardVo.title}</td>
-          <input  type="hidden" name="title" id="title" style="width:1000px ;font-size:15px;" value="${boardVo.title}" />
-        </tr>
-        <tr>
-          <th style="text-align:center">내용</th>
-          <td>${boardVo.cont}</td>
-          <input  type="hidden" name="cont" id="cont" style="width:1000px;height:400px;font-size:15px;" value="${boardVo.cont}" />
-        </tr>
-        <tr>
-          <th style="text-align:center">답변내용</th>
-          <td><input  type="text" name="a_cont" id="a_cont" style="width:1000px;height:400px;font-size:15px;"/></td>
-        </tr>
+        <c:when test="${menu_id eq 4}">
+          <c:choose>
+            <c:when test="${login.authority eq 0}">
+            <tr>
+              <th style= "width:6%; height:10%; text-align:center">제목</th>
+              <td>${boardVo.title}</td>
+              <input  type="hidden" name="title" id="title" style="width:1000px ;font-size:15px;" value="${boardVo.title}" />
+            </tr>
+            <tr>
+              <th style="text-align:center">내용</th>
+              <td>${boardVo.cont}</td>
+              <input  type="hidden" name="cont" id="cont" style="width:1000px;height:400px;font-size:15px;" value="${boardVo.cont}" />
+            </tr>
+            <tr>
+              <th style="text-align:center">답변내용</th>
+              <td><input  type="text" name="a_cont" id="a_cont" style="width:1000px;height:400px;font-size:15px;"/></td>
+            </tr>
+            </c:when>
+            <c:otherwise>
+              <tr>
+                <th style= "width:6%; height:10%; text-align:center">제목</th>
+                <td>${boardVo.title}</td>
+                <input  type="hidden" name="title" id="title" style="width:1000px ;font-size:15px;" value="${boardVo.title}" />
+              </tr>
+              <tr>
+                <th style="text-align:center">내용</th>
+                <td><input  type="text" name="cont" id="cont" style="width:1000px;height:400px;font-size:15px;" value="${boardVo.cont}" /></td>
+              </tr>
+            </c:otherwise>
+          </c:choose>
         </c:when>
         <c:otherwise>
           <tr>

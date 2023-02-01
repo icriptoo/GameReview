@@ -121,4 +121,10 @@ public class UserServiceImpl implements UserService {
         List<UserVo> userVoList = userDao.getUserList();
         return userVoList;
     }
+
+    @Override
+    public UserVo authorityCheck(String u_id) {
+        UserVo user = userDao.authorityCheck(u_id);
+        return user;
+    }
 }

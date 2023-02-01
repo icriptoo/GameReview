@@ -109,13 +109,15 @@ textarea {
         <th style="width:8%; height:10%; text-align:center">신고자</th>
         <td>${detail.us_name}</td>
       </tr>
-      <tr>
-        <th style="width:8%; height:10%; text-align:center">신고처리</th>
-        <td>
-          <button style="font-size:20px;" onClick="location.href='/declarationProcess?d_idx=${detail.d_idx}&process=1'" >접수</button>
-          <button style="font-size:20px;" onClick="location.href='/declarationProcess?d_idx=${detail.d_idx}&process=2'" >거부</button>
-        </td>
-      </tr>
+      <c:if test="${login.authority eq 0}">
+        <tr>
+          <th style="width:8%; height:10%; text-align:center">신고처리</th>
+          <td>
+            <button style="font-size:20px;" onClick="location.href='/declarationProcess?d_idx=${detail.d_idx}&process=1'" >접수</button>
+            <button style="font-size:20px;" onClick="location.href='/declarationProcess?d_idx=${detail.d_idx}&process=2'" >거부</button>
+          </td>
+        </tr>
+      </c:if>
 
       <tr>
         <td style="height:10%; text-align:right" colspan="2">
