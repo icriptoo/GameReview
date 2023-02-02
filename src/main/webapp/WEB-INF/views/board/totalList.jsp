@@ -100,7 +100,7 @@ function btnSearchEnter(){
     <c:forEach var="item" items="${boardList}" >
       <tr>
         <td width="10%" style="text-align:center">${item.b_idx}</td>
-        <td width="13%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&pageNum=1&contentNum=30">${item.title}</a></td>
+        <td width="13%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&place=1&pageNum=1&contentNum=30">${item.title}</a></td>
         <td width="12%" style="text-align:left">${item.g_name}</td>
         <c:if test="${menu_id eq 1}">
           <td width="5%" style="text-align:center">${item.r_score}</td>

@@ -207,6 +207,7 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
+        String place = (String)map.get("place");
 
         boardService.boardUpdate(map);
 
@@ -218,9 +219,16 @@ public class BoardController {
 
         model.addAttribute("menu_id", menu_id ); //메뉴번호
 
+
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
-            path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
+            if(place.equals("1")){
+                path = "redirect:/totalList?pageNum=1&contentNum=30";
+            } else if(place.equals("2")) {
+                path = "redirect:/myboard?pageNum=1&contentNum=30";
+            } else {
+                path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
+            }
         } else if(menu_id.equals("3") || menu_id.equals("4")){
             path = "redirect:/managementList?pageNum=1&contentNum=30";
         }
@@ -238,6 +246,7 @@ public class BoardController {
         model.addAttribute("boardVo", boardVo ); // 글 불러오기
         model.addAttribute("menu_id", menu_id ); //메뉴정보
         model.addAttribute("answer", answer ); //답변여부
+        model.addAttribute("place", map.get("place")); //위치
 
         return "/board/updateForm";
     }
@@ -274,6 +283,7 @@ public class BoardController {
         String menu_id = (String)map.get("menu_id");
         String g_idx = (String)map.get("g_idx");
         String u_id = (String)map.get("u_id");
+        String place = (String)map.get("place");
 
         boardService.boardDelete(map);
 
@@ -287,7 +297,13 @@ public class BoardController {
 
         String path = null;
         if(menu_id.equals("1") || menu_id.equals("2")){
-            path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
+            if(place.equals("1")){
+                path = "redirect:/totalList?pageNum=1&contentNum=30";
+            } else if(place.equals("2")) {
+                path = "redirect:/myboard?pageNum=1&contentNum=30";
+            } else {
+                path = "redirect:/GameReviewList?pageNum=1&contentNum=30";
+            }
         } else if(menu_id.equals("3") || menu_id.equals("4")){
             path = "redirect:/managementList?pageNum=1&contentNum=30";
         }
@@ -494,8 +510,7 @@ public class BoardController {
     //전체 글목록
     @RequestMapping("/totalList")
     public String totalList(@RequestParam HashMap<String, Object> map, Model model){
-
-
+        map.remove("g_idx");
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String menu_id = (String)map.get("menu_id");
@@ -563,13 +578,20 @@ public class BoardController {
         model.addAttribute("menu_id", menu_id ); //메뉴정보
         model.addAttribute("pageNum", pageNum); // 댓글페이지번호
         model.addAttribute("contentNum", contentNum); //댓글가져오는 마지막 번호
+        model.addAttribute("place", map.get("place")); //위치
 
         return "/board/view";
     }
 
     // 게임목록db에 넣기
     @RequestMapping("/GameListInsert")
-    public String GameListInsert() throws IOException {
+    public String GameListInsert(Model model, HttpSession httpSession) throws IOException {
+        UserVo vo = userService.getUser(httpSession.getAttribute("login"));
+        if(!vo.getAuthority().equals("0")){
+            model.addAttribute("msg", "권한이 없습니다.");
+            model.addAttribute("url", "/");
+            return "/alert";
+        }
         boardService.GameInsert();
         List<GameListVo> gameListVo = boardService.getGameList();
 
@@ -918,6 +940,7 @@ public class BoardController {
     // 마이페이지 내 개시글보기
     @RequestMapping("/myboard")
     public String myBoard(@RequestParam HashMap<String, Object> map, Model model, HttpSession httpSession){
+        map.remove("g_idx");
         int PageNum = Integer.parseInt((String) map.get("pageNum"));
         int ContentNum = Integer.parseInt((String) map.get("contentNum"));
         String menu_id = (String) map.get("menu_id");

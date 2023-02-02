@@ -124,7 +124,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-
         Object obj = httpSession.getAttribute("login");
         if (obj == null){
             response.sendRedirect("/login");

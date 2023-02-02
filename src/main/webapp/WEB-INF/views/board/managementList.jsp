@@ -54,14 +54,14 @@ function check(){
 .headerB{ font-size: 80px!important }
 
 .rightAside {
-	float: right;
-	width: 20%;
-	height: 100%;
+   float: right;
+   width: 20%;
+   height: 100%;
 }
 .leftAside {
-	float: left;
-	width: 20%;
-	height: 100%;
+   float: left;
+   width: 20%;
+   height: 100%;
 }
 ul{
     list-style:none;
