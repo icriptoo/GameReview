@@ -170,6 +170,7 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public int boardCount(HashMap<String, Object> map) {
+        System.out.println(map);
         return sqlSession.selectOne("Board.Count", map);
     }
 

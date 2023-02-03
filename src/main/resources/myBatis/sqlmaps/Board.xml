@@ -175,15 +175,33 @@
             </when>
             <when test="menu_id == 4">
                 <choose>
-                    <when test="searchType == null">
-                        SELECT COUNT(*)
-                        FROM BOARD
-                        where menu_id = ${menu_id} and u_id = #{u_id}
+                    <when test="authority == 1">
+                        <choose>
+                            <when test="searchType == null">
+                                SELECT COUNT(*)
+                                FROM BOARD
+                                where menu_id = ${menu_id} and u_id = #{u_id}
+                            </when>
+                            <otherwise>
+                                SELECT COUNT(*)
+                                FROM BOARD
+                                where menu_id = ${menu_id} and ${searchType} like '%${keyword}%' and u_id = #{u_id}
+                            </otherwise>
+                        </choose>
                     </when>
                     <otherwise>
-                        SELECT COUNT(*)
-                        FROM BOARD
-                        where menu_id = ${menu_id} and ${searchType} like '%${keyword}%' and u_id = #{u_id}
+                        <choose>
+                            <when test="searchType == null">
+                                SELECT COUNT(*)
+                                FROM BOARD
+                                where menu_id = ${menu_id}
+                            </when>
+                            <otherwise>
+                                SELECT COUNT(*)
+                                FROM BOARD
+                                where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
+                            </otherwise>
+                        </choose>
                     </otherwise>
                 </choose>
             </when>
