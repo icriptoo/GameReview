@@ -633,7 +633,7 @@ public class BoardController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return "redirect:/";
+        return "redirect:/Board/GameList?pageNum=1&contentNum=30";
     }
 
     // 게임목록 조회 게시판
