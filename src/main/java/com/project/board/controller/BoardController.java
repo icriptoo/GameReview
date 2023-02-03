@@ -351,7 +351,6 @@ public class BoardController {
             model.addAttribute("msg", "더 많은 게임리뷰를 남겨주세요.");
             model.addAttribute("url", "/");
             return "/alert";
-
         }
 
         String title = boardVo.getG_name(); // 추천알고리즘 입력값으로 넣어줄 게임
