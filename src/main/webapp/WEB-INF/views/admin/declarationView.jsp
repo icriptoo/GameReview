@@ -118,10 +118,9 @@ textarea {
           </td>
         </tr>
       </c:if>
-
       <tr>
         <td style="height:10%; text-align:right" colspan="2">
-          <button style="font-size:20px;" onClick="location.href='/declarationList'" >목록으로</button>
+          <button style="font-size:20px;" onClick="location.href='/declarationList?pageNum=1&contentNum=30'" >목록으로</button>
         </td>
       </tr>
     </div>
