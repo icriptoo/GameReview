@@ -32,6 +32,9 @@ ul{
 .eGName{
     color:#c0c0c0;
 }
+td{
+    padding: 8px 16px;
+}
 </style>
 <script>
 function btnSearch(e){
@@ -66,7 +69,7 @@ function btnSearchEnter(){
 <header class="w3-container w3-center w3-padding-48 w3-white">
   <h1 class="headerB"><b>Game List</b></h1>
 </header>
-<div style="width: 100%; height: 500px; ">
+<div style="width: 100%; height: 500px;">
   <div>
     <aside class="leftAside">
       <h1> </h1>
@@ -86,7 +89,7 @@ function btnSearchEnter(){
         <button style="font-size:20px;" onClick="location.href='/myboard?menu_id=2&pageNum=1&contentNum=30'" >자유게시판</button>
       </th>
     </tr>
-    <tr>
+    <tr style="border-bottom: 1px solid #000000">
       <th width="10%" style="text-align:center">번호</th>
       <th width="25%" style="text-align:center">제목</th>
       <th width="12%" style="text-align:center">게임</th>
@@ -98,7 +101,7 @@ function btnSearchEnter(){
       <th width="5%" style="text-align:center">조회수</th>
     </tr>
     <c:forEach var="item" items="${boardList}" >
-      <tr>
+      <tr style="border-bottom: 1px solid #999999">
         <td width="10%" style="text-align:center">${item.b_idx}</td>
         <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&place=2&pageNum=1&contentNum=30">${item.title}</a></td>
         <td width="12%" style="text-align:left">${item.g_name}</td>
@@ -111,12 +114,12 @@ function btnSearchEnter(){
       </tr>
     </c:forEach>
     <tr>
-      <td colspan="4">
+      <td>
         <c:set var="sT" value="${sT}"/>
         <c:choose>
           <c:when test="${sT eq 'a'}">
             <tr>
-              <td class="page" id="page" colspan="5" style="text-align:center;">
+              <td class="page" id="page" colspan="7" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/myboard?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
@@ -137,7 +140,7 @@ function btnSearchEnter(){
           </c:when>
           <c:otherwise>
             <tr>
-              <td class="page" id="page" colspan="5" style="text-align:center;">
+              <td class="page" id="page" colspan="7" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/myboard?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">< 이전</a>

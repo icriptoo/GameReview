@@ -38,6 +38,10 @@ table.a {
   border-style: hidden;
   box-shadow: 0 0 0 1px #000;
 }
+table.a td, th {
+  border : 1px solid black;
+  border-collapse : collapse;
+}
 table.b {
   width: 800px;
   height: 100px;
@@ -45,10 +49,6 @@ table.b {
   border-radius: 10px;
   border-style: hidden;
   box-shadow: 0 0 0 1px #000;
-}
-table.a td, th {
-  border : 1px solid black;
-  border-collapse : collapse;
 }
 table.b tr {
   border : 1px solid black;

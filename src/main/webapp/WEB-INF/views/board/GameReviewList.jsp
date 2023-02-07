@@ -151,7 +151,7 @@ function btnSearchEnter(){
         <button style="font-size:20px;" onClick="location.href='/GameReviewList?g_idx=${gameListVo.g_idx}&menu_id=2&pageNum=1&contentNum=30'" >자유게시판</button>
       </th>
     </tr>
-    <tr>
+    <tr style="border-bottom: 1px solid #000000">
       <th width="10%" style="text-align:center">번호</th>
       <th width="25%" style="text-align:center">제목</th>
       <c:if test= "${menu_id eq 1}">
@@ -176,12 +176,12 @@ function btnSearchEnter(){
       </tr>
     </c:forEach>
     <tr>
-      <td colspan="4">
+      <td colspan="6">
         <c:set var="sT" value="${sT}"/>
         <c:choose>
           <c:when test="${sT eq 'a'}">
             <tr>
-              <td class="page" id="page" colspan="2" style="text-align:center;">
+              <td class="page" id="page" colspan="6" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}">< 이전</a>
@@ -202,7 +202,7 @@ function btnSearchEnter(){
           </c:when>
           <c:otherwise>
             <tr>
-              <td class="page" id="page" colspan="2" style="text-align:center;">
+              <td class="page" id="page" colspan="6" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/GameReviewList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}&g_idx=${gameListVo.g_idx}">< 이전</a>

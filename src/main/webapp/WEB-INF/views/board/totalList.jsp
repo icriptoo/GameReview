@@ -32,6 +32,9 @@ ul{
 .eGName{
     color:#c0c0c0;
 }
+td{
+    padding: 8px 16px;
+}
 </style>
 <script>
 function btnSearch(){
@@ -86,7 +89,7 @@ function btnSearchEnter(){
         <button style="font-size:20px;" onClick="location.href='/totalList?menu_id=2&pageNum=1&contentNum=30'" >자유게시판</button>
       </td>
     </tr>
-    <tr>
+    <tr style="border-bottom: 1px solid #000000">
       <th width="10%" style="text-align:center">번호</th>
       <th width="13%" style="text-align:center">제목</th>
       <th width="12%" style="text-align:center">게임</th>
@@ -98,7 +101,7 @@ function btnSearchEnter(){
       <th width="5%" style="text-align:center">조회수</th>
     </tr>
     <c:forEach var="item" items="${boardList}" >
-      <tr>
+      <tr style="border-bottom: 1px solid #999999">
         <td width="10%" style="text-align:center">${item.b_idx}</td>
         <td width="13%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&place=1&pageNum=1&contentNum=30">${item.title}</a></td>
         <td width="12%" style="text-align:left">${item.g_name}</td>

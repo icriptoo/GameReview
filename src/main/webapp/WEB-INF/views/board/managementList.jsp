@@ -50,7 +50,9 @@ function check(){
 </script>
 <title>Insert title here</title>
 <style>
-
+td{
+    padding: 8px 16px;
+}
 .headerB{ font-size: 80px!important }
 
 .rightAside {
@@ -90,7 +92,7 @@ ul{
       <%@ include file="/WEB-INF/include/topgame.jsp" %>
     </aside>
   </div>
-  <table>
+  <table class="a">
     <tr>
       <th colspan="6" style="font-size:20px; text-align:center;">
       <c:if test="${menu_id eq 3}">
@@ -108,7 +110,7 @@ ul{
     <c:set var="au" value="${authority}"/>
     <c:choose>
       <c:when test="${au ne 11}">
-        <tr>
+        <tr style="border-bottom: 1px solid #000000">
           <th width="10%" style="text-align:center">번호</th>
           <th width="25%" style="text-align:center">제목</th>
           <c:if test= "${menu_id eq 4}">
@@ -123,7 +125,7 @@ ul{
           </c:if>
         </tr>
         <c:forEach var="item" items="${boardList}" >
-          <tr>
+          <tr style="border-bottom: 1px solid #999999">
             <td width="10%" style="text-align:center">${item.b_idx}</td>
             <td width="25%" style="text-align:left"><a href="/View?b_idx=${item.b_idx}&menu_id=${menu_id}&authority=${authority}">${item.title}</a></td>
             <c:if test="${menu_id eq 4}">

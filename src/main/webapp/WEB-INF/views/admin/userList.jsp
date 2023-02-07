@@ -108,7 +108,7 @@ function chk(u_id){
         <button style="font-size:20px;" onClick="location.href='/userList?pageNum=1&contentNum=30'" >유저목록</button>
       </th>
     </tr>
-    <tr>
+    <tr style="border-bottom: 1px solid #000000">
       <th width="10%" style="text-align:center">가입일</th>
       <th width="10%" style="text-align:center">아이디</th>
       <th width="10%" style="text-align:center">닉네임</th>
