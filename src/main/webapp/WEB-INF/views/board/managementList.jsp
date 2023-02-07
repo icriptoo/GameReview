@@ -235,14 +235,18 @@ ul{
       <td colspan="2" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
-          <option value="n_name"><strong>작성자</strong></option>
-          <option value="a_cont"><strong>답변상태</strong></option>
+          <c:choose>
+            <c:when test="${menu_id ne 3}">
+              <option value="n_name"><strong>작성자</strong></option>
+              <option value="a_cont"><strong>답변상태</strong></option>
+            </c:when>
+          </c:choose>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>
       </td>
       <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
-        <c:if test="${sessionScope.login.authority ne 0}">
+        <c:if test="${login.authority eq 0}">
           <button style="font-size:20px;" onClick="check()" >글쓰기</button>
         </c:if>
       </td>
