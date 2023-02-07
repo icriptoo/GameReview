@@ -45,31 +45,28 @@ td{
 <script>
 function btnSearch(e){
   e.preventDefault();
-  var url = "/GameReviewList?pageNum=1&contentNum=30";
+  var url = "/declarationList?pageNum=1&contentNum=30";
   url += "&keyword=" + $("#keyword").val();
   url += "&searchType=" + $("#searchType").val();
-  url += "&menu_id=${menu_id}";
-  url += "&g_idx=${gameListVo.g_idx}"
+  url += "&menu_id=4";
   if ($("#keyword").val() === ""){
     alert("키워드를 입력해 주세요.");
-    return false;
+
   }else{
     location.href = url;
   }
 }
 function btnSearchEnter(){
   if(window.event.keyCode == 13){
-    var url = "/GameReviewList?pageNum=1&contentNum=30";
+    var url = "/declarationList?pageNum=1&contentNum=30";
     url += "&keyword=" + $("#keyword").val();
     url += "&searchType=" + $("#searchType").val();
-    url += "&menu_id=${menu_id}";
-    url += "&g_idx=${gameListVo.g_idx}"
+    url += "&menu_id=4";
     if ($("#keyword").val() === ""){
       alert("키워드를 입력해 주세요.");
-      return false;
     }else{
       location.href = url;
-    }
+   }
   }
 }
 </script>
@@ -96,7 +93,7 @@ function btnSearchEnter(){
     <tr>
       <th colspan="6" style="text-align:center">
         <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&pageNum=1&contentNum=30'">Q&A</button>
-        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고목록</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList?pageNum=1&contentNum=30'" >신고목록</button>
         <c:if test="${login.authority == 0}">
           <button style="font-size:20px;" onClick="location.href='/userList?pageNum=1&contentNum=30'">유저목록</button>
         </c:if>
@@ -138,7 +135,7 @@ function btnSearchEnter(){
             <td width="10%" style="text-align:center">대기</td>
           </c:when>
           <c:when test="${list.process eq 1}">
-            <td width="10%" style="text-align:center">접수완료</td>
+            <td width="10%" style="text-align:center">완료</td>
           </c:when>
           <c:when test="${list.process eq 2}">
             <td width="10%" style="text-align:center">거부</td>
@@ -149,6 +146,67 @@ function btnSearchEnter(){
       <tr style="border-top: 1px solid #999999">
       </tr>
     </c:forEach>
+    <tr>
+      <td colspan="5">
+        <c:set var="sT" value="${sT}"/>
+        <c:choose>
+          <c:when test="${sT eq 'a'}">
+            <tr>
+              <td class="page" id="page" colspan="5" style="text-align:center;">
+                <div class="pager">
+                  <c:if test="${Pager.prev}">
+                    <a href="http://localhost:8080/declarationList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
+                    <a class="firstPageNum" href="/declarationList?pageNum=1&contentNum=30&menu_id=${menu_id}">1</a>
+                    ...
+                  </c:if>
+                  <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                    <a class="pageNum" href="/declarationList?pageNum=${idx}&contentNum=${idx*30}&menu_id=${menu_id}">${idx}</a>
+                  </c:forEach>
+                  <c:if test="${Pager.next}">
+                    ...
+                    <a class="lastPageNum" href="/declarationList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&menu_id=${menu_id}">${Pager.lastPageNum}</a>
+                    <a href="http://localhost:8080/declarationList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&menu_id=${menu_id}">다음 ></a>
+                  </c:if>
+                </div>
+              </td>
+            </tr>
+          </c:when>
+          <c:otherwise>
+            <tr>
+              <td class="page" id="page" colspan="5" style="text-align:center;">
+                <div class="pager">
+                  <c:if test="${Pager.prev}">
+                    <a href="http://localhost:8080/declarationList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">< 이전</a>
+                    <a class="firstPageNum" href="/declarationList?pageNum=1&contentNum=30&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">1</a>
+                    ...
+                  </c:if>
+                  <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                  <a class="pageNum" href="/declarationList?pageNum=${idx}&contentNum=${idx*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">${idx}</a>
+                  </c:forEach>
+                  <c:if test="${Pager.next}">
+                    ...
+                    <a class="lastPageNum" href="/declarationList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">${Pager.lastPageNum}</a>
+                    <a href="http://localhost:8080/declarationList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">다음 ></a>
+                  </c:if>
+                </div>
+              </td>
+            </tr>
+          </c:otherwise>
+        </c:choose>
+      </td>
+    </tr>
+    <tr style="border-top: 1px solid #000">
+      <td colspan="2" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
+        <select class="search" id="searchType">
+          <option value="type_idx"><strong>분류</strong></option>
+          <option value="process"><strong>답변상태</strong></option>
+          <option value="s.n_name"><strong>신고대상</strong></option>
+          <option value="u.n_name"><strong>신고자</strong></option>
+        </select>
+        <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
+        <button id="btnSearch" class="searchB">검색</button>
+      </td>
+    </tr>
   </table>
 </div>
 <script>

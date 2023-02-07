@@ -56,43 +56,43 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
         //아이디중복확인
-        if(requestUrl.contains("useridCheck")){
+        if(requestUrl.contains("/useridCheck")){
             return true;
         }
         //닉네임중복확인
-        if(requestUrl.contains("nnCheck")){
+        if(requestUrl.contains("/nnCheck")){
             return true;
         }
         //이메일중복확인
-        if(requestUrl.contains("emailck")){
+        if(requestUrl.contains("/emailck")){
             return true;
         }
         //비밀번호 정규식체크
-        if(requestUrl.contains("ckPwJ")){
+        if(requestUrl.contains("/ckPwJ")){
             return true;
         }
         //창닫기
-        if(requestUrl.contains("popupout")){
+        if(requestUrl.contains("/popupout")){
             return true;
         }
         //아이디찾기 결과출력
-        if(requestUrl.contains("getUserid")){
+        if(requestUrl.contains("/getUserid")){
             return true;
         }
         //비밀번호변경에 필요한 아이디, 이메일확인
-        if(requestUrl.contains("changePwIdCk")){
+        if(requestUrl.contains("/changePwIdCk")){
             return true;
         }
         //아이디,비밀번호 찾기 이메일 인증번호 전송
-        if(requestUrl.contains("findemailck")){
+        if(requestUrl.contains("/findemailck")){
             return true;
         }
         //아이디,비밀번호 찾기 이메일 인증번호 확인
-        if(requestUrl.contains("findecodeck")){
+        if(requestUrl.contains("/findecodeck")){
             return true;
         }
         //비밀번호변경
-        if(requestUrl.contains("changePw")){
+        if(requestUrl.contains("/changePw")){
             return true;
         }
         //마이페이지 인증번호 확인
@@ -119,8 +119,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         if(requestUrl.contains("/commentList")){
             return true;
         }
-        //
-        if(requestUrl.contains("")){
+        if(requestUrl.contains("/view")){
+            return true;
+        }
+        if(requestUrl.contains("/GameReviewList")){
             return true;
         }
 

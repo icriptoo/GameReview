@@ -30,56 +30,66 @@
     <!-- 신고글목록 가져오기 -->
     <select id="getDeclarationList" resultType="com.project.board.vo.DeclarationVo">
         <choose>
-            <when test="authority == 0">
-                SELECT d.d_idx,
-                d.indate,
-                d.us_id,
-                u.n_name us_name,
-                d.ue_id,
-                s.n_name ue_name,
-                d.type_idx,
-                d.process
-                FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
-                ORDER BY d_idx desc
+            <when test="searchType == null">
+                <choose>
+                    <when test="authority == 0">
+                        SELECT d.d_idx,
+                        d.indate,
+                        d.us_id,
+                        u.n_name us_name,
+                        d.ue_id,
+                        s.n_name ue_name,
+                        d.type_idx,
+                        d.process
+                        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                        ORDER BY d_idx desc
+                    </when>
+                    <otherwise>
+                        SELECT d.d_idx,
+                        d.indate,
+                        d.us_id,
+                        u.n_name us_name,
+                        d.ue_id,
+                        s.n_name ue_name,
+                        d.type_idx,
+                        d.process
+                        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                        WHERE d.us_id = #{u_id}
+                        ORDER BY d_idx desc
+                    </otherwise>
+                </choose>
             </when>
             <otherwise>
-                SELECT d.d_idx,
-                d.indate,
-                d.us_id,
-                u.n_name us_name,
-                d.ue_id,
-                s.n_name ue_name,
-                d.type_idx,
-                d.process
-                FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
-                WHERE d.us_id = #{u_id}
-                ORDER BY d_idx desc
+                <choose>
+                    <when test="authority == 0">
+                        SELECT d.d_idx,
+                        d.indate,
+                        d.us_id,
+                        u.n_name us_name,
+                        d.ue_id,
+                        s.n_name ue_name,
+                        d.type_idx,
+                        d.process
+                        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                        WHERE ${searchType} like '%${keyword}%'
+                        ORDER BY d_idx desc
+                    </when>
+                    <otherwise>
+                        SELECT d.d_idx,
+                        d.indate,
+                        d.us_id,
+                        u.n_name us_name,
+                        d.ue_id,
+                        s.n_name ue_name,
+                        d.type_idx,
+                        d.process
+                        FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                        WHERE d.us_id = #{u_id} and ${searchType} like '%${keyword}%'
+                        ORDER BY d_idx desc
+                    </otherwise>
+                </choose>
             </otherwise>
         </choose>
-    </select>
-
-    <select id="getDeclarationList2" resultType="com.project.board.vo.DeclarationVo">
-        SELECT a.d_idx,
-        a.indate,
-        a.us_id,
-        a.us_name,
-        a.ue_id,
-        b.n_name ue_name,
-        a.type_idx
-        FROM
-        (SELECT d.d_idx,
-        d.indate,
-        d.us_id,
-        u.n_name us_name,
-        d.ue_id,
-        d.type_idx,
-        d.process
-        FROM declaration d
-        inner join users u on d.us_id = u.u_id
-        ORDER BY d_idx asc) a
-        INNER JOIN users b
-        ON a.ue_id = b.u_id
-        where a.us_id = #{u_id}
     </select>
 
     <!-- 신고 저장 -->
@@ -159,6 +169,26 @@
     <!-- 글 목록 카운트 -->
     <select id="Count" resultType="int">
         <choose>
+            <when test="declarationList == 0">
+                SELECT COUNT(*)
+                FROM declaration
+            </when>
+            <when test="declarationList == 1">
+                SELECT COUNT(*)
+                FROM (
+                SELECT
+                d.d_idx,
+                d.indate,
+                d.us_id,
+                u.n_name us_name,
+                d.ue_id,
+                s.n_name ue_name,
+                d.type_idx,
+                d.process
+                FROM declaration d inner join users u on d.us_id = u.u_id inner join users s on d.ue_id = s.u_id
+                WHERE ${searchType} like '%${keyword}%'
+                ORDER BY d_idx DESC)
+            </when>
             <when test="menu_id == 3">
                 <choose>
                     <when test="searchType == null">
@@ -196,10 +226,62 @@
                                 FROM BOARD
                                 where menu_id = ${menu_id}
                             </when>
-                            <otherwise>
+                            <when test="keyword != null and ck != 1">
                                 SELECT COUNT(*)
-                                FROM BOARD
-                                where menu_id = ${menu_id} and ${searchType} like '%${keyword}%'
+                                FROM (
+                                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                a.B_IDX,
+                                a.TITLE,
+                                a.CONT,
+                                a.B_COUNT,
+                                a.INDATE,
+                                a.U_ID,
+                                b.n_name
+                                FROM BOARD a
+                                INNER JOIN users b
+                                ON a.u_id = b.u_id
+                                WHERE a.menu_id = ${menu_id} AND ${searchType} LIKE '%${keyword}%'
+                                ORDER BY b_idx DESC)
+                            </when>
+                            <otherwise>
+                                <choose>
+                                    <when test="keyword == null">
+                                        SELECT COUNT(*)
+                                        FROM (
+                                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                        a.B_IDX,
+                                        a.TITLE,
+                                        a.CONT,
+                                        a.B_COUNT,
+                                        a.INDATE,
+                                        a.U_ID,
+                                        b.n_name,
+                                        a_cont
+                                        FROM BOARD a
+                                        INNER JOIN users b
+                                        ON a.u_id = b.u_id
+                                        WHERE a.menu_id = ${menu_id} AND a_cont is null
+                                        ORDER BY b_idx DESC)
+                                    </when>
+                                    <otherwise>
+                                        SELECT COUNT(*)
+                                        FROM (
+                                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                        a.B_IDX,
+                                        a.TITLE,
+                                        a.CONT,
+                                        a.B_COUNT,
+                                        a.INDATE,
+                                        a.U_ID,
+                                        b.n_name,
+                                        a_cont
+                                        FROM BOARD a
+                                        INNER JOIN users b
+                                        ON a.u_id = b.u_id
+                                        WHERE a.menu_id = ${menu_id} AND a_cont is not null
+                                        ORDER BY b_idx DESC)
+                                    </otherwise>
+                                </choose>
                             </otherwise>
                         </choose>
                     </otherwise>
@@ -366,23 +448,69 @@
                          WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
                     </when>
                     <when test="authority == 0 and searchType != null">
-                        SELECT *
-                          FROM (
-                            SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
-                                   a.B_IDX,
-                                   a.TITLE,
-                                   a.CONT,
-                                   a.B_COUNT,
-                                   a.INDATE,
-                                   a.U_ID,
-                                   b.n_name
-                              FROM BOARD a
-                             INNER JOIN users b
+                        <choose>
+                            <when test="keyword != null and ck != 1">
+                                SELECT *
+                                FROM (
+                                SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                a.B_IDX,
+                                a.TITLE,
+                                a.CONT,
+                                a.B_COUNT,
+                                a.INDATE,
+                                a.U_ID,
+                                b.n_name
+                                FROM BOARD a
+                                INNER JOIN users b
                                 ON a.u_id = b.u_id
-                             WHERE a.menu_id = #{menu_id} AND a.${searchType} LIKE '%${keyword}%'
-                             ORDER BY b_idx DESC)
-                         WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
-                    </when>
+                                WHERE a.menu_id = #{menu_id} AND ${searchType} LIKE '%${keyword}%'
+                                ORDER BY b_idx DESC)
+                                WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                            </when>
+                            <otherwise>
+                                <choose>
+                                    <when test="keyword == null">
+                                        SELECT *
+                                        FROM (
+                                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                        a.B_IDX,
+                                        a.TITLE,
+                                        a.CONT,
+                                        a.B_COUNT,
+                                        a.INDATE,
+                                        a.U_ID,
+                                        b.n_name,
+                                        a_cont
+                                        FROM BOARD a
+                                        INNER JOIN users b
+                                        ON a.u_id = b.u_id
+                                        WHERE a.menu_id = #{menu_id} AND a_cont is null
+                                        ORDER BY b_idx DESC)
+                                        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                                    </when>
+                                    <otherwise>
+                                        SELECT *
+                                        FROM (
+                                        SELECT ROW_NUMBER() OVER (ORDER BY B_IDX desc) RNUM,
+                                        a.B_IDX,
+                                        a.TITLE,
+                                        a.CONT,
+                                        a.B_COUNT,
+                                        a.INDATE,
+                                        a.U_ID,
+                                        b.n_name,
+                                        a_cont
+                                        FROM BOARD a
+                                        INNER JOIN users b
+                                        ON a.u_id = b.u_id
+                                        WHERE a.menu_id = #{menu_id} AND a_cont is not null
+                                        ORDER BY b_idx DESC)
+                                        WHERE RNUM BETWEEN #{pageNum} and #{contentNum}
+                                    </otherwise>
+                                </choose>
+                            </otherwise>
+                        </choose>
+                        </when>
                     <when test="authority != 0 and searchType == null">
                         SELECT a.b_idx,
                               a.title,

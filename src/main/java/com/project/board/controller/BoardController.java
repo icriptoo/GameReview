@@ -78,10 +78,85 @@ public class BoardController {
         UserVo userVo = (UserVo) httpSession.getAttribute("login");
         map.put("authority", userVo.getAuthority());
         map.put("u_id", userVo.getU_id());
-        List<DeclarationVo> declarationVoList = boardService.getDeclarationList(map);
-
+        List<DeclarationVo> declarationVoList =  null;
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+        String menu_id = (String)map.get("menu_id");
+        String searchType = (String) map.get("searchType");
+        String keyword = (String) map.get("keyword");
+        // type_idx
+        // 1 : 불건전한 내용
+        // 2 : 스팸 및 부적절한 홍보
+        // 3 : 명예회손 및 비방
+        // 4 : 초상권 및 저작권 침해
+        // 5 : 개인정보 도용
+        // 6 : 기타
+        // process
+        // 0 : 대기
+        // 1 : 완료
+        // 2 : 거부
+        if (searchType == null){ // 검색유무 확인
+            searchType = "a";
+        } else if (searchType.equals("type_idx")){
+            if ("불건전한 내용".contains(keyword)){
+                map.put("keyword","1");
+            }else if ("스팸 및 부적절한 홍보".contains(keyword)){
+                map.put("keyword","2");
+            }else if ("명예회손 및 비방".contains(keyword)){
+                map.put("keyword","3");
+            }else if ("초상권 및 저작권 침해".contains(keyword)){
+                map.put("keyword","4");
+            }else if ("개인정보 도용".contains(keyword)){
+                map.put("keyword","5");
+            }else if ("기타".contains(keyword)){
+                map.put("keyword","6");
+            }
+        } else if (searchType.equals("process")){
+            if ("대기".contains(keyword)){
+                map.put("keyword","0");
+            }else if ("완료".contains(keyword)){
+                map.put("keyword","1");
+            }else if ("거부".contains(keyword)){
+                map.put("keyword","2");
+            }
+        }
+        if (searchType.equals("a")) {
+            map.put("declarationList",0);
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if (boardPager.getPageNum() != 0) {
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            declarationVoList = boardService.getDeclarationList(map);
+        } else {
+            map.put("declarationList",1);
+            boardPager.setTotalCount(boardService.boardCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if (boardPager.getPageNum() != 0) {
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+            declarationVoList = boardService.getDeclarationList(map);
+        }
         model.addAttribute("list", declarationVoList);
-
+        model.addAttribute("Pager", boardPager);
+        model.addAttribute("sT",searchType);// 페이징용 검색유무
+        model.addAttribute("kw",keyword);
         return "/admin/declarationList";
     }
 
@@ -155,9 +230,15 @@ public class BoardController {
         //고객센터 페이지에 사용
 
         String a = ""; //신고목록 페이지에 갈 때 사용
-
         if (searchType == null){ // 검색유무 확인
             searchType = "a";
+        }
+        if(searchType.equals("a_cont")){
+            if ("대기".contains(keyword)){
+                map.put("keyword",null);
+            } else {
+                map.put("ck","1");
+            }
         }
         if (searchType.equals("a")) {
             boardPager.setTotalCount(boardService.boardCount(map));

@@ -12,8 +12,6 @@ public interface UserService {
 
     UserVo login(HashMap<String, Object> map);
 
-
-
     void userupdate(HashMap<String, Object> userVo);
 
     void profileupdate(HashMap<String, Object> map, HttpServletRequest request, HttpSession httpSession) throws IOException;
@@ -48,4 +46,8 @@ public interface UserService {
     List<UserVo> getUserList();
 
     UserVo authorityCheck(String u_id);
+
+    List<UserVo> getSUserList(HashMap<String, Object> map);
+
+    int getUserCount(HashMap<String, Object> map);
 }

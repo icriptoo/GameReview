@@ -183,12 +183,12 @@ ul{
       </c:otherwise>
     </c:choose>
     <tr>
-      <td colspan="4">
+      <td colspan="5">
         <c:set var="sT" value="${sT}"/>
         <c:choose>
           <c:when test="${sT eq 'a'}">
             <tr>
-              <td class="page" id="page" colspan="4" style="text-align:center;">
+              <td class="page" id="page" colspan="5" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/managementList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
@@ -209,7 +209,7 @@ ul{
           </c:when>
           <c:otherwise>
             <tr>
-              <td class="page" id="page" colspan="4" style="text-align:center;">
+              <td class="page" id="page" colspan="5" style="text-align:center;">
                 <div class="pager">
                   <c:if test="${Pager.prev}">
                     <a href="http://localhost:8080/managementList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">< 이전</a>
@@ -235,12 +235,14 @@ ul{
       <td colspan="2" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
         <select class="search" id="searchType">
           <option value="title"><strong>제목</strong></option>
+          <option value="n_name"><strong>작성자</strong></option>
+          <option value="a_cont"><strong>답변상태</strong></option>
         </select>
         <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
         <button id="btnSearch" class="searchB">검색</button>
       </td>
       <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
-        <c:if test="${sessionScope.login.u_id ne null}">
+        <c:if test="${sessionScope.login.authority ne 0}">
           <button style="font-size:20px;" onClick="check()" >글쓰기</button>
         </c:if>
       </td>

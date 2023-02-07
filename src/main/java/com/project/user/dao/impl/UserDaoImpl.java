@@ -140,4 +140,14 @@ public class UserDaoImpl implements UserDao {
         UserVo user = sqlSession.selectOne("User.authorityCheck", u_id);
         return user;
     }
+
+    @Override
+    public List<UserVo> getSUserList(HashMap<String, Object> map) {
+        return sqlSession.selectList("User.getSUserList",map);
+    }
+
+    @Override
+    public int getUserCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("User.count",map);
+    }
 }

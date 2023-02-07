@@ -127,4 +127,14 @@ public class UserServiceImpl implements UserService {
         UserVo user = userDao.authorityCheck(u_id);
         return user;
     }
+
+    @Override
+    public List<UserVo> getSUserList(HashMap<String, Object> map) {
+        return userDao.getSUserList(map);
+    }
+
+    @Override
+    public int getUserCount(HashMap<String, Object> map) {
+        return userDao.getUserCount(map);
+    }
 }

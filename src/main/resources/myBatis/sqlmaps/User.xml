@@ -172,4 +172,41 @@
         WHERE U_ID = #{u_id}
     </update>
 
+    <select id="count" resultType="int">
+        <choose>
+            <when test="searchType != a">
+                SELECT COUNT(*)
+                FROM USERS
+                WHERE WITHDRAWAL = 'ON' AND ${searchType} LIKE '%${keyword}%'
+            </when>
+            <otherwise>
+                SELECT COUNT(*)
+                FROM USERS
+                WHERE WITHDRAWAL = 'ON'
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getSUserList" resultType="com.project.user.vo.UserVo" >
+        SELECT TO_CHAR(x.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
+        x.u_id,
+        x.n_name,
+        x.email,
+        x.genre1,
+        x.genre2,
+        x.genre3,
+        NVL(y.declaration, 0) declaration
+        FROM users x
+        LEFT OUTER JOIN
+        (SELECT a.u_id,
+        COUNT(b.process) declaration
+        FROM users a
+        INNER JOIN declaration b
+        ON a.u_id = b.ue_id
+        GROUP BY a.u_id) y
+        ON x.u_id = y.u_id
+        WHERE withdrawal = 'ON' AND x.${searchType} LIKE '%${keyword}%'
+        ORDER BY INDATE desc
+    </select>
+
 </mapper>

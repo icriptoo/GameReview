@@ -53,10 +53,53 @@ public class UserController {
             model.addAttribute("url", "/");
             return "/alert";
         }
-        List<UserVo> userVoList = userService.getUserList();
+        int PageNum = Integer.parseInt((String) map.get("pageNum"));
+        int ContentNum = Integer.parseInt((String) map.get("contentNum"));
+        String searchType = (String) map.get("searchType");
+        String keyword = (String) map.get("keyword");
+        List<UserVo> userVoList =  null ;
+
+        if (searchType == null){ // 검색유무 확인
+            searchType = "a";
+        }
+        if (searchType.equals("a")) {
+            boardPager.setTotalCount(userService.getUserCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if (boardPager.getPageNum() != 0) {
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+
+            userVoList = userService.getUserList();
+        } else {
+            boardPager.setTotalCount(userService.getUserCount(map));
+            boardPager.setPageNum(PageNum - 1);
+            boardPager.setContentNum(ContentNum);
+            boardPager.setCurrentBlock(PageNum);
+            boardPager.setLastBlock();
+            boardPager.prevNext(PageNum);
+            boardPager.setStartPage();
+            boardPager.setEndPage();
+            if (boardPager.getPageNum() != 0) {
+                boardPager.setPageNum((PageNum - 1) * 30 + 1);
+            }
+            map.put("pageNum", boardPager.getPageNum());
+            map.put("contentNum", boardPager.getContentNum());
+
+            userVoList = userService.getSUserList(map);
+        }
 
         model.addAttribute("list", userVoList);
-
+        model.addAttribute("Pager", boardPager);
+        model.addAttribute("sT",searchType);// 페이징용 검색유무
+        model.addAttribute("kw",keyword);
         return "/admin/userList";
     }
 

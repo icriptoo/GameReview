@@ -42,4 +42,8 @@ public interface UserDao {
     List<UserVo> getUserList();
 
     UserVo authorityCheck(String u_id);
+
+    List<UserVo> getSUserList(HashMap<String, Object> map);
+
+    int getUserCount(HashMap<String, Object> map);
 }

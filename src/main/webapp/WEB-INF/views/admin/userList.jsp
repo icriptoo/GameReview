@@ -41,11 +41,9 @@ td{
 <script>
 function btnSearch(e){
   e.preventDefault();
-  var url = "/GameReviewList?pageNum=1&contentNum=30";
+  var url = "/userList?pageNum=1&contentNum=30";
   url += "&keyword=" + $("#keyword").val();
   url += "&searchType=" + $("#searchType").val();
-  url += "&menu_id=${menu_id}";
-  url += "&g_idx=${gameListVo.g_idx}"
   if ($("#keyword").val() === ""){
     alert("키워드를 입력해 주세요.");
     return false;
@@ -55,11 +53,9 @@ function btnSearch(e){
 }
 function btnSearchEnter(){
   if(window.event.keyCode == 13){
-    var url = "/GameReviewList?pageNum=1&contentNum=30";
+    var url = "/userList?pageNum=1&contentNum=30";
     url += "&keyword=" + $("#keyword").val();
     url += "&searchType=" + $("#searchType").val();
-    url += "&menu_id=${menu_id}";
-    url += "&g_idx=${gameListVo.g_idx}"
     if ($("#keyword").val() === ""){
       alert("키워드를 입력해 주세요.");
       return false;
@@ -107,9 +103,9 @@ function chk(u_id){
   <table>
     <tr>
       <th colspan="9" style="text-align:center">
-        <button style="font-size:20px;" onClick="location.href='/declarationList'" >Q&A</button>
-        <button style="font-size:20px;" onClick="location.href='/declarationList'" >신고목록</button>
-        <button style="font-size:20px;" onClick="location.href='/userList'" >유저목록</button>
+        <button style="font-size:20px;" onClick="location.href='/managementList?menu_id=4&u_id=${login.u_id}&pageNum=1&contentNum=30'" >Q&A</button>
+        <button style="font-size:20px;" onClick="location.href='/declarationList?pageNum=1&contentNum=30'" >신고목록</button>
+        <button style="font-size:20px;" onClick="location.href='/userList?pageNum=1&contentNum=30'" >유저목록</button>
       </th>
     </tr>
     <tr>
@@ -139,7 +135,66 @@ function chk(u_id){
       <tr style="border-top: 1px solid #999999">
       </tr>
     </c:forEach>
-
+    <tr>
+      <td colspan="9">
+        <c:set var="sT" value="${sT}"/>
+        <c:choose>
+          <c:when test="${sT eq 'a'}">
+            <tr>
+              <td class="page" id="page" colspan="9" style="text-align:center;">
+                <div class="pager">
+                  <c:if test="${Pager.prev}">
+                    <a href="http://localhost:8080/userList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&menu_id=${menu_id}">< 이전</a>
+                    <a class="firstPageNum" href="/userList?pageNum=1&contentNum=30&menu_id=${menu_id}">1</a>
+                    ...
+                  </c:if>
+                  <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                    <a class="pageNum" href="/userList?pageNum=${idx}&contentNum=${idx*30}&menu_id=${menu_id}">${idx}</a>
+                  </c:forEach>
+                  <c:if test="${Pager.next}">
+                    ...
+                    <a class="lastPageNum" href="/userList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&menu_id=${menu_id}">${Pager.lastPageNum}</a>
+                    <a href="http://localhost:8080/userList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&menu_id=${menu_id}">다음 ></a>
+                  </c:if>
+                </div>
+              </td>
+            </tr>
+          </c:when>
+          <c:otherwise>
+            <tr>
+              <td class="page" id="page" colspan="9" style="text-align:center;">
+                <div class="pager">
+                  <c:if test="${Pager.prev}">
+                    <a href="http://localhost:8080/userList?pageNum=${Pager.startPage-1}&contentNum=${(Pager.startPage-1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">< 이전</a>
+                    <a class="firstPageNum" href="/userList?pageNum=1&contentNum=30&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">1</a>
+                    ...
+                  </c:if>
+                  <c:forEach begin="${Pager.startPage}" end="${Pager.endPage}" var="idx">
+                  <a class="pageNum" href="/userList?pageNum=${idx}&contentNum=${idx*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">${idx}</a>
+                  </c:forEach>
+                  <c:if test="${Pager.next}">
+                    ...
+                    <a class="lastPageNum" href="/userList?pageNum=${Pager.lastPageNum}&contentNum=${Pager.lastPageNum*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">${Pager.lastPageNum}</a>
+                    <a href="http://localhost:8080/userList?pageNum=${Pager.endPage+1}&contentNum=${(Pager.endPage+1)*30}&searchType=${sT}&keyword=${kw}&menu_id=${menu_id}">다음 ></a>
+                  </c:if>
+                </div>
+              </td>
+            </tr>
+          </c:otherwise>
+        </c:choose>
+      </td>
+    </tr>
+    <tr style="border-top: 1px solid #000">
+      <td colspan="3" style="padding-left: 50px; border-radius: 4px; padding: 15px 0px 15px 20px;">
+        <select class="search" id="searchType">
+          <option value="u_id"><strong>아이디</strong></option>
+          <option value="n_name"><strong>닉네임</strong></option>
+          <option value="email"><strong>이메일</strong></option>
+        </select>
+        <input id="keyword" class="keyword" type="text" onkeyup="btnSearchEnter()">
+        <button id="btnSearch" class="searchB">검색</button>
+      </td>
+    </tr>
   </table>
 </div>
 <script>
