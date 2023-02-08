@@ -216,7 +216,7 @@ function commentListIn(list){
     } else {
       html += '<tr><td rowspan="3" style="padding-left:20px"><img style="width: 55%;" src="/img/userProfile/default/1.png"/></td><td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
     }
-    html += '<td class="cont"><strong>'+list[i].u_id+'</strong></td></tr>';
+    html += '<td class="cont"><strong>'+list[i].n_name+'</strong></td></tr>';
     html += '<tr><td style="white-space:pre;" colspan="2" class="cont" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td></tr>';
     html += '<tr><td class="cont" style="border-bottom : 1px solid #dfdfdf; color:#b3b3b3;">'+list[i].indate+'</td>';
     if(list[i].u_id === u_id){
@@ -353,7 +353,7 @@ function showPopup(u_id){
         </tr>
       </c:if>
       <tr>
-        <td style="height:10%; text-align:right" colspan="2">
+        <td style="height:10%; text-align:right" colspan="5">
           <c:if test="${login.authority eq 0  && menu_id eq 4}">
             <button style="font-size:20px;" onClick="location.href='/updateForm?menu_id=${boardVo.menu_id}&b_idx=${boardVo.b_idx}'" >답변하기</button>
           </c:if>
@@ -385,7 +385,7 @@ function showPopup(u_id){
   </table>
   <div id="replylist-box"></div>
     <div class="replyin_box" id="replyin_box" style="padding-left:20%">
-      <div>${login.u_id}</div><br>
+      <div>${login.n_name}</div><br>
       <div><textarea type="textarea" id="replytext" placeholder="내용을 입력해 주세요."></textarea></div>
       <div style="float: center" id="replybtn"><button>작성</button></div>
     </div>
@@ -464,7 +464,7 @@ function replyList(){
             } else {
               html += '<td rowspan="3" class="img-box"><img src="/img/userProfile/'+list[i].u_id+'/'+list[i].img+'" class="profile" alt="UserProfile"/></td>';
             }
-            html += '<td class="cont" colspan="3"><strong>'+list[i].u_id+'</strong></td>';
+            html += '<td class="cont" colspan="3"><strong>'+list[i].n_name+'</strong></td>';
             html += '</tr>';
             html += '<tr>';
             html += '<td style="white-space:pre;" class="cont" colspan="3" id="replycont'+ list[i].r_idx +'">'+list[i].cont+'</td>';
@@ -533,6 +533,5 @@ function replyP(){
     }
   });
 };
-
 </script>
 </html>

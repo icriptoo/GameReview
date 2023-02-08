@@ -248,7 +248,7 @@ ul{
         <button id="btnSearch" class="searchB">검색</button>
       </td>
       <td colspan="5" style="text-align: right; border-radius: 4px; padding: 15px 20px 15px 0px;">
-        <c:if test="${login.authority eq 0}">
+        <c:if test="${login.authority eq 1}">
           <button style="font-size:20px;" onClick="check()" >글쓰기</button>
         </c:if>
       </td>

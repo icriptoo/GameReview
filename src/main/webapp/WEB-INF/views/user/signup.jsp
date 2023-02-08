@@ -27,6 +27,12 @@ div.signup{
   font-family:'d2coding';
   float:left;
 }
+p {
+    margin : 10px 0px 10px 0px;
+}
+.pt {
+    width : 30px;
+}
 </style>
 <script>
 function checkSpacebar(){
@@ -356,25 +362,25 @@ $(function(){
   </div>
   <div class="signup">
     <form action="/signup" method="POST" encType = "multipart/form-data">
-      <p>아이디 : <input type="text" name="u_id" maxlength="20" onkeydown="checkSpacebar();"/>
+      <p><span class="pt">아이디 : </span><input type="text" name="u_id" maxlength="20" onkeydown="checkSpacebar();"/>
         <button id="idCheck" type="button">중복확인</button>
         <span id="idCheckResult" name="idCheckResult"></span>
       </p>
-      <p>닉네임 : <input type="text" name="n_name" maxlength="12" onkeydown="checkSpacebar();"/>
+      <p><span class="pt">닉네임 : </span><input type="text" name="n_name" maxlength="12" onkeydown="checkSpacebar();"/>
         <button id="nnCheck" type="button">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p>비밀번호 : <input type="password" name="pw" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
-      <p>비밀번호 확인 : <input type="password" name="pwck" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
+      <p><span class="pt">비밀번호 : </span><input type="password" name="pw" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
+      <p><span class="pt">비밀번호 확인 : </span><input type="password" name="pwck" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
       <p>8~15자 영문 대 소문자, 숫자, 특수문자를 사용해 주세요.</p>
-      <p>이메일 : <input type="text" name="email" onkeydown="checkSpacebar();"/><button id="enumsend" name="enumsend" type="button">인증번호전송</button>
+      <p><span class="pt">이메일 : </span><input type="text" name="email" onkeydown="checkSpacebar();"/><button id="enumsend" name="enumsend" type="button">인증번호전송</button>
         <span id="enumsendResult" name="enumsendResult"></span>
       </p>
-      <p>인증번호 : <input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode" maxlength="6" onkeydown="checkSpacebar();"/>
+      <p><span class="pt">인증번호 : </span><input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode" maxlength="6" onkeydown="checkSpacebar();"/>
         <span id="timer" name="timer"></span>
         <button id="enumck" name="enumck" type="button" >인증번호확인</button><span id="enumckResult" name="enumckResult"></span>
       </p>
-      <p>선호 장르1 :
+      <p><span class="pt">선호 장르1 : </span>
         <select name="genre1">
           <option value="">선호 장르1</option>
           <option value="RPG">RPG</option>
@@ -395,7 +401,7 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
-      <p>선호 장르2 :
+      <p><span class="pt">선호 장르2 : </span>
         <select name="genre2">
           <option value="">선호 장르2</option>
           <option value="RPG">RPG</option>
@@ -416,7 +422,7 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
-      <p>선호 장르3 :
+      <p><span class="pt">선호 장르3 : </span>
         <select name="genre3">
           <option value="">선호 장르3</option>
           <option value="RPG">RPG</option>

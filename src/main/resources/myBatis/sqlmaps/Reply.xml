@@ -19,7 +19,8 @@
                 TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
                 U.IMG,
                 R.C_IDX,
-                R.D_CK
+                R.D_CK,
+                U.N_NAME
                 FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
                 WHERE R.B_IDX = ${b_idx}
                 ORDER BY R.INDATE ASC)
@@ -35,7 +36,8 @@
                 TO_CHAR(R.INDATE + 9/24, 'yyyy-mm-dd hh24:mi') AS INDATE,
                 U.IMG,
                 R.C_IDX,
-                R.D_CK
+                R.D_CK,
+                U.N_NAME
                 FROM  REPLY R INNER JOIN USERS U on R.U_ID = U.U_ID
                 WHERE R.C_IDX = ${c_idx}
                 ORDER BY INDATE ASC

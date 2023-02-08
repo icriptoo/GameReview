@@ -10,10 +10,11 @@ public class ReplyVo {
    private String img;
    private int c_idx;
    private int d_ck;
+   private String n_name;
 
    public ReplyVo(){}
 
-    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx, String img, int c_idx, int d_ck) {
+    public ReplyVo(int r_idx, String cont, String indate, int b_idx, String u_id, int g_idx, String img, int c_idx, int d_ck, String n_name) {
         this.r_idx = r_idx;
         this.cont = cont;
         this.indate = indate;
@@ -23,6 +24,7 @@ public class ReplyVo {
         this.img = img;
         this.c_idx = c_idx;
         this.d_ck = d_ck;
+        this.n_name = n_name;
     }
 
     public int getD_ck() {
@@ -97,6 +99,14 @@ public class ReplyVo {
         this.g_idx = g_idx;
     }
 
+    public String getN_name() {
+        return n_name;
+    }
+
+    public void setN_name(String n_name) {
+        this.n_name = n_name;
+    }
+
     @Override
     public String toString() {
         return "ReplyVo{" +
@@ -109,6 +119,7 @@ public class ReplyVo {
                 ", img='" + img + '\'' +
                 ", c_idx=" + c_idx +
                 ", d_ck=" + d_ck +
+                ", n_name='" + n_name + '\'' +
                 '}';
     }
 }
