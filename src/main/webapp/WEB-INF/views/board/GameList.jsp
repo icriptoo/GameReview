@@ -110,7 +110,7 @@ function btnGSearch(){
           <option value="/Board/GameList?pageNum=1&contentNum=30&searchType=66" ${so == '66' ? 'selected="selected"' : '' }>기타</option>
           </select>
         </td>
-        <td colspan="3" style="padding-left: 45%;">
+        <td colspan="3" style="padding-left: 43%;">
           <input id="gameName" class="gameName" type="text" placeholder="게임명을 입력해 주세요." onkeyup="btnGSearchEnter()">
           <button id="btnGSearch" class="btnGSearch" onclick="btnGSearch()">검색</button>
         </td>

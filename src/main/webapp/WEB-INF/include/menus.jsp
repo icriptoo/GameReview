@@ -40,6 +40,10 @@ html {
   background-color: #333333;color: white;
   position: absolute;z-index: 1;
 }
+button {
+    border: 1px solid;
+    padding: 2px 5px 2px 5px;
+}
 </style>
 <body style="background-color:#F6F6F6; height: 100%;">
 <div class="menu">
