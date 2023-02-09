@@ -416,7 +416,7 @@ public class UserController {
             if (eck != null) {
                 ecode = mailService.joinEmail(email);
                 System.out.println("인증번호:"+ecode);
-                mse = "인증번호가 발송 됐습니다.";
+                mse = "인증번호가 전송 됐습니다.";
             } else {
                 mse = "닉네임과 이메일을 확인해 주세요.";
             }
@@ -425,7 +425,7 @@ public class UserController {
             if (eck != null) {
                 ecode = mailService.joinEmail(email);
                 System.out.println("인증번호:"+ecode);
-                mse = "인증번호가 발송 됐습니다.";
+                mse = "인증번호가 전송 됐습니다.";
             } else {
                 mse = "아이디와 이메일을 확인해 주세요.";
             }
@@ -459,7 +459,7 @@ public class UserController {
         if (eck == null) {
             ecode = mailService.joinEmail(email);
             System.out.println("인증번호:"+ecode);
-            mse = "인증번호가 발송 됐습니다.";
+            mse = "인증번호가 전송 됐습니다.";
         }else if(eck != null){
             mse = "중복된 이메일입니다.";
         }else {

@@ -127,8 +127,8 @@ $(function(){
   $('#enumck').on('click',function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
-    if($('#enumsendResult').text() != "인증번호가 발송 됐습니다."){
-      $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
+    if($('#enumsendResult').text() != "인증번호가 전송 됐습니다."){
+      $("#enumckResult").text("인증번호전송 버튼을 클릭해 주세요.");
       return false;
     }
     if(ecodeck == ""){
@@ -168,7 +168,7 @@ $(function(){
       alert("닉네임과 이메일을 확인해 주세요.");
       return false;
     }
-    if($('[name=enumsendResult]').text() == "인증번호가 발송 됐습니다."){
+    if($('[name=enumsendResult]').text() == "인증번호가 전송 됐습니다."){
       if($('[name=enumckResult]').text() == "인증번호가 일치하지 않습니다."){
         alert("인증번호를 확인해 주세요.");
         return false;

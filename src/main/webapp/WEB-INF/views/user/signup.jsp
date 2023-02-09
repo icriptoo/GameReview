@@ -18,20 +18,37 @@
 	height: 100%;
 }
 div.signup{
-  width: 600px;
+  margin-top: 150px;
+  margin-left: 100px;
+  width: 700px;
   height: 600px;
   border: 1px solid #000;
   border-radius: 10px;
   text-align: left;
-  padding: 40px 40px;
+  padding: 100px 10px 0px 150px;
   font-family:'d2coding';
   float:left;
 }
-p {
+.signupP {
     margin : 10px 0px 10px 0px;
 }
-.pt {
-    width : 30px;
+.pt3 {
+margin-left: 42px;
+margin-right: 10px;
+}
+.pt4 {
+margin-left: 30px;
+margin-right: 10px;
+}
+.pt7 {
+margin-right: 10px;
+}
+.pt6 {
+margin-left: 17px;
+margin-right: 5px;
+}
+a {
+    text-decoration: none;
 }
 </style>
 <script>
@@ -163,7 +180,7 @@ $(function(){
       alert('입력한 이메일이 변경 됐습니다. 확인해 주세요.');
       return false;
     }
-    if($('[name=enumsendResult]').text()== "인증번호가 발송 됐습니다."){
+    if($('[name=enumsendResult]').text()== "인증번호가 전송 됐습니다."){
       if($('[name=emailcode]').val() != lastEmailCode){
         $("#enumckResult").empty();
         alert('입력한 인증번호가 변경 됐습니다. 확인해 주세요.');
@@ -274,8 +291,8 @@ $(function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
     lastEmailCode = ecodeck;
-    if($('#enumsendResult').text() != "인증번호가 발송 됐습니다."){
-      $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
+    if($('#enumsendResult').text() != "인증번호가 전송 됐습니다."){
+      $("#enumckResult").text("전송 버튼을 클릭해 주세요.");
       return false;
     }
     if(ecodeck == ""){
@@ -362,25 +379,25 @@ $(function(){
   </div>
   <div class="signup">
     <form action="/signup" method="POST" encType = "multipart/form-data">
-      <p><span class="pt">아이디 : </span><input type="text" name="u_id" maxlength="20" onkeydown="checkSpacebar();"/>
+      <p class="signupP"><span class="pt3">아이디</span><input type="text" name="u_id" maxlength="20" onkeydown="checkSpacebar();"/>
         <button id="idCheck" type="button">중복확인</button>
         <span id="idCheckResult" name="idCheckResult"></span>
       </p>
-      <p><span class="pt">닉네임 : </span><input type="text" name="n_name" maxlength="12" onkeydown="checkSpacebar();"/>
+      <p class="signupP"><span class="pt3">닉네임</span><input type="text" name="n_name" maxlength="12" onkeydown="checkSpacebar();"/>
         <button id="nnCheck" type="button">중복확인</button>
         <span id="nnCheckResult" name="nnCheckResult"></span>
       </p>
-      <p><span class="pt">비밀번호 : </span><input type="password" name="pw" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwJCheckResult" name="pwJCheckResult"></span></p>
-      <p><span class="pt">비밀번호 확인 : </span><input type="password" name="pwck" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwCheckResult" name="pwCheckResult"></span></p>
-      <p>8~15자 영문 대 소문자, 숫자, 특수문자를 사용해 주세요.</p>
-      <p><span class="pt">이메일 : </span><input type="text" name="email" onkeydown="checkSpacebar();"/><button id="enumsend" name="enumsend" type="button">인증번호전송</button>
+      <p class="signupP"><span class="pt4">비밀번호</span><input type="password" name="pw" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwJCheckResult" name="pwJCheckResult" style="margin-left: 6px;"></span></p>
+      <p class="signupP"><span class="pt7">비밀번호 확인</span><input type="password" name="pwck" maxlength="15" onkeydown="checkSpacebar();"/><span id="pwCheckResult" name="pwCheckResult" style="margin-left: 6px;"></span></p>
+      <p class="signupP">8~15자 영문 대 소문자, 숫자, 특수문자를 사용해 주세요.</p>
+      <p class="signupP"><span class="pt3">이메일</span><input type="text" name="email" onkeydown="checkSpacebar();"/><button id="enumsend" name="enumsend" type="button" style="margin-left: 6px;">인증번호전송</button>
         <span id="enumsendResult" name="enumsendResult"></span>
       </p>
-      <p><span class="pt">인증번호 : </span><input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode" maxlength="6" onkeydown="checkSpacebar();"/>
+      <p class="signupP"><span class="pt4">인증번호</span><input type="text" placeholder="인증번호 6자리를 입력해 주세요." name="emailcode" id="emailcode" maxlength="6" onkeydown="checkSpacebar();"/>
         <span id="timer" name="timer"></span>
-        <button id="enumck" name="enumck" type="button" >인증번호확인</button><span id="enumckResult" name="enumckResult"></span>
+        <button id="enumck" name="enumck" type="button" >인증번호확인</button><span id="enumckResult" name="enumckResult" style="margin-left: 6px;"></span>
       </p>
-      <p><span class="pt">선호 장르1 : </span>
+      <p class="signupP"><span class="pt6">선호 장르1</span>
         <select name="genre1">
           <option value="">선호 장르1</option>
           <option value="RPG">RPG</option>
@@ -401,7 +418,7 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
-      <p><span class="pt">선호 장르2 : </span>
+      <p class="signupP"><span class="pt6">선호 장르2</span>
         <select name="genre2">
           <option value="">선호 장르2</option>
           <option value="RPG">RPG</option>
@@ -422,7 +439,7 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
-      <p><span class="pt">선호 장르3 : </span>
+      <p class="signupP"><span class="pt6">선호 장르3</span>
         <select name="genre3">
           <option value="">선호 장르3</option>
           <option value="RPG">RPG</option>
@@ -443,8 +460,8 @@ $(function(){
           <option value="기타">기타</option>
         </select>
       </p>
-      <p>중복되지 않도록 선택해 주세요.</p>
-      <p><button>가입하기</button></p>
+      <p class="signupP">선호 장르가 중복되지 않도록 선택해 주세요.</p>
+      <p class="signupP"><button>가입하기</button></p>
     </form>
   <div>
 </div>

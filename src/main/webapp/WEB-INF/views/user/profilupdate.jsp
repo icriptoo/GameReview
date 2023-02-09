@@ -122,7 +122,7 @@ $(function(){
         alert('이메일을 확인해 주세요.');
         return false;
       }
-      if($('[name=enumsendResult]').text() == "인증번호가 발송 됐습니다."){
+      if($('[name=enumsendResult]').text() == "인증번호가 전송 됐습니다."){
         if($('input[name=emailcode]').val() != lastEmailCode){
           $('[name=enumckResult]').empty();
           alert('입력한 인증번호가 변경 됐습니다. 확인해 주세요.');
@@ -224,8 +224,8 @@ $(function(){
     $("#enumckResult").text("");
     let ecodeck = $('input[name=emailcode]').val();
     lastEmailCode = ecodeck;
-    if($('#enumsendResult').text() != "인증번호가 발송 됐습니다."){
-      $("#enumckResult").text("인증번호발송 버튼을 클릭해 주세요.");
+    if($('#enumsendResult').text() != "인증번호가 전송 됐습니다."){
+      $("#enumckResult").text("인증번호전송 버튼을 클릭해 주세요.");
       return false;
     }
     if(ecodeck == ""){
