@@ -154,6 +154,7 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public void boardDelete(HashMap<String, Object> map) {
         sqlSession.delete( "Board.Delete",map); // 글 삭제
+        sqlSession.update("Game.ScoreUpdate", map); //저장 후 해당게임 총평점 업데이트
     }
 
     @Override
