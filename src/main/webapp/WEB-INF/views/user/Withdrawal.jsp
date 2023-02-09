@@ -35,15 +35,14 @@ ul{
 
 .mypage{
   height: 800px;
-  border: 1px solid #000;
   border-radius: 10px;
   text-align: center;
   margin: 50px 450px 0px 350px;
-  background-color: #fff;
 }
 .withdrawalin{
-  width: 800px;
-  height: 800px;
+  width: 100%;
+  max-width: 755px;
+  height: 100%;
   border: 1px solid #000;
   border-radius: 10px;
   margin-left: 100px;
@@ -51,6 +50,7 @@ ul{
   padding: 40px 40px;
   font-family:'d2coding';
   float:left;
+  background-color: #fff;
 }
 .profile{
   width: 100px;
